@@ -45,6 +45,13 @@ The goal of this project is to produce a viable, robust, and user-friendly softw
 ## Team Work Planning
 
 ## Risks
+- Data Security and privacy breaches
+- Load balancing
+- System level failures
+- Server failures
+- Bad documentation for Error codes
+- Potential inaccuracies in AI grading
+- Integration challenges between different technologies
 
 ## Feauture List
 

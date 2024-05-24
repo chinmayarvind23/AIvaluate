@@ -28,6 +28,9 @@ The goal of this project is to produce a viable, robust, and user-friendly softw
 - Software will be documented in English.
 
 ## Assumptions
+- The application will be functional and understandable
+- A users’ technological skill level should not effect there ability to comprehend how to navigate about the site.
+- Code will be well documented, commented, and structured for future changes and additional implementation.
 
 ## Goals
 

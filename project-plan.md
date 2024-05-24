@@ -20,6 +20,12 @@ The goal of this project is to produce a viable, robust, and user-friendly softw
 ### Technical Requirements
 
 ## Contraints
+- Code must be secure and robust
+- The application must follow standards set for LMSs and be accessible for all students
+- The UI must be Intuitive and understandable to all users.
+- Design should be simplistic and clutter free.
+- AI training will be done using user data.
+- Software will be documented in English.
 
 ## Assumptions
 

@@ -4,6 +4,14 @@
 
 **Team Members:** \<List your team members\>
 
+## Overview:
+Scope
+Clarity
+Cohesiveness
+Measurable Objectives
+Success Criteria
+Usage Scenario
+
 ### Project purpose or justification (UVP)
 
 What is the purpose of this software? What problem does it solve? What is the unique value proposition? Why is your solution better than others?
@@ -154,5 +162,3 @@ Use this opportunity to discuss with your team who **may** do what in the projec
 |  **Final Individual Report**  |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | 
 
 ## Documentation
-
-## Overview:

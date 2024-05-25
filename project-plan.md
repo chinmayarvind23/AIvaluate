@@ -2,7 +2,7 @@
 
 **Team Number:** Team 8
 
-**Team Members:** Colton Palfrey, Jerry Fan, Aayush Chaudhary, Chinmay Arvind, Omar Hemed
+**Team Members:** Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed
 
 ## Overview:
  - Scope
@@ -20,19 +20,30 @@
 ### Project purpose or justification (UVP)
 The AI-Powered Web Development Course Platform aims to streamline and enhance the grading process for HTML, CSS, and JavaScript assignments by automating evaluations based on professor-defined criteria. This solution addresses the inefficiencies and inconsistencies of manual grading by leveraging advanced AI to provide accurate, detailed, and timely feedback. This will enable dynamic engagement for both students and instructors. This platform will stand out because of its ability to deliver fast and comprehensive evaluations complemented by a user-friendly interface therfor offering a superior, more scalable, and customizable solutions for learners and teachers. By reducing the grading burden on professors and providing immediate feedback that students can take action to, the platform will ensure a more efficient and insightful educational experience.
 
-
 ## Scope
-The goal of this project is to produce a viable, robust, and user-friendly software capable of efficiently and effectively grading students HTML, CSS, or JavaScript documents. This will be done using a set of instructions provided by the professor where in return, insightful grading feedback provided to both the student and the instructor allowing both users to engage with the web app in a dynamic matter.
+The goal of this project is to produce a viable, robust, and user-friendly software capable of efficiently and effectively grading students HTML, CSS, or JavaScript documents. This will be done using a set of instructions provided by the professor where in return, insightful grading feedback will be provided to both the student and the instructor allowing both users to engage with the web app in a dynamic matter.
 
 ## Goals
-
 ### High-level project description and boundaries
-
-Describe your MVP in a few statements and identify the boundaries of the system. 
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
+The project goals for the AI-Powered Web Development Course Platform are to automate the grading of HTML, CSS, and JavaScript assignments with high accuracy and consistency, provide detailed and acurate feedback to enhance student learning, and reduce the grading workload for instructors. Additionally, the platform aims to ensure a user-friendly experience, support scalability for large classes, and to remember instrustors previous rubrics and grading creatiria to make the resuse of assignment easy.
+### MPV
+- Automated grading engine for HTML, CSS, and JavaScript assignments.
+- Interface for instructors to define and save grading criteria and rubrics.
+- Submission system for students to upload their code.
+- Detailed feedback reports for students based on the automated grading.
+- User-friendly interface for both students and instructors.
+- Scalability to handle large numbers of students.
 
 ## Change management/Communications/QA plan
+### Change Management
+- **Change Request Submission**: Stakeholders can submit change requests which must include a detailed description, rationale, impact analysis, and urgency.
+- **Change Evaluation**: As a team we will evaluate each change request based on its impact, benefits, risks, and requirements.
+- **Approval or Rejection**: As a team we will decide whether to approve, defer, or reject the change request. Given that we approve changes they will immediatly be prioritized and scheduled for implementation.
+- **Implementation Planning**: A detailed plan will be created for the implementation of approved changes, timeline, and risk mitigation strategies.
+- **Change Implementation**: Changes will be implemented by following the implementation plan and adhering to best practices and guidelines.
+- **Testing and Validation**: Changes will be throughly tested to ensure they function as intended and do not negatively impact the platform. Testing could include unit tests, integration tests, and user acceptance tests.
+- **Documentation and Training**: All changes will be documented, including the rationale, implementation steps, and testing results. We will update stakeholders on new features or changes.
+- **Review and Closure**: As a team we will review the implemented changes to ensure they meet the intended objectives and are functioning correctly. Once we cna guarenteed the change was successful the change request is closed, and any lessons learned are documented for future reference.s
 
 ## Products and Services to be provided
 
@@ -40,21 +51,18 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibu
 
 Make sure to use simple but precise statement of goals for the project that will be included when it the project is completed.  Rememeber that goals must be clear and measurable and **SMART**.  It should be clearly understood what success means to the project and how the success will be measured (as a high level, what is success?). 
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
 
 ## Users, Usage Scenarios and High Level Requirements 
 
 ### Users Groups:
 Provide a a descriotion of the primary users in the system and when their high-level goals are with the system (Hint: there is more than one group for most projects).  Proto-personas will help to identify user groups and their wants/needs. 
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
+
 
 ### Envisioned Usage
 What can the user do with your software? If there are multiple user groups, explain it from each of their perspectives. These are what we called *user scenarios* back in COSC 341. Use subsections if needed to make things more clear. Make sure you tell a full story about how the user will use your software. An MVP is a minimal and viable, so don’t go overboard with making things fancy (to claim you’ll put in a ton of extra features and not deliver in the end), and don’t focus solely on one part of your software so that the main purpose isn’t achievable. Scope wisely.  Don't forget about journey lines to describe the user scenarios.  
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
+
 
 ### Requirements:
 In the requirements section, make sure to clearly define/describe the **functional** requirements (what the system will do), **non-functional** requirements (performane/development), **user requirements (what the users will be able to do with the system and **technical** requirements.  These requirements will be used to develop the detailed uses in the design and form your feature list.

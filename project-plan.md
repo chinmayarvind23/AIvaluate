@@ -1,22 +1,25 @@
-# Project Plan/Proposal for \<Team 8\>: AI-Powered Web Development Course Platform
+# Project Plan/Proposal for Team 8: AI-Powered Web Development Course Platform
 
-**Team Number:** \<Team 8\>
+**Team Number:** Team 8
 
-**Team Members:** \<List your team members\>
+**Team Members:** Colton Palfrey, Jerry Fan, Aayush Chaudhary, Chinmay Arvind, Omar Hemed
 
 ## Overview:
-Scope
-Clarity
-Cohesiveness
-Measurable Objectives
-Success Criteria
-Usage Scenario
+ - Scope
+
+- Clarity
+
+- Cohesiveness
+
+- Measurable Objectives
+
+- Success Criteria
+
+- Usage Scenario
 
 ### Project purpose or justification (UVP)
+The AI-Powered Web Development Course Platform aims to streamline and enhance the grading process for HTML, CSS, and JavaScript assignments by automating evaluations based on professor-defined criteria. This solution addresses the inefficiencies and inconsistencies of manual grading by leveraging advanced AI to provide accurate, detailed, and timely feedback. This will enable dynamic engagement for both students and instructors. This platform will stand out because of its ability to deliver fast and comprehensive evaluations complemented by a user-friendly interface therfor offering a superior, more scalable, and customizable solutions for learners and teachers. By reducing the grading burden on professors and providing immediate feedback that students can take action to, the platform will ensure a more efficient and insightful educational experience.
 
-What is the purpose of this software? What problem does it solve? What is the unique value proposition? Why is your solution better than others?
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna. Donec vehicula augue eu neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices. Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc. Praesent eget sem vel leo ultrices bibendum. Aenean faucibus. Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla. Curabitur auctor semper nulla. Donec varius orci eget risus. Duis nibh mi, congue eu, accumsan eleifend, sagittis quis, diam. Duis eget orci sit amet orci dignissim rutrum.
 
 ## Scope
 The goal of this project is to produce a viable, robust, and user-friendly software capable of efficiently and effectively grading students HTML, CSS, or JavaScript documents. This will be done using a set of instructions provided by the professor where in return, insightful grading feedback provided to both the student and the instructor allowing both users to engage with the web app in a dynamic matter.
@@ -79,9 +82,9 @@ In the requirements section, make sure to clearly define/describe the **function
 Identify the “tech stack” you are using. This includes the technology the user is using to interact with your software (e.g., a web browser, an iPhone, any smartphone, etc.), the technology required to build the interface of your software, the technology required to handle the logic of your software (which may be part of the same framework as the technology for the interface), the technology required to handle any data storage, and the programming language(s) involved. You may also need to use an established API, in which case, say what that is. (Please don’t attempt to build your API in this course as you will need years of development experience to do it right.) You can explain your choices in a paragraph, in a list of bullet points, or a table. Just make sure you identify the full tech stack.
 For each choice you make, provide a short justification based on the current trends in the industry. For example, don’t choose an outdated technology because you learned it in a course. Also, don’t choose a technology because one of the team members knows it well. You need to make choices that are good for the project and that meet the client’s needs, otherwise, you will be asked to change those choices.  Consider risk analysis. 
 
-## Front-End
+### Front-End
 
-## Back-End
+### Back-End
 
 ## Feauture List
 
@@ -134,10 +137,10 @@ Use the table below to help line up everyone’s strengths and areas of improvem
 For **experience** provide a description of a previous project that would be similar to the technical difficulty of this project’s proposal.  None, if nothing
 For **good At**, list of skills relevant to the project that you think you are good at and can contribute to the project.  These could be soft skills, such as communication, planning, project management, and presentation.  Consider different aspects: design, coding, testing, and documentation. It is not just about the code.  You can be good at multiple things. List them all! It doesn’t mean you have to do it all.  Don’t ever leave this blank! Everyone is good at something!
 
-|  Category  | Team Member 1 | Team Member 2 | Team Member 3 | Team Member 4 | Team Member 5 | Team Member 6 | 
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|  **Experience**  |  |  |  |  |  |  | 
-|  **Good At**  |  |  |  |  |  |  | 
+|  Category  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+|  **Experience**  |  |  |  |  |  |
+|  **Good At**  |  |  |  |  |  |
 |  **Expect to learn**  | Don’t ever leave this blank! We are all learning.  | Understanding your limits is important. Where do you expect you will need help? | It may not be technical skills. You may be a good coder but never worked with people in a team. Maybe you built a web- site but not used a framework. | It may also be a theoretical concept you already learned but never applied in practice. | Think about different project aspects: design, data security, web security, IDE tools, inte- gration testing, CICD, etc. There will be something. | Don’t ever leave this blank! We are all learning. | 
 
 Use this opportunity to discuss with your team who **may** do what in the project. Make use of everyone’s skill set and discuss each person’s role and responsibilities by considering how everyone will contribute.  Remember to identify project work (some examples are listed below at the top of the table) and course deliverables (the bottom half of the table). You might want to change the rows depending on what suits your project and team.  Understand that no one person will own a single task.  Recall that this is just an incomplete example.  Please explain how things are assigned in the caption below the table, or put the explanation into a separate paragraph so the reader understands why things are done this way and how to interpret your table. 

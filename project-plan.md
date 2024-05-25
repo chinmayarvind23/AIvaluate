@@ -54,10 +54,79 @@ Make sure to use simple but precise statement of goals for the project that will
 
 ## Users, Usage Scenarios and High Level Requirements 
 
-### Users Groups:
-Provide a a descriotion of the primary users in the system and when their high-level goals are with the system (Hint: there is more than one group for most projects).  Proto-personas will help to identify user groups and their wants/needs. 
+### User Groups:
+**1. Instructors**
 
+- **Description**: Responsible for teaching web development courses, including HTML, CSS, and JavaScript. They create and manage assignments, set grading criteria, and review AO provided feedback to students.
 
+- **High-Level Goals**: 
+    - Efficiently create and manage assignments.
+    - Automate the grading process to save time.
+    - Provide detailed and constructive feedback to students.
+    - Monitor student progress and performance.
+    - Reuse and customize grading rubrics for different assignments.
+
+- **Proto-Persona:**
+    - **Name**: Dr. John Newman
+    - **Age**: 45
+    - **Occupation**: Professor of Computer Science
+    - **Background**: Dr. Newman has over 20 years of experience teaching web development and enjoys integrating new technologies into his teaching methods.
+    - **Needs**: Tools to streamline assignment creation and grading, insights into student performance, and the ability to customize grading criteria.
+    - **Frustrations**: Time-consuming manual grading, inconsistent feedback, and managing large class sizes.
+
+**2. Students**
+
+- **Description**: Students are individuals enrolled in web development courses. They submit assignments, receive grades and feedback, and use the platform to improve their coding skills.
+
+- **High-Level Goals**:
+    - Easily submit assignments and receive prompt feedback.
+    - Understand strengths and areas for improvement in their code.
+    - Track their progress and grades throughout the course.
+    - Access resources and feedback to enhance their learning experience.
+
+- Proto-Persona:
+    - **Name**: Regeena Falangie
+    - **Age**: 20
+    - **Occupation**: Computer Science Student
+    - **Background**: Alex is a second-year student passionate about web development and eager to learn and improve coding skills.
+    - **Needs**: Clear instructions for assignments, timely and detailed feedback, and tools to track progress and grades.
+    - **Frustrations**: Delayed feedback, unclear grading criteria, and difficulty understanding how to improve code.
+
+**3. Teaching Assistants (TAs)**
+
+- **Description**: Teaching Assistants support instructors by helping with grading, providing additional feedback, and assisting students with course materials.
+
+- **High-Level Goals**:
+    - Assist instructors with grading and providing feedback.
+    - Help students understand their grades and feedback.
+    - Facilitate communication between instructors and students.
+    - Monitor student performance to identify those needing extra help.
+
+- **Proto-Persona**:
+    - **Name**: Ken Adams
+    - **Age**: 26
+    - **Occupation**: Graduate Teaching Assistant
+    - **Background**: Ken is a graduate student in computer science with a focus on web development. He enjoys mentoring and helping undergraduates succeed.
+    - **Needs**: Tools to efficiently assist with grading, clear communication channels with instructors and students, and insights into student performance.
+    - **Frustrations**: Overwhelming volume of assignments to grade, inconsistent feedback mechanisms, and difficulty tracking student progress.
+
+**4. System Administrators**
+
+- **Description**: System Administrators manage the technical aspects of the platform, ensuring its stability, security, and performance.
+
+- **High-Level Goals**:
+    - Maintain the platform’s uptime and performance.
+    - Ensure data security and compliance with regulations.
+    - Implement updates and fixes promptly.
+    - Provide technical support to users.
+
+- **Proto-Persona**:
+    - **Name**: Blandon Smith
+    - **Age**: 35
+    - **Occupation**: IT System Administrator
+    - **Background**: Blandon has extensive experience managing educational software systems and is responsible for maintaining the technical infrastructure.
+    - **Needs**: Reliable and secure system architecture, efficient tools for monitoring and maintaining the platform, and clear communication with users regarding technical issues.
+    - **Frustrations**: Unexpected system downtimes, security vulnerabilities, and managing user support requests.
 
 ### Envisioned Usage
 What can the user do with your software? If there are multiple user groups, explain it from each of their perspectives. These are what we called *user scenarios* back in COSC 341. Use subsections if needed to make things more clear. Make sure you tell a full story about how the user will use your software. An MVP is a minimal and viable, so don’t go overboard with making things fancy (to claim you’ll put in a ton of extra features and not deliver in the end), and don’t focus solely on one part of your software so that the main purpose isn’t achievable. Scope wisely.  Don't forget about journey lines to describe the user scenarios.  

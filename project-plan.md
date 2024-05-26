@@ -200,9 +200,66 @@ In the requirements section, make sure to clearly define/describe the **function
     - System administrators must be able to regularly update the system to fix vulnerabilities and improve security.
 
 #### Technical Requirements:
-- These emerge from the functional requirements to answer the questions: 
--- How will the problem be solved this time and will it be solved technologically and/or procedurally? 
--- Specify how the system needs to be designed and implemented to provide required functionality and fulfill required operational characteristics.
+**1. System Architecture**
+- **Scalability**:
+    - The system must be designed to scale to handle increasing numbers of users and assignments without performance problems.
+
+- **Modular Design**:
+    - Implement a modular architecture to allow independent development, testing, and deployment of different system components (e.g., user interface, database).
+
+**2. Grading Engine**
+- **AI Integration**:
+    - Implement an AI-powered grading API capable of analyzing HTML, CSS, and JavaScript code against predefined rubrics and criteria.
+    - Use AI learning to improve the accuracy and consistency of automated grading over time.
+
+- **Rubric Management**:
+    - Provide a system for instructors to create, save, and reuse grading rubrics.
+    - Ensure rubrics can be customized for different assignments and course sections.
+
+- **Feedback Generation**:
+    - Develop a feedback generation module that provides detailed and constructive comments based on the grading criteria.
+    - Allow for instructor and TA modifications to the AI-generated feedback.
+
+**3. User Interface**
+- **Responsive Design**:
+    - Ensure the platform’s user interface is responsive and works seamlessly across different devices and screen sizes (desktop, tablet, mobile).
+
+- **User-Friendly Interface**:
+    - Design an intuitive and easy-to-navigate interface for instructors, students, and TAs.
+    - Implement user-friendly dashboards for tracking assignments, grades, and feedback.
+
+- **Communication Tools**:
+    - Integrate messaging and discussion tools to facilitate communication between instructors, students, and TAs.
+    - Ensure notifications and alerts are efficiently communicated through the interface.
+
+**4. Data Management**
+- **Database Design**:
+    - Use a relational database management system (MySQL) for structured data storage.
+    - Ensure the database schema is optimized for performance and scalability.
+
+- **Data Security**:
+    - Implement strong encryption methods for data.
+    - Use both client-side and server-side validation to protect system.
+
+**5. Security**
+- **Authentication and Authorization**:
+    - Implement robust authentication mechanisms to ensure secure access to the platform.
+    - Restrict access based on user roles (e.g., student, instructor, TA, admin).
+
+**6. Integration**
+- **API Development**:
+    - Ensure APIs are well-documented and follow industry standards.
+
+**7. Testing and Quality Assurance**
+- **Automated Testing**:
+    - Implement automated testing for unit tests and integration tests to ensure system reliability and quality.
+    - Use testing frameworks and tools like Jest.
+
+- **User Acceptance Testing (UAT)**:
+    - Conduct UAT with actual end-users (other class mates, family, or friends) to validate the system’s functionality and usability before full deployment.
+
+- **Continuous Integration/Continuous Deployment (CI/CD)**:
+    - Set up a CI/CD pipeline to automate the build, test, and deployment processes, ensuring rapid and reliable updates to the system.
 
 ### System Requirements
   

@@ -129,9 +129,38 @@ Make sure to use simple but precise statement of goals for the project that will
     - **Frustrations**: Unexpected system downtimes, security vulnerabilities, and managing user support requests.
 
 ### Envisioned Usage
-What can the user do with your software? If there are multiple user groups, explain it from each of their perspectives. These are what we called *user scenarios* back in COSC 341. Use subsections if needed to make things more clear. Make sure you tell a full story about how the user will use your software. An MVP is a minimal and viable, so don’t go overboard with making things fancy (to claim you’ll put in a ton of extra features and not deliver in the end), and don’t focus solely on one part of your software so that the main purpose isn’t achievable. Scope wisely.  Don't forget about journey lines to describe the user scenarios.  
+**1. Instructors**
+- **Create and Manage Assignments**: Create new assignments with specific instructions and due dates. Upload and manage grading rubrics and criteria tailored to each assignment.
 
+- **Automate Grading**: Use the platform’s AI implementation to automatically grade student submissions based on predefined criteria.
 
+- **Provide Feedback**: Review automatically generated feedback and adjust or add personalized comments if necessary. Ensure students receive detailed and constructive feedback promptly.
+
+- **Reuse and Customize Rubrics**: Save grading rubrics for reuse in future assignments. Customize rubrics for different assignments or course sections.
+
+- **Communicate with Students**: Send announcements, reminders, and feedback through the platform. Engage with students via integrated messaging tools.
+
+- **Example Scenario**: Dr. John Newman creates a new JavaScript assignment using the platform. He sets the grading criteria, assigns it to his class, and waits for submissions. Once students submit their work, the platform automatically grades the assignments, providing John with detailed reports. He reviews the feedback, adds personalized comments, and releases the grades to the students.
+
+**2. Students**
+- **Submit Assignments**: Upload HTML, CSS, and JavaScript files for assignments directly through the platform. Receive confirmation of successful submissions.
+
+- **Receive Feedback**: Access detailed feedback on their submissions, including scores and comments on areas of improvement. Students should understand the strengths and weaknesses of their work through the feedback provided.
+
+- **Track Progress**: View their grades and feedback history for all assignments in a centralized dashboard. Monitor their overall performance and identify areas where they need to improve.
+
+- **Engage with Instructors**: Ask questions and seek clarifications on assignments and feedback through integrated messaging tools. Students can participate in discussion forums or group chats if available.
+
+- **Access Resources**: Utilize any supplementary resources or materials provided by the instructor through the platform. Review past feedback to improve future submissions.
+
+- **Example Scenario**: Regeena Falangie submits her HTML assignment through the platform. After grading is completed by the AI engine, Regeena receives detailed feedback, including comments on where she excelled and what she can improve. She checks her progress dashboard to see how this assignment affects her overall grade and identifies areas to focus on for future assignments.
+
+**3. Teaching Assistants (TAs)**
+- **Assist with Grading**: Review and refine AI-generated grades and feedback. Provide additional comments or adjustments as needed.
+
+- **Communicate with Students**: Engage with students to provide additional support and clarification on assignments. Assist in managing class discussions and answering queries.
+
+- **Example Scenario**: The TA Ken Adams reviews the AI-generated feedback for a recent HTML and CSS assignment. He notices a common error among several students and decides to add additional comments to help clarify the mistake. He then identifies a few students who are struggling and informs Dr. John Newman, suggesting they might need extra support
 
 ### Requirements:
 In the requirements section, make sure to clearly define/describe the **functional** requirements (what the system will do), **non-functional** requirements (performane/development), **user requirements (what the users will be able to do with the system and **technical** requirements.  These requirements will be used to develop the detailed uses in the design and form your feature list.

@@ -145,8 +145,59 @@ In the requirements section, make sure to clearly define/describe the **function
 - List restrictions or constraints to be placed on the deliverable and how to build it; remember that this is intended to restrict the number of solutions that will meet a set of requirements.
 
 #### User Requirements:
-- Describes what the user needs to do with the system (links to FR)
-- Focus is on the user experience with the system under all scenarios
+
+- **Assignment Creation and Management:**
+    - Instructors must be able to create new assignments with detailed instructions and due dates.
+    - Instructors must be able to upload, modify, and manage grading rubrics and criteria for assignments.
+- **Automated Grading**:
+    - The platform must support the automatic grading of HTML, CSS, and JavaScript assignments based on predefined criteria.
+    - Instructors must be able to review and adjust AI-generated grades and feedback before releasing them to students.
+
+- **Feedback Provision**:
+    - Instructors must be able to add personalized comments to the automated feedback.
+    - The platform must allow instructors to provide detailed and constructive feedback to students.
+
+- **Rubric Reuse and Customization**:
+    - Instructors must be able to save and reuse grading rubrics for future assignments.
+    - Instructors must be able to customize grading criteria and rubrics for different assignments or course sections.
+
+- **Communication Tools**:
+    - The platform must provide tools for instructors to send announcements, reminders, and feedback to students.
+    - Instructors must be able to engage with students via integrated messaging tools.
+
+- **Assignment Submission**:
+    - Students must be able to upload HTML, CSS, and JavaScript files for assignments directly through the platform.
+    - The platform must provide confirmation of successful submission.
+
+- **Feedback Reception**:
+    - Students must have access to detailed feedback on their submissions, including scores and comments on areas for improvement.
+    - Feedback must be provided in a timely manner to facilitate learning.
+
+- **Progress Tracking**:
+    - Students must be able to view their grades and feedback history for all assignments in a centralized dashboard.
+    - The platform must enable students to monitor their overall performance and identify areas for improvement.
+
+-  **Communication and Support**:
+    - The platform must provide tools for students to ask questions and seek clarifications on assignments and feedback.
+
+- **Resource Access**:
+    - The platform must enable students to review past feedback to improve future submissions.
+
+- **Grading Assistance**:
+    - TAs must be able to review and refine AI-generated grades and feedback.
+    - The platform must allow TAs to provide additional comments or adjustments as needed.
+
+- **Communication Tools**:
+    - TAs must be able to engage with students to provide additional support and clarification on assignments.
+    - The platform must support TAs in managing class discussions and answering queries.
+
+- **System Performance Maintenance**:
+    - System administrators must be able to monitor the platform’s performance to ensure it runs smoothly and efficiently.
+    - The platform must provide alerts for potential issues or downtimes.
+
+- **Security and Compliance**:
+    - The platform must support the implementation of security measures to protect user data and ensure compliance with relevant regulations.
+    - System administrators must be able to regularly update the system to fix vulnerabilities and improve security.
 
 #### Technical Requirements:
 - These emerge from the functional requirements to answer the questions: 

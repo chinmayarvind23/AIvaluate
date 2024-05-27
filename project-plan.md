@@ -293,12 +293,35 @@ In the requirements section, make sure to clearly define/describe the **function
 ### System Requirements
   
 ## Tech Stack
-Identify the “tech stack” you are using. This includes the technology the user is using to interact with your software (e.g., a web browser, an iPhone, any smartphone, etc.), the technology required to build the interface of your software, the technology required to handle the logic of your software (which may be part of the same framework as the technology for the interface), the technology required to handle any data storage, and the programming language(s) involved. You may also need to use an established API, in which case, say what that is. (Please don’t attempt to build your API in this course as you will need years of development experience to do it right.) You can explain your choices in a paragraph, in a list of bullet points, or a table. Just make sure you identify the full tech stack.
-For each choice you make, provide a short justification based on the current trends in the industry. For example, don’t choose an outdated technology because you learned it in a course. Also, don’t choose a technology because one of the team members knows it well. You need to make choices that are good for the project and that meet the client’s needs, otherwise, you will be asked to change those choices.  Consider risk analysis. 
+**Platform:**
+- The app will be accessed by user via a web-browswer. The UI of the application will need to be adaptable to fit browswers on different devices, such as laptop/desktop, smart phones and tablets.
 
-### Front-End
+**Front-End:**
+- **React.js:** The front-end will be built using the React framework, as per the customer's request. 
+  - **Justification:** React is the requested framework by the customer. It is a popular and widely-used framework for building dynamic and responsive user interfaces. It provides a component-based architecture that enhances code reusability and maintainability. React also has strong community support and a rich ecosystem of libraries and tools.
 
-### Back-End
+**Back-End:**
+- **Node.js:** The back-end will be built using the Node.js framework.
+  - **Justification:** Node.js's non-blocking architecture is well-suited for handling numerous concurrent requests, which is essential for a platform expected to support a high volume of users. Also, the unified language of both fron-end and back-end will enable easier maintainability.
+
+**Database:**
+- **MongoDB:** We plan to use MongoDB as our database language, hosted on Digital Ocean.
+  - **Justification:** MongoDB is a NoSQL database that provides flexibility with its schema-less design, allowing for easy adaptation to changing requirements. It is well-suited for applications that handle large volumes of unstructured or semi-structured data. MongoDB's horizontal scalability makes it ideal for applications expecting rapid growth in user base and data volume.
+
+**API:**
+- **OpenAI Assistants API:** We plan to use the Assistants API provided by OpenAI for AI-powered features such as automated grading.
+  - **Justification:** The Assistants API offers advanced natural language processing and code interpretation capabilities, which are essential for implementing sophisticated grading algorithms. By leveraging prompt engineering, we can customize the AI responses to provide detailed and context-specific feedback on student submissions. Additionally, the API can handle various file types, allowing us to seamlessly process and grade assignments submitted in different formats. According to the API documentation, .js, .css and .html files are all on their supported list.
+
+**File Storage and Management:**
+- **Digital Ocean Space:** For secure file storage.
+  - **Justification:** Digital Ocean Space provides scalable and reliable storage for user-uploaded files, with built-in security features such as server-side encryption and access control.
+
+**Testing Frameworks:**
+- **Jest:** For testing JavaScript and React components.
+  - **Justification:** Jest is a comprehensive testing framework that provides a simple API for writing tests, along with powerful features such as snapshot testing and parallel test execution, ensuring the reliability and robustness of the codebase.
+
+- **Mocha:** For testing back-end logic in Node.js.
+  - **Justification:** Mocha is a flexible testing framework for Node.js, it provides a robust environment for writing and running unit and integration tests for server-side code. This ensures the back-end logic works correctly under various scenarios, contributing to the overall stability and reliability of the application.
 
 ## Feauture List
 

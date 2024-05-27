@@ -363,8 +363,6 @@ In the requirements section, we will clearly define and describe the functional,
 ## Feauture List
 
 
-## High-level risks
-
 ## Risks
 
 **1- Data Security and Privacy Breaches:**
@@ -392,8 +390,7 @@ In the requirements section, we will clearly define and describe the functional,
 - Analysis: Inaccurate grading can result in dissatisfaction among users and erode trust in the system's capabilities. Rigorous testing, validation, and refinement of AI algorithms are necessary to minimize the risk of grading inaccuracies.
 
 **7- Integration Challenges Between Different Technologies:**
-- Risk Description: Di
-fficulties in integrating various technologies, frameworks, or platforms may impede the development and deployment of the system.
+- Risk Description: Difficulties in integrating various technologies, frameworks, or platforms may impede the development and deployment of the system.
 - Analysis: Integration challenges can lead to delays, increased costs, and decreased system interoperability. Thorough planning, compatibility testing, and communication among development teams are crucial to address integration risks effectively.
 
 ## Assumptions and constraints

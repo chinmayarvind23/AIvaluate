@@ -162,14 +162,6 @@ Make sure to use simple but precise statement of goals for the project that will
 
 - **Example Scenario**: The TA Ken Adams reviews the AI-generated feedback for a recent HTML and CSS assignment. He notices a common error among several students and decides to add additional comments to help clarify the mistake. He then identifies a few students who are struggling and informs Dr. John Newman, suggesting they might need extra support
 
-
-
-
-
-
-
-
-
 ### Requirements:
 In the requirements section, we will clearly define and describe the functional, non-functional, user, and technical requirements for the project. These requirements will guide the development of detailed use cases in the design phase and form the basis for the feature list.
 
@@ -217,8 +209,6 @@ In the requirements section, we will clearly define and describe the functional,
 
 - The system will be easy to update.
 - Clear documentation for features and error codes will be provided.
-
-
 
 #### User Requirements:
 
@@ -373,14 +363,6 @@ In the requirements section, we will clearly define and describe the functional,
 ## Feauture List
 
 
-
-
-
-
-
-
-
-
 ## High-level risks
 
 ## Risks
@@ -392,7 +374,6 @@ In the requirements section, we will clearly define and describe the functional,
 **2- Load Balancing:**
 - Risk Description: Inadequate load balancing may lead to performance issues, slowdowns, or system crashes during periods of high user activity.
 - Analysis: Insufficient load balancing can impact user experience, causing frustration and dissatisfaction. Proper load balancing strategies should be implemented to ensure system stability and scalability.
-
 
 **3- System Level Failures:**
 - Risk Description: Failures at the system level, including hardware malfunctions, software bugs, or compatibility issues, may disrupt system functionality.
@@ -414,12 +395,6 @@ In the requirements section, we will clearly define and describe the functional,
 - Risk Description: Di
 fficulties in integrating various technologies, frameworks, or platforms may impede the development and deployment of the system.
 - Analysis: Integration challenges can lead to delays, increased costs, and decreased system interoperability. Thorough planning, compatibility testing, and communication among development teams are crucial to address integration risks effectively.
-
-
-
-
-
-
 
 ## Assumptions and constraints
 What assumptions is the project team making and what are the constraints for the project?
@@ -467,23 +442,23 @@ For **good At**, list of skills relevant to the project that you think you are g
 
 Use this opportunity to discuss with your team who **may** do what in the project. Make use of everyone’s skill set and discuss each person’s role and responsibilities by considering how everyone will contribute.  Remember to identify project work (some examples are listed below at the top of the table) and course deliverables (the bottom half of the table). You might want to change the rows depending on what suits your project and team.  Understand that no one person will own a single task.  Recall that this is just an incomplete example.  Please explain how things are assigned in the caption below the table, or put the explanation into a separate paragraph so the reader understands why things are done this way and how to interpret your table. 
 
-|  Category of Work/Features  | Team Member 1 | Team Member 2 | Team Member 3 | Team Member 4 | Team Member 5 | Team Member 6 | 
-| ------------- | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|  **Project Management: Kanban Board Maintenance**  | :heavy_check_mark:  |  | :heavy_check_mark:  |  |  |  | 
-|  **System Architecture Designt**  |  | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark:  |  |  | 
-|  **User Interface Design**  | :heavy_check_mark:  | :heavy_check_mark: |  |  |  |  | 
-|  **CSS Development**  | :heavy_check_mark:  |  |  |  |  | :heavy_check_mark:  | 
-|  **Feature 1**  | :heavy_check_mark:  |  |  |  |  |  | 
-|  **Feature 2**  | :heavy_check_mark:  |  |  |  |  |  | 
-|  **...**  |  |  |  |  |  |  | 
-|  **Database setup**  |  |  | :heavy_check_mark:  | :heavy_check_mark:  |  |  | 
-|  **Presentation Preparation**  | :heavy_check_mark:  |  |  | :heavy_check_mark:  |  |  | 
-|  **Design Video Creation**  |  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |  | 
-|  **Design Video Editing**  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |  |  | 
-|  **Design Report**  | :heavy_check_mark:  |  |  |  |  |  | 
-|  **Final Video Creation**  | :heavy_check_mark:  |  |  |  |  | :heavy_check_mark:  | 
-|  **Final Video Editing**  | :heavy_check_mark:  |  |  |  |  | :heavy_check_mark:  | 
-|  **Final Team Report**  |  | :heavy_check_mark:  |  |  |  |  | 
-|  **Final Individual Report**  |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | 
+|  Category of Work/Features  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
+| ------------- | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
+|  **Project Management: Kanban Board Maintenance**  | :heavy_check_mark:  |  | :heavy_check_mark:  |  |  | 
+|  **System Architecture Designt**  |  | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark:  |  |
+|  **User Interface Design**  | :heavy_check_mark:  | :heavy_check_mark: |  |  |  |
+|  **CSS Development**  | :heavy_check_mark:  |  |  |  |  |
+|  **Feature 1**  | :heavy_check_mark:  |  |  |  |  |
+|  **Feature 2**  | :heavy_check_mark:  |  |  |  |  |
+|  **...**  |  |  |  |  |  |
+|  **Database setup**  |  |  | :heavy_check_mark:  | :heavy_check_mark:  |  |
+|  **Presentation Preparation**  | :heavy_check_mark:  |  |  | :heavy_check_mark:  |  |
+|  **Design Video Creation**  |  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |
+|  **Design Video Editing**  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |  |
+|  **Design Report**  | :heavy_check_mark:  |  |  |  |  |
+|  **Final Video Creation**  | :heavy_check_mark:  |  |  |  |  |
+|  **Final Video Editing**  | :heavy_check_mark:  |  |  |  |  |
+|  **Final Team Report**  |  | :heavy_check_mark:  |  |  |  |
+|  **Final Individual Report**  |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 
 ## Documentation

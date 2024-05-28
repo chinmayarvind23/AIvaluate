@@ -484,33 +484,38 @@ For **good At**, list of skills relevant to the project that you think you are g
 
 |  Category  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|  **Experience**  |  |  |  |  |  |
-|  **Good At**  |  |  |  |  |  |
-|  **Expected to learn**  | Don’t ever leave this blank! We are all learning.  | Understanding your limits is important. Where do you expect you will need help? | It may not be technical skills. You may be a good coder but never worked with people in a team. Maybe you built a web- site but not used a framework. | It may also be a theoretical concept you already learned but never applied in practice. | Think about different project aspects: design, data security, web security, IDE tools, inte- gration testing, CICD, etc. There will be something. | Don’t ever leave this blank! We are all learning. | 
+|  **Experience**  | Grocery Price Tracker, I-Clicker Clone |  |  |  |  |
+|  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management |  |  |  |  |
+|  **Expected to learn**  | React, AI API-implementations |  |  |  |  |
 
-Use this opportunity to discuss with your team who **may** do what in the project. Make use of everyone’s skill set and discuss each person’s role and responsibilities by considering how everyone will contribute.  Remember to identify project work (some examples are listed below at the top of the table) and course deliverables (the bottom half of the table). Understand that no one person will own a single task. Please explain how things are assigned in the caption below the table, or put the explanation into a separate paragraph so the reader understands why things are done this way and how to interpret your table. 
 
 |  Category of Work/Features  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|  **Project Management: Kanban Board Maintenance**  | :heavy_check_mark:  |  | :heavy_check_mark:  |  |  | 
-|  **System Architecture Designt**  |  | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark:  |  |
-|  **User Interface Design**  | :heavy_check_mark:  | :heavy_check_mark: |  |  |  |
-|  **CSS Development**  | :heavy_check_mark:  |  |  |  |  |
-|  **Feature 1**  | :heavy_check_mark:  |  |  |  |  |
-|  **Feature 2**  | :heavy_check_mark:  |  |  |  |  |
-|  **...**  |  |  |  |  |  |
-|  **Database setup**  |  |  | :heavy_check_mark:  | :heavy_check_mark:  |  |
+|  **Project Management: Kanban Board Maintenance**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | 
+|  **System Architecture Design**  | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark: |
+|  **User Interface Design**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+|  **CSS Development**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
+|  **AJAX + JavaScript Development**  |   |  | :heavy_check_mark: |  | :heavy_check_mark: |
+|  **Cookie/Server Implementation**  | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |  |
+|  **HTML Development**  |  | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
+|  **API Intergration**  | :heavy_check_mark:  | :heavy_check_mark: |  | :heavy_check_mark: |  |
+|  **Query Implemations**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+|  **Mock Database For testing**  | :heavy_check_mark: |  |  | :heavy_check_mark: |  |
+|  **Client + Server Side Security**  | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |  |
+|  **Testing with Jest**  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+|  **Database setup**  | :heavy_check_mark: |  |  | :heavy_check_mark:  |  |
 |  **Presentation Preparation**  | :heavy_check_mark:  |  |  | :heavy_check_mark:  |  |
-|  **Design Video Creation**  |  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |
+|  **Design Video Creation**  |  | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: |
 |  **Design Video Editing**  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |  |
-|  **Design Report**  | :heavy_check_mark:  |  |  |  |  |
-|  **Final Video Creation**  | :heavy_check_mark:  |  |  |  |  |
+|  **Design Report**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+|  **Final Video Creation**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 |  **Final Video Editing**  | :heavy_check_mark:  |  |  |  |  |
-|  **Final Team Report**  |  | :heavy_check_mark:  |  |  |  |
+|  **Final Team Report**  | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 |  **Final Individual Report**  |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 
 Rationale for assignment of work among team members:
+Our decision to split team members up was based on everyones skills and preferences. Some of our team members felt more comfortable putting a stronger focus on front-end design while others wanted to focus on developing the back-end of the system. We want everyone to be equally involved in each development stage of this proejct so we workign on alot of these features as a team so make sure everyone has a say in whats going on.
 
 
 ## Documentation
-
+This project will be documented using a shared Google Doc. This Document will keep track of our progress, implementions, and the problems we ran into along with their solutions.

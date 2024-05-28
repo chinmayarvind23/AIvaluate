@@ -28,7 +28,7 @@ Over the course of this project, we will be delivering the following:
 - Presentations for the Project Plan, Design Plan, and the Minimum Viable Product (MVP)
 - Final individual project reports (from each team member detailing components they worked on, as well as how their component works with the remaining components of the system and how the system will function as a whole successfully)
 
-### Project purpose or justification (UVP)
+### Project purpose and justification i.e. Unique Value Proposition (UVP)
 The AI-Powered Web Development Course Platform aims to streamline and automate the grading process of HTML, CSS, and JavaScript web development course assignments based on professor-defined criteria. Our solution will address inefficiencies and inconsistencies of manual grading by leveraging advanced AI techniques such as LLMs (Large Language Models) to provide accurate, detailed, and timely feedback. This will allow for dynamic engagement between students and instructors. Our platform will provide unique value due to its ability to deliver swift and comprehensive evaluations complemented by a user-friendly interface, and therefore, offering a superior, scalable, and customizable solution for students and instructors. By automating the grading process for instructors and providing immediate feedback that students can take action to, the platform will ensure a more valuable, efficient and insightful educational experience for students and instructors.
 
 ## Goals

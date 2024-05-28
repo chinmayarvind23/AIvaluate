@@ -17,16 +17,25 @@
 
 - Usage Scenario
 
-### Project purpose or justification (UVP)
-The AI-Powered Web Development Course Platform aims to streamline and enhance the grading process for HTML, CSS, and JavaScript assignments by automating evaluations based on professor-defined criteria. This solution addresses the inefficiencies and inconsistencies of manual grading by leveraging advanced AI to provide accurate, detailed, and timely feedback. This will enable dynamic engagement for both students and instructors. This platform will stand out because of its ability to deliver fast and comprehensive evaluations complemented by a user-friendly interface therfor offering a superior, more scalable, and customizable solutions for learners and teachers. By reducing the grading burden on professors and providing immediate feedback that students can take action to, the platform will ensure a more efficient and insightful educational experience.
-
 ## Scope
-The goal of this project is to produce a viable, robust, and user-friendly software capable of efficiently and effectively grading students HTML, CSS, or JavaScript documents. This will be done using a set of instructions provided by the professor where in return, insightful grading feedback will be provided to both the student and the instructor allowing both users to engage with the web app in a dynamic matter.
+The goal of this project is to produce a viable, robust, and user-friendly software solution capable of efficiently and effectively grading students HTML, CSS, and JavaScript documents. This will be done using a set of instructions provided by the professor where in return, insightful and accurate grading (relative to human grading) feedback will be provided to both the student and the instructor allowing both users to engage with the web app in a dynamic manner, allowing for students to understand problem areas and work on them and instructors to spend less time grading and more time helping students and developing the course to be the best it can be. 
+
+## Deliverables
+Over the course of this project, we will be delivering the following: 
+- AI-powered web development course platform
+- Project Plan (high-level, and will include descriptions of the features of the project, user requirements, functional requirements, usage scenarios, technical requirements, non-functional requirements, system requirements, project goals, Unique Value Proposition, Minimum Viable Product description, Change management plan, Communications plan, Quality Assurance plan, milestone schedule, and the teamwork planning schedule)
+- Design plan (lower-level, and will include details about how the system is designed, how components of the system will interact to produce the required outcome in different scenarios as described in the usage scenarios)
+- Presentations for the Project Plan, Design Plan, and the Minimum Viable Product (MVP)
+- Final individual project reports (from each team member detailing components they worked on, as well as how their component works with the remaining components of the system and how the system will function as a whole successfully)
+
+### Project purpose or justification (UVP)
+The AI-Powered Web Development Course Platform aims to streamline and automate the grading process of HTML, CSS, and JavaScript web development course assignments based on professor-defined criteria. Our solution will address inefficiencies and inconsistencies of manual grading by leveraging advanced AI techniques such as LLMs (Large Language Models) to provide accurate, detailed, and timely feedback. This will allow for dynamic engagement between students and instructors. Our platform will provide unique value due to its ability to deliver swift and comprehensive evaluations complemented by a user-friendly interface, and therefore, offering a superior, scalable, and customizable solution for students and instructors. By automating the grading process for instructors and providing immediate feedback that students can take action to, the platform will ensure a more valuable, efficient and insightful educational experience for students and instructors.
 
 ## Goals
 ### High-level project description and boundaries
-The project goals for the AI-Powered Web Development Course Platform are to automate the grading of HTML, CSS, and JavaScript assignments with high accuracy and consistency, provide detailed and acurate feedback to enhance student learning, and reduce the grading workload for instructors. Additionally, the platform aims to ensure a user-friendly experience, support scalability for large classes, and to remember instrustors previous rubrics and grading creatiria to make the resuse of assignment easy.
-### MPV
+The project goals for the AI-Powered Web Development Course Platform are to automate the grading of HTML, CSS, and JavaScript assignments with high accuracy and consistency, provide detailed and acurate feedback to enhance student learning, and reduce the grading workload for instructors. Additionally, the platform aims to ensure a user-friendly experience, support scalability for large classes, and to maintain instrustors' previous rubrics and grading criteria to make the resuse of assignments easy.
+
+### MVP (Minimum Viable Product) Description
 - Automated grading engine for HTML, CSS, and JavaScript assignments.
 - Interface for instructors to define and save grading criteria and rubrics.
 - Submission system for students to upload their code.
@@ -38,25 +47,86 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 ### Change Management
 - **Change Request Submission**: Stakeholders can submit change requests which must include a detailed description, rationale, impact analysis, and urgency.
 - **Change Evaluation**: As a team we will evaluate each change request based on its impact, benefits, risks, and requirements.
-- **Approval or Rejection**: As a team we will decide whether to approve, defer, or reject the change request. Given that we approve changes they will immediatly be prioritized and scheduled for implementation.
+- **Approval or Rejection**: As a team we will decide whether to approve, defer, or reject the change request. Given that we approve changes they will immediatly be prioritized and scheduled for implementation via Continuous Integration.
 - **Implementation Planning**: A detailed plan will be created for the implementation of approved changes, timeline, and risk mitigation strategies.
 - **Change Implementation**: Changes will be implemented by following the implementation plan and adhering to best practices and guidelines.
 - **Testing and Validation**: Changes will be throughly tested to ensure they function as intended and do not negatively impact the platform. Testing could include unit tests, integration tests, and user acceptance tests.
 - **Documentation and Training**: All changes will be documented, including the rationale, implementation steps, and testing results. We will update stakeholders on new features or changes.
-- **Review and Closure**: As a team we will review the implemented changes to ensure they meet the intended objectives and are functioning correctly. Once we cna guarenteed the change was successful the change request is closed, and any lessons learned are documented for future reference.s
+- **Review and Closure**: As a team we will review the implemented changes to ensure they meet the intended objectives and are functioning correctly. Once we cna guarenteed the change was successful the change request is closed, and any lessons learned are documented for future references
+### Communications
+- We will communicate as a team through in-person meetings, as well as the popular social media platform, Discord.
+- This is also where we will have occasional meetings related to the project, and discuss the project if not in person.
+- The application maintains a history of our communications to hold each other accountable during the course of this project.
+### QA plan
+- In order to maintain quality in our code base, we will implement unit testing, code reviews, integration testing, as well as regression testing.
+- We will also have meetings with the client and establish a feedback loop with them to iteratively improve our software product.
 
-## Products and Services to be provided
+### Feature List
+1. User authentication and user account management (modify, delete, grant permissions)
+2. Course management (edit, delete, restore)
+3. Assignment management (create, modify, delete assignments, upload rubrics and answer keys, AI-powered grading, human review of AI grading)
+4. Assignment submission (submitting assignments, AI-powered feedback on assignment for student and instructor)
+5. Security and privacy (anonymization of student data for storage and transfer)
+6. Notifications (email and in-app notifications for assignment due dates, grades, and feedback)
+7. Analytics (dashboard with class analytics for assignment to be viewed by admins and instructors for feedback on class performance, and AI grading accuracy)
 
 ### Measurable project objectives and related success criteria (scope of project)
+**Feature 1: User authentication and user account management (modify, delete, grant permissions)**
+- Objective: To accomodate for users of different roles (students, instructors, admins) to create, modify, and delete accounts, as well as giving the ability for instructors and admins to grant access to a course and assignment.
+- Success Criteria:
+  1. Should allow for users to login within 2 seconds
+  2. Should allow users to reset passwords and have the changes reflected within 5 seconds
+  3. Should allow for admins to grant access to instructors and students to their accounts and have the changes reflected within 5 seconds
+  4. Should allow users to delete accounts and have the changes reflected within 5 seconds
+  5. Should send an account deletion email and have the changes reflected within 5 seconds of deleting the account
+  6. Should secure password with hashing after user registers, within 5 seconds
+ 
+**Feature 2: Course management (edit, delete, restore)**
+- Objective: To accomodate for users of different roles (students, instructors, admins) to join, modify, and delete courses (editing and deleting course permissions not given to students), as well as giving the ability for instructors and admins to restore course material from past courses to use for future courses.
+- Success Criteria:
+  1. Should allow for admins and instructors to create a course/delete a course and have the changes reflected within 5 seconds
+  2. Should allow admins and instructors to restore old course material and have the changes reflected within 5 seconds
+  3. Should allow for admins to grant access to instructors and students invites to courses and have the changes reflected within 5 seconds
+  4. Should allow admins and users to modify a course and have the changes reflected within 5 seconds
+  5. Should allow students to join courses and have the changes reflected within 5 seconds
+ 
+**Feature 3: Assignment management (create, modify, delete assignments, upload rubrics and answer keys, AI-powered grading, human review of AI grading)**
+- Objective: To accomodate for users of different roles (students, instructors, admins) to create, modify, and delete assignments, as well as giving the ability for instructors and admins to upload rubrics and answer keys, and generate automated grades with the help of AI-powered grading, and allowing for instructors and admins to review the grading.
+- Success Criteria:
+  1. Should allow for admins and instructors to create, modify and delete assignments and have changes reflected within 5 seconds
+  2. Should allow admins and instructors to upload rubrics and answer keys for an assignment within 5 seconds
+  3. Should generate AI-powered automated grades within 15 seconds
+  4. Should give admins and instructors the opportunity to review the grading before approving as final grade within 10 seconds of the assignment being graded by the AI
+ 
+**Feature 4: Assignment submission (submitting assignments, AI-powered feedback on assignment for student and instructor)**
+- Objective: To accomodate for users of different roles (students, instructors, admins) to submit assignments, and receive AI-powered feedback.
+- Success Criteria:
+  1. Should allow for students to submit their assignments within 5 seconds
+  2. Should generate AI-powered feedback on the students' submissions within 1 minute
+  3. Should send generated feedback to instructors for reviewing and assessing class progress within 1 minute
+  4. Should allow users to delete accounts within 30 seconds
+ 
+**Feature 5: Security and privacy (anonymization of student data for storage and transfer)**
+- Objective: To guarantee for users of different roles (students, instructors, admins) security on their data, and anonymizing their data.
+- Success Criteria:
+  1. Should allow for students' data to be anonymized within 5 seconds of being created
+  2. Should have secure storage of students', admins', and instructors' data through hashing
+ 
+**Feature 6: Notifications (email and in-app notifications for assignment due dates, grades, and feedback)**
+- Objective: To accomodate for users of different roles (students, instructors, admins) to receive notifications of due dates, grades, and feedback for an upcoming assignment and a finished assignment.
+- Success Criteria:
+  1. Should send students, instructors, and admins a notification of an assignment being due one week, and one day before it is due
+  2. Should generate feedback and send a notification that directs students to the AI-generated feedback on the submission within 5 seconds 
 
-Make sure to use simple but precise statement of goals for the project that will be included when it the project is completed.  Rememeber that goals must be clear and measurable and **SMART**.  It should be clearly understood what success means to the project and how the success will be measured (as a high level, what is success?). 
+**Feature 7: Analytics (dashboard with class analytics for assignment to be viewed by admins and instructors for feedback on class performance, and AI grading accuracy)**
+- Objective: To accomodate for users of different roles (instructors, admins) to receive analytics on how the class is doing in learning the subject (web-development) via averages, learning objectives, and other metrics decided by the AI itself, and to compare with human grading.
+- Success Criteria:
+  1. Should generate analytics about student performance on the assignment for the admins and instructors to view within 10 minutes
+  2. Should allow for manual review of grades before finalizing within 10 minutes of analytics being generated
 
-
-## Users, Usage Scenarios and High Level Requirements 
-
+## User Groups, Usage Scenarios and High Level Requirements 
 ### User Groups:
 **1. Instructors**
-
 - **Description**: Responsible for teaching web development courses, including HTML, CSS, and JavaScript. They create and manage assignments, set grading criteria, and review AO provided feedback to students.
 
 - **High-Level Goals**: 
@@ -75,7 +145,6 @@ Make sure to use simple but precise statement of goals for the project that will
     - **Frustrations**: Time-consuming manual grading, inconsistent feedback, and managing large class sizes.
 
 **2. Students**
-
 - **Description**: Students are individuals enrolled in web development courses. They submit assignments, receive grades and feedback, and use the platform to improve their coding skills.
 
 - **High-Level Goals**:
@@ -85,7 +154,7 @@ Make sure to use simple but precise statement of goals for the project that will
     - Access resources and feedback to enhance their learning experience.
 
 - Proto-Persona:
-    - **Name**: Regeena Falangie
+    - **Name**: Alex Falangie
     - **Age**: 20
     - **Occupation**: Computer Science Student
     - **Background**: Alex is a second-year student passionate about web development and eager to learn and improve coding skills.
@@ -93,7 +162,6 @@ Make sure to use simple but precise statement of goals for the project that will
     - **Frustrations**: Delayed feedback, unclear grading criteria, and difficulty understanding how to improve code.
 
 **3. Teaching Assistants (TAs)**
-
 - **Description**: Teaching Assistants support instructors by helping with grading, providing additional feedback, and assisting students with course materials.
 
 - **High-Level Goals**:
@@ -111,7 +179,6 @@ Make sure to use simple but precise statement of goals for the project that will
     - **Frustrations**: Overwhelming volume of assignments to grade, inconsistent feedback mechanisms, and difficulty tracking student progress.
 
 **4. System Administrators**
-
 - **Description**: System Administrators manage the technical aspects of the platform, ensuring its stability, security, and performance.
 
 - **High-Level Goals**:
@@ -128,7 +195,7 @@ Make sure to use simple but precise statement of goals for the project that will
     - **Needs**: Reliable and secure system architecture, efficient tools for monitoring and maintaining the platform, and clear communication with users regarding technical issues.
     - **Frustrations**: Unexpected system downtimes, security vulnerabilities, and managing user support requests.
 
-### Envisioned Usage
+### Usage Scenarios
 **1. Instructors**
 - **Create and Manage Assignments**: Create new assignments with specific instructions and due dates. Upload and manage grading rubrics and criteria tailored to each assignment.
 
@@ -165,56 +232,48 @@ Make sure to use simple but precise statement of goals for the project that will
 ### Requirements:
 In the requirements section, we will clearly define and describe the functional, non-functional, user, and technical requirements for the project. These requirements will guide the development of detailed use cases in the design phase and form the basis for the feature list.
 
+### System Requirements
 #### Functional Requirements: 
-
-**1- User Authentication and Authorization:**
+**1 User Authentication and Authorization:**
 - The system must allow users to create accounts and log in.
 - The system must support multiple user roles such as student and professor.
 - Access to certain features will be restricted depending on the user's role.
 
-
-**2- Assignment Editing:**
+**2 Assignment Editing:**
 - Users should be able to create, edit, or delete assignments and rubrics.
 - Teachers must be able to assign assignments to specific groups of students.
 
-
-**3- Managing Assignments:**
+**3 Managing Assignments:**
 - Assignments must have attributes such as title, description, due date, and should relate to specific class. 
 - AI grading must be done according to the rubric and instructor's teaching pattern. 
 - AI feedback for student submissions on assignments.
 
-
 #### Non-functional Requirements:
-**1- Secure**
-
+**1 Secure**
 - Anonymization of student data.
 - Secure data storage and transmission.
 
-**2-Scalable**
-
+**2 Scalable**
 - The system will handle a large number of concurrent users.
 - The system can manage increasing data generated by users.
 
-**3- High Performance**
-
+**3 High Performance**
 - Quick submission evaluation.
 - Consistency and accuracy in grading.
 
-**4- Usable**
-
+**4 Usable**
 - The UI will be easy to understand and visually appealing.
 - Each element of the system will perform exactly as the user expects.
 
-**5- Maintainable**
-
+**5 Maintainable**
 - The system will be easy to update.
 - Clear documentation for features and error codes will be provided.
 
 #### User Requirements:
-
 - **Assignment Creation and Management:**
     - Instructors must be able to create new assignments with detailed instructions and due dates.
     - Instructors must be able to upload, modify, and manage grading rubrics and criteria for assignments.
+
 - **Automated Grading**:
     - The platform must support the automatic grading of HTML, CSS, and JavaScript assignments based on predefined criteria.
     - Instructors must be able to review and adjust AI-generated grades and feedback before releasing them to students.
@@ -326,10 +385,8 @@ In the requirements section, we will clearly define and describe the functional,
 
 - **Continuous Integration/Continuous Deployment (CI/CD)**:
     - Set up a CI/CD pipeline to automate the build, test, and deployment processes, ensuring rapid and reliable updates to the system.
-
-### System Requirements
   
-## Tech Stack
+## Technology Stack
 **Platform:**
 - The app will be accessed by user via a web-browswer. The UI of the application will need to be adaptable to fit browswers on different devices, such as laptop/desktop, smart phones and tablets.
 
@@ -356,52 +413,49 @@ In the requirements section, we will clearly define and describe the functional,
 **Testing Frameworks:**
 - **Jest:** For testing JavaScript and React components.
   - **Justification:** Jest is a comprehensive testing framework that provides a simple API for writing tests, along with powerful features such as snapshot testing and parallel test execution, ensuring the reliability and robustness of the codebase.
-
+- **SuperTest:** For integration testing of components in the frontend and backend as well as Database connections
+   - **Justification:** SuperTest is a testing framework that is great for integration testing of features as and when new features are written, to ensure the reliability and robustness of the codebase.
+- **DalekJS:** DalekJS is a regression testing framework based on JSON, that can ensure that the software is operational after changes have been made
+   - **Justification:** DalekJS is JSON-based and will be easy to use as most web and JavaScript have great support for JSON-based frameworks.
 - **Mocha:** For testing back-end logic in Node.js.
   - **Justification:** Mocha is a flexible testing framework for Node.js, it provides a robust environment for writing and running unit and integration tests for server-side code. This ensures the back-end logic works correctly under various scenarios, contributing to the overall stability and reliability of the application.
 
-## Feauture List
-
-
-## Risks
-
-**1- Data Security and Privacy Breaches:**
+## High-level risks
+**1 Data Security and Privacy Breaches:**
 - Risk Description: The potential for unauthorized access, data breaches, or privacy violations compromising sensitive user information.
 - Analysis: Data security breaches can result in legal consequences, loss of trust from users, and damage to the project's reputation. Adequate security measures and protocols must be implemented to mitigate this risk.
 
-**2- Load Balancing:**
+**2 Load Balancing:**
 - Risk Description: Inadequate load balancing may lead to performance issues, slowdowns, or system crashes during periods of high user activity.
 - Analysis: Insufficient load balancing can impact user experience, causing frustration and dissatisfaction. Proper load balancing strategies should be implemented to ensure system stability and scalability.
 
-**3- System Level Failures:**
+**3 System Level Failures:**
 - Risk Description: Failures at the system level, including hardware malfunctions, software bugs, or compatibility issues, may disrupt system functionality.
 - Analysis: System failures can result in downtime, data loss, and decreased productivity. Regular testing, monitoring, and maintenance are essential to identify and address potential system-level risks.
 
-**4- Server Failures:**
+**4 Server Failures:**
 - Risk Description: Server failures, such as hardware failures, network issues, or power outages, can impact system availability and performance.
 - Analysis: Server failures can lead to service disruptions, affecting user access and functionality. Redundancy measures, backup systems, and disaster recovery plans should be in place to mitigate the impact of server failures.
 
-**5- Bad Documentation for Error Codes:**
+**5 Bad Documentation for Error Codes:**
 - Risk Description: Inadequate or unclear documentation for error codes may hinder troubleshooting efforts and delay problem resolution.
 - Analysis: Poor documentation can lead to confusion, frustration, and inefficiencies in diagnosing and resolving issues. Comprehensive documentation practices should be adopted to facilitate effective error management and troubleshooting.
 
-**6- Potential Inaccuracies in AI Grading:**
+**6 Potential Inaccuracies in AI Grading:**
 - Risk Description: Inaccuracies or biases in AI algorithms used for grading may lead to unfair evaluations and undermine the credibility of the system.
 - Analysis: Inaccurate grading can result in dissatisfaction among users and erode trust in the system's capabilities. Rigorous testing, validation, and refinement of AI algorithms are necessary to minimize the risk of grading inaccuracies.
 
-**7- Integration Challenges Between Different Technologies:**
+**7 Integration Challenges Between Different Technologies:**
 - Risk Description: Difficulties in integrating various technologies, frameworks, or platforms may impede the development and deployment of the system.
 - Analysis: Integration challenges can lead to delays, increased costs, and decreased system interoperability. Thorough planning, compatibility testing, and communication among development teams are crucial to address integration risks effectively.
 
 ## Assumptions and constraints
-What assumptions is the project team making and what are the constraints for the project?
-
 ## Assumptions
 - The application will be functional and understandable
 - A users’ technological skill level should not effect there ability to comprehend how to navigate about the site.
 - Code will be well documented, commented, and structured for future changes and additional implementation.
 
-## Contraints
+## Constraints
 - Code must be secure and robust
 - The application must follow standards set for LMSs and be accessible for all students
 - The UI must be Intuitive and understandable to all users.
@@ -410,7 +464,7 @@ What assumptions is the project team making and what are the constraints for the
 - Software will be documented in English.
 
 ## Summary milestone schedule
-Identify the major milestones in your solution and align them to the course timeline. In particular, what will you have ready to present and/or submit for the following deadlines? List the anticipated features you will have for each milestone, and we will help you scope things out in advance and along the way. Use the table below and just fill in the appropriate text to describe what you expect to submit for each deliverable. Use the placeholder text in there to guide you on the expected length of the deliverable descriptions. You may also use bullet points to clearly identify the features associated with each milestone (which means your table will be lengthier, but that’s okay).  The dates are correct for the milestones.  
+In particular, what will you have ready to present and/or submit for the following deadlines? **List the anticipated features** you will have for each milestone, and we will help you scope things out in advance and along the way. Use the table below and just fill in the appropriate text to describe what you expect to submit for each deliverable. Use the placeholder text in there to guide you on the expected length of the deliverable descriptions. You may also use bullet points to clearly identify the features associated with each milestone (which means your table will be lengthier, but that’s okay).
 
 |  Milestone  | Deliverable |
 | :-------------: | ------------- |
@@ -425,9 +479,6 @@ Identify the major milestones in your solution and align them to the course time
 | August 9th  |  Final project submission and group presentions: Details to follow |
 
 ## Teamwork Planning and Anticipated Hurdles (Completion Plan)
-Based on the teamwork icebreaker survey, talk about the different types of work involved in a software development project. Start thinking about what you are good at as a way to get to know your teammates better. At the same time, know your limits so you can identify which areas you need to learn more about. These will be different for everyone. But in the end, you all have strengths and you all have areas where you can improve. Think about what those are, and think about how you can contribute to the team project. Nobody is expected to know everything, and you will be expected to learn (just some things, not everything).
-Use the table below to help line up everyone’s strengths and areas of improvement together. The table should give the reader some context and explanation about the values in your table.
-
 For **experience** provide a description of a previous project that would be similar to the technical difficulty of this project’s proposal.  None, if nothing
 For **good At**, list of skills relevant to the project that you think you are good at and can contribute to the project.  These could be soft skills, such as communication, planning, project management, and presentation.  Consider different aspects: design, coding, testing, and documentation. It is not just about the code.  You can be good at multiple things. List them all! It doesn’t mean you have to do it all.  Don’t ever leave this blank! Everyone is good at something!
 
@@ -435,9 +486,9 @@ For **good At**, list of skills relevant to the project that you think you are g
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 |  **Experience**  |  |  |  |  |  |
 |  **Good At**  |  |  |  |  |  |
-|  **Expect to learn**  | Don’t ever leave this blank! We are all learning.  | Understanding your limits is important. Where do you expect you will need help? | It may not be technical skills. You may be a good coder but never worked with people in a team. Maybe you built a web- site but not used a framework. | It may also be a theoretical concept you already learned but never applied in practice. | Think about different project aspects: design, data security, web security, IDE tools, inte- gration testing, CICD, etc. There will be something. | Don’t ever leave this blank! We are all learning. | 
+|  **Expected to learn**  | Don’t ever leave this blank! We are all learning.  | Understanding your limits is important. Where do you expect you will need help? | It may not be technical skills. You may be a good coder but never worked with people in a team. Maybe you built a web- site but not used a framework. | It may also be a theoretical concept you already learned but never applied in practice. | Think about different project aspects: design, data security, web security, IDE tools, inte- gration testing, CICD, etc. There will be something. | Don’t ever leave this blank! We are all learning. | 
 
-Use this opportunity to discuss with your team who **may** do what in the project. Make use of everyone’s skill set and discuss each person’s role and responsibilities by considering how everyone will contribute.  Remember to identify project work (some examples are listed below at the top of the table) and course deliverables (the bottom half of the table). You might want to change the rows depending on what suits your project and team.  Understand that no one person will own a single task.  Recall that this is just an incomplete example.  Please explain how things are assigned in the caption below the table, or put the explanation into a separate paragraph so the reader understands why things are done this way and how to interpret your table. 
+Use this opportunity to discuss with your team who **may** do what in the project. Make use of everyone’s skill set and discuss each person’s role and responsibilities by considering how everyone will contribute.  Remember to identify project work (some examples are listed below at the top of the table) and course deliverables (the bottom half of the table). Understand that no one person will own a single task. Please explain how things are assigned in the caption below the table, or put the explanation into a separate paragraph so the reader understands why things are done this way and how to interpret your table. 
 
 |  Category of Work/Features  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: |
@@ -458,4 +509,8 @@ Use this opportunity to discuss with your team who **may** do what in the projec
 |  **Final Team Report**  |  | :heavy_check_mark:  |  |  |  |
 |  **Final Individual Report**  |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 
+Rationale for assignment of work among team members:
+
+
 ## Documentation
+

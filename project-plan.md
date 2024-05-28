@@ -52,7 +52,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 - **Change Implementation**: Changes will be implemented by following the implementation plan and adhering to best practices and guidelines.
 - **Testing and Validation**: Changes will be throughly tested to ensure they function as intended and do not negatively impact the platform. Testing could include unit tests, integration tests, and user acceptance tests.
 - **Documentation and Training**: All changes will be documented, including the rationale, implementation steps, and testing results. We will update stakeholders on new features or changes.
-- **Review and Closure**: As a team we will review the implemented changes to ensure they meet the intended objectives and are functioning correctly. Once we cna guarenteed the change was successful the change request is closed, and any lessons learned are documented for future references
+- **Review and Closure**: As a team we will review the implemented changes to ensure they meet the intended objectives and are functioning correctly. Once we cna guarenteed the change was  the change request is closed, and any lessons learned are documented for future references
 ### Communications
 - We will communicate as a team through in-person meetings, as well as the popular social media platform, Discord.
 - This is also where we will have occasional meetings related to the project, and discuss the project if not in person.
@@ -67,7 +67,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 3. Assignment management (create, modify, delete assignments, upload rubrics and answer keys, AI-powered grading, human review of AI grading)
 4. Assignment submission (submitting assignments, AI-powered feedback on assignment for student and instructor)
 5. Security and privacy (anonymization of student data for storage and transfer)
-6. Notifications (email and in-app notifications for assignment due dates, grades, and feedback)
+6. Notifications (in-app notifications for assignment due dates, grades, and feedback)
 7. Analytics (dashboard with class analytics for assignment to be viewed by admins and instructors for feedback on class performance, and AI grading accuracy)
 
 ### Measurable project objectives and related success criteria (scope of project)
@@ -210,7 +210,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 - **Example Scenario**: Dr. John Newman creates a new JavaScript assignment using the platform. He sets the grading criteria, assigns it to his class, and waits for submissions. Once students submit their work, the platform automatically grades the assignments, providing John with detailed reports. He reviews the feedback, adds personalized comments, and releases the grades to the students.
 
 **2. Students**
-- **Submit Assignments**: Upload HTML, CSS, and JavaScript files for assignments directly through the platform. Receive confirmation of successful submissions.
+- **Submit Assignments**: Upload HTML, CSS, and JavaScript files for assignments directly through the platform. Receive confirmation of  submissions.
 
 - **Receive Feedback**: Access detailed feedback on their submissions, including scores and comments on areas of improvement. Students should understand the strengths and weaknesses of their work through the feedback provided.
 
@@ -359,7 +359,7 @@ In the requirements section, we will clearly define and describe the functional,
 
 **4. Data Management**
 - **Database Design**:
-    - Use a relational database management system (MySQL) for structured data storage.
+    - Use a relational database management system (MongoDB) for structured data storage.
     - Ensure the database schema is optimized for performance and scalability.
 
 - **Data Security**:

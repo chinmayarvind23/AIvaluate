@@ -1,6 +1,6 @@
 # Team 8 Project Plan/Proposal: AI-Powered Web Development Course Platform
 
-**Team Number:** Team 8
+**Team Number:** 8
 
 **Team Members:** Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed
 

@@ -408,7 +408,15 @@ In the following requirements section, we will clearly define and describe the f
 
 **API:**
 - **OpenAI Assistants API:** We plan to use the Assistants API provided by OpenAI for AI-powered features such as automated grading.
-  - **Justification:** The Assistants API offers advanced natural language processing and code interpretation capabilities, which are essential for implementing sophisticated grading algorithms. By leveraging prompt engineering, we can customize the AI responses to provide detailed and context-specific feedback on student submissions. Additionally, the API can handle various file types, allowing us to seamlessly process and grade assignments submitted in different formats. According to the API documentation, .js, .css and .html files are all on their supported list.
+  - **Justification:** The Assistants API offers advanced natural language processing and code interpretation capabilities, which are essential for implementing sophisticated grading algorithms. By leveraging prompt engineering, we can customize the AI responses to provide detailed and context-specific feedback on student submissions. Additionally, the API can handle various file types, allowing us to seamlessly process and grade assignments submitted in different formats. According to the API documentation, .js, .css, and .html files are all on their supported list.
+
+**CI/CD:**
+- **Drone CI:** We plan to use the Drone CI as our CI/CD pipeline.
+  - **Justification:** DroneCI is built around a container-native architecture, meaning it uses Docker containers to execute pipelines. This approach ensures consistency across different environments (development, testing, and production) and simplifies the process of managing dependencies and runtime environments.
+    
+**Deployment Environment:**
+- **Docker:** We plan to use Docker as our deployment environment.
+  - **Justification:** Docker will provide a standardized environment for both deployment and development. Docker also makes it easy to scale applications horizontally by adding or removing containers as needed. This flexibility is crucial for handling varying loads, especially for our platform, which anticipates a high number of concurrent users.
 
 **File Storage and Management:**
 - **Digital Ocean Space:** For secure file storage.

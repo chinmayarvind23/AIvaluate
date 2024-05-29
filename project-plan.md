@@ -366,7 +366,7 @@ In the following requirements section, we will clearly define and describe the f
 
 **4. Data Management**
 - **Database Design**:
-    - Use a relational database management system (MongoDB) for structured data storage.
+    - Use a relational database management system (PostgreSQL) for structured data storage.
     - Ensure the database schema is optimized for performance and scalability.
 
 - **Data Security**:
@@ -395,19 +395,19 @@ In the following requirements section, we will clearly define and describe the f
   
 ## Technology Stack
 **Platform:**
-- The app will be accessed by user via a web-browswer. The UI of the application will need to be adaptable to fit browswers on different devices, such as laptop/desktop, smart phones and tablets.
+- The app will be accessed by the user via a web browser. The UI of the application will need to be adaptable to fit browsers on different devices, such as laptops/desktops, smartphones and tablets.
 
 **Front-End:**
-- **React.js:** The front-end will be built using the React framework, as per the customer's request. 
-  - **Justification:** React is the requested framework by the customer. It is a popular and widely-used framework for building dynamic and responsive user interfaces. It provides a component-based architecture that enhances code reusability and maintainability. React also has strong community support and a rich ecosystem of libraries and tools.
+- **React.js:** The front end will be built using the React framework, as per the customer's request. 
+  - **Justification:** React is the requested framework by the customer. It is a popular and widely used framework for building dynamic and responsive user interfaces. It provides a component-based architecture that enhances code reusability and maintainability. React also has strong community support and a rich ecosystem of libraries and tools.
 
 **Back-End:**
 - **Node.js:** The back-end will be built using the Node.js framework.
-  - **Justification:** Node.js's non-blocking architecture is well-suited for handling numerous concurrent requests, which is essential for a platform expected to support a high volume of users. Also, the unified language of both fron-end and back-end will enable easier maintainability.
+  - **Justification:** Node.js's non-blocking architecture is well-suited for handling numerous concurrent requests, which is essential for a platform expected to support a high volume of users. Also, the unified language of both front-end and back-end will enable easier maintainability.
 
 **Database:**
-- **MongoDB:** We plan to use MongoDB as our database language, hosted on Digital Ocean.
-  - **Justification:** MongoDB is a NoSQL database that provides flexibility with its schema-less design, allowing for easy adaptation to changing requirements. It is well-suited for applications that handle large volumes of unstructured or semi-structured data. MongoDB's horizontal scalability makes it ideal for applications expecting rapid growth in user base and data volume.
+- **PostgreSQL:** We plan to use PostgreSQL as our database language, which is hosted on Digital Ocean.
+  - **Justification:** PostgreSQL is designed to handle large-scale applications with high concurrency and large datasets efficiently. Features like parallel query execution and table partitioning help optimize performance for high-load environments.
 
 **API:**
 - **OpenAI Assistants API:** We plan to use the Assistants API provided by OpenAI for AI-powered features such as automated grading.
@@ -492,7 +492,7 @@ For **good At**, list of skills relevant to the project that you think you are g
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 |  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) |Internet of Things, Pet-Community-Application  | Travel Recommendation System, Fire Fighter Communication and Fire Detection App, Discord Clone | Location sharing app, Online weather app using HTML and CSS  |
 |  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management | AI API implementation, Front-end UI Design | Front-end UI Design, Python, Java, Planning, Project Management  | AI API implementation, Python, DB implementation, Java, Backend implementation, Planning, Project Management | Front-end UI design, Project Management, Java and Python |
-|  **Expected to learn**  | React, AI API-implementations | Nodejs, MongoDB | React, MongoDB | React, MongoDB | React, AI Implementation, Nodejs and MongoDB   |
+|  **Expected to learn**  | React, AI API-implementations | Nodejs, Database Setup | React, MongoDB | React, MongoDB | React, AI Implementation, Nodejs and MongoDB   |
 
 
 |  Category of Work/Features  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 

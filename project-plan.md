@@ -220,14 +220,21 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 
 - **Access Resources**: Utilize any supplementary resources or materials provided by the instructor through the platform. Review past feedback to improve future submissions.
 
-- **Example Scenario**: Regeena Falangie submits her HTML assignment through the platform. After grading is completed by the AI engine, Regeena receives detailed feedback, including comments on where she excelled and what she can improve. She checks her progress dashboard to see how this assignment affects her overall grade and identifies areas to focus on for future assignments.
+- **Example Scenario**: Alex Falangie submits her HTML assignment through the platform. After grading is completed by the AI engine, Alex receives detailed feedback, including comments on where she excelled and what she can improve. She checks her progress dashboard to see how this assignment affects her overall grade and identifies areas to focus on for future assignments.
 
 **3. Teaching Assistants (TAs)**
 - **Assist with Grading**: Review and refine AI-generated grades and feedback. Provide additional comments or adjustments as needed.
 
 - **Communicate with Students**: Engage with students to provide additional support and clarification on assignments. Assist in managing class discussions and answering queries.
 
-- **Example Scenario**: The TA Ken Adams reviews the AI-generated feedback for a recent HTML and CSS assignment. He notices a common error among several students and decides to add additional comments to help clarify the mistake. He then identifies a few students who are struggling and informs Dr. John Newman, suggesting they might need extra support
+- **Example Scenario**: The TA Ken Adams reviews the AI-generated feedback for a recent HTML and CSS assignment. He notices a common error among several students and decides to add additional comments to help clarify the mistake. He then identifies a few students who are struggling and informs Dr. John Newman, suggesting they might need extra support.
+
+**4. System Administrators**
+- **Grant access to resources**: Allowing access to courses and assignments for students and instructors at times.
+
+- **Communicate with Instructors & Students**: Send important faculty messages to instructors to aid them in teaching the course material to students and informing students of any major changes to the course.
+
+- **Example Scenario**: The system administrator Blandon Smith gives access to courses and assignments for instructors, as well as students. If a student, Alex, drops the course, then the system administrator removes their access to the course materials.
 
 ### Requirements:
 In the requirements section, we will clearly define and describe the functional, non-functional, user, and technical requirements for the project. These requirements will guide the development of detailed use cases in the design phase and form the basis for the feature list.

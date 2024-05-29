@@ -490,7 +490,8 @@ For **good At**, list of skills relevant to the project that you think you are g
 
 |  Category  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) |Internet of Things, Pet-Community-Application  | Travel Recommendation System, Fire Fighter Communication and Fire Detection App, Discord Clone |  |
+|  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) | 
+ Internet of Things, Pet-Community-Application  | Travel Recommendation System, Fire Fighter Communication and Fire Detection App, Discord Clone |  |
 |  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management | AI API implementation, Front-end UI Design | Front-end UI Design, Python, Java , Planning, Project Management  | AI API implementation, Python, DB implementation, Java, Backend implementation, Planning, Project Management |  |
 |  **Expected to learn**  | React, AI API-implementations | Nodejs, MongoDB | React, MongoDB | React, MongoDB |  |
 

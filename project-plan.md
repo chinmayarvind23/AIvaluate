@@ -94,12 +94,12 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 - Objective: To accomodate for users of different roles (students, instructors, admins) to create, modify, and delete assignments, as well as giving the ability for instructors and admins to upload rubrics and answer keys, and generate automated grades with the help of AI-powered grading, and allowing for instructors and admins to review the grading.
 - Success Criteria:
   1. Should allow for admins and instructors to create, modify and delete assignments and have changes reflected within 5 seconds
-  2. Should allow admins and instructors to upload rubrics and answer keys for an assignment within 5 seconds
+  2. Should allow admins, instructors, and TAs to upload rubrics and answer keys for an assignment within 5 seconds
   3. Should generate AI-powered automated grades within 15 seconds
-  4. Should give admins and instructors the opportunity to review the grading before approving as final grade within 10 seconds of the assignment being graded by the AI
+  4. Should give admins, instructors, and TAs the opportunity to review the grading before approving as final grade within 10 seconds of the assignment being graded by the AI
  
 **Feature 4: Assignment submission (submitting assignments, AI-powered feedback on assignment for student and instructor)**
-- Objective: To accomodate for users of different roles (students, instructors, admins) to submit assignments, and receive AI-powered feedback.
+- Objective: To accomodate for users of different roles (students, instructors, TAs, admins) to submit assignments, and receive AI-powered feedback.
 - Success Criteria:
   1. Should allow for students to submit their assignments within 5 seconds
   2. Should generate AI-powered feedback on the students' submissions within 1 minute
@@ -107,19 +107,19 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
   4. Should allow users to delete accounts within 30 seconds
  
 **Feature 5: Security and privacy (anonymization of student data for storage and transfer)**
-- Objective: To guarantee for users of different roles (students, instructors, admins) security on their data, and anonymizing their data.
+- Objective: To guarantee for users of different roles (students, instructors, TAs, admins) security on their data, and anonymizing their data.
 - Success Criteria:
   1. Should allow for students' data to be anonymized within 5 seconds of being created
-  2. Should have secure storage of students', admins', and instructors' data through hashing
+  2. Should have secure storage of students', admins', TAs', and instructors' data through hashing
  
 **Feature 6: Notifications (email and in-app notifications for assignment due dates, grades, and feedback)**
-- Objective: To accomodate for users of different roles (students, instructors, admins) to receive notifications of due dates, grades, and feedback for an upcoming assignment and a finished assignment.
+- Objective: To accomodate for users of different roles (students, instructors, TAs, admins) to receive notifications of due dates, grades, and feedback for an upcoming assignment and a finished assignment.
 - Success Criteria:
   1. Should send students, instructors, and admins a notification of an assignment being due one week, and one day before it is due
   2. Should generate feedback and send a notification that directs students to the AI-generated feedback on the submission within 5 seconds 
 
 **Feature 7: Analytics (dashboard with class analytics for assignment to be viewed by admins and instructors for feedback on class performance, and AI grading accuracy)**
-- Objective: To accomodate for users of different roles (instructors, admins) to receive analytics on how the class is doing in learning the subject (web-development) via averages, learning objectives, and other metrics decided by the AI itself, and to compare with human grading.
+- Objective: To accomodate for users of different roles (instructors, TAs, admins) to receive analytics on how the class is doing in learning the subject (web-development) via averages, learning objectives, and other metrics decided by the AI itself, and to compare with human grading.
 - Success Criteria:
   1. Should generate analytics about student performance on the assignment for the admins and instructors to view within 10 minutes
   2. Should allow for manual review of grades before finalizing within 10 minutes of analytics being generated
@@ -230,20 +230,20 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 - **Example Scenario**: The TA Ken Adams reviews the AI-generated feedback for a recent HTML and CSS assignment. He notices a common error among several students and decides to add additional comments to help clarify the mistake. He then identifies a few students who are struggling and informs Dr. John Newman, suggesting they might need extra support.
 
 **4. System Administrators**
-- **Grant access to resources**: Allowing access to courses and assignments for students and instructors at times.
+- **Grant access to resources**: Allowing access to courses and assignments for students, TAs, instructors as and when required.
 
-- **Communicate with Instructors & Students**: Send important faculty messages to instructors to aid them in teaching the course material to students and informing students of any major changes to the course.
+- **Communicate with Instructors & Students**: Send important faculty messages to instructors and TAs to aid them in teaching the course material to students and informing students of any major changes to the course.
 
-- **Example Scenario**: The system administrator Blandon Smith gives access to courses and assignments for instructors, as well as students. If a student, Alex, drops the course, then the system administrator removes their access to the course materials and notifies the instructor of the student's departure from the course.
+- **Example Scenario**: The system administrator Blandon Smith gives access to courses and assignments for instructors, TAs, as well as students. If a student, Alex, drops the course, then the system administrator removes their access to the course materials and notifies the instructor and the TAs in the class of the student's departure from the course.
 
 ### Requirements:
-In the requirements section, we will clearly define and describe the functional, non-functional, user, and technical requirements for the project. These requirements will guide the development of detailed use cases in the design phase and form the basis for the feature list.
+In the following requirements section, we will clearly define and describe the functional, non-functional, user, and technical requirements for the project. These requirements will guide the development of detailed use cases in the design phase and form the basis for the feature list.
 
 ### System Requirements
 #### Functional Requirements: 
 **1 User Authentication and Authorization:**
 - The system must allow users to create accounts and log in.
-- The system must support multiple user roles such as student and professor.
+- The system must support multiple user roles such as student, professor, TA, and system admin.
 - Access to certain features will be restricted depending on the user's role.
 
 **2 Assignment Editing:**

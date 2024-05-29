@@ -471,15 +471,15 @@ In the requirements section, we will clearly define and describe the functional,
 - Software will be documented in English.
 
 ## Summary milestone schedule
-What will you have ready to present and/or submit for the following deadlines? **List the anticipated features** you will have for each milestone, and we will help you scope things out in advance and along the way. Use the table below and just fill in the appropriate text to describe what you expect to submit for each deliverable. Use the placeholder text in there to guide you on the expected length of the deliverable descriptions.
+What will you have ready to present and/or submit for the following deadlines? **List the anticipated features** you will have for each milestone, and we will help you scope things out in advance and along the way. Use the table below and just fill in the appropriate text to describe what you expect to submit for each deliverable. 3-4 lines for each deliverable description.
 
 |  Milestone  | Deliverable |
 | :-------------: | ------------- |
 |  May 29th  | Project Plan Submission & short video presentation describing the user groups and requirements for the project to be reviewed by client. |
 | June 5th  | Design Plan Submission describing the system architecture, use case models, database design, data flow diagrams, as well as the UI design for the project. The general user interface design will be implemented by this deadline via mockups. Our user interface will have a consistent layout, color scheme, text fonts, and visual elements and will clearly describe how the user will interact with the system. The tests for our system will pass for our system up to this point. |
 | June 5th  |  A short video presenation decribing the design plan for the project highlighting the details of the project's implementation as described above for the client to review and provide feedback on. |
-| June 14th  | Mini-Presentation of the 3 features of our system's envisioned usage we plan to deliver for this milestone, without extra explanation beyond what was in our initial envisioned usage. Will have 3 of our 7 features working by this point along with being tested. |
-| July 5th  | MVP Mini-Presentation of 6 out of our 7 features of our system's envisioned usage we plan to deliver for this milestone, without extra explanation beyond what was in our initial envisioned usage. Will have 6 of our 7 features working by this point along with being tested for our client to critique.|
+| June 14th  | Mini-Presentation of the 3 features of our system's envisioned usage we plan to deliver for this milestone, without extra explanation beyond what was in our initial envisioned usage. Will have 3 of our 7 features working by this point along with being tested (Feature 1, Feature 2, Feature 3). |
+| July 5th  | MVP Mini-Presentation of 6 out of our 7 features of our system's envisioned usage we plan to deliver for this milestone, without extra explanation beyond what was in our initial envisioned usage. Will have 6 of our 7 features working by this point along with being tested for our client to critique (Feature 1, Feature 2, Feature 3, Feature 4, Feature 5, Feature 6.|
 | July 19th  | Peer testing and feedback: Will have all features tested and implemented **per** team member. We will plan our time to acccomodate for code reviews, integration, and regression testing.|
 | August 2nd  | Test-O-Rama: Full-scale user testing and system testing with everyone |
 | August 9th  |  Final project submission and group presentions |

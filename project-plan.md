@@ -486,12 +486,12 @@ What will you have ready to present and/or submit for the following deadlines? *
 
 ## Teamwork Planning and Anticipated Hurdles (Completion Plan)
 For **experience** provide a description of a previous project that would be similar to the technical difficulty of this project’s proposal.  None, if nothing
-For **good At**, list of skills relevant to the project that you think you are good at and can contribute to the project.  These could be soft skills, such as communication, planning, project management, and presentation.  Consider different aspects: design, coding, testing, and documentation. It is not just about the code.  You can be good at multiple things. List them all! It doesn’t mean you have to do it all.  Don’t ever leave this blank! Everyone is good at something!
+For **good At**, list of skills relevant to the project that you think you are good at and can contribute to the project. These could be soft skills, such as communication, planning, project management, and presentation.  Consider different aspects: design, coding, testing, and documentation. It is not just about the code. 
 
 |  Category  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 |  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) |  | Travel Recommendation System, Fire Fighter Communication and Fire Detection App, Discord Clone |  |
-|  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management | AI API implementation, Front-end UI Design |  | AI API implementation, Python, DB implementation, Java, Backend implementation |  |
+|  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management | AI API implementation, Front-end UI Design |  | AI API implementation, Python, DB implementation, Java, Backend implementation, Planning, Project Management |  |
 |  **Expected to learn**  | React, AI API-implementations | Nodejs, MongoDB |  | React, MongoDB |  |
 
 

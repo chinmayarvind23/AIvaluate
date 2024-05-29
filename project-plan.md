@@ -294,8 +294,9 @@ In the following requirements section, we will clearly define and describe the f
     - Instructors must be able to customize grading criteria and rubrics for different assignments or course sections.
 
 - **Communication Tools**:
-    - The platform must provide tools for instructors to send announcements, reminders, and feedback to students.
-    - Instructors must be able to engage with students via integrated messaging tools.
+    - The platform should provide tools for instructors and TAs to send announcements, reminders, feedback, and interact with students through integrated messaging for additional 
+      support, clarification, and class discussions.
+    - Both instructors and TAs must be able to manage class interactions, including responding to queries and facilitating discussions. 
 
 - **Assignment Submission**:
     - Students must be able to upload HTML, CSS, and JavaScript files for assignments directly through the platform.
@@ -318,10 +319,6 @@ In the following requirements section, we will clearly define and describe the f
 - **Grading Assistance**:
     - TAs must be able to review and refine AI-generated grades and feedback.
     - The platform must allow TAs to provide additional comments or adjustments as needed.
-
-- **Communication Tools**:
-    - TAs must be able to engage with students to provide additional support and clarification on assignments.
-    - The platform must support TAs in managing class discussions and answering queries.
 
 - **System Performance Maintenance**:
     - System administrators must be able to monitor the platform’s performance to ensure it runs smoothly and efficiently.

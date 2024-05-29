@@ -234,7 +234,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 
 - **Communicate with Instructors & Students**: Send important faculty messages to instructors to aid them in teaching the course material to students and informing students of any major changes to the course.
 
-- **Example Scenario**: The system administrator Blandon Smith gives access to courses and assignments for instructors, as well as students. If a student, Alex, drops the course, then the system administrator removes their access to the course materials.
+- **Example Scenario**: The system administrator Blandon Smith gives access to courses and assignments for instructors, as well as students. If a student, Alex, drops the course, then the system administrator removes their access to the course materials and notifies the instructor of the student's departure from the course.
 
 ### Requirements:
 In the requirements section, we will clearly define and describe the functional, non-functional, user, and technical requirements for the project. These requirements will guide the development of detailed use cases in the design phase and form the basis for the feature list.

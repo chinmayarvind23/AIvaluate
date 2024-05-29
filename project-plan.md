@@ -471,19 +471,18 @@ In the requirements section, we will clearly define and describe the functional,
 - Software will be documented in English.
 
 ## Summary milestone schedule
-In particular, what will you have ready to present and/or submit for the following deadlines? **List the anticipated features** you will have for each milestone, and we will help you scope things out in advance and along the way. Use the table below and just fill in the appropriate text to describe what you expect to submit for each deliverable. Use the placeholder text in there to guide you on the expected length of the deliverable descriptions. You may also use bullet points to clearly identify the features associated with each milestone (which means your table will be lengthier, but that’s okay).
+What will you have ready to present and/or submit for the following deadlines? **List the anticipated features** you will have for each milestone, and we will help you scope things out in advance and along the way. Use the table below and just fill in the appropriate text to describe what you expect to submit for each deliverable. Use the placeholder text in there to guide you on the expected length of the deliverable descriptions.
 
 |  Milestone  | Deliverable |
 | :-------------: | ------------- |
-|  May 29th  | Project Plan Submission |
-| May 29th  | A short video presenation decribing the user groups and requirements for the project.  This will be reviewed by your client and the team will receive feedback. |
-| June 5th  | Design Submission: Same type of description here. Aim to have a design of the project and the system architecture planned out. Use cases need to be fully developed.  The general user interface design needs to be implemented by this point (mock-ups). This includes having a consistent layout, color scheme, text fonts, etc., and showing how the user will interact with the system should be demonstrated. It is crucial to show the tests pass for your system here. |
-| June 5th  |  A short video presenation decribing the design for the project.  This will be reviewed by your client and the team will receive feedback. |
-| June 14th  | Mini-Presentations: A short description of the parts of the envisioned usage you plan to deliver for this milestone. Should not require additional explanation beyond what was already in your envisioned usage. This description should only be a few lines of text long. Aim to have 3 features working for this milestone (e.g., user log-in with credentials and permissions counts as 1 feature). Remember that features also need to be tested.  |
-| July 5th  | MVP Mini-Presentations: A short description of the parts of the envisioned usage you plan to deliver for this milestone. Should not require additional explanation beyond what was already in your envisioned usage. This description should only be a few lines of text long. Aim to have close to 50% of the features working for this milestone.  Remember that features also need to be tested. Clients will be invited to presentations.|
-| July 19th  | Peer testing and feedback: Aim to have an additional two features implemented and tested **per** team member. As the software gets bigger, you will need to be more careful about planning your time for code reviews, integration, and regression testing. |
-| August 2nd  | Test-O-Rama: Full scale system and user testing with everyone |
-| August 9th  |  Final project submission and group presentions: Details to follow |
+|  May 29th  | Project Plan Submission & short video presentation describing the user groups and requirements for the project to be reviewed by client. |
+| June 5th  | Design Plan Submission describing the system architecture, use case models, database design, data flow diagrams, as well as the UI design for the project. The general user interface design will be implemented by this deadline via mockups. Our user interface will have a consistent layout, color scheme, text fonts, and visual elements and will clearly describe how the user will interact with the system. The tests for our system will pass for our system up to this point. |
+| June 5th  |  A short video presenation decribing the design plan for the project highlighting the details of the project's implementation as described above for the client to review and provide feedback on. |
+| June 14th  | Mini-Presentation of the 3 features of our system's envisioned usage we plan to deliver for this milestone, without extra explanation beyond what was in our initial envisioned usage. Will have 3 of our 7 features working by this point along with being tested. |
+| July 5th  | MVP Mini-Presentation of 6 out of our 7 features of our system's envisioned usage we plan to deliver for this milestone, without extra explanation beyond what was in our initial envisioned usage. Will have 3 of our 7 features working by this point along with being tested for our client to critique.|
+| July 19th  | Peer testing and feedback: Will have all features tested and implemented **per** team member. We will plan our time to acccomodate for code reviews, integration, and regression testing.|
+| August 2nd  | Test-O-Rama: Full-scale user testing and system testing with everyone |
+| August 9th  |  Final project submission and group presentions |
 
 ## Teamwork Planning and Anticipated Hurdles (Completion Plan)
 For **experience** provide a description of a previous project that would be similar to the technical difficulty of this project’s proposal.  None, if nothing
@@ -491,9 +490,9 @@ For **good At**, list of skills relevant to the project that you think you are g
 
 |  Category  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) |  |  |  |
-|  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management | AI API implementation, Front-end UI Design |  |  |  |
-|  **Expected to learn**  | React, AI API-implementations | Nodejs, MongoDB |  |  |  |
+|  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) |  | Travel Recommendation System, Discord Clone |  |
+|  **Good At**  | PHP, DB Implemention, Cookies/Servers, Project Management | AI API implementation, Front-end UI Design |  | Python, DB implementation, Java |  |
+|  **Expected to learn**  | React, AI API-implementations | Nodejs, MongoDB |  | React |  |
 
 
 |  Category of Work/Features  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
@@ -513,16 +512,15 @@ For **good At**, list of skills relevant to the project that you think you are g
 |  **Database setup**  | :heavy_check_mark: |  |  | :heavy_check_mark:  |  |
 |  **Presentation Preparation**  | :heavy_check_mark:  |  |  | :heavy_check_mark:  |  |
 |  **Design Video Creation**  |  | :heavy_check_mark:  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: |
-|  **Design Video Editing**  | :heavy_check_mark:  | :heavy_check_mark:  |  |  |  |
+|  **Design Video Editing**  | :heavy_check_mark:  | :heavy_check_mark:  |  | :heavy_check_mark: |  |
 |  **Design Report**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 |  **Final Video Creation**  | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-|  **Final Video Editing**  | :heavy_check_mark:  |  |  |  |  |
+|  **Final Video Editing**  | :heavy_check_mark:  |  |  | :heavy_check_mark: |  |
 |  **Final Team Report**  | :heavy_check_mark: | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 |  **Final Individual Report**  |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 
 Rationale for assignment of work among team members:
 Our decision to split team members up was based on everyones skills and preferences. Some of our team members felt more comfortable putting a stronger focus on front-end design while others wanted to focus on developing the back-end of the system. We want everyone to be equally involved in each development stage of this proejct so we workign on alot of these features as a team so make sure everyone has a say in whats going on.
-
 
 ## Documentation
 This project will be documented using a shared Google Doc. This Document will keep track of our progress, implementions, and the problems we ran into along with their solutions.

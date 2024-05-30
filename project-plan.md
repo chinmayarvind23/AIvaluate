@@ -1,4 +1,4 @@
-# Team 8 Project Plan/Proposal: AI-Powered Web Development Course Platform
+# Team 8 Project Plan: AI-Powered Web Development Course Platform
 
 **Team Number:** 8
 

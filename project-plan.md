@@ -29,7 +29,7 @@ Over the course of this project, we will be delivering the following:
 - Final individual project reports (from each team member detailing components they worked on, as well as how their component works with the remaining components of the system and how the system will function as a whole successfully)
 
 ### Project purpose and justification i.e. Unique Value Proposition (UVP)
-The AI-Powered Web Development Course Platform aims to streamline and automate the grading process of HTML, CSS, and JavaScript web development course assignments based on professor-defined criteria. Our solution will address inefficiencies and inconsistencies of manual grading by leveraging advanced AI techniques such as LLMs (Large Language Models) to provide accurate, detailed, and timely feedback. This will allow for dynamic engagement between students and instructors. Our platform will provide unique value due to its ability to deliver swift and comprehensive evaluations complemented by a user-friendly interface, and therefore, offering a superior, scalable, and customizable solution for students and instructors. By automating the grading process for instructors and providing immediate feedback that students can take action to, the platform will ensure a more valuable, efficient and insightful educational experience for students and instructors.
+Our AI-Powered Web Development Course Platform will aim to streamline and automate the grading process of HTML, CSS, and JavaScript web development course assignments based on professor-defined criteria. Our solution will address inefficiencies and inconsistencies of manual grading by leveraging advanced AI techniques such as LLMs (Large Language Models) to provide accurate, detailed, and timely feedback. This will allow for dynamic engagement between students and instructors. Our platform will provide unique value due to its ability to deliver swift and comprehensive evaluations complemented by a user-friendly interface, and therefore, offering a superior, scalable, and customizable solution for students and instructors. By automating the grading process for instructors and providing immediate feedback that students can take action to, the platform will ensure a more valuable, efficient and insightful educational experience for students and instructors.
 
 ## Goals
 ### High-level project description and boundaries
@@ -90,8 +90,8 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
   4. Should allow admins and users to modify a course and have the changes reflected within 5 seconds
   5. Should allow students to join courses and have the changes reflected within 5 seconds
  
-**Feature 3: Assignment management (create, modify, delete assignments, upload rubrics and answer keys, AI-powered grading, human review of AI grading)**
-- Objective: To accomodate for users of different roles (students, instructors, admins) to create, modify, and delete assignments, as well as giving the ability for instructors and admins to upload rubrics and answer keys, and generate automated grades with the help of AI-powered grading, and allowing for instructors and admins to review the grading.
+**Feature 3: Assignment management (create, modify, and delete assignments, upload custom rubrics and answer keys, provide AI-powered grading, facilitate human review of AI grading)**
+- Objective: To accomodate for users of different roles (students, instructors, TAs, admins) to create, delete, and modify assignments, and giving instructors and admins a way to upload rubrics with answer keys, generate AI-powered automated grades, and allow for human review in the form of giving instructors and admins a chance to review the grading.
 - Success Criteria:
   1. Should allow for admins and instructors to create, modify and delete assignments and have changes reflected within 5 seconds
   2. Should allow admins, instructors, and TAs to upload rubrics and answer keys for an assignment within 5 seconds
@@ -112,8 +112,8 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
   1. Should allow for students' data to be anonymized within 5 seconds of being created
   2. Should have secure storage of students', admins', TAs', and instructors' data through hashing
  
-**Feature 6: Notifications (email and in-app notifications for assignment due dates, grades, and feedback)**
-- Objective: To accomodate for users of different roles (students, instructors, TAs, admins) to receive notifications of due dates, grades, and feedback for an upcoming assignment and a finished assignment.
+**Feature 6: Notifications (email and in-app notifications for assignment due dates, AI-generated and instructor grades, and feedback)**
+- Objective: To accomodate for users of different roles (students, instructors, TAs, admins) to receive timely and accurate notifications of due dates, grades, and feedback for upcoming/recently finished and graded assignments.
 - Success Criteria:
   1. Should send students, instructors, and admins a notification of an assignment being due one week, and one day before it is due
   2. Should generate feedback and send a notification that directs students to the AI-generated feedback on the submission within 5 seconds 
@@ -162,7 +162,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
     - **Frustrations**: Delayed feedback, unclear grading criteria, and difficulty understanding how to improve code.
 
 **3. Teaching Assistants (TAs)**
-- **Description**: Teaching Assistants support instructors by helping with grading, providing additional feedback, and assisting students with course materials.
+- **Description**: Teaching Assistants offer support to instructors by helping with grading, providing feedback as and when needed on student submissions, and assisting students efficiently to learn the course materials.
 
 - **High-Level Goals**:
     - Assist instructors with grading and providing feedback.
@@ -182,8 +182,8 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 - **Description**: System Administrators manage the technical aspects of the platform, ensuring its stability, security, and performance.
 
 - **High-Level Goals**:
-    - Maintain the platform’s uptime and performance.
-    - Ensure data security and compliance with regulations.
+    - Maintain our platform’s uptime and performance efficiently as and when needed.
+    - Ensure the security of the data we collect, and the compliance of the security of our data with data security regulations.
     - Implement updates and fixes promptly.
     - Provide technical support to users.
 
@@ -212,7 +212,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 **2. Students**
 - **Submit Assignments**: Upload HTML, CSS, and JavaScript files for assignments directly through the platform. Receive confirmation of  submissions.
 
-- **Receive Feedback**: Access detailed feedback on their submissions, including scores and comments on areas of improvement. Students should understand the strengths and weaknesses of their work through the feedback provided.
+- **Receive Feedback**: Access feedback on their submissions through a grade and comments on areas for improvement from the AI, and the teaching team. Students can use this feedback to determine strengths and weaknesses of their submission.
 
 - **Track Progress**: View their grades and feedback history for all assignments in a centralized dashboard. Monitor their overall performance and identify areas where they need to improve.
 
@@ -247,8 +247,8 @@ In the following requirements section, we will clearly define and describe the f
 - Access to certain features will be restricted depending on the user's role.
 
 **2 Assignment Editing:**
-- Users should be able to create, edit, or delete assignments and rubrics.
-- Teachers must be able to assign assignments to specific groups of students.
+- Users should be accomodated for by being allowed to create, edit, or delete assignments and rubrics.
+- Instructors should be accomodated for by being allowed to assign assignments to specific groups of students.
 
 **3 Managing Assignments:**
 - Assignments must have attributes such as title, description, due date, and should relate to specific class. 
@@ -278,20 +278,20 @@ In the following requirements section, we will clearly define and describe the f
 
 #### User Requirements:
 - **Assignment Creation and Management:**
-    - Instructors must be able to create new assignments with detailed instructions and due dates.
-    - Instructors must be able to upload, modify, and manage grading rubrics and criteria for assignments.
+    - Instructors should be accomodated for by being allowwed to create new assignments with detailed instructions and due dates.
+    - Instructors should be accomodated for by being allowwed to upload, modify, and manage grading rubrics and criteria for assignments.
 
 - **Automated Grading**:
-    - The platform must support the automatic grading of HTML, CSS, and JavaScript assignments based on predefined criteria.
-    - Instructors must be able to review and adjust AI-generated grades and feedback before releasing them to students.
+    - Our platform must automate the process of grading, with the use of AI for HTML, CSS, and JavaScript assignments based on predefined criteria.
+    - Instructors should be accomodated for by being allowwed to review and adjust AI-generated grades and feedback before releasing them to students.
 
 - **Feedback Provision**:
     - Instructors must be able to add personalized comments to the automated feedback.
     - The platform must allow instructors to provide detailed and constructive feedback to students.
 
 - **Rubric Reuse and Customization**:
-    - Instructors must be able to save and reuse grading rubrics for future assignments.
-    - Instructors must be able to customize grading criteria and rubrics for different assignments or course sections.
+    - Instructors should be accomodated for by being allowwed to save and reuse grading rubrics for future assignments.
+    - Instructors should be accomodated for by being allowwed to customize grading criteria and rubrics for different assignments or course sections.
 
 - **Communication Tools**:
    - The platform should provide tools for instructors and TAs to send announcements, reminders, feedback, and interact with students through integrated messaging for additional support, 
@@ -303,8 +303,8 @@ In the following requirements section, we will clearly define and describe the f
     - The platform must provide confirmation of successful submission.
 
 - **Feedback Reception**:
-    - Students must have access to detailed feedback on their submissions, including scores and comments on areas for improvement.
-    - Feedback must be provided in a timely manner to facilitate learning.
+    - Students should be accomodated for by being allowwed to access detailed feedback on their submissions, including scores and comments on areas for improvement.
+    - The platform must provide timely feedback that facilitates learning.
 
 - **Progress Tracking**:
     - Students must be able to view their grades and feedback history for all assignments in a centralized dashboard.
@@ -321,12 +321,12 @@ In the following requirements section, we will clearly define and describe the f
     - The platform must allow TAs to provide additional comments or adjustments as needed.
 
 - **System Performance Maintenance**:
-    - System administrators must be able to monitor the platform’s performance to ensure it runs smoothly and efficiently.
+    - System administrators should be accomodated for by being allowwed to monitor the platform’s performance to ensure it runs smoothly and efficiently.
     - The platform must provide alerts for potential issues or downtimes.
 
 - **Security and Compliance**:
-    - The platform must support the implementation of security measures to protect user data and ensure compliance with relevant regulations.
-    - System administrators must be able to regularly update the system to fix vulnerabilities and improve security.
+    - The platform must accomodate for system administrators by allowing them to implement ecurity measures to protect user data and ensure compliance with relevant regulations.
+    - System administrators should be accomodated for by being allowwed to regularly update and fix the system as and when vulnerabilities present themselves or even otherwise, and improve security.
 
 #### Technical Requirements:
 **1. System Architecture**
@@ -392,7 +392,7 @@ In the following requirements section, we will clearly define and describe the f
   
 ## Technology Stack
 **Platform:**
-- The app will be accessed by the user via a web browser. The UI of the application will need to be adaptable to fit browsers on different devices, such as laptops/desktops, smartphones and tablets.
+- The app will be accessed via a web browser. The UI of the application will need to be adaptable to fit browsers on different devices, such as laptops/desktops, smartphones and tablets.
 
 **Front-End:**
 - **React.js:** The front end will be built using the React framework, as per the customer's request. 
@@ -490,9 +490,6 @@ What will you have ready to present and/or submit for the following deadlines? *
 | August 9th  |  Final project submission and group presentions |
 
 ## Teamwork Planning and Anticipated Hurdles (Completion Plan)
-For **experience** provide a description of a previous project that would be similar to the technical difficulty of this project’s proposal.  None, if nothing
-For **good At**, list of skills relevant to the project that you think you are good at and can contribute to the project. These could be soft skills, such as communication, planning, project management, and presentation.  Consider different aspects: design, coding, testing, and documentation. It is not just about the code. 
-
 |  Category  | Colton Palfrey | Jerry Fan | Aayush Chaudhary | Chinmay Arvind | Omar Hemed | 
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 |  **Experience**  | Grocery Price Tracker, I-Clicker Clone | Event Ticket Selling Platform (React/Nodejs/Mysql), Farmer Market Finder (Java/AndroidStudio), First-year CS AI-Chatbot (Remix/PostgreSql) |Internet of Things, Pet-Community-Application  | Travel Recommendation System, Fire Fighter Communication and Fire Detection App, Discord Clone | Location sharing app, Online weather app using HTML and CSS  |

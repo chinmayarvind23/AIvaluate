@@ -24,7 +24,7 @@ Cycle 1 Weekly Log
 - Burn-up chart (velocity)
   - Generated burn-up chart with limited data from this cycle: ![Burn up cycle 1](https://raw.githubusercontent.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/logs/docs/weekly%20logs/Burn%20up%20cycle%201.png)
 - Times for team/individual
-  - Chinmay: 10 hours
+  - Chinmay: 7 hours
   - Colton:  hours
   - Jerry:  hours
   - Omar:  hours

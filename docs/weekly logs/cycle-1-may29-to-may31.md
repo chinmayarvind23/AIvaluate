@@ -22,8 +22,7 @@ Cycle 1 Weekly Log
   - Issue #9 (Aayush Chaudary)
   - Issue #10 (Colton Palfrey & Omar Hemed)
 - Burn-up chart (velocity)
-  - Generated burn-up chart with limited data from this cycle:
-  ![Alt text](/Users/chinmayarvind/Downloads/Burn up cycle 1.png)
+  - Generated burn-up chart with limited data from this cycle: ![Alt text](/Users/chinmayarvind/Downloads/Burn up cycle 1.png)
 - Times for team/individual
   - Chinmay: 10 hours
   - Colton:  hours

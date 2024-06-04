@@ -1,0 +1,21 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./app/aivaluate/backend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app/aivaluate/backend:/app
+    depends_on:
+      - database
+
+  frontend:
+    build:
+      context: ./app/aivaluate/frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app/aivaluate/frontend:/app

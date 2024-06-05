@@ -14,7 +14,7 @@ Our AI-powered web-development course platform has a multitude of use cases for 
 
 ## Use Case Diagram & Use Case Descriptions
 
-[INSERT IMAGES - 4]<img width="1409" alt="Use Case Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/3865884b-cf59-4ca9-8a5c-d256faa9cdbd">
+<img width="1409" alt="Use Case Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/3865884b-cf59-4ca9-8a5c-d256faa9cdbd">
 
 Use case 1: 
 Primary actor:

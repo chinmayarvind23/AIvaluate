@@ -6,18 +6,23 @@ The goal of our project is to produce dependable, robust, and user-friendly soft
 
 ## System Architecture Design
 
+### System Architecture Diagram
+![Screenshot 2024-06-05 123506](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/123427375/a2d6dbbf-eae3-4273-a6ef-ad3fe66dbea1)
+
 ### System Architecture pattern
 #### Microservice architecture 
 We aim to put every backend system component in its own containers to remove dependencies. This will also help us isolate, test, and deploy individual parts of our system without needing to run the system as a whole. In our case, the database, the frontend, the AI model, the reverse proxy, and each group of the backend service will be dockerized separately.
 
 
 ### System Components
-- Reverse Proxy: This acts as an intermediary between the user and the system; it forwards the client’s request to the web server and will decide which user portal will be displayed.
-Frontend: The frontend will consist of three different user portals: the instructor portal, the student portal, and the administrator portal. The frontend requests will be sent to the backend, where they are handled; then, after the requests are processed, data will be returned from the backend to the frontend, allowing users to view it.
+- Reverse Proxy/Frontend: This acts as an intermediary between the user and the system; it forwards the client’s request to the web server and will decide which user portal will be displayed. The frontend will consist of three different user portals: the instructor portal, the student portal, and the administrator portal. The frontend requests will be sent to the backend, where they are handled; then, after the requests are processed, data will be returned from the backend to the frontend, allowing users to view it.
+  
 - Backend: The backend receives frontend user requests and processes them by accessing the database or the chatGPT AI component through an API. It will consist of five main services, the assignment grading service, the course management service, the notification service, the status monitoring service and the file uploading service. Each service will be put in a separate container to remove dependencies. These services communicate with the front end, the database, the AI component and the file storage component. Once the request is received from the front-end components, the backend will handle the request by accessing either the AI component or the file storage component or reading/writing data from the database; finally, backend services will reflect the result and show it on the front end. 
 - AI Model: The AI component talks directly with the backend. The backend sends prompts, rubrics, and student assignments to the AI component through the OpenAI API. The AI model then utilizes the prompts and uploaded files to create feedback and a mark, which the backend will receive.
+  
 - Database: The database will store important relational data such as classes, students, professors, admins, assignments, etc. It will not, however, save the file submissions sent in by the students. The data will be created, accessed, updated or deleted by the backend services.
-Amazon Simple Storage Service (S3): Because file submissions can be quite large, we will be using Amazon S3 to store all student file submissions. This will be connected to the backend file uploading service. It stores the actual files students and instructors upload. Then, the reference to such files will be stored in the database.
+  
+- Amazon Simple Storage Service (S3): Because file submissions can be quite large, we will be using Amazon S3 to store all student file submissions. This will be connected to the backend file uploading service. It stores the actual files students and instructors upload. Then, the reference to such files will be stored in the database.
 
 
 ## Use Case Models

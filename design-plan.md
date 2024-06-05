@@ -16,7 +16,7 @@ Our AI-powered web-development course platform has a multitude of use cases for 
 
 <img width="1409" alt="Use Case Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/3865884b-cf59-4ca9-8a5c-d256faa9cdbd">
 
-(If the image is too small, either right click the image to open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Use Case diagram)
+(If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Use Case diagram)
 
 **Use case 1:** 
 
@@ -50,7 +50,7 @@ Extensions:
 
 <img width="1352" alt="UML Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/29265f12-ea67-47a1-91e4-33cd6e5ec444">
 
-(If the image is too small, either right click the image to open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the UML Class diagram)
+(If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the UML Class diagram)
 
 The above UML (Unified Modeling Language) class diagram has 12 classes in total, with several relations
 
@@ -64,7 +64,7 @@ The above UML (Unified Modeling Language) class diagram has 12 classes in total,
 
 <img width="1458" alt="Journey Line 4_ System Administrator course supervision   permissions" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/cd19fefe-143d-44b8-8a80-64de403126f8">
 
-(If the images are too small, either right click the image to open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Journey Lines 1 - 4)
+(If the images are too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Journey Lines 1 - 4)
 
 Brief description of each journey line within 1-2 sentences.
 
@@ -76,7 +76,7 @@ The following ER (Entity Relationship) diagram details our how the data within o
 
 <img width="1382" alt="ER Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/d5088ad5-0fba-4ec9-bb06-f39cd16af591">
 
-(If the image is too small, either right click the image to open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the ER diagram)
+(If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the ER diagram)
 
 ## Database Design Justification
 

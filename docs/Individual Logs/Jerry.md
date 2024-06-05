@@ -9,10 +9,12 @@
 - System Architecture Graph
 - Team Meeting - Database Design
 
+# Current Cycle
+- Tasks completed 
 ## Friday May 31th
-### 4 hours
-- System Architecture Documents 
-- Team meeting - Discussion of system design decisions, data flow diagrams, database design decisions, UI 
+### 5 hours
+- System Architecture Documents Draft
+- Team meeting - Discussion of system design decisions, data flow diagrams, database design decisions, UI components etc.
 
 ## Saturday June 1st
 ### 3 hours
@@ -24,5 +26,11 @@
 - Exploration and self-study of docker: how to write docker-compose.yml file, Dockerfile commands
 
 ## Monday June 3rd
-### 1 hour
+### 3 hour
 - Continuous self-study of docker-compose files and VITE, a React app initializer
+- Code review and provide feedback on the initialized project
+
+## Wedensday Jnue 5th
+### 2 hour
+- Finalize the project design system architecture section
+- Watch and review other group's presentations

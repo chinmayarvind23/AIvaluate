@@ -22,7 +22,7 @@
   - Issue #9 (Aayush Chaudary)
   - Issue #10 (Colton Palfrey & Omar Hemed)
 - ### Burn-up chart (velocity)
-  - Generated burn-up chart with limited data from this cycle: ![Burn up cycle 1](https://raw.githubusercontent.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/logs/docs/weekly%20logs/Burn%20up%20cycle%201.png)
+  - Generated burn-up chart with limited data from this cycle: <img width="942" alt="Screenshot 2024-06-05 at 7 19 26 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/1ef6c393-9b75-4e84-bf24-3fa98069e366">
 - ### Times for team/individual
   - Chinmay: 7 hours
   - Colton: 6 hours

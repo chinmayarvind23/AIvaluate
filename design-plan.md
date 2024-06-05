@@ -121,28 +121,51 @@ Upon login students will be shown their dashboard/homepage. Here they can select
 ![student drop down menu](/docs/ui-design/7.png)
 ![Evaluator drop down menu](/docs/ui-design/8.png)
 ![Account](/docs/ui-design/9.png)
-![Create Course](/docs/ui-design/10.png)
+Students can visit the help page for instructions of how to use the website.
 ![Get help](/docs/ui-design/11.png)
+After clicking on a course the student can view their grades for the course in the grades tab.
 ![Grade: student view](/docs/ui-design/12.png)
+When clicking on the assignments tab students can view all complete assignments. Each assignment can be clicked on to view more information such as assignment descriptions or grade/AI and professor feedback.
 ![Assignments: student view](/docs/ui-design/13.png)
 ![Single assignment feedback: student view](/docs/ui-design/14.png)
 ![Single assignment submission: student view](/docs/ui-design/15.png)
+Student can click on the people tab to see a list of all other students enrolled in the class.
 ![People: student view](/docs/ui-design/16.png)
+Student can click on the Submissions tab and see all of their submissions for this course.
 ![Submissions: student view](/docs/ui-design/17.png)
-![Submitted assignment: prof view](/docs/ui-design/18.png)
-![All specific subissions: prof view](/docs/ui-design/19.png)
-![All submissions: prof view](/docs/ui-design/20.png)
-![Assignment Unpublished: prof view](/docs/ui-design/21.png)
-![Assignment published: studetn view](/docs/ui-design/22.png)
-![Assignment submissions and publish grades: prof view](/docs/ui-design/23.png)
-![Create assignment: prof view](/docs/ui-design/24.png)
-![Student grades: prof view](/docs/ui-design/25.png)
-![Selected rubricc: prof view](/docs/ui-design/26.png)
-![All past rubrics: prof view](/docs/ui-design/27.png)
-![Student manager, all students view: Admin view](/docs/ui-design/28.png)
-![Student manager, single students view: Admin view](/docs/ui-design/29.png)
-![Evaluator manager: all evaluators: Admin view](/docs/ui-design/30.png)
-![Evaluator manager: Single evaluator: Admin view](/docs/ui-design/31.png)
 
+### Evaluator Interface.
 The login page for T.A. and professor look different then the login page for the students because they cannot create an account themselves. Instead the Admin must create an account for them. Note: The admin page login will also look the same as this.
 ![Evaluator/admin login](/docs/ui-design/login.png)
+The professor dashboard looks very similar to a student dashboard but gives them the ability to create a course.
+![Create Course](/docs/ui-design/10.png)
+Professors can visit the help page for instructions of how to use the website.
+![Get help](/docs/ui-design/11.png)
+Upon clicking on the assignments the evaluator can see specific assignments. They can click on these to view all of the students submissions. Or to view or edit assignment criteria. From here they can also browse assignments of create a new assignment.
+![All submissions: prof view](/docs/ui-design/20.png)
+![All specific submissions: prof view](/docs/ui-design/19.png)
+The professor can create an assignment by creating a new rubric or reusing a past one.
+![Create assignment: prof view](/docs/ui-design/24.png)
+Professor or T.A. can click to view a students submission of an assignment and can view the AI feedback. The evaluator must confirm the students score before it is considered marked. The Evaluator may also edit the due date for this specific student. Finally the evaluator can write their own comments on the assignment submission and mark the evaluation as complete.
+![Submitted assignment: prof view](/docs/ui-design/18.png)
+Professors can see whether or not an assignment is published or not and edit everything on an assignment such as due date, name, and description/rubric. they can also publish or unpublish an assignment.
+![Assignment Unpublished: prof view](/docs/ui-design/21.png)
+![Assignment published: student view](/docs/ui-design/22.png)
+Once all assignments submissions are marked for a specific assignment, the professor can publish the grades to the students or hide the grades from the students.
+![Assignment submissions and publish grades: prof view](/docs/ui-design/23.png)
+Professor can view the averages of student grades from assignments so they know how their students are doing in the course.
+![Student grades: prof view](/docs/ui-design/25.png)
+Professor can review all past rubrics from this any course as they are all saved.
+![Selected rubricc: prof view](/docs/ui-design/26.png)
+![All past rubrics: prof view](/docs/ui-design/27.png)
+
+### Admin Interface
+The admin can view or search the list of students that have an account at AIvaluate. These users can be selected to allow the admin to view more information
+![Student manager, all students view: Admin view](/docs/ui-design/28.png)
+A selected student profile contains their course information and the Admin can drop them from a course. The admin can also delete a user.
+![Student manager, single students view: Admin view](/docs/ui-design/29.png)
+The admin can view or search the list of T.A.'s and Instructors that have an account at AIvaluate. These users can be selected to allow the admin to view more information. Admin can user sign a evaluator up for an account.
+![Evaluator manager: all evaluators: Admin view](/docs/ui-design/30.png)
+A selected evaluator profile contains their course access information and the Admin can remove the professor from a course. The admin can also delete an evaluator or select whether or not they are a teaching assistant.
+![Evaluator signup: Admin view](/docs/ui-design/32.png)
+![Evaluator manager: Single evaluator: Admin view](/docs/ui-design/31.png)

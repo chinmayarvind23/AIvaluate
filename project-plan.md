@@ -294,9 +294,9 @@ In the following requirements section, we will clearly define and describe the f
     - Instructors should be accomodated for by being allowwed to customize grading criteria and rubrics for different assignments or course sections.
 
 - **Communication Tools**:
-   - The platform should provide tools for instructors and TAs to send announcements, reminders, feedback, and interact with students through integrated messaging for additional support, 
-     clarification, and class discussions.
-   - Both instructors and TAs must be able to manage class interactions, including responding to queries and facilitating discussions.
+    - The platform should provide tools for instructors and TAs to send announcements, reminders, feedback, and interact with students through integrated messaging for additional 
+      support, clarification, and class discussions.
+    - Both instructors and TAs must be able to manage class interactions, including responding to queries and facilitating discussions. 
 
 - **Assignment Submission**:
     - Students must be able to upload HTML, CSS, and JavaScript files for assignments directly through the platform.

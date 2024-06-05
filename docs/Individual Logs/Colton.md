@@ -14,3 +14,18 @@
 ### 2 hours
 - Worked on prototype design
 - worked on Relationship Entity Diagram
+
+## Sunday June 2nd
+### 6.5 hours
+- Set up file structure
+- Worked on setting up AWS
+- Learned how to dockerize our project for development stage
+
+## Monday June 3rd
+### 3 hours
+- Finished UI design
+- Did code review and tested React app implementation from VEST
+
+## Wednesday
+### 2 hours
+- Added to the deisgn plan document.

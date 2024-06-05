@@ -34,11 +34,20 @@ Extensions:
     1a1. action to handle the extension condition
 
 ## UML Class Diagram
-[INSERT HERE]
+
+<img width="1352" alt="UML Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/29265f12-ea67-47a1-91e4-33cd6e5ec444">
 
 The above UML (Unified Modeling Language) class diagram has 12 classes in total, with several relations
 
 ## Journey Lines
+
+<img width="1134" alt="Journey Line 1_ Instructor assignment supervision" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/63f29a9b-2eb4-443a-9385-e53db0566b5e">
+
+<img width="1238" alt="Journey Line 2_ Instructor grading and feedback" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/681fbc12-afd5-426a-aa20-9d66705d720a">
+
+<img width="1391" alt="Journey Line 3_ Student submissions and feedback" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/ef3f265c-f6ca-4ef5-aae5-0327a97a7d2e">
+
+<img width="1458" alt="Journey Line 4_ System Administrator course supervision   permissions" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/cd19fefe-143d-44b8-8a80-64de403126f8">
 
 Brief description of each journey line within 1-2 sentences.
 
@@ -48,7 +57,7 @@ Brief description of each journey line within 1-2 sentences.
 
 The following ER (Entity Relationship) diagram details our how the data within our database is modelled via the creation of tables to support differnet entities interacting with eachother to make the system function efficiently and effectively:
 
-[INSERT HERE]
+<img width="1382" alt="ER Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/d5088ad5-0fba-4ec9-bb06-f39cd16af591">
 
 ## Database Design Justification
 

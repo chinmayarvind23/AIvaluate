@@ -102,7 +102,16 @@ Why is our data modelled the way it is? purpose of each table and attribute
 
 ## Data Flow Diagram (Level 0/Level 1)
 
-L0 (high-level context diagram) and L1 (in-depth, explain how and why the data moves the way it does within the system) diagrams to represent system data flow (key processes, data stores, data movement) with same level of abstraction as L0
+L0 (high-level context diagram) 
+<img width="939" alt="Screenshot 2024-06-05 at 4 43 36 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97553042/3e36477a-e838-4c57-aa85-451df74630af">
+
+
+and L1 (in-depth, explain how and why the data moves the way it does within the system) 
+
+<img width="967" alt="Screenshot 2024-06-05 at 4 41 37 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97553042/16cc7cbb-3c16-4f81-a42c-3f835c45162f">
+
+
+diagrams to represent system data flow (key processes, data stores, data movement) with same level of abstraction as L0
 
 ## User Interface (UI) Design
 

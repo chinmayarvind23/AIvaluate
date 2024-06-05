@@ -28,7 +28,7 @@
   - Generated burn-up chart with limited data from this cycle: <img width="925" alt="Screenshot 2024-06-05 at 7 14 34 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/fe76ef51-9bed-4152-8903-e9b6f045ede1">
 - ### Times for team/individual
   - Chinmay: 28 hours
-  - Colton:  hours
+  - Colton: 12.5 hours
   - Jerry: 12 hours
   - Omar:  hours
   - Aayush:  hours

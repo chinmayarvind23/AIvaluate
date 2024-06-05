@@ -9,8 +9,18 @@
 - System Architecture Graph
 - Team Meeting - Database Design
 
-# Current Cycle
-- Tasks completed 
+# Current Cycle Summary (May 31 Afternoon - June 5 Morning) 
+- Tasks completed this cycle:
+- Study and exploration of docker, VITE, and microservice system architecture
+- Code review
+- Discussion and team meeting to assist with other components required in the project plan doc
+- Task #6 on Kanban board: project plan system design documents and diagram
+- Task #8 on Kanban board: project plan database design
+
+- Tasks for the next cycle:
+- Start on programming, specific task to be discussed with the team
+- Project plan video recording
+  
 ## Friday May 31th
 ### 5 hours
 - System Architecture Documents Draft
@@ -31,6 +41,6 @@
 - Code review and provide feedback on the initialized project
 
 ## Wedensday Jnue 5th
-### 2 hour
+### 1 hour
 - Finalize the project design system architecture section
 - Watch and review other group's presentations

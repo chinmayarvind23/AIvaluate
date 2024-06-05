@@ -40,7 +40,7 @@
 - Continuous self-study of docker-compose files and VITE, a React app initializer
 - Code review and provide feedback on the initialized project
 
-## Wedensday Jnue 5th
+## Wednesday June 5th
 ### 1 hour
 - Finalize the project design system architecture section
 - Watch and review other group's presentations

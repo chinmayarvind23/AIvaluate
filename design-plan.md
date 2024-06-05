@@ -18,7 +18,7 @@ Our AI-powered web-development course platform has a multitude of use cases for 
 
 [INSERT HERE]
 
-Use case 1:
+Use case 1: 
 Primary actor:
 Description:
 Precondition:
@@ -36,14 +36,13 @@ Extensions:
     1a1. action to handle the extension condition
 
 ## UML Class Diagram
-
 [INSERT HERE]
 
 The above UML (Unified Modeling Language) class diagram has 12 classes in total, with several relations
 
 ## Journey Lines
 
-[INSERT IMAGES - 15]
+[INSERT IMAGES - 4]
 Brief description of each journey line within 1-2 sentences.
 
 ## Database Design
@@ -65,4 +64,4 @@ L0 (high-level context diagram) and L1 (in-depth, explain how and why the data m
 
 ## User Interface (UI) Design
 
-The team is required to put forward a series of UI mock-ups that will be used as starting points for the design of the system   They can be minimal but the team will need to  have at least made some choices about the interaction flow of the application.  You should consider the different major aspects of user interactions and develop UI mockups for those (think about the different features/use cases and what pages are needed; you will have a number most likely).  Additionally, create a diagram to explain the navigation flow for the MVP  prototype (and any alternate flows).  When considering your UI, think about usability, accessibility, desktop and mobile uses.  As a team, you will need to discuss design choices for the system.
+UI mock-ups (minimal, but need to know interaction flow of the application, diagram to explain the navigation flow for the MVP prototype (and any alternate flows)).  Think about usability, accessibility, desktop and mobile uses.

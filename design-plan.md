@@ -19,16 +19,24 @@ Our AI-powered web-development course platform has a multitude of use cases for 
 (If the image is too small, either right click the image to open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Use Case diagram)
 
 Use case 1: 
+
 Primary actor:
+
 Description:
+
 Precondition:
+
 Postcondition:
+
 Assumptions:
 
 Main scenario (3-9 steps):
 1.
+
 2.
+
 3.
+
 4.
 
 Extensions:

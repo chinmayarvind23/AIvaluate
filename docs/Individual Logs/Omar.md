@@ -17,4 +17,10 @@
 ### 2 Hours 
 - Finalized the mockup design
 
+## Wednesday June 5
+### 4 hours 
+- Updated the UI design
+- Finished peer review
+- Did my own search on some project-related stuff 
+
 

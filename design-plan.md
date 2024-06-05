@@ -92,10 +92,13 @@ L0 (high-level context diagram) and L1 (in-depth, explain how and why the data m
 UI mock-ups (minimal, but need to know interaction flow of the application, diagram to explain the navigation flow for the MVP prototype (and any alternate flows)).  Think about usability, accessibility, desktop and mobile uses.
 
 ### Student Interface
+When a student enters the url to the AIvaluate website they will be met with the login/sign up page. Students can login if they already have an existing account or sign up if it is their first time visiting the site.
 ![Signup](/docs/ui-design/1.png)
 ![Login](/docs/ui-design/2.png)
+If a student forgets their password they can submit their email and they will be emailed a link to change there password if a user exists with that email.
 ![Forgot Password](/docs/ui-design/3.png)
 ![Change password from forgot pass request](/docs/ui-design/4.png)
+Upon login students will be shown their dashboard/homepage. Here they can select a course, or via the drop down menu, visit account page, join a course, get help, or log out.
 ![Student dashboard](/docs/ui-design/5.png)
 ![Join Course](/docs/ui-design/6.png)
 ![student drop down menu](/docs/ui-design/7.png)
@@ -106,7 +109,7 @@ UI mock-ups (minimal, but need to know interaction flow of the application, diag
 ![Grade: student view](/docs/ui-design/12.png)
 ![Assignments: student view](/docs/ui-design/13.png)
 ![Single assignment feedback: student view](/docs/ui-design/14.png)
-![Single assignment submittion: student view](/docs/ui-design/15.png)
+![Single assignment submission: student view](/docs/ui-design/15.png)
 ![People: student view](/docs/ui-design/16.png)
 ![Submissions: student view](/docs/ui-design/17.png)
 ![Submitted assignment: prof view](/docs/ui-design/18.png)
@@ -123,3 +126,6 @@ UI mock-ups (minimal, but need to know interaction flow of the application, diag
 ![Student manager, single students view: Admin view](/docs/ui-design/29.png)
 ![Evaluator manager: all evaluators: Admin view](/docs/ui-design/30.png)
 ![Evaluator manager: Single evaluator: Admin view](/docs/ui-design/31.png)
+
+The login page for T.A. and professor look different then the login page for the students because they cannot create an account themselves. Instead the Admin must create an account for them. Note: The admin page login will also look the same as this.
+![Evaluator/admin login](/docs/ui-design/login.png)

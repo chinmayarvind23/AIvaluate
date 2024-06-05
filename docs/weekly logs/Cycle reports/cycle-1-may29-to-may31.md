@@ -26,7 +26,7 @@
 - ### Times for team/individual
   - Chinmay: 7 hours
   - Colton: 6 hours
-  - Jerry:  hours
+  - Jerry:  6 hours
   - Omar:  hours
   - Aayush: 6 hours
 - ### Table view of completed tasks on project board (by which username)

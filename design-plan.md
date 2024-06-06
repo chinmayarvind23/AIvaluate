@@ -97,8 +97,6 @@ The following ER (Entity Relationship) diagram details our how the data within o
 
 ## Database Design Justification
 
-## Database Design Justification
-
 ### List of Entities
 #### Student
 ###### Purpose

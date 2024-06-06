@@ -65,7 +65,7 @@ Extensions:
 
 ## UML Class Diagram
 
-<img width="1352" alt="UML Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/29265f12-ea67-47a1-91e4-33cd6e5ec444">
+![UML Diagram](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/123427375/4817210f-5735-4c75-8d06-2096e703c8dd)
 
 (If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the UML Class diagram)
 

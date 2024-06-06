@@ -69,7 +69,7 @@ Extensions:
 
 (If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the UML Class diagram)
 
-The above UML (Unified Modeling Language) class diagram has 12 classes in total, with several relations
+As shown above, the UML diagram consists of 11 classes. A description of each class and attribute can be found below under the ER diagram section.
 
 ## Journey Lines
 

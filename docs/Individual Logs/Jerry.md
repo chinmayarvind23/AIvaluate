@@ -9,7 +9,7 @@
 - System Architecture Graph
 - Team Meeting - Database Design
 
-# Current Cycle Summary (May 31 Afternoon - June 5 Morning) 
+# Cycle Summary (May 31 - June 4) 
 - Tasks completed this cycle:
 - Study and exploration of docker, VITE, and microservice system architecture
 - Code review
@@ -40,7 +40,12 @@
 - Continuous self-study of docker-compose files and VITE, a React app initializer
 - Code review and provide feedback on the initialized project
 
+# Cycle Summary (June 5 - June 7) 
+
 ## Wednesday June 5th
-### 1 hour
-- Finalize the project design system architecture section
-- Watch and review other group's presentations
+### 8 hour
+- Finalize the project design system architecture section (30 minutes)
+- Watch and review other group's presentations (30 minutes)
+- Team meeting and project planning (1 hour)
+- Project design - ER diagram adjustment, added new entities and relationships to the existing; ER diagram justification and write-up (5 hours)
+- Project design - UML diagram adjustment, added new class and relations to the existing diagram (1 hour)

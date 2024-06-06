@@ -129,4 +129,28 @@ Daily work log
         - DB Design (Large, Close to finished)
         - Complete review of design document (Medium, Close to finished)
    - Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
-        - Working on completing review of design document  
+        - Working on completing review of design document
+8. June 5
+   - Tasks worked on:
+       - Use case models revision with client feedback incorporated (4 hours)
+       - DB design revision with client feedback incorporated (4 hours)
+       - Journey lines, UML, DFDs, UI review (3 hours)
+   - Features being worked on and linked project board issues:
+        - Use case models, Issue #7
+        - DB Design, Issue #8
+        - Review of others' work in the design document
+   - Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+        - Design document (Large, Finished)
+        - Setting up tech stacks and CI/CD (Medium, Finished)
+        - Use case models (Large, Finished)
+        - DB Design (Large, Finished)
+        - Complete review of design document (Medium, Finished)
+   - Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+        - Working on containerizing major compoents of system architecture
+        - Recording video presentation for design plan
+        - Dockerize all major system components
+        - Setup DroneCI for CI/CD and automated testing
+        - Setup RDS, S3 from AWS
+        - Setup Express.js, PostgreSQL
+        - Setup reverse proxy
+        - Design login page

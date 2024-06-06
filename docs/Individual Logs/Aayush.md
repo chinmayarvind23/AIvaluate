@@ -13,19 +13,21 @@
 
 ## Friday May 31st
 ### 2 hours
-- Worked on  the data flow diagram Level 0 
+- Worked on  the data flow diagrams 
 - worked on the Relationship Entity Diagram
 
-- ## Sunday June 2nd
-### hours
+  ## Monday June 3rd
+### 3 hours
 - Set up file structure
-- Worked on  the data flow diagram Level 1
+- Worked on the data flow diagrams
+- worked on the Relationship Entity Diagram
 
-## Monday June 3rd
-###  hours
+
+## Wednesday June 4
+###   hours
 - 
 
-## Wednesday
+## 
 ###  hours
 - 
 

@@ -31,37 +31,337 @@ Our AI-powered web-development course platform has a multitude of use cases for 
 
 ## Use Case Diagram & Use Case Descriptions
 
-<img width="1409" alt="Use Case Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/3865884b-cf59-4ca9-8a5c-d256faa9cdbd">
+## Use Case Diagram & Use Case Descriptions
+
+<img width="1392" alt="Use Case Diagram (1)" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/221facc9-64c1-4777-98d7-d44b86e8f732">
 
 (If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Use Case diagram)
 
-**Use case 1:** 
+**Use case 1: Login/Logout**
 
-Primary actor:
+Primary actor: Instructors, Students
 
-Description:
+Description: An instructor or student should have the ability to login and log out of the system in a timely and efficient manner.
 
-Precondition:
+Precondition: A student or instructor should have created an account or have one created for them by the system administrator resectively.
 
-Postcondition:
+Postcondition: If an instructor or student has successfully created an account, then they will be able to login and logout of the course platform.
 
-Assumptions:
+Main scenario:
 
-Main scenario (3-9 steps):
+1. Student/Instructor is directed to the login page.
 
-1.
+2. They can enter in their login details, and press the log in button.
 
-2.
+3. On successful login, the student/instructor will be directed to the dashboard where they can see the courses they are involved with.
 
-3.
 
-4.
+
+**Use case 2: Invite to course**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to invite students to a course that they created.
+
+Precondition: An instructor should be logged in and have created a course.
+
+Postcondition: If an instructor or student has successfully logged in, created a course, and sent out invites to students to join their course, this will allow for the students to be able to join the course and access the material within the course.
+
+Main scenario:
+
+1. Instructor logs into their dashboard.
+
+2. They create a course, or click one of the courses they already have created.
+
+3. On going into the course of their choice (either the created one or one they have already created), they can send invites to students to join their course.
+
+
+
+**Use case 3: Create account**
+
+Primary actor: Students 
+
+Description: A student should have the ability to create an account in a simple and efficient manner.
+
+Precondition: A student has been invited to join a course via email by an instructor, and needs to create an account to join the course and access the material in the course.
+
+Postcondition: If a student is able to successfully create their account, they will be able to join the course that the instructor invited them to, and access the material within the course.
+
+Main scenario:
+
+1. Student receives email to join the course that the instructor invited them to join.
+
+2. Student enters the sign up page.
+
+3. Student will need to create an account under their name.
+
+4. The student will then be given the option to join the course.
+
+
+
+**Use case 4: Modify, delete account**
+
+Primary actor: Students, Instructors
+
+Description: A student/instructor should have the ability to modify their account or delete their account in a simple and efficient manner.
+
+Precondition: A student/instructor have created their account or have their account created for them by the system administrator.
+
+Postcondition: If a student/instructor is able to successfully modify or delete their account, they will be able to leave the platform with their data deleted from our database, and they will lose access to the courses they were involved with, and any other data from the courses they were involved in.
+
+Main scenario:
+
+1. Students and instructors log into their accounts.
+
+2. Students and instructors can modify personal details related to their account and see their data.
+
+3. Students and instructors will navigate to the delete account page.
+
+4. The students and instructors will then be able to delete their account, leading them to lose access to our platform, and all their data on the platform.
+
+
+**Use case 5: Create, edit, delete course**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to create, edit, and delete courses in a simple and efficient manner.
+
+Precondition: An instructor has their account created for them by the system administrator, and have created a course or multiple courses.
+
+Postcondition: If an instructor is able to successfully delete a course they taught, they will lose access to all rubrics, answer keys, grades, and other data within the course permanently.
+
+Main scenario:
+
+1. Instructor logs into their account.
+
+2. Instructor can navigate to the course of their choice that they teach from the dashboard.
+
+3. Instructor will be redirected to the course's main page and navigate to the delete course page.
+
+4. The instructors will then be able to delete the course they are teaching, and once they delete the course, they will lose access to all rubrics, answer keys, grades, and other data within the course permanently.
+
+
+
+**Use case 6: Release assignment grades and feedbacke**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to override, and release assignment grades and feedback on top of the AI-generated feedback and grades produced.
+
+Precondition: An instructor has their account created for them by the system administrator, and have created a course or multiple courses, and assigned assignments to students which have been graded by the AI.
+
+Postcondition: If an instructor is able to successfully release grades from the AI, themself, and the feedback from the AI as well as the instructor, then the students can view their grades and feedback.
+
+Main scenario:
+
+1. Instructor logs into their account.
+
+2. Instructor can navigate to the course of their choice that they teach from the dashboard.
+
+3. Instructor will create an assignment and assign it to students, the students will submit their assignments before the due date.
+
+4. The instructors will then be able to receive AI-generated grades, and feedback, which they can add to with their own feedback and will be able to assign a final grade to the assignment for each student.
 
 Extensions:
 
-1a. describe extension to step 1 as a condition from main scenario if any that will need different handling
-    
-    1a1. action to handle the extension condition
+6a. Instructors should be able to review and/or override the grades and feedback generated by the AI.
+	- Our platform will give the instructors the chance to accept or override the AI-generated grades and feedback.
+
+6b. Instructors should be able to provide additional feedback on top of the feedback already generated as well as a final grade.
+	- Our platform will give the instructors the chance to provide additional feedback and a final grade on top of the AI-generated grades and feedback.
+
+
+**Use case 7: Upload rubrics and answer keys**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to upload rubrics, and answer keys to an assignment.
+
+Precondition: An instructor has their account created for them by the system administrator, and have created a course or multiple courses, and assigned assignments to students which have been graded by the AI.
+
+Postcondition: If an instructor is able to successfully upload rubrics and answer keys to an assignment, then the student will be able to view it after the assignment due date has passed to check where their skills are lacking.
+
+Main scenario:
+
+1. Instructor logs into their account.
+
+2. Instructor can navigate to the course of their choice that they teach from the dashboard.
+
+3. Instructor will create an assignment, upload a rubric and answer key and assign it to students, the students will submit their assignments before the due date.
+
+4. The instructors will then be able to receive AI-generated grades, and feedback, which they can add to with their own feedback and will be able to assign a final grade to the assignment for each student.
+
+
+
+**Use case 8: View all individual grades**
+
+Primary actor: Students, Instructors
+
+Description: A student should have the ability to view all their individual grades and an instructor should have the ability to view all students' individual grades.
+
+Precondition: A student and instructor have created their account or have their account created for them by the system administrator respectively, and instructors have created a course or multiple courses, and assigned assignments to students which have been graded by the AI and themselves, resulting in a grade history being stored for each student.
+
+Postcondition: If instructors are able to successfully view a student's grade history, and student's are able to view their grade history, then they can advise the student to focus on certain topics and assist the student in their problem areas.
+
+Main scenario:
+
+1. Students and Instructors log into their accounts.
+
+2. Instructors can navigate to the course of their choice that they teach from the dashboard, and students can navigate to the courses that they are enrolled in.
+
+3. Instructors acan view a student's grade history, and students can view their individual grade history to assess their progress in the course.
+
+
+
+**Use case 9: View all students' overall grades**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to view all overall grades of all students.
+
+Precondition: An instructor who has their account created for them by the system administrator, and have created a course or multiple courses, assigned assignments to students which have been graded by the AI and themselves, resulting in a grade history being stored for each student as well as an overall grade.
+
+Postcondition: If instructors are able to successfully view a student's overall grade, then they can decide whether to pass or fail a student.
+
+Main scenario:
+
+1. Instructors log into their accounts.
+
+2. Instructors can navigate to the course of their choice that they teach from the dashboard.
+
+3. Instructors can view all students' overall grades from the instructor dashboard.
+
+
+
+**Use case 10: Submit Assignment**
+
+Primary actor: Students
+
+Description: A student should have the ability to submit an assignment as HTML, CSS, JS files or as a link.
+
+Precondition: A student creates their account and logs in, and selects a course and an assignment in that course to submit.
+
+Postcondition: If students are able to successfully submit their assignments, then they can await feedback from the AI as well as the instructor and teaching assistants.
+
+Main scenario:
+
+1. Students log into their accounts or create accounts if they do not have one.
+
+2. Students can navigate to the course of their choice that they are enrolled in from the dashboard.
+
+3. Students can then navigate to the assignments tab, and click on an assignment.
+
+4. Students can then submit their assignment as a file or a link.
+
+Extensions:
+
+10a. Students should be able to view all feedback and grades.
+	- Our platform will give the students the chance to view the grade and feedback from instructor and AI.
+
+
+
+
+**Use case 11: View assignment grades and feedback**
+
+Primary actor: Students, Instructors
+
+Description: Students and instructors should have the ability to view individual assignments' grades and the feedback given along with the grades.
+
+Precondition: A student and instructor have created their account or have their account created for them by the system administrator respectively, and instructors have created a course or multiple courses, and assigned assignments to students which have been graded by the AI and themselves, resulting in grades being stored for each assignment individually for each student.
+
+Postcondition: If instructors and students are able to successfully view assignment grades for all submissions and for their individual submissions respectively along with feedback, then instructors can advise the student to focus on certain topics and assist the student in their problem areas.
+
+Main scenario:
+
+1. Students and Instructors log into their accounts.
+
+2. Instructors can navigate to the course of their choice that they teach from the dashboard, and students can navigate to the courses that they are enrolled in.
+
+3. Instructors can view a student's grade for an assignment along with all the feedback for that particular assignment, and students can view their individual grade for an assignment with the feedback from the AI and the instructor.
+
+
+
+
+**Use case 12: Join Course**
+
+Primary actor: Students
+
+Description: A student should have the ability to join a course given an email sent to them from our platform with an invite to a course and provided the student makes an account or can log into an existing account.
+
+Precondition: A student has created their account and instructors have created a course or multiple courses.
+
+Postcondition: If students are able to successfully log in and join a course that they were invited to by the course instructor, they will have access to course material in the form of assignments, and can view their grades.
+
+Main scenario:
+1. Students click on a link sent to them via email that invites them to a course.
+
+2. Students log into their accounts or create accounts if they do not have one.
+
+3. Students are then added to the course, and can view assignments, and grades.
+
+
+
+**Use case 13: Create, edit, delete, and assign assignments**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to create, edit, delete assignments, and assign assignments to students.
+
+Precondition: An instructor has their account created for them by the system administrator, and instructors have created a course or multiple courses.
+
+Postcondition: If instructors are able to successfully create, edit, delete assignments, and assign assignments to students, then they can effectively run their course in the way they see fit to assist students in learning the course material.
+
+Main scenario:
+
+1. Instructors log into their accounts.
+
+2. Instructors can navigate to the course of their choice that they teach from the dashboard.
+
+3. Instructors can create an assignment, edit an existing assignment, delete an assignment and also assign assignments to students (sends a notification of the assignment being assigned).
+
+
+
+**Use case 14: View analytics**
+
+Primary actor: Instructors
+
+Description: An instructor should have the ability to view analytics on overall grades for assignments and overall course grades from students.
+
+Precondition: Instructors have their account created for them by the system administrator, and have created a course or multiple courses, and assigned assignments to students which have been graded by the AI and themselves.
+
+Postcondition: If instructors are able to view analytics like mean, median, etc. of students' overall grades and assignment grades, they can use that to assist the students with material where the assignment grades were low.
+
+Main scenario:
+
+1. Instructors log into their accounts.
+
+2. Instructors can navigate to the course of their choice that they teach from the dashboard.
+
+3. Instructors can assignment grades and all overall grades from students, and the analytics for the overall grades and the assignment grades for each assignment, which will help them assist the students with the material where the assignment performance was low.
+
+
+
+**Use case 15: Report inaccurate feedback**
+
+Primary actor: Students
+
+Description: A student should have the ability to report inaccurate AI-generated feedback.
+
+Precondition: A student has created their account, and students join course that are created by instructors, and assigned assignments to students which have been graded by the AI and instructors.
+
+Postcondition: If students are able to successfully report inaccurate feedback from the AI, then they can help guide and train the AI to become better over time and generate better feedback for future versions and future assignments of the current course.
+
+Main scenario:
+
+1. Students log into their accounts.
+
+2. Students can navigate to the course of their choice that they are enrolled in from the dashboard.
+
+3. Students can view their assignment grades.
+
+4. Students can then click on a specific assignment to review the feedback from the AI.
+
+5. If the student feels that the feedback was inaccurate, they can report the feeback for being inaccurate, helping train the AI to become better at generating feedback on similar assignments in the future. 
 
 ## UML Class Diagram
 

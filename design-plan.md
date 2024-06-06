@@ -107,15 +107,19 @@ DFD Level 0
 <img width="939" alt="Screenshot 2024-06-05 at 4 43 36 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97553042/3e36477a-e838-4c57-aa85-451df74630af">
 
 
+
+
 DFD Level 1 
 
 <img width="967" alt="Screenshot 2024-06-05 at 4 41 37 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97553042/16cc7cbb-3c16-4f81-a42c-3f835c45162f">
 
-High-Level Context Diagram
+## High-Level Context Diagram
+
 This diagram illustrates the primary external entities and how they interact with the system:
-Instructor: Oversees courses, assignments, and the grading process.
-Student: Completes and submits assignments, and retrieves grades and feedback.
-Admin: Administers the overall system configurations and manages user permissions.
+
+-Instructor: Oversees courses, assignments, and the grading process.
+-Student: Completes and submits assignments, and retrieves grades and feedback.
+-Admin: Administers the overall system configurations and manages user permissions.
 
 
 

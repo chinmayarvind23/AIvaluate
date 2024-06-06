@@ -136,7 +136,7 @@ Below is an expanded flow based on the detailed DFD you have provided:
 - **Storage**: Information is stored in the Courses Database.
 
 #### Assignment Creation and Modification (Process 3)
-- **Participants**: Instructors and teaching assistants
+- **Participants**: Instructors and teaching assi
 - **Action**: Develop or modify assignments along with associated rubrics.
 - **Storage**: Assignment details are cataloged in the Assignments Database.
 

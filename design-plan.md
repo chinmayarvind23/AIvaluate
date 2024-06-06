@@ -1,4 +1,5 @@
-# System Design Plan - Team 8 (AI-powered web-development course platform - AIValuate)
+# System Design Plan - Team 8 (AI-powered web-development course platform)
+# AIValuate
 
 ## Introduction
 
@@ -367,11 +368,13 @@ Main scenario:
 
 (If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the UML Class diagram)
 
-As shown above, the UML diagram consists of 11 classes. A description of each class and attribute can be found below under the ER diagram section.
+As shown above, the UML diagram consists of 11 classes. A description of each class and attribute can be found below in the ER diagram section. The main changes from the ER diagram to the above UML diagram were including aggregation relationships for entities like students -> courses, with courses being the whole entity, and the students being the part, and having attributes with their data types as well as methods to get and set those attributes. The above UML diagram gives clarity on how we can go about modelling classes within our web application.
 
 ## Journey Lines
 
 <img width="1134" alt="Journey Line 1_ Instructor assignment supervision" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/63f29a9b-2eb4-443a-9385-e53db0566b5e">
+
+In the above journey line, we depict a progression of customer satisfication throughout the assignment supervision (creation) process, all the way from logging into our application, to including what could potentially go wrong, to creating an assignment and modifying its details according to an instructor's wish up until the student being able to access the assignment successfully via our platform.
 
 <img width="1238" alt="Journey Line 2_ Instructor grading and feedback" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/681fbc12-afd5-426a-aa20-9d66705d720a">
 

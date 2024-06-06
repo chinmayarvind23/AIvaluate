@@ -97,8 +97,123 @@ The following ER (Entity Relationship) diagram details our how the data within o
 
 ## Database Design Justification
 
-Our database is modeled in
-Why is our data modelled the way it is? purpose of each table and attribute
+## Database Design Justification
+
+### List of Entities
+#### Student
+###### Purpose
+The Student entity keeps track of basic student information and login credentials.
+###### Attributes
+- studetnId: the primary key that identifies student
+- firstName: student's first name
+- lastName: student's last name
+- email: student account log in email
+- password: password of a student account
+- major: student's major program
+- grade: the average GPA of a student
+
+#### SystemAdministrator
+
+###### Purpose
+The SystemAdministrator table stores admin user groups name and log in credentials.
+###### Attributes
+- adminId: the primary key that uniquely identifies each system administrator
+- firstName: system administrator's first name
+- lastName: system administrator's last name
+- email: system administrator log in email
+- password: system password of a system administrator's account
+#### Course
+###### Purpose
+The course table stores basic info of a course, and various stats of student grades of that course.
+###### Attributes
+- couseId: The primary key that identifies each course
+- description: a brief introduction of what the course offers
+- studentGrade
+	- Mean: the average grade of the course
+	- Median: the median grade of the course
+	- Mode: the mode of student's grade of the course
+	- UpperQuartile: the upper quartile of student grades of the course
+	- LowerQuartile: the lower quartile of student grades of the course
+
+#### CourseNotification
+###### Purpose
+The CourseNotification table stores data related to posted notifications.
+###### Attributes
+- senderId: the primary key that indicates the sender's identification
+- receiverId: the primary key that indicates the receiver's identification
+- message: stores the actual message of a notification
+- isRead: stores the status of whether the notification has been read by the receiver
+#### EnrolledIn
+###### Purpose
+The EntrolledIn table stores data of students' course enrollment status.
+###### Attributes
+- enrollmentId: a primary key that identifies each student's enrollment status
+- enrolledInCourseCode: a list of courses a student is currently enrolled in
+#### Instructor
+###### Purpose
+The Instructor entity stores basic information of an instructor and their login credentials
+###### Attributes
+- instructorId: the primary key which uniquely identifies an instructor
+- firstName: an instructor's first name
+- lastName: an instrctor's last name
+- email: an instructor's log in email address
+- password: an instructor's log in password
+- department: the department an instructor belongs to
+- hasFullAccess: determines whether an user has full access of the system, this attribute differentiate T.A. user roles from instructor roles
+#### Assignment
+###### Purpose
+The Assignment entity stores data of assignments created by instructors
+###### Attribute
+- assignmentId: the primary key that identifies each assignment
+- percentageAssignmentGrade: a percentage grade assigned to the assignment
+- dueDate: the due date of an assignment
+- assignmentKey: the correct answers of an assignment
+#### StudentFeedback
+###### Purpose
+The StudentFeedback table stores data of AI's feedback and instructor's feedback in regards to the student's assignment submission.
+###### Attributes
+- studentFeedbackId: a primary key that uniquely identifies the feedback of a student's assignment submission
+- AifeedbackText: stores the AI feedback of a student's assignment submission
+- InstructorTAfeedbackText: stores the instructor's, or the TA's feedback of a student's assignment submission
+#### Rubric
+###### Purpose 
+The Rubric entity stores data of rubric of a specific assignment. The rubrics also serve the purpose of providing prompts to the AI marking components.
+###### Attributes
+- rubricId: the primary key that uniquely identifies each rubric
+- criteria: specific description of contents of a rubric
+
+#### Submission
+###### Purpose
+The Submission entity stores all data relates to an assignment submission, including the grades, submission status, feedback and course info.
+###### Attributes
+- submissionId: this is the primary key that identifies each submission
+- courseName: the name of the course the submission belongs to
+- submittedAt: a timestamp of when the submission is made
+- isSubmitted: a status indicating whether the assignment is submitted or not
+- updatedAt: a timestamp that shows when the submission is updated by the student
+- isGraded: a status indicating whether or not the submission has been graded
+- AIGrade: a grade assigned by the AI to the submission attempt
+- AIFeedbackText: the feedback provided by the AI
+- InstructorTAFeedbackText: the feedback provided by instructor or TA
+- instructorTAgrade: a grade assigned by the instructor/TA to the submission attempt
+
+### Table Relationships
+
+| Entity #1           | Cardinality #1 | Cardinality #2 | Entity #2          | Description                                                                                                                                                        |
+| ------------------- | -------------- | -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| CourseNotification  | 0...*          | 0...*          | Student            | A course notification can be sent to zero to many students, and a student can receive zero to many notifications                                                   |
+| Student             | 1...*          | 1...*          | Course             | A student enrolls in at least one course, and each course has at least one student                                                                                 |
+| SystemAdministrator | 1...*          | 1...*          | Course             | System Administrator manages at least one course, and each course is managed by at least one system administrator                                                  |
+| Instructor          | 1...*          | 1...*          | Course             | An instructor teaches at least one course, and one course is taught by at least one instructor (note that the instructor and teaching assistant shares one entity) |
+| Course              | 0....*         | 1...*          | Assignment         | A course has at least one assignment, and an assignment can be assigned to zero to many courses.                                                                   |
+| Assignment          | 1...1          | 1...*          | StudentFeedback    | One assignment can have one to many feedbacks, and each feedback will be attached to exactly one assignment                                                        |
+| Assignment          | 1...1          | 0...1          | Rubric             | One assignment can have zero or one rubric, and each rubric will be attached to exactly one assignment                                                             |
+| Assignment          | 1...1          | 1...*          | Submission         | An assignment can be submitted multiple times, and each submission applies to one assignment only                                                                  |
+| Assignment          | 1...1          | 0...*          | CourseNotification | Each assignment can have zero to many notifications, and each notifications applies to only one assignment only                                                    |
+
+
+
+
 
 ## Data Flow Diagram (Level 0/Level 1)
 

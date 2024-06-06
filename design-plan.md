@@ -374,17 +374,21 @@ As shown above, the UML diagram consists of 11 classes. A description of each cl
 
 <img width="1134" alt="Journey Line 1_ Instructor assignment supervision" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/63f29a9b-2eb4-443a-9385-e53db0566b5e">
 
-In the above journey line, we depict a progression of customer satisfication throughout the assignment supervision (creation) process, all the way from logging into our application, to including what could potentially go wrong, to creating an assignment and modifying its details according to an instructor's wish up until the student being able to access the assignment successfully via our platform.
+In the above journey line, we depict a progression of an instructor's satisfication throughout the assignment supervision (creation) process, all the way from logging into our application, to including what could potentially go wrong, to creating an assignment and modifying its details according to an instructor's wish up until the student being able to access the assignment successfully via our platform.
 
 <img width="1238" alt="Journey Line 2_ Instructor grading and feedback" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/681fbc12-afd5-426a-aa20-9d66705d720a">
 
+In the above journey line, we depict a progression of an instructor's satisfication throughout the assignment grading and feedback process, all the way from logging into our application, to including what could potentially go wrong, to creating an assignment and students submitting their assignments and waiting on instructor and AI-generated feedback, which is delivered to the students with their grades via our platform.
+
 <img width="1391" alt="Journey Line 3_ Student submissions and feedback" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/ef3f265c-f6ca-4ef5-aae5-0327a97a7d2e">
+
+In the above journey line, we depict a progression of a student's satisfication throughout the assignment submission and feedback process, all the way from logging into our application, to including what could potentially go wrong, to receiving submissions from the student, to receiving feedback and a grade from the AI and the instructor for their submission, helping the students to learn from the feedback via our platform.
 
 <img width="1458" alt="Journey Line 4_ System Administrator course supervision   permissions" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/cd19fefe-143d-44b8-8a80-64de403126f8">
 
-(If the images are too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Journey Lines 1 - 4)
+In the above journey line, we depict a progression of a system administrator's satisfication throughout the course supervision and permission granting process, all the way from giving instructors their access to our platform, to including what could potentially go wrong, and even giving teaching assistants restricted access within the instructor role, and allowing for students to receive feedback and grades from the TAs, instructors and the AI  via our platform.
 
-Brief description of each journey line within 1-2 sentences.
+(If the images are too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Journey Lines 1 - 4)
 
 ## Database Design
 

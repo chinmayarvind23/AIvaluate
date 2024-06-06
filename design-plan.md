@@ -115,11 +115,11 @@ DFD Level 1
 
 ## High-Level Context Diagram
 
-This diagram illustrates the primary external entities and how they interact with the system:
+This diagram illustrates the primary external entities and how they interact with the system:<br>
 
--Instructor: Oversees courses, assignments, and the grading process.
--Student: Completes and submits assignments, and retrieves grades and feedback.
--Admin: Administers the overall system configurations and manages user permissions.
+-Instructor: Oversees courses, assignments, and the grading process.<br>
+-Student: Completes and submits assignments, and retrieves grades and feedback.<br>
+-Admin: Administers the overall system configurations and manages user permissions.<br>
 
 
 

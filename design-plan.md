@@ -114,12 +114,51 @@ DFD Level 1
 <img width="967" alt="Screenshot 2024-06-05 at 4 41 37 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97553042/16cc7cbb-3c16-4f81-a42c-3f835c45162f">
 
 
-
 This diagram illustrates the primary external entities and how they interact with the system:
 
 - **Instructor**: Oversees courses, assignments, and the grading process.
 - **Student**: Completes and submits assignments, and retrieves grades and feedback.
 - **Admin**: Administers the overall system configurations and manages user permissions.
+
+  
+
+  ### Detailed Level 1 DFD
+Below is an expanded flow based on the detailed DFD you have provided:
+
+#### Login (Process 1)
+- **Participants**: Users (including instructors, students, and admins)
+- **Action**: Go through a login procedure for authentication.
+- **Validation**: User credentials are validated against the User Account Database.
+
+#### Course Management (Process 2)
+- **Participants**: Instructors
+- **Action**: Input new or updated course information.
+- **Storage**: Information is stored in the Courses Database.
+
+#### Assignment Creation and Modification (Process 3)
+- **Participants**: Instructors and teaching assistants
+- **Action**: Develop or modify assignments along with associated rubrics.
+- **Storage**: Assignment details are cataloged in the Assignments Database.
+
+#### Assignment Submission (Process 4)
+- **Participants**: Students
+- **Action**: Upload their assignments (either documents or links).
+- **Storage**: Submissions are recorded in the Student Work Database.
+
+#### Automated Grading (Process 5)
+- **Tools**: AI tools (like OpenAI’s ChatGPT or Ollama)
+- **Action**: Automatically evaluate assignments.
+- **Storage**: Initial grades are temporarily logged in the Grades Database.
+
+#### Grade Validation and Oversight (Process 6)
+- **Participants**: Instructors
+- **Action**: Scrutinize the AI-produced grades for precision and authorize them.
+- **Update**: Any modifications are recorded in the Grades Database.
+
+#### Feedback and Improvement (Process 7)
+- **Participants**: Students
+- **Action**: Review their finalized grades and feedback.
+
 
 
 

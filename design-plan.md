@@ -31,8 +31,6 @@ Our AI-powered web-development course platform has a multitude of use cases for 
 
 ## Use Case Diagram & Use Case Descriptions
 
-## Use Case Diagram & Use Case Descriptions
-
 <img width="1392" alt="Use Case Diagram (1)" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/221facc9-64c1-4777-98d7-d44b86e8f732">
 
 (If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the Use Case diagram)

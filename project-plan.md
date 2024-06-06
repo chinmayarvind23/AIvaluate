@@ -161,24 +161,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
     - **Needs**: Clear instructions for assignments, timely and detailed feedback, and tools to track progress and grades.
     - **Frustrations**: Delayed feedback, unclear grading criteria, and difficulty understanding how to improve code.
 
-**3. Teaching Assistants (TAs)**
-- **Description**: Teaching Assistants offer support to instructors by helping with grading, providing feedback as and when needed on student submissions, and assisting students efficiently to learn the course materials.
-
-- **High-Level Goals**:
-    - Assist instructors with grading and providing feedback.
-    - Help students understand their grades and feedback.
-    - Facilitate communication between instructors and students.
-    - Monitor student performance to identify those needing extra help.
-
-- **Proto-Persona**:
-    - **Name**: Ken Adams
-    - **Age**: 26
-    - **Occupation**: Graduate Teaching Assistant
-    - **Background**: Ken is a graduate student in computer science with a focus on web development. He enjoys mentoring and helping undergraduates succeed.
-    - **Needs**: Tools to efficiently assist with grading, clear communication channels with instructors and students, and insights into student performance.
-    - **Frustrations**: Overwhelming volume of assignments to grade, inconsistent feedback mechanisms, and difficulty tracking student progress.
-
-**4. System Administrators**
+**3. System Administrators**
 - **Description**: System Administrators manage the technical aspects of the platform, ensuring its stability, security, and performance.
 
 - **High-Level Goals**:
@@ -222,14 +205,7 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 
 - **Example Scenario**: Alex Falangie submits her HTML assignment through the platform. After grading is completed by the AI engine, Alex receives detailed feedback, including comments on where she excelled and what she can improve. She checks her progress dashboard to see how this assignment affects her overall grade and identifies areas to focus on for future assignments.
 
-**3. Teaching Assistants (TAs)**
-- **Assist with Grading**: Review and refine AI-generated grades and feedback. Provide additional comments or adjustments as needed.
-
-- **Communicate with Students**: Engage with students to provide additional support and clarification on assignments. Assist in managing class discussions and answering queries.
-
-- **Example Scenario**: The TA Ken Adams reviews the AI-generated feedback for a recent HTML and CSS assignment. He notices a common error among several students and decides to add additional comments to help clarify the mistake. He then identifies a few students who are struggling and informs Dr. John Newman, suggesting they might need extra support.
-
-**4. System Administrators**
+**3. System Administrators**
 - **Grant access to resources**: Allowing access to courses and assignments for students, TAs, instructors as and when required.
 
 - **Communicate with Instructors & Students**: Send important faculty messages to instructors and TAs to aid them in teaching the course material to students and informing students of any major changes to the course.

@@ -163,7 +163,7 @@ The Assignment entity stores data on assignments created by instructors
 - assignmentId: the primary key that identifies each assignment
 - dueDate: the due date of an assignment
 - assignmentKey: the correct answers to an assignment
-- maxAssignmentGrade: the max number grade one can obtain
+- maxObtainableGrade: the max number grade one can obtain
 - description: specifies the requirement or the content of the assignment
 #### StudentFeedback
 ###### Purpose
@@ -187,10 +187,6 @@ The Submission entity stores all data relates to an assignment submission, inclu
 - submittedAt: a timestamp of when the submission is made
 - updatedAt: a timestamp that shows when the submission is updated by the student
 - isGraded: a status indicating whether or not the submission has been graded
-- AIGrade: a grade assigned by the AI to the submission attempt
-- AIFeedbackText: the feedback provided by the AI
-- InstructorTAFeedbackText: the feedback provided by the instructor or TA
-- instructorTAgrade: a grade assigned by the instructor/TA to the submission attempt
 
 #### StudentFeedbackReport
 ###### Purpose

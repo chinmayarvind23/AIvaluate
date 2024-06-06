@@ -91,7 +91,7 @@ Brief description of each journey line within 1-2 sentences.
 
 The following ER (Entity Relationship) diagram details our how the data within our database is modelled via the creation of tables to support differnet entities interacting with eachother to make the system function efficiently and effectively:
 
-<img width="1382" alt="ER Diagram" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/d5088ad5-0fba-4ec9-bb06-f39cd16af591">
+![ER Diagram](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/123427375/a44937e1-ac75-431b-b191-20b97fbfa88e)
 
 (If the image is too small, either right click the image and open in new tab to zoom in, or click the following link: https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/tree/design-plan/docs/design/System%20Design and click on the ER diagram)
 
@@ -141,7 +141,7 @@ The CourseNotification table stores data related to posted notifications.
 - isRead: stores the status of whether the notification has been read by the receiver
 #### EnrolledIn
 ###### Purpose
-The EntrolledIn table stores data of students' course enrollment status.
+The EntrolledIn table stores data on students' course enrollment status.
 ###### Attributes
 - enrollmentId: a primary key that identifies each student's enrollment status
 - enrolledInCourseCode: a list of courses a student is currently enrolled in
@@ -151,31 +151,30 @@ The Instructor entity stores basic information of an instructor and their login 
 ###### Attributes
 - instructorId: the primary key which uniquely identifies an instructor
 - firstName: an instructor's first name
-- lastName: an instrctor's last name
-- email: an instructor's log in email address
-- password: an instructor's log in password
+- lastName: an instructor's last name
+- email: an instructor's login email address
+- password: an instructor's login password
 - department: the department an instructor belongs to
-- hasFullAccess: determines whether an user has full access of the system, this attribute differentiate T.A. user roles from instructor roles
+- hasFullAccess: determines whether a user has full access to the system; this attribute differentiates T.A. user roles from instructor roles
 #### Assignment
 ###### Purpose
-The Assignment entity stores data of assignments created by instructors
+The Assignment entity stores data on assignments created by instructors
 ###### Attribute
 - assignmentId: the primary key that identifies each assignment
-- courseId: a foreign key to specify which course the assignment belongs to
 - dueDate: the due date of an assignment
-- assignmentKey: the correct answers of an assignment
+- assignmentKey: the correct answers to an assignment
 - maxAssignmentGrade: the max number grade one can obtain
 - description: specifies the requirement or the content of the assignment
 #### StudentFeedback
 ###### Purpose
-The StudentFeedback table stores data of AI's feedback and instructor's feedback in regards to the student's assignment submission.
+The StudentFeedback table stores data on AI's feedback and the instructor's feedback in regard to the student's assignment submission.
 ###### Attributes
 - studentFeedbackId: a primary key that uniquely identifies the feedback of a student's assignment submission
 - AifeedbackText: stores the AI feedback of a student's assignment submission
-- InstructorTAfeedbackText: stores the instructor's, or the TA's feedback of a student's assignment submission
+- InstructorTAfeedbackText: stores the instructor's or the TA's feedback on a student's assignment submission
 #### Rubric
 ###### Purpose 
-The Rubric entity stores data of rubric of a specific assignment. The rubrics also serve the purpose of providing prompts to the AI marking components.
+The Rubric entity stores data on the rubric of a specific assignment. The rubrics also serve the purpose of providing prompts to the AI marking components.
 ###### Attributes
 - rubricId: the primary key that uniquely identifies each rubric
 - criteria: specific description of contents of a rubric
@@ -185,19 +184,17 @@ The Rubric entity stores data of rubric of a specific assignment. The rubrics al
 The Submission entity stores all data relates to an assignment submission, including the grades, submission status, feedback and course info.
 ###### Attributes
 - submissionId: this is the primary key that identifies each submission
-- courseId: a foreign key which specifies which course the submission belongs to
-- studentId: a foreign key that tells which student has made the submission
 - submittedAt: a timestamp of when the submission is made
 - updatedAt: a timestamp that shows when the submission is updated by the student
 - isGraded: a status indicating whether or not the submission has been graded
 - AIGrade: a grade assigned by the AI to the submission attempt
 - AIFeedbackText: the feedback provided by the AI
-- InstructorTAFeedbackText: the feedback provided by instructor or TA
+- InstructorTAFeedbackText: the feedback provided by the instructor or TA
 - instructorTAgrade: a grade assigned by the instructor/TA to the submission attempt
 
 #### StudentFeedbackReport
 ###### Purpose
-The StudentFeedbackReport entity stores data of the review and adjustment instructor made in regards of AI feedbacks.
+The StudentFeedbackReport entity stores data on the review and adjustments the instructor made in regard to AI feedback.
 ###### Attributes
 - studentFeedbackReportId: this is the primary key that uniquely identifies each feedback report
 - reportText: the content  of a feedback report
@@ -205,11 +202,10 @@ The StudentFeedbackReport entity stores data of the review and adjustment instru
 
 #### Grade
 ###### Purpose
-The grade entity keeps track of the ai and instructor grade assigned to one submission attempt
+The grade entity keeps track of the AI and instructor grade assigned to one submission attempt
 ###### Attributes
-- submissionId: this is the FK from submission table, also acts as one of the primary key 
-- assignmentId: this is the FK from the assignment table, also acts as one of the primary key
-- maxObtainableGrade: this is a FK borrowed from the assignment table, it represents the maximum grade one can obtain for one assignment
+- submissionId: this is a partial key borrowed from the submission table
+- assignmentId: this is a partial key borrowed from the assignment table
 - numberAssignmentGradeAI: the number grade provided by the AI
 - numberAssignmentGradeFinal: the final number grade assigned by the instructor
 - percentageAssignmentGrade: a percentage grade assigned to the assignment
@@ -221,15 +217,15 @@ The grade entity keeps track of the ai and instructor grade assigned to one subm
 | CourseNotification  | 0...*          | 0...*          | Student               | A course notification can be sent to zero to many students, and a student can receive zero to many notifications                                                   |
 | Student             | 1...*          | 1...*          | Course                | A student enrolls in at least one course, and each course has at least one student                                                                                 |
 | SystemAdministrator | 1...*          | 1...*          | Course                | System Administrator manages at least one course, and each course is managed by at least one system administrator                                                  |
-| Instructor          | 1...*          | 1...*          | Course                | An instructor teaches at least one course, and one course is taught by at least one instructor (note that the instructor and teaching assistant shares one entity) |
+| Instructor          | 1...*          | 1...*          | Course                | An instructor teaches at least one course, and one course is taught by at least one instructor (note that the instructor and teaching assistant share one entity) |
 | Course              | 1...1          | 0...*          | Assignment            | A course has zero to many assignments, and an assignment can be assigned to one and only one class                                                                 |
 | Assignment          | 1...1          | 1...*          | StudentFeedback       | One assignment can have one to many feedbacks, and each feedback will be attached to exactly one assignment                                                        |
 | Assignment          | 1...1          | 0...1          | Rubric                | One assignment can have zero or one rubric, and each rubric will be attached to exactly one assignment                                                             |
 | Assignment          | 1...1          | 0...*          | Submission            | An assignment can be submitted zero to many times, and each submission applies to one assignment only                                                              |
-| Assignment          | 1...1          | 0...*          | CourseNotification    | Each assignment can have zero to many notifications, and each notifications applies to only one assignment only                                                    |
-| StudentFeedback     | 1...1          | 0...*          | StudentFeedbackReport | Each student feedback report is associated to one and only one student feedback, and each feedback can have zero to many feedback reports                          |
+| Assignment          | 1...1          | 0...*          | CourseNotification    | Each assignment can have zero to many notifications, and each notification applies to only one assignment only                                                    |
+| StudentFeedback     | 1...1          | 0...*          | StudentFeedbackReport | Each student feedback report is associated with one and only one student feedback and each feedback can have zero to many feedback reports                          |
 | Student             | 1...1          | 0...*          | Submission            | Each submission is made by one and only one student, one student can submit zero to many times                                                                     |
-| Assignment          | 1...1          | 0...*          | Grade                 | An assignment can have zero to many graded submission, but each graded submission can only belong to one assignment                                                |
+| Assignment          | 1...1          | 0...*          | Grade                 | An assignment can have zero to many graded submissions, but each graded submission can only belong to one assignment                                                |
 
 
 

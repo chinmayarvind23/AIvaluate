@@ -28,7 +28,7 @@ services:
   
 # Backend container
   backend:
-    build: ./aivaluate/backend
+    image: chinmayarvind/aivaluate-backend-quantum-phoenix
     container_name: backend
     ports:
       - 3000:3000

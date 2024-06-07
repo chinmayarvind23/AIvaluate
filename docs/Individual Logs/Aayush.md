@@ -29,9 +29,9 @@
 
 
   ## Wednesday June 5th
-###  hours
+### 3  hours
 - Reviewing the project design documents
-- Set up and containerized frontend with Docker
+  
   
 
 

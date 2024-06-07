@@ -52,7 +52,7 @@
 - Chinmay: 24.25 hours
 - Colton: 9.5 hours
 - Jerry: 19.5 hours
-- Omar: hours
+- Omar:7 hours
 - Aayush: hours
 
 - ### Table view of completed tasks on project board (by which username)

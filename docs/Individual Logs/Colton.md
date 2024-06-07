@@ -26,6 +26,15 @@
 - Finished UI design
 - Did code review and tested React app implementation from VEST
 
-## Wednesday
-### 2 hours
+## Wednesday June 5th
+### 5.5 hours
 - Added to the deisgn plan document.
+- Set up and containerized frontend with Docker
+
+## Thursday June 6th
+### 3 hours
+- Working on Login/logout page front end design
+
+## Friday June 7th
+### 1 hour
+- worked on Login/logout page front end design

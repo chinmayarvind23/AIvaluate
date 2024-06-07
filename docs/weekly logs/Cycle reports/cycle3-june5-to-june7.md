@@ -45,7 +45,7 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    ![Burn Up Cycle 3](/Users/chinmayarvind/Documents/Projects/capstone-project/docs/weekly logs/Burnup graphs/Cycle3.png)
+    <img width="821" alt="Screenshot 2024-06-07 at 6 05 45 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/273798fa-ce66-4510-afbf-5ac9199d78f7">
 
 ### Times for team/individual
 

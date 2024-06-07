@@ -57,11 +57,11 @@
 
 - ### Table view of completed tasks on project board (by which username)
 
-   tasks completed, by all team members contributing equally
+  8 out of the 9 tasks nearing completion, the split of tasks can be viewed by whom the issue #x is assigned to.
 
 - ### Table view of in progress tasks on project board (by which username)
 
-   out of the 8 tasks completed, will be integrating frontend + backend + DB together within today, with each team member contributing equally.
+  8 out of the 9 tasks nearing completion, will be integrating frontend + backend + DB together within today, with each team member contributing equally.
 
 - ### Test report/testing status
 

@@ -154,3 +154,42 @@ Daily work log
         - Setup Express.js, PostgreSQL
         - Setup reverse proxy
         - Design login page
+9. June 6
+   - Tasks worked on:
+       - Setting up digital ocean (2 hours)
+       - PostgreSQL setup locally (2 hours)
+       - DDL designing and connecting to PostgreSQL (2.25 hours)
+   - Features being worked on and linked project board issues:
+        - Digital Ocean setup, Issue #33
+        - DDL Design, Issue #31
+        - PostgreSQL setup
+   - Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+        - Digital Ocean setup (Medium, WIP)
+        - DDL Design (Large, WIP)
+        - PostgreSQL setup (Medium, WIP)
+   - Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+        - Working on containerizing major compoents of system architecture
+        - Recording and editing video presentation for design plan
+        - Containerize all major system components
+        - Setup PostgreSQL
+        - Setup DroneCI for CI/CD and automated testing
+10. June 7
+   - Tasks worked on:
+       - DDL rework and redesign to match foreign keys from relational model, and integration with PostgreSQL (5 hours)
+       - Containerization of Backend, with basic code for backend (5 hours)
+       - Recording and editing video for design plan presentation (3 hours)
+   - Features being worked on and linked project board issues:
+        - DDL creation + PostgreSQL integration Issue #31
+        - Backend containerization Issue #32
+        - Setup http-proxy-middleware on backendIssue #34
+   - Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+        - DDL creation + PostgreSQL integration (Large, completed)
+        - Backend containerization (Large, completed)
+        - Setup http-proxy-middleware on backendIssue (Small, completed)
+        - PostgreSQL + DigitalOcean integration (Large, WIP)
+   - Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+        - Test login feature
+        - Setup hosting website for docker, website, and DB
+        - Create mini-presentation of project progress
+        - Creating issues for all features, finishable in 1-2 hours each
+        - Setup DroneCI for CI/CD and automated testing

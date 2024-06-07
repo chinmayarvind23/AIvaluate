@@ -24,10 +24,18 @@
 
 
 ## Wednesday June 4
-###   hours
-- 
+### 4  hours
+-completed the data flow diagrams and supporting documents
 
-## 
+
+  ## Wednesday June 5th
 ###  hours
-- 
+- Reviewing the project design documents
+- Set up and containerized frontend with Docker
+  
+
+
+## Thursday June 6th
+###  2 hours
+- Working on Login/logout page front-end design page
 

@@ -13,12 +13,13 @@ COPY --from=build /app .
 
 RUN apk add --no-cache postgresql-client
 
-COPY db/aivaluatedb.sql /docker-entrypoint-initdb.d/
+COPY aivaluatedb.sql /docker-entrypoint-initdb.d/
 
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=aivaluate
-ENV POSTGRES_DB=aivaluate
+ENV POSTGRES_USER=admin
+ENV POSTGRES_PASSWORD=admin
+ENV POSTGRES_DB=AIvaluatedb
+ENV POSTGRES_HOST=db
 
 EXPOSE 5432
 
-CMD ["postgres", "node", "server.js"]
+CMD ["sh", "-c", "until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c 'SELECT 1' >/dev/null 2>&1; do echo 'Waiting for database connection...'; sleep 1; done && PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f /docker-entrypoint-initdb.d/aivaluatedb.sql && node server.js"]

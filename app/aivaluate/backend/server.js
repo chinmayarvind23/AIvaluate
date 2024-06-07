@@ -1,7 +1,8 @@
 const express = require('express');
-const path = require('path');
 const { Pool } = require('pg');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
+const port = 3000;
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -10,14 +11,10 @@ const pool = new Pool({
     port: 5432,
 });
 
-// Serve static files from the frontend folder
-app.use(express.static(path.join(__dirname, 'frontend')));
-
-// Define your API routes here
-app.get('/api/data', async (req, res) => {
+app.get('/data', async (req, res) => {
     try {
         // Query the database
-        const result = await pool.query('SELECT * FROM your_table');
+        const result = await pool.query('SELECT * FROM assignments');
         res.json(result.rows);
     } catch (error) {
         console.error('Error executing query', error);
@@ -25,7 +22,6 @@ app.get('/api/data', async (req, res) => {
     }
 });
 
-const port = 3000;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });

@@ -42,7 +42,7 @@ function initialize(passport) {
 
   passport.use(
     new LocalStrategy(
-      { usernameField: "email", passwordField: "password" },
+      { usernameField: "email", passwordField: "userPassword" },
       authenticateUser
     )
   );

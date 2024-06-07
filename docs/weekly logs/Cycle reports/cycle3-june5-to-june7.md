@@ -29,18 +29,18 @@
 
 ### Which tasks are going to be targeted from the next cycle with time estimates and owners (ie planning and who is going to own/work on each task)
 
-- Issue #18 (Set up frontend login page)
-  - Issue #21 (Set up http proxy middle ware for reverse proxy)
-  - Issue #19 (Design css common styling sheet that will be shared among all pages)
-  - Issue #23 (Submitted Docker container of frontend to the server)
-  - Issue #35 (Finish video presentation for design plan)
-  - Issue #20 (Set up and containerize passport.js for user authentication)
-  - Issue #31 (DDL setup for Postgres)
-  - Issue #32 (Backend containerization & setting up backend to be compatible with express, passport, frontend, and the DB)
-  - Issue #33 (Setting up Digital Ocean to integrate with Postgres)
-  - Issue #24 (Write testing for user authentication)
-  - Issue #26 (Create issues for all features, finishable in 1-2 hours each)
-  - Issue #34 (Setup http-proxy-middleware for backend communication with AI API)
+  - Issue #18 (Set up frontend login/signup page): Colton
+  - Issue #21 (Set up http proxy middle ware for reverse proxy): Colton + Jerry
+  - Issue #19 (Design css common styling sheet that will be shared among all pages): Omar + Aayush
+  - Issue #23 (Submitted Docker container of frontend to the server): Colton
+  - Issue #35 (Finish video presentation for design plan): Whole time
+  - Issue #20 (Set up and containerize passport.js for user authentication): Colton
+  - Issue #31 (DDL setup for Postgres): Chinmay
+  - Issue #32 (Backend containerization & setting up backend to be compatible with express, passport, frontend, and the DB): Chinmay
+  - Issue #33 (Setting up Digital Ocean to integrate with Postgres): Jerry + Chinmay
+  - Issue #24 (Write testing for user authentication): Chinmay
+  - Issue #26 (Create issues for all features, finishable in 1-2 hours each): Whole team
+  - Issue #34 (Setup http-proxy-middleware for backend communication with AI API): Colton + Jerry
 
 ### Burn-up chart (velocity)
 
@@ -50,7 +50,7 @@
 ### Times for team/individual
 
 - Chinmay: 21.25 hours
-- Colton: hours
+- Colton: 9.5 hours
 - Jerry: 19.5 hours
 - Omar: hours
 - Aayush: hours
@@ -66,3 +66,4 @@
 - ### Test report/testing status
 
   - Will begin testing within this week, using DroneCI for automating the testing.
+  - Tests will be done for user authentication as soon as it as implemented

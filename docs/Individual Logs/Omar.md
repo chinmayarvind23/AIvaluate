@@ -23,4 +23,8 @@
 - Finished peer review
 - Did my own search on some project-related stuff 
 
+## Thursday, June 6 
+### 4 hours 
+- Worked on the UI design
+- Self-learn - React.js
 

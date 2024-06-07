@@ -1,6 +1,5 @@
 version: '3'
 services:
-  # # below code are from Colton's branch
   # backend:
   #   build:
   #     context: ./app/aivaluate/backend
@@ -21,19 +20,6 @@ services:
   #   volumes:
   #     - ./app/aivaluate/frontend:/app
 
-  backend:
-    build:
-      context: ./aivaluate/backend
-      dockerfile: Dockerfile
-    container_name: backend
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./aivaluate/backend:/app
-      - /app/node_modules
-    depends_on:
-      - db
-
   frontend:
     image: coltonpalfrey/aivaluate-frontend:dev
     container_name: frontend
@@ -52,6 +38,8 @@ services:
       POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"
+    volumes:
+      - ./aivaluate/database:/docker-entrypoint-initdb.d
 
 # A database manager can be accessed at http://localhost:8080/
   adminer:

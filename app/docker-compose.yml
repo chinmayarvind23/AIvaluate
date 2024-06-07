@@ -1,9 +1,6 @@
 version: '3'
 services:
 
- #   volumes:
- #     - ./aivaluate/database:/docker-entrypoint-initdb.d
-
   frontend:
       image: coltonpalfrey/aivaluate-frontend:dev
       container_name: frontend
@@ -21,6 +18,8 @@ services:
       POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"
+    volumes:
+      - ./aivaluate/backend:/docker-entrypoint-initdb.d
 
 # A database manager can be accessed at http://localhost:8080/
   adminer:
@@ -30,16 +29,16 @@ services:
       - 8080:8080
 
   
-# Backend container
-  backend:
-    image: chinmayarvind/aivaluate-backend-quantum-phoenix
-    container_name: backend
-    ports:
-      - 3000:3000
-    depends_on:
-      - db
-    environment:
-      POSTGRES_DB: AIvaluatedb
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_HOST: db
+# # Backend container
+#   backend:
+#     image: chinmayarvind/aivaluate-backend-quantum-phoenix
+#     container_name: backend
+#     ports:
+#       - 3000:3000
+#     depends_on:
+#       - db
+#     environment:
+#       POSTGRES_DB: AIvaluatedb
+#       POSTGRES_USER: admin
+#       POSTGRES_PASSWORD: admin
+#       POSTGRES_HOST: db

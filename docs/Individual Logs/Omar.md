@@ -28,3 +28,7 @@
 - Worked on the UI design
 - Self-learn - React.js
 
+## Friday, June 7 
+### 3 hours 
+- Worked on the presentation video
+- Self-learn - React.js

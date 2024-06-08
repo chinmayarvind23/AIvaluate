@@ -50,7 +50,7 @@
 ### Times for team/individual
 
 - Chinmay: 24.25 hours
-- Colton: 9.5 hours
+- Colton: 14.5 hours
 - Jerry: 19.5 hours
 - Omar:7 hours
 - Aayush: hours

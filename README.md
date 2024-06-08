@@ -4,14 +4,13 @@
 ## Colton Palfrey, Omar Hemed, Chinmay Arvind, Aayush Chaudhary, Jerry Fan
 
 To run the app after you pull from development branch:
-In Terminal #1: (run the docker-compose for frontend and database)
-cd app
-docker-compose up
-
-In Terminal #2: (run the backend server)
-cd app/aivaluate/backend
-npm install
-npm run dev
+- In Terminal #1: (run the docker-compose for frontend and database)
+  - cd app
+  - docker-compose up
+- In Terminal #2: (run the backend server)
+  - cd app/aivaluate/backend
+  - npm install
+  - npm run dev
 
 -Added Passport Authentication
 -Added mockup frontend pages for authentication demo

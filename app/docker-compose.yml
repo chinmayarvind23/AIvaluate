@@ -39,3 +39,20 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_HOST: db
+
+# ollama container
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all  # Ensure Nvidia GPU devices are visible if using GPU
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  ollama_data:
+

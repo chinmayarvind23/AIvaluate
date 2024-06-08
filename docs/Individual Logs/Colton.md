@@ -36,5 +36,7 @@
 - Working on Login/logout page front end design
 
 ## Friday June 7th
-### 1 hour
-- worked on Login/logout page front end design
+### 6 hours
+- Worked on Login/logout page front end design
+- Worked on trying to help solve merge conflicts to merge branch with dockerized backend and merge branch with dockerized passport for authentication
+- Work on ollama AI implementation and dockerization

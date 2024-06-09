@@ -52,3 +52,12 @@
 - Added tailwind css implementation.
 - Worked building a generalized css template called "styles.css" for the front end.
 - Lokking into using github CI/CD for testing when doing a PR and did some research on DRONECI.
+
+## Sunday June 9th
+## 3 hours
+- Created Git issues for the team.
+- Planned the teams sprint plan fo the week.
+- Started working on the front end of the students assignments page.
+- Seperated the front end into more modular components.
+
+

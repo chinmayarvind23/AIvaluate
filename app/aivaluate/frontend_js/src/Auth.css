@@ -3,15 +3,18 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #000428, #004e92);
+    
   }
   
   .auth-form {
+    justify-content: center;
+    align-items: center;
     background: white;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
+    display:inline-block;
   }
   
   .auth-title {
@@ -23,6 +26,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+    
   }
   
   .auth-toggle-btn {
@@ -32,38 +36,69 @@
     background: none;
     cursor: pointer;
     font-weight: bold;
+    height: 40px;
   }
   
   .auth-toggle-btn.active {
     color: white;
-    background: #5a67d8;
-    border-radius: 15px;
+    background: #4d24d4;
+    border-radius: 23px;
+    height:40px;
   }
   
   .auth-input {
+    display: flex;
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ddd;
-    border-radius: 15px;
+    border-radius: 25px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .auth-input::placeholder {
+    font-size: 14px; /* Adjust the font size of the placeholder text */
   }
   
   .forgot-password {
     display: block;
     text-align: right;
     margin-bottom: 1rem;
-    color: #5a67d8;
+    color: #4d24d4;
     text-decoration: none;
+    text-align: center;
   }
   
   .auth-submit {
     width: 100%;
     padding: 0.5rem;
     border: none;
-    border-radius: 15px;
-    background: #5a67d8;
+    border-radius: 25px;
+    background: #4d24d4;
     color: white;
     font-weight: bold;
     cursor: pointer;
+    height: 40px;
+  }
+
+  .background{
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #000000, #2600a3);
+  }
+
+  .logoText{
+    font-size: 2em;
+    color:white;
+    display: flex;
+    flex: column;
+  }
+  .logo{
+    display: flex;
+    flex: column;
+    margin-right: 50px;
   }
   

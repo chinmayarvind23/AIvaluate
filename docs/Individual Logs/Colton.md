@@ -40,3 +40,15 @@
 - Worked on Login/logout page front end design
 - Worked on trying to help solve merge conflicts to merge branch with dockerized backend and merge branch with dockerized passport for authentication
 - Work on ollama AI implementation and dockerization
+
+## Saturday June 8th
+## 6.75 hours
+- Worked on learning and understand the flow and interaction of react and how it worked with javascrip with our system.
+- Fixed the issue with our signup page and improved the look of the front end.
+- Build our dashboard front end and fixed issue with drop down menu.
+- Added page interactions and logout implementation.
+- Finished dockerization of ollama in docker-compose.yml with llama3 implementation.
+- Attempted to write tests using jest for ollama.
+- Added tailwind css implementation.
+- Worked building a generalized css template called "styles.css" for the front end.
+- Lokking into using github CI/CD for testing when doing a PR and did some research on DRONECI.

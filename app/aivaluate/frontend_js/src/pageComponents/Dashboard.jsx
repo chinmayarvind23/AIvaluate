@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import '../styles.css';
 
 const Dashboard = () => {
@@ -8,7 +9,7 @@ const Dashboard = () => {
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    console.log(`menu open - ${!menuOpen}`); // Logging state change
+    console.log(`menu open - ${!menuOpen}`); 
   };
 
   const clickedMenu = {
@@ -23,29 +24,12 @@ const Dashboard = () => {
     color: '#4d24d4',
   };
 
+
   return (
     <div>
-      <header className="header">
-        <div className="circle"></div>
-        <h1>Hello Colton</h1>
-        <div className="menu">
-          <button onClick={toggleMenu}>
-            &#9776;
-          </button>
-          <div className={`dropdown ${menuOpen ? 'show' : ''}`}>
-          <button onClick={toggleMenu}  style={clickedMenu}>
-            &#9776;
-          </button>
-            <a href="#" style={boostFromTop} className="selected">Home</a>
-            <a href="#">Account</a>
-            <a href="login">Logout</a>
-            <a href="#">Join a Course</a>
-            <a href="#">Get Help...</a>
-          </div>
-        </div>
-      </header>
+      <AIvaluateNavBar navBarText='Hello Colton'  />
       <div className="dashboard">
-        <div className="course-card">
+        <div className="course-card" onClick={() => navigate('/AssignmentOverview')}>
           <img src="../../public/webpic.svg" alt="Course" />
           <h2>COSC 499</h2>
           <p>Software Engineering Capstone</p>

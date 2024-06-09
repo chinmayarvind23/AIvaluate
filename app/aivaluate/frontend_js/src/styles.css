@@ -74,23 +74,30 @@ body {
     z-index: 11; /* Ensure button stays on top of dropdown */
   }
   
-  .menu button.active {
+  .menu button .active {
     background: #4d24d4;
     color: white;
+    border: none;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px;
   }
   
   .menu .dropdown {
     display: none;
     position: absolute;
-    top: 15px;
-    right: 10px;
+    top: 0px;
+    right: 0px;
     background: white;
     color: black;
-    border-radius: 50px;
+    border-radius: 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     width: 400px;
-    padding-top: 100px;
     z-index: 1;
   }
   
@@ -101,6 +108,16 @@ body {
     color: black;
     font-size: 30px;
   }
+
+  .menu .dropdown a::before {
+    content: '•'; 
+    margin-right: 10px;
+    color: #4d24d4; 
+    font-size: 40px;
+    text-decoration: none;
+  }
+
+
   
   .menu .dropdown a:hover {
     background: #eee;
@@ -108,5 +125,10 @@ body {
   
   .menu .dropdown.show {
     display: block;
+  }
+
+  .selected{
+    color:#4d24d4;
+    font-style:underline;
   }
   

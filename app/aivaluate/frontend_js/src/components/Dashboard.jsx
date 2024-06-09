@@ -11,19 +11,34 @@ const Dashboard = () => {
     console.log(`menu open - ${!menuOpen}`); // Logging state change
   };
 
+  const clickedMenu = {
+    color: 'white',
+    background: '#4d24d4',
+    float: 'right',
+    marginBottom: '10px'
+  };
+
+  const boostFromTop = {
+    marginTop: '120px',
+    color: '#4d24d4',
+  };
+
   return (
     <div>
       <header className="header">
         <div className="circle"></div>
         <h1>Hello Colton</h1>
         <div className="menu">
-          <button onClick={toggleMenu} className={menuOpen ? 'active' : ''}>
+          <button onClick={toggleMenu}>
             &#9776;
           </button>
           <div className={`dropdown ${menuOpen ? 'show' : ''}`}>
-            <a href="#">Home</a>
+          <button onClick={toggleMenu}  style={clickedMenu}>
+            &#9776;
+          </button>
+            <a href="#" style={boostFromTop} className="selected">Home</a>
             <a href="#">Account</a>
-            <a href="#">Logout</a>
+            <a href="login">Logout</a>
             <a href="#">Join a Course</a>
             <a href="#">Get Help...</a>
           </div>

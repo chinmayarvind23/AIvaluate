@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #000000, #2600a3);
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #4d24d4;
+    border-radius: 70px;
+    margin: 20px;
+    height: 90px;
+    z-index: 9;
+  }
+  
+  .header .circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 20px;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 44px;
+  }
+  
+  .dashboard {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  
+  .course-card {
+    background: white;
+    color: black;
+    border-radius: 50px;
+    width: 200px;
+    margin: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .course-card img {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10; /* Ensure menu button stays on top */
+  }
+  
+  .menu button {
+    background: white;
+    border: none;
+    color: #4d24d4;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px;
+    z-index: 11; /* Ensure button stays on top of dropdown */
+  }
+  
+  .menu button .active {
+    background: #4d24d4;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px;
+  }
+  
+  .menu .dropdown {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: white;
+    color: black;
+    border-radius: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 400px;
+    z-index: 1;
+  }
+  
+  .menu .dropdown a {
+    display: block;
+    padding: 10px 50px 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 30px;
+  }
+
+  .menu .dropdown a::before {
+    content: '•'; 
+    margin-right: 10px;
+    color: #4d24d4; 
+    font-size: 40px;
+    text-decoration: none;
+  }
+
+
+  
+  .menu .dropdown a:hover {
+    background: #eee;
+  }
+  
+  .menu .dropdown.show {
+    display: block;
+  }
+
+  .selected{
+    color:#4d24d4;
+    font-style:underline;
+  }
+  

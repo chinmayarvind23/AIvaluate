@@ -27,7 +27,13 @@
 - Aayush: hours
 
 - ### Table view of completed tasks on project board (by which username)
-
+- Containerized/Dockerized Frontend: Colton
+- Containerized/Dcokerized Ollama llama3 model: Colton
+- Designed General Styling sheet (CSS): Colton
+- Built login page (Frontend): Colton
+- Built signup page (Frontend): Colton
+- Built professor and student dashboard (Frontend): Colton
+- Built modular cards and nav bar with drop down menu as components (Frontend): Colton
   
 
 - ### Table view of in progress tasks on project board (by which username)

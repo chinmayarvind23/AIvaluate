@@ -1,5 +1,5 @@
-import Card from '../components/card';
 import '../styles.css';
+import Card from './card';
 
 const CourseCards = ({navBarText}) => {
 

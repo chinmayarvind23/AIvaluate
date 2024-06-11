@@ -1,28 +1,8 @@
-version: '3'
+version: '3.8'
 services:
-  # backend:
-  #   build:
-  #     context: ./app/aivaluate/backend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8000:8000
-  #   volumes:
-  #     - ./app/aivaluate/backend:/app
-  #   depends_on:
-  # #     - database
-
-  # frontend:
-  #   build:
-  #     context: ./app/aivaluate/frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - ./app/aivaluate/frontend:/app
-
   frontend:
-    image: coltonpalfrey/aivaluate-frontend:dev
-    container_name: frontend
+    image: chinmayarvind/aivaluate-frontend-js-quantum-phoenix:dev
+    container_name: frontend_js
     ports:
       - "5173:5173"
 
@@ -30,7 +10,6 @@ services:
     image: postgres
     restart: always
     shm_size: 128mb
-
     container_name: database
     environment:
       POSTGRES_DB: AIvaluatedb
@@ -47,3 +26,14 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+  # Backend container
+  backend:
+    image: chinmayarvind/ai-valuate-backend-quantum-phoenix:dev
+    container_name: backend
+    ports:
+    - "4000:4000"
+    depends_on:
+    - db
+    env_file:
+    - ./aivaluate/backend/.env

@@ -67,6 +67,14 @@
     text-decoration: none;
     text-align: center;
   }
+
+  .back-to-login {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    text-decoration: none;
+    text-align: center;
+  }
   
   .auth-submit {
     width: 100%;

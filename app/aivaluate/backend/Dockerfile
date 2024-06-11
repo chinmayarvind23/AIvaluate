@@ -8,10 +8,8 @@ RUN npm install
 
 COPY . .
 
-# Debugging lines to list directory contents
-RUN ls -l /app
-RUN ls -l /app/views
+RUN apt-get update && apt-get install -y postgresql-client
 
-EXPOSE 5432
+EXPOSE 4000
 
 CMD ["node", "server.js"]

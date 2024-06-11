@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS "Student" (
 );
 
 CREATE TABLE IF NOT EXISTS "Instructor"(
-    "instructorId" INT NOT NULL PRIMARY KEY,
+    "instructorId" SERIAL NOT NULL PRIMARY KEY,
     "firstName" VARCHAR(100),
     "lastName" VARCHAR(100),
     "email" VARCHAR(200),
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS "Instructor"(
 );
 
 CREATE TABLE IF NOT EXISTS "Course" (
-    "courseId" INT NOT NULL PRIMARY KEY,
+    "courseId" SERIAL NOT NULL PRIMARY KEY,
     "courseName" VARCHAR(100),
     "courseCode" VARCHAR(100),
     "courseDescription" VARCHAR(1000),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS "EnrolledIn"(
 );
 
 CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
-    "adminId" INT NOT NULL PRIMARY KEY,
+    "adminId" SERIAL NOT NULL PRIMARY KEY,
     "firstName" VARCHAR(100),
     "lastName" VARCHAR(100),
     "email" VARCHAR(200),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
 );
 
 CREATE TABLE IF NOT EXISTS "Assignment"(
-    "assignmentId" INT NOT NULL PRIMARY KEY,
+    "assignmentId" SERIAL NOT NULL PRIMARY KEY,
     "courseId" INT,
     "dueDate" DATE,
     "assignmentKey" VARCHAR(500),
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
 );
 
 CREATE TABLE IF NOT EXISTS "CourseNotification"(
-    "senderId" INT NOT NULL,
+    "senderId" SERIAL NOT NULL,
     "receiverId" INT NOT NULL,
     PRIMARY KEY ("senderId", "receiverId"),
     "courseId" INT,
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS "CourseNotification"(
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
-    "assignmentSubmissionId" INT NOT NULL PRIMARY KEY,
+    "assignmentSubmissionId" SERIAL NOT NULL PRIMARY KEY,
     "studentId" INT NOT NULL,
     "courseId" INT NOT NULL,
     "assignmentId" INT NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedback"(
-    "studentFeedbackId" INT NOT NULL PRIMARY KEY,
+    "studentFeedbackId" SERIAL NOT NULL PRIMARY KEY,
     "studentId" INT NOT NULL,
     "assignmentId" INT NOT NULL,
     "courseId" INT NOT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedback"(
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
-    "studentFeedbackReportId" INT NOT NULL PRIMARY KEY,
+    "studentFeedbackReportId" SERIAL NOT NULL PRIMARY KEY,
     "studentFeedbackReportText" VARCHAR(1000),
     "isResolved" BOOLEAN,
     "studentId" INT NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
-    "assignmentRubricId" INT NOT NULL PRIMARY KEY,
+    "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
     "assignmentId" INT NOT NULL,
     "courseId" INT NOT NULL,
     "criteria" VARCHAR(1000), /* Rubric upload as a file */

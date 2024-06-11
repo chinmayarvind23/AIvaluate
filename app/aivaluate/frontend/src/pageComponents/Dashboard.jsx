@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <AIvaluateNavBar navBarText='Hello Colton'  />
+      <AIvaluateNavBar navBarText='Hello Colton' tab="home" />
       <CourseCards />
     </div>
   );

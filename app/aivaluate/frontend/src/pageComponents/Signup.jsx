@@ -18,12 +18,12 @@ const Signup = () => {
     <div class="background">
       <div class="logo">
         <div class="logoText">
-          <h1 style={aivaluatePurple}>AI</h1><h1>valuate</h1>
+          <h1 class="primary-color-text">AI</h1><h1 class="secondary-color-bg">valuate</h1>
         </div>
       </div>
       <div className="auth-container">
-        <div className="auth-form">
-          <h2 className="auth-title">Signup</h2> 
+        <div className="auth-form secondary-colorbg">
+          <h2 className="auth-title third-color-text">Signup</h2> 
           <div className="auth-toggle" style={divStyle}>
             <button className="auth-toggle-btn" onClick={() => navigate('/login')}>Login</button>
             <button className="auth-toggle-btn active">Signup</button>
@@ -39,7 +39,7 @@ const Signup = () => {
             <option>Mathematics</option>
             <option>Engineering</option>
           </select>
-          <button className="auth-submit">Create Account</button>
+          <button className="auth-submit primary-colorbg">Create Account</button>
         </div>
       </div>
     </div>

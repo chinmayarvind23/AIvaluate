@@ -9,10 +9,6 @@ const Login = () => {
     borderRadius: '25px'
   };
 
-  const aivaluatePurple = {
-    color: '#4d24d4'
-  }
-
   return (
     <div className="background">
       <div className="logo">
@@ -29,7 +25,7 @@ const Login = () => {
           </div>
           <input type="email" placeholder="Email Address" className="auth-input" />
           <input type="password" placeholder="Password" className="auth-input" />
-          <a href="#" className="forgot-password primary-color-text">Forgot Password?</a>
+          <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
           <button className="auth-submit primary-colorbg" onClick={() => navigate('/Dashboard')}>Login</button>
         </div>
       </div>

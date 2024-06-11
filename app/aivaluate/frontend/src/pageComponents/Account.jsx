@@ -10,7 +10,7 @@ const Account = () => {
     const email = "colton@email.com";
     const password = "*********";
     const accountId = "12348817";
-    const id = "Student ID";
+    var id = "Student ID";
     const prof = false;
     if (prof === true) {
         id = "Evaluator ID";

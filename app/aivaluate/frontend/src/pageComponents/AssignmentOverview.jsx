@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Assignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import SideMenuBar from '../components/SideMenuBar';
 import '../styles.css';
 
 const aivaluatePurple = {
@@ -32,19 +33,8 @@ const AssignmentOverview = () => {
   return (
     <div>
       <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone'  />
+      <SideMenuBar tab='assignments' />
       <div className="assignments-container">
-        
-        <aside className="sidebar">
-          <nav>
-            <ul>
-              <li><a href="dashboard">Home</a></li>
-              <li>Grades</li>
-              <li className="selected">Assignments</li>
-              <li>People</li>
-              <li>Submissions</li>
-            </ul>
-          </nav>
-        </aside>
         <main className="content">
           <header className="content-header">
             <button className="back-button">&lt;</button>

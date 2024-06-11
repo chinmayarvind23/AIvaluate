@@ -97,7 +97,8 @@ app.post("/users/register", async(req, res) => {
             [email],
             (err, results)=>{
                 if(err){
-                    throw err;
+                    console.error('Error during SELECT:', err);
+                    return res.render('register', { errors: [{ message: "Database error" }] });
                 }
             
             console.log(results.rows);   
@@ -111,7 +112,8 @@ app.post("/users/register", async(req, res) => {
                     [firstName, lastName, email, hashedPassword],
                     (err, results) => {
                         if (err) {
-                            throw err;
+                            console.error('Error during INSERT:', err);
+                            return res.render('register', { errors: [{ message: "Database error" }] });
                         }
                         console.log(results.rows);
                         req.flash('success_msg',"You are now registered.Please log in");

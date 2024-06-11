@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   frontend:
     image: chinmayarvind/aivaluate-frontend-js-quantum-phoenix:dev
@@ -26,29 +27,8 @@ services:
     ports:
       - 8080:8080
 
-  # # # Backend container
-  # backend:
-  #   build:
-  #     context: ./aivaluate/backend
-  #     dockerfile: Dockerfile
-  #   container_name: backend
-  #   ports:
-  #     - "4000:4000"
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - ./aivaluate/backend/.env
-
   backend:
     image: chinmayarvind/ai-valuate-backend-quantum-phoenix:dev
     container_name: backend
     ports:
-      - 4000:4000
-    depends_on:
-      - db
-    environment:
-      DB_DATABASE: AIvaluatedb
-      DB_USER: admin
-      DB_PASSWORD: admin
-      DB_HOST: localhost
-      DB_PORT: 5432
+

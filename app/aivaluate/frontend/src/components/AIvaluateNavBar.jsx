@@ -28,11 +28,11 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
                     <a href="account" className={`${tab === "account" ? 'primary-color-text' : 'third-color-text'}`}>Account</a>
                     <a href="login" className={`${tab === "login" ? 'primary-color-text' : 'third-color-text'}`}>Logout</a>
                     <a href="#" className={`${tab === "join-course" ? 'primary-color-text' : 'third-color-text'}`}>Join a Course</a>
-                    <a href="#" className={`${tab === "help" ? 'primary-color-text' : 'third-color-text'}`}>Get Help...</a>
+                    <a href="help" className={`${tab === "help" ? 'primary-color-text' : 'third-color-text'}`}>Get Help...</a>
                 </div>
                 </div>
             </header>
         </div>
-    )
+    ) 
 }
 export default AIvaluateNavBar;

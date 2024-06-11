@@ -6,6 +6,7 @@ import AssignmentOverview from './pageComponents/AssignmentOverview';
 import Dashboard from './pageComponents/Dashboard';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
+import HelpPage from './pageComponents/HelpPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path ="/dashboard" element={<Dashboard />} />
           <Route path ="/AssignmentOverview" element={<AssignmentOverview />} />
           <Route path ="/account" element={<Account />} />
+          <Route path ="/help" element={<HelpPage />} />
         </Routes>
       </div>
     </Router>

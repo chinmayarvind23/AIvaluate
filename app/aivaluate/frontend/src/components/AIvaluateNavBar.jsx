@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import '../GeneralStyling.css';
 import '../styles.css';
 
-const AIvaluateNavBar = ({navBarText}) => {
+const AIvaluateNavBar = ({navBarText , tab}) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -9,35 +10,25 @@ const AIvaluateNavBar = ({navBarText}) => {
     console.log(`menu open - ${!menuOpen}`); 
   };
 
-  const clickedMenu = {
-    color: 'white',
-    background: '#4d24d4',
-    float: 'right',
-    marginBottom: '10px'
-  };
 
   const boostFromTop = {
-    marginTop: '120px',
-    color: '#4d24d4',
+    marginTop: '120px'
   };
     return (
         <div>
-            <header className="header">
-                <div className="circle"></div>
+            <header className="header primary-colorbg rborder">
+                <div className="circle secondary-colorbg"></div>
                 <h1>{navBarText}</h1>
                 <div className="menu">
-                <button onClick={toggleMenu}>
+                <button onClick={toggleMenu} className={menuOpen ? 'active' : ''}>
                     &#9776;
                 </button>
-                <div className={`dropdown ${menuOpen ? 'show' : ''}`}>
-                <button onClick={toggleMenu}  style={clickedMenu}>
-                    &#9776;
-                </button>
-                    <a href="#" style={boostFromTop} className="selected">Home</a>
-                    <a href="#">Account</a>
-                    <a href="login">Logout</a>
-                    <a href="#">Join a Course</a>
-                    <a href="#">Get Help...</a>
+                <div className={`dropdown ${menuOpen ? 'show secondary-colorbg' : 'primary-colorbg'}`}>
+                    <a href="dashboard" style={boostFromTop} className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Home</a>
+                    <a href="account" className={`${tab === "account" ? 'primary-color-text' : 'third-color-text'}`}>Account</a>
+                    <a href="login" className={`${tab === "login" ? 'primary-color-text' : 'third-color-text'}`}>Logout</a>
+                    <a href="#" className={`${tab === "join-course" ? 'primary-color-text' : 'third-color-text'}`}>Join a Course</a>
+                    <a href="#" className={`${tab === "help" ? 'primary-color-text' : 'third-color-text'}`}>Get Help...</a>
                 </div>
                 </div>
             </header>

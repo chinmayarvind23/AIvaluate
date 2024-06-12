@@ -5,6 +5,8 @@ import '../styles.css';
 const AIvaluateNavBar = ({navBarText , tab}) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
     console.log(`menu open - ${!menuOpen}`); 

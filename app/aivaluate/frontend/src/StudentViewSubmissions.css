@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    height: max-content;
+    justify-content: center;
+    align-items: center;
+    background: var(--gradient-color);
+    padding: 20px;
+  }
+  
+  .filetab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--gradient-color);
+    color: var(--secondary-color);
+    border-radius: 8px;
+    overflow-y: auto;
+  }
+  
+  .file-list {
+    width: 1400px;
+    height: max-content;
+    max-width: 2900px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+    justify-content: center;
+  }
+  
+  .file-item {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    margin: 5px 0;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background-color: #dfcbcb84;
+    color: black;
+    border-radius: 5px;
+    font-size: 48px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .file-item:nth-child(odd) {
+    background-color: #dfcbcb;
+}
+
+.file-item:nth-child(even) {
+    background-color: #ffffff;
+}
+  
+  .file-item::before {
+    content: '📁';
+    margin-right: 10px;
+  }
+  

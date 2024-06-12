@@ -7,6 +7,8 @@ import Dashboard from './pageComponents/Dashboard';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
+import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import AdminProfLogin from './pageComponents/AdminProfLogin';
 
 const App = () => {
   return (
@@ -21,6 +23,7 @@ const App = () => {
           <Route path ="/account" element={<Account />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
+          <Route path="/admin-proflogin" element={<AdminProfLogin />} />
         </Routes>
       </div>
     </Router>

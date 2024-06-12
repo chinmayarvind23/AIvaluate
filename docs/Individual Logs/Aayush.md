@@ -36,6 +36,22 @@
 
 
 ## Thursday June 6th
-###  2 hours
-- Working on Login/logout page front-end design page
+###  3.5 hours
+- Working on  front-end Login/logout design page
+- Learning react 
+
+## Friday June 7th
+###  4 hours
+
+- Working on  front-end Login/logout design page
+- Worked on the design video presentation
+- Worked on trying to help solve merge conflicts to merge the branch with the dockerized backend
+
+## Saturday June 8th
+###  2.5 hours
+
+- Worked on learning and understanding react
+  
+  
+  
 

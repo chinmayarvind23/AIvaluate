@@ -32,7 +32,7 @@
 
 - Chinmay: 11 hours
 - Colton: 18 hours
-- Jerry: hours
+- Jerry: 10.5 hours
 - Omar: hours
 - Aayush: 12 hours
 

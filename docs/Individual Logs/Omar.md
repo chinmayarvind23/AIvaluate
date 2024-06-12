@@ -32,3 +32,10 @@
 ### 3 hours 
 - Worked on the presentation video
 - Self-learn - React.js
+
+## Tuesday, June 11 
+### 4 Hours
+- Worked on issue 58
+- Workes on issue 60
+- Fixes some ongoing issues with my vs code and got it perfectly running
+- Self-study react

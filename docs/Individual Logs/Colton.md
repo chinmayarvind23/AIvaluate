@@ -106,7 +106,6 @@ Clockify report
         </td>
     </tr>
     <tr>
-        
         <td>Make Signin page
         </td>
         <!-- Status -->
@@ -114,7 +113,6 @@ Clockify report
         </td>
     </tr>
     <tr>
-        
         <td>Make signup page
         </td>
         <!-- Status -->
@@ -122,7 +120,6 @@ Clockify report
         </td>
     </tr>
     <tr>
-        
         <td>Make prof and student dashboard
         </td>
         <!-- Status -->
@@ -130,7 +127,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-        
         <td>Make account page
         </td>
         <!-- Status -->
@@ -138,7 +134,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-        
         <td>Make forgot password page
         </td>
         <!-- Status -->
@@ -146,7 +141,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-        
         <td>Make forgot password email redirect page
         </td>
         <!-- Status -->
@@ -154,7 +148,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-        
         <td>Make join course page
         </td>
         <!-- Status -->
@@ -162,7 +155,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-        
         <td>Dockerize/containerize llama3 using olama
         </td>
         <!-- Status -->
@@ -170,7 +162,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-        
         <td>Set up reverse proxy with server
         </td>
         <!-- Status -->
@@ -178,7 +169,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-         
         <td>Set up backend for login/logout
         </td>
         <!-- Status -->
@@ -186,7 +176,6 @@ Clockify report
         </td>
     </tr>
   <tr>
-         
         <td>Finalize general styling sheet
         </td>
         <!-- Status -->

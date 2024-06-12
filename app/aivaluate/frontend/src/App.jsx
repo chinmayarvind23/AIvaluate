@@ -4,6 +4,7 @@ import './App.css';
 import Account from './pageComponents/Account';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import Dashboard from './pageComponents/Dashboard';
+import JoinCourse from './pageComponents/JoinCourse';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
@@ -21,6 +22,8 @@ const App = () => {
           <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
           <Route path ="/account" element={<Account />} />
           <Route path ="/help" element={<HelpPage />} />
+          <Route path="/joincourse" element={<JoinCourse />} />
+
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
         </Routes>
       </div>

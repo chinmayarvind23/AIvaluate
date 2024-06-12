@@ -34,7 +34,7 @@
 - Colton: 18 hours
 - Jerry: hours
 - Omar: hours
-- Aayush: hours
+- Aayush: 12 hours
 
 
 - ### Table view of completed tasks on project board (by which username)

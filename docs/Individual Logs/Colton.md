@@ -68,7 +68,7 @@
 
 ### Timesheet
 Clockify report
-![alt text](image_url_here)
+![alt text](./clockify-images/Clockify_colton_report_C4.pdf)
 
 ### Current Tasks (Provide sufficient detail)
   * #1: Set up reverse proxy with server: I am setting up http proxy middle ware to route between prof pages, student pages, and admin pages
@@ -84,88 +84,88 @@ Clockify report
         </td>
     </tr>
     <tr>
-        Make Signin page
-        <td>Task A
+        
+        <td>Make Signin page
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
     <tr>
-        Make signup page
-        <td>Task B
+        
+        <td>Make signup page
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
     <tr>
-        Make prof and student dashboard
-        <td>Task C
+        
+        <td>Make prof and student dashboard
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
   <tr>
-        Make account page
-        <td>Task C
+        
+        <td>Make account page
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
   <tr>
-        Make forgot password page
-        <td>Task C
+        
+        <td>Make forgot password page
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
   <tr>
-        Make forgot password email redirect page
-        <td>Task C
+        
+        <td>Make forgot password email redirect page
         </td>
         <!-- Status -->
         <td>In progress
         </td>
     </tr>
   <tr>
-        Make join course page
-        <td>Task C
+        
+        <td>Make join course page
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
   <tr>
-        Dockerize/containerize llama3 using olama
-        <td>Task C
+        
+        <td>Dockerize/containerize llama3 using olama
         </td>
         <!-- Status -->
         <td>Complete
         </td>
     </tr>
   <tr>
-        Set up reverse proxy with server
-        <td>Task C
+        
+        <td>Set up reverse proxy with server
         </td>
         <!-- Status -->
         <td>In progress
         </td>
     </tr>
   <tr>
-        Set up backend for login/logout 
-        <td>Task C
+         
+        <td>Set up backend for login/logout
         </td>
         <!-- Status -->
         <td>In progress
         </td>
     </tr>
   <tr>
-        Finalize general styling sheet 
-        <td>Task C
+         
+        <td>Finalize general styling sheet
         </td>
         <!-- Status -->
         <td>Complete

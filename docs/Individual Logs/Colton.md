@@ -60,4 +60,126 @@
 - Started working on the front end of the students assignments page.
 - Seperated the front end into more modular components.
 
+## Tuesday June 10th
+## 8 hours
+- Finalized the 
+
+## Friday (6/5- 6/7)
+
+### Timesheet
+Clockify report
+![alt text](image_url_here)
+
+### Current Tasks (Provide sufficient detail)
+  * #1: Set up reverse proxy with server: I am setting up http proxy middle ware to route between prof pages, student pages, and admin pages
+  * #2: Make forgot password email redirect page so that when a users receives an email to reset their password they can be redirected to this page.
+  * #3: Set up backend for login/logout: I am setting up the SQL queries to work with our database to allow our login in to work properly with passport.js and to allow our signup page to actually add users to the database.
+
+### Progress Update (since 6/5/2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        Make Signin page
+        <td>Task A
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+    <tr>
+        Make signup page
+        <td>Task B
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+    <tr>
+        Make prof and student dashboard
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+  <tr>
+        Make account page
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+  <tr>
+        Make forgot password page
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+  <tr>
+        Make forgot password email redirect page
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>In progress
+        </td>
+    </tr>
+  <tr>
+        Make join course page
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+  <tr>
+        Dockerize/containerize llama3 using olama
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+  <tr>
+        Set up reverse proxy with server
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>In progress
+        </td>
+    </tr>
+  <tr>
+        Set up backend for login/logout 
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>In progress
+        </td>
+    </tr>
+  <tr>
+        Finalize general styling sheet 
+        <td>Task C
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+Everything has gone really well for me this week and I feel asthough I have been making some steady progress. This week I focused mostly on frontend and designed the login, logout, forgot password, dashboard, account and join class pages, as well and build mutiple reusable frontend modules such as an incourse menu and our websites nav bar. I also put a lot of time and thought into setting up a General styling sheet that is shared among all pages that lets us change the colours of the entire site just by changing three variables.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- SQL/backend implementation for login/Sign and well as joining and creating courses.
+- Server side validation
+- Writign lots of tests using jest for backend implementation
+- Setting up express.js for managing server and routing state memory
+
 

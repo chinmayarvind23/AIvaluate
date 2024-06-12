@@ -26,7 +26,7 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="821" alt="Screenshot 2024-06-07 at 6 05 45 AM" src="">
+    <img width="1020" alt="Screenshot 2024-06-12 at 6 49 50 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/f90cb7d1-edab-4d42-8c60-a6320b445904">
 
 ### Times for team/individual
 

@@ -6,7 +6,7 @@
 Clockify report
 ![alt text](./clockify-images/Clockify_colton_report_C3.png)
 
-### Current Tasks (Provide sufficient detail)
+### Current Tasks
   * #1: Set up reverse proxy with server: I am setting up http proxy middle ware to route between prof pages, student pages, and admin pages
   * #2: Make forgot password email redirect page so that when a users receives an email to reset their password they can be redirected to this page.
   * #3: Set up backend for login/logout: I am setting up the SQL queries to work with our database to allow our login in to work properly with passport.js and to allow our signup page to actually add users to the database.
@@ -92,7 +92,7 @@ This week I spent alot of time working on learning docker and trying to figure o
 Clockify report
 ![alt text](./clockify-images/Clockify_colton_report_C4.png)
 
-### Current Tasks (Provide sufficient detail)
+### Current Tasks
   * #1: Set up reverse proxy with server: I am setting up http proxy middle ware to route between prof pages, student pages, and admin pages
   * #2: Make forgot password email redirect page so that when a users receives an email to reset their password they can be redirected to this page.
   * #3: Set up backend for login/logout: I am setting up the SQL queries to work with our database to allow our login in to work properly with passport.js and to allow our signup page to actually add users to the database.

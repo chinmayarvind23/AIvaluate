@@ -8,6 +8,7 @@ import JoinCourse from './pageComponents/JoinCourse';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
+import People from './pageComponents/People';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/joincourse" element={<JoinCourse />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
+          <Route path ="/People" element={<People />} />
         </Routes>
       </div>
     </Router>

@@ -44,10 +44,12 @@ const StudentLogin = () => {
             <button className="auth-toggle-btn active">Login</button>
             <button className="auth-toggle-btn" onClick={() => navigate('/Signup')}>Signup</button>
           </div>
-          <input type="email" placeholder="Email Address" className="auth-input" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Password" className="auth-input" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
-          <button className="auth-submit primary-colorbg" type="submit" onClick={handleSubmit}>Login</button>
+          <form onSubmit={handleSubmit}>
+            <input type="email" placeholder="Email Address" className="auth-input" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="password" placeholder="Password" className="auth-input" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
+            <button className="auth-submit primary-colorbg" type="submit">Login</button>
+          </form>
         </div>
       </div>
     </div>

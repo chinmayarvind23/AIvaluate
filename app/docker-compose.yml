@@ -1,10 +1,12 @@
 version: '3.8'
 services:
   frontend:
-    image: chinmayarvind/aivaluate-frontend-js-quantum-phoenix:dev
-    container_name: frontend_js
+    image: coltonpalfrey/aivaluate-frontend-quantum-phoenix:dev
+    container_name: frontend
     ports:
       - "5173:5173"
+    environment:
+      - NODE_ENV=development
 
   db:
     image: postgres

@@ -8,6 +8,7 @@ import JoinCourse from './pageComponents/JoinCourse';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
+import HelpPage from './pageComponents/HelpPage';
 
 const App = () => {
   return (
@@ -17,10 +18,12 @@ const App = () => {
           <Route path="/" element={<Login />} /> {/* Default route */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/assignmentoverview" element={<AssignmentOverview />} />
-          <Route path="/account" element={<Account />} />
+          <Route path ="/dashboard" element={<Dashboard />} />
+          <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
+          <Route path ="/account" element={<Account />} />
+          <Route path ="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
+
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
         </Routes>
       </div>

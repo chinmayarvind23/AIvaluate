@@ -1,10 +1,14 @@
 const express = require('express');
+const path = require('path');
 const app = express();
+const cors = require('cors');
 const { pool } = require('./dbConfig');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const flash = require("express-flash");
+const bodyParser = require('body-parser');
 const passport = require("passport");
+const courseRoutes = require('./routes/courseRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -12,8 +16,12 @@ initializePassport(passport);
 
 const PORT = process.env.PORT || 4000;
 
+app.use(cors());
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(
     session({
@@ -27,8 +35,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+// course routes
+
+app.use(courseRoutes);
+
 app.get('/', (req, res) => {
   res.render("index");
+});
+
+app.get('/createcourse', (req, res) => {
+    res.render("createcourse");
 });
 
 app.get('/users/register', checkAuthenticated, (req, res) => {
@@ -149,3 +165,4 @@ function checkNotAuthenticated(req,res,next){
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import '../styles.css';
 import '../GeneralStyling.css';
@@ -11,19 +12,24 @@ const aivaluatePurple = {
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
-  const [courseNumber, setCourseNumber] = useState('');
+  const [courseCode, setCourseCode] = useState('');
   const [maxStudents, setMaxStudents] = useState('');
   const [instructor] = useState('Dr. Scott Fazackerley');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic
-    console.log({
-      courseName,
-      courseNumber,
-      maxStudents,
-      instructor
-    });
+    try {
+      const response = await axios.post('http://localhost:4000/courses', {
+        courseName,
+        courseCode,
+        maxStudents,
+      });
+      console.log('Course created successfully:', response.data);
+      navigate('/dashboard'); // Redirect to dashboard or another page after successful creation
+    } catch (error) {
+      console.error('There was an error creating the course:', error);
+    }
   };
 
   return (
@@ -37,6 +43,7 @@ const CreateCourse = () => {
                 <h3>Course Name</h3>
                 <input 
                   type="text" 
+                  name="courseName"
                   value={courseName}
                   onChange={(e) => setCourseName(e.target.value)}
                 />
@@ -45,14 +52,16 @@ const CreateCourse = () => {
                 <h3>Course Number</h3>
                 <input 
                   type="text" 
-                  value={courseNumber}
-                  onChange={(e) => setCourseNumber(e.target.value)}
+                  name="courseCode"
+                  value={courseCode}
+                  onChange={(e) => setCourseCode(e.target.value)}
                 />
               </div>
               <div className="form-group">
                 <h3>Maximum Number of Students</h3>
                 <input 
                   type="text" 
+                  name="maxStudents"
                   value={maxStudents}
                   onChange={(e) => setMaxStudents(e.target.value)}
                 />

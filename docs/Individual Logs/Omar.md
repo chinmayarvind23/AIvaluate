@@ -39,3 +39,36 @@
 - Workes on issue 60
 - Fixes some ongoing issues with my vs code and got it perfectly running
 - Self-study react
+
+
+
+Timesheet
+
+
+<img width="907" alt="clockify-June 12" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/39a9e7f8-285d-4553-b1ba-edbd811bf468">
+
+
+
+
+Current Tasks: 
+- issue 58
+- issue 60
+- Backend of the Account page(issue 119)
+
+Progress Update: 
+# Progress Update (since June 7)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Issue #58  | Completed  |
+| Task #2 / Issue #119 | Completed  |
+| Task #3 / Issue #60 | In Progress  |
+
+I successfully tackled Task 1, investing considerable effort in debugging and resolving errors. Task 2 presented a significant challenge, requiring extensive setup of the backend before achieving functionality. While I completed both tasks, there remains room for further refinement and improvement.
+
+# Next Cycle Goals
+- Task 3
+- Assign myself more tasks and get them done in a timely manner 
+
+
+
+

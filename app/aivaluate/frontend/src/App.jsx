@@ -9,6 +9,7 @@ import ForgotPassword from './pageComponents/ForgotPassword';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
 import CreateCourse from './pageComponents/CreateCourse';
+import HelpPage from './pageComponents/HelpPage';
 
 const App = () => {
   return (
@@ -18,10 +19,12 @@ const App = () => {
           <Route path="/" element={<Login />} /> {/* Default route */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/assignmentoverview" element={<AssignmentOverview />} />
-          <Route path="/account" element={<Account />} />
+          <Route path ="/dashboard" element={<Dashboard />} />
+          <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
+          <Route path ="/account" element={<Account />} />
+          <Route path ="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
+
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
           <Route path = "/createcourse" element={<CreateCourse />} />
         </Routes>

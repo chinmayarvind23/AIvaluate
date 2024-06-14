@@ -39,10 +39,10 @@ const AssignmentOverview = () => {
           <header className="content-header">
             <button className="back-button">&lt;</button>
             <h2>Feedback - Assignment 1</h2>
-            <div className="score">
+            <h2 className="score">
               <span>Score:</span>
-              <span>25/34</span>
-            </div>
+              <span> 25/34</span>
+            </h2>
           </header>
           <section className="feedback-section">
             <h3>AI Feedback</h3>

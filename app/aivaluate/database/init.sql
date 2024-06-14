@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS "Course" (
     "courseId" SERIAL NOT NULL PRIMARY KEY,
     "courseName" VARCHAR(100),
     "courseCode" VARCHAR(100),
+    "maxStudents" INT CHECK ("maxStudents" > 0),
     "courseDescription" VARCHAR(1000),
     "instructorId" INT,
     FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId")
@@ -150,10 +151,10 @@ VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Course table
-INSERT INTO "Course" ("courseId", "courseName", "courseCode", "courseDescription", "instructorId")
-VALUES (1, 'Introduction to Programming', 'CS101', 'An introductory course on programming', 1),
-    (2, 'Calculus I', 'MATH101', 'A course on basic calculus', 2),
-    (3, 'Physics I', 'PHYS101', 'An introductory course on physics', 3)
+INSERT INTO "Course" ("courseName", "courseCode", "courseDescription", "instructorId")
+VALUES ('Introduction to Programming', 'CS101', 'An introductory course on programming', 1),
+    ('Calculus I', 'MATH101', 'A course on basic calculus', 2),
+    ('Physics I', 'PHYS101', 'An introductory course on physics', 3)
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table

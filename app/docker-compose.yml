@@ -1,10 +1,10 @@
 version: '3.8'
 services:
-  frontend:
-    image: chinmayarvind/aivaluate-frontend-js-quantum-phoenix:dev
-    container_name: frontend_js
-    ports:
-      - "5173:5173"
+  # frontend:
+  #   image: chinmayarvind/aivaluate-frontend-js-quantum-phoenix:dev
+  #   container_name: frontend_js
+  #   ports:
+  #     - "5173:5173"
 
   db:
     image: postgres
@@ -27,13 +27,13 @@ services:
     ports:
       - 8080:8080
 
-  backend:
-    image: chinmayarvind/ai-valuate-backend-quantum-phoenix:dev
-    container_name: backend
-    ports:
-    - "4000:4000"
-    depends_on:
-    - db
-    env_file:
-    - ./aivaluate/backend/.env
+  # backend:
+  #   image: chinmayarvind/ai-valuate-backend-quantum-phoenix:dev
+  #   container_name: backend
+  #   ports:
+  #   - "4000:4000"
+  #   depends_on:
+  #   - db
+  #   env_file:
+  #   - ./aivaluate/backend/.env
 

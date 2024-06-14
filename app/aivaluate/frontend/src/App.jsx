@@ -8,8 +8,12 @@ import JoinCourse from './pageComponents/JoinCourse';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
+import People from './pageComponents/People';
 import CreateCourse from './pageComponents/CreateCourse';
 import HelpPage from './pageComponents/HelpPage';
+import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import AdminProfLogin from './pageComponents/AdminProfLogin';
+import CourseHome from './pageComponents/CourseHome';
 
 const App = () => {
   return (
@@ -24,9 +28,12 @@ const App = () => {
           <Route path ="/account" element={<Account />} />
           <Route path ="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
-
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
+          <Route path ="/People" element={<People />} />
           <Route path = "/createcourse" element={<CreateCourse />} />
+          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
+          <Route path="/admin-proflogin" element={<AdminProfLogin />} />
+          <Route path="/CourseHome" element={<CourseHome />} />
         </Routes>
       </div>
     </Router>

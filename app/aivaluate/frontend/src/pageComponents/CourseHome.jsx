@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../Assignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import CourseCards from '../components/CourseCards';
+import SideMenuBar from '../components/SideMenuBar';
 import '../styles.css';
 
-const Dashboard = () => {
+const aivaluatePurple = {
+    color: '#4d24d4'
+  }
+
+const AssignmentOverview = () => {
   const navigate = useNavigate();
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-    console.log(`menu open - ${!menuOpen}`); 
+    console.log(`menu open - ${!menuOpen}`); // Logging state change
   };
 
   const clickedMenu = {
-    color: 'white', 
+    color: 'white',
     background: '#4d24d4',
     float: 'right',
     marginBottom: '10px'
@@ -24,13 +30,12 @@ const Dashboard = () => {
     marginTop: '120px',
     color: '#4d24d4',
   };
-
   return (
     <div>
-      <AIvaluateNavBar navBarText='Hello Colton' tab="home" />
-      <CourseCards />
+      <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone'  />
+      <SideMenuBar tab='home' />`
     </div>
   );
 };
 
-export default Dashboard;
+export default AssignmentOverview;

@@ -25,7 +25,6 @@ const Dashboard = () => {
     color: '#4d24d4',
   };
 
-
   return (
     <div>
       <AIvaluateNavBar navBarText='Hello Colton' tab="home" />

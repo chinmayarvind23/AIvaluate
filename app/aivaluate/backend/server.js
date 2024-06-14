@@ -9,7 +9,7 @@ const flash = require("express-flash");
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const courseRoutes = require('./routes/courseRoutes');
-const loginRoutes = require('./routes/loginRoutes');
+const studentRoutes = require('./routes/studentRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -41,7 +41,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(courseRoutes);
-app.use(loginRoutes);
+app.use(studentRoutes);
 
 app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;

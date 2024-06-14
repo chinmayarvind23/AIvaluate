@@ -68,10 +68,9 @@
 
   
 ## Friday June 14th
-### 2.5 hours
-- Adjust the Account page frontend page styles (0.5 hours)
-- Backend Account info edit feature implementation (1.5 hours)
-- Backend Account info edit and frontend integration (0.5 hours)
+###  1.5 hours
+- Finalizing the presentation
+
   
   
   

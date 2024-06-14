@@ -13,6 +13,7 @@ import CreateCourse from './pageComponents/CreateCourse';
 import HelpPage from './pageComponents/HelpPage';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
+import CourseHome from './pageComponents/CourseHome';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
           <Route path = "/createcourse" element={<CreateCourse />} />
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
+          <Route path="/CourseHome" element={<CourseHome />} />
         </Routes>
       </div>
     </Router>

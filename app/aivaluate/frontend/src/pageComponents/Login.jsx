@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
+import axios from 'axios';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const divStyle = {
     border: '1px solid black',
     borderRadius: '25px'
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:4000/stu/login', {
+        email,
+        password
+      }, { withCredentials: true }); // Ensure cookies are sent/received
+      console.log('Login successful:', response.data);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('There was an error logging in:', error);
+    }
   };
 
   return (
@@ -21,12 +38,32 @@ const Login = () => {
           <h2 className="auth-title third-color-text">Login</h2>
           <div className="auth-toggle" style={divStyle}>
             <button className="auth-toggle-btn active">Login</button>
-            <button className="auth-toggle-btn" onClick={() => navigate('/Signup')}>Signup</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/signup')}>Signup</button>
           </div>
-          <input type="email" placeholder="Email Address" className="auth-input" />
-          <input type="password" placeholder="Password" className="auth-input" />
-          <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
-          <button className="auth-submit primary-colorbg" onClick={() => navigate('/Dashboard')}>Login</button>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                className="auth-input" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+              />
+            </div>
+            <div className="form-group">
+              <input 
+                type="password" 
+                placeholder="Password" 
+                className="auth-input" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                required 
+              />
+            </div>
+            <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
+            <button className="auth-submit primary-colorbg" type="submit">Login</button>
+          </form>
         </div>
       </div>
     </div>

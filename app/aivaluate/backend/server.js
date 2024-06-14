@@ -9,6 +9,7 @@ const flash = require("express-flash");
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const courseRoutes = require('./routes/courseRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -35,56 +36,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// course routes
-
 app.use(courseRoutes);
+app.use(loginRoutes);
 
-app.get('/', (req, res) => {
-  res.render("index");
-});
-
-app.get('/createcourse', (req, res) => {
-    res.render("createcourse");
-});
-
-app.get('/users/register', checkAuthenticated, (req, res) => {
-    res.render("register");
-});
-
-app.get("/users/login", checkAuthenticated, (req, res) => {
-    res.render("login", { messages: req.flash() });
-});
-
-app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
-    res.render("dashboard", { user: req.user });
-});
-
-app.get('/users/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash('success_msg', "You have successfully logged out");
-        req.session.destroy((err) => {
-            if (err) {
-                return next(err);
-            }
-            res.clearCookie('connect.sid');
-            res.redirect('/users/login');
-        });
-    });
-});
-
-app.post("/users/register", async(req, res) => {
+app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
-
-    console.log({
-        firstName,
-        lastName,
-        email,
-        password,
-        password2
-    });
 
     let errors = [];
 
@@ -96,73 +52,85 @@ app.post("/users/register", async(req, res) => {
         errors.push({ message: "Password should be at least 6 characters long" });
     }
 
-    if(password != password2) {
+    if (password != password2) {
         errors.push({ message: "Passwords do not match" });
     }
 
-    if (errors.length > 0){
-        res.render("register", {errors});
-    }else{
-        // Form validation has passed
-
+    if (errors.length > 0) {
+        return res.status(400).json({ errors });
+    } else {
         let hashedPassword = await bcrypt.hash(password, 10);
-        console.log(hashedPassword);
 
         pool.query(
-            'SELECT * FROM "Student" WHERE email = $1', 
+            'SELECT * FROM "Student" WHERE email = $1',
             [email],
-            (err, results)=>{
-                if(err){
+            (err, results) => {
+                if (err) {
                     console.error('Error during SELECT:', err);
-                    return res.render('register', { errors: [{ message: "Database error" }] });
+                    return res.status(500).json({ errors: [{ message: "Database error" }] });
                 }
-            
-            console.log(results.rows);   
 
-            if(results.rows.length > 0){
-                errors.push({message: "Email already registered"});
-                res.render('register', { errors })
-            }else{
-                pool.query(
-                    'INSERT INTO "Student" ("firstName", "lastName", email, password) VALUES ($1, $2, $3, $4) RETURNING "studentId", password',
-                    [firstName, lastName, email, hashedPassword],
-                    (err, results) => {
-                        if (err) {
-                            console.error('Error during INSERT:', err);
-                            return res.render('register', { errors: [{ message: "Database error" }] });
+                if (results.rows.length > 0) {
+                    errors.push({ message: "Email already registered" });
+                    return res.status(400).json({ errors });
+                } else {
+                    pool.query(
+                        'INSERT INTO "Student" ("firstName", "lastName", email, password) VALUES ($1, $2, $3, $4) RETURNING "studentId", password',
+                        [firstName, lastName, email, hashedPassword],
+                        (err, results) => {
+                            if (err) {
+                                console.error('Error during INSERT:', err);
+                                return res.status(500).json({ errors: [{ message: "Database error" }] });
+                            }
+                            res.status(201).json({ message: "You are now registered. Please log in" });
                         }
-                        console.log(results.rows);
-                        req.flash('success_msg',"You are now registered.Please log in");
-                        res.redirect('/users/login')
-                    }
-                )
+                    );
+                }
             }
-        });
+        );
     }
 });
 
-app.post("/users/login", passport.authenticate("local", {
-    successRedirect: "/users/dashboard",
-    failureRedirect: "/users/login",
+app.post("/stu/login", passport.authenticate("local", {
+    successRedirect: "/stu/dashboard",
+    failureRedirect: "/stu/login",
     failureFlash: true
 }));
 
-function checkAuthenticated(req,res,next){
-    if (req.isAuthenticated()){
-        return res.redirect('/users/dashboard')
+app.get("/stu/dashboard", checkNotAuthenticated, (req, res) => {
+    res.json({ user: req.user });
+});
+
+app.get('/stu/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        req.flash('success_msg', "You have successfully logged out");
+        req.session.destroy((err) => {
+            if (err) {
+                return next(err);
+            }
+            res.clearCookie('connect.sid');
+            res.redirect('/stu/login');
+        });
+    });
+});
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/stu/dashboard');
     }
     next();
 }
 
-function checkNotAuthenticated(req,res,next){
-    if (req.isAuthenticated()){
-        return next()
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
     }
-
-    res.redirect("/users/login");
+    res.redirect("/stu/login");
 }
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-

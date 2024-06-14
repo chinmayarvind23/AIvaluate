@@ -45,7 +45,7 @@ const Signup = () => {
         <div className="auth-form secondary-colorbg">
           <h2 className="auth-title third-color-text">Signup</h2>
           <div className="auth-toggle" style={divStyle}>
-            <button className="auth-toggle-btn" onClick={() => navigate('/login/stu')}>Login</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/login')}>Login</button>
             <button className="auth-toggle-btn active">Signup</button>
           </div>
           <form onSubmit={handleSubmit}>

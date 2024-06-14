@@ -8,9 +8,11 @@ const StudentLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); 
     try {
       console.log('Attempting to log in...');
       const response = await axios.post('http://localhost:4000/login', {
@@ -22,14 +24,18 @@ const StudentLogin = () => {
         console.log('Login successful:', response.data);
         navigate('/dashboard');
       } else {
+        setErrorMessage('Login failed: ' + response.data.message);
         console.error('Login failed:', response.data.message);
       }
     } catch (error) {
       if (error.response) {
+        setErrorMessage('Login failed: ' + error.response.data.message); 
         console.error('Error response:', error.response.data);
       } else if (error.request) {
+        setErrorMessage('Login failed: No response from server'); 
         console.error('Error request:', error.request);
       } else {
+        setErrorMessage('Login failed: ' + error.message);
         console.error('Error message:', error.message);
       }
     }
@@ -77,6 +83,7 @@ const StudentLogin = () => {
                 required 
               />
             </div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
             <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
             <button className="auth-submit primary-colorbg" type="submit">Login</button>
           </form>

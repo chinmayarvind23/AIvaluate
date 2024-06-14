@@ -62,4 +62,8 @@ body {
     font-weight: bold;
 }
 
+.error-message{
+    color: red;
+    text-align: center;
+}
 

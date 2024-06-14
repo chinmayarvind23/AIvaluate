@@ -38,7 +38,10 @@
 ## Thursday June 6th
 ###  3.5 hours
 - Working on  front-end Login/logout design page
-- Learning react 
+- Learning react
+
+  
+- # Timesheet (June 7 - June 11) - 9.5 hours
 
 ## Friday June 7th
 ###  4 hours
@@ -50,6 +53,20 @@
 ## Saturday June 8th
 ###  2.5 hours
 - Worked on learning and understanding react
+  
+## Sunday June 9th
+### 0.5 hour
+- Code review, merged the Frontend login pages to the development branch
+
+
+## Tuesday June 11th
+### 2.5 hours
+- Team meeting and planning (0.5 hour)
+- worked on frontend design Assignment  frontend  page (2 hours)
+
+
+
+
 
 # Timesheet (June 12 - June 14) - 14 hours
 

@@ -1,5 +1,58 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 12 - June 14) - 14 hours
+
+## Friday June 14th
+### 2.5 hours
+- Adjust the Account page frontend page styles (0.5 hours)
+- Backend Account info edit feature implementation (1.5 hours)
+- Backend Account info edit and frontend integration (0.5 hours)
+- 
+## Thursday June 13th
+### 9 hours
+- Team meeting and planning (2 hours)
+- Finished implementing the course creation backend logic (2 hours)
+- Backend integration of the course creation feature (2 hours)
+- Backend and Front integration of the login/user registration feature (3 hours)
+
+## Wednesday June 12th
+### 2.5 hour
+- Built course creation function frontend page (localhost:5173/createcourse)
+  - The course object only has course code/course name and max number of students as attributes
+- Worked on creating course creation function backend logic
+
+# Current Tasks
+- #1 Design Frontend Assignment Overview Page(student view)
+- #2 Design Frontend Individual Assignment Feedback Page
+- #3 Connects User Authentication Backend with Frontend UI
+- #4 Write Testing Cases for User Authentication
+- #5 Implement Account Edit Backend and Connect to the Front Pages
+- #6 Implement Course Creation Backend and Connect to the Front Pages
+
+# Progress Update (since June 12)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Pending  |
+| Task #2 | Pending  |
+| Task #3 | Completed  |
+| Task #4 | In Progress  |
+| Task #5 | Completed  |
+| Task #6 | In Progress  |
+
+# Cycle Goal Review
+I focused on implementing the features to get through Friday's presentation. The user authentication task#3 now works properly. Two other features were also implemented, the course creation and the account info edit (task #5 and #6). 
+
+# Next Cycle 
+- #1 Refine Course Creation Feature
+  - add an expiration date attribute
+  - add the dashboard filter based on the course date
+  - add the instructor detection when creating a course
+- #2 Implement course info edit feature
+- #3 Refine Login Feature
+  - add user role (prof/admin/student) detection    
+- #4 Write Testing Cases for newly added features
+- #5 Implement Course Creation Backend Logic 
+
 # Timesheet (June 7 - June 11) - 10.5 hours
 ## Tuesday June 11th
 ### 2.5 hours

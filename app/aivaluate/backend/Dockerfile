@@ -1,4 +1,4 @@
-FROM node:20.14.0-buster as build
+FROM node:20.14.0-buster
 
 WORKDIR /app/aivaluate/backend
 
@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN apt-get update && apt-get install -y netcat
+
 EXPOSE 4000
 
-CMD sh -c "while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done && node server.js"
+CMD ["npm", "start"]

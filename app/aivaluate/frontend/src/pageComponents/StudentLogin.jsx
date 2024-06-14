@@ -12,6 +12,7 @@ const StudentLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log('Attempting to log in...');
       const response = await axios.post('http://localhost:4000/login', {
         email,
         password,
@@ -19,12 +20,18 @@ const StudentLogin = () => {
 
       if (response.status === 200) {
         console.log('Login successful:', response.data);
-        navigate('/dashboard'); // Redirect to dashboard on successful login
+        navigate('/dashboard');
       } else {
         console.error('Login failed:', response.data.message);
       }
     } catch (error) {
-      console.error('Error logging in:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+      } else if (error.request) {
+        console.error('Error request:', error.request);
+      } else {
+        console.error('Error message:', error.message);
+      }
     }
   };
 

@@ -201,6 +201,8 @@
 ## Timesheet
 
 Clockify report: Total hours - 17 hours
+![Screenshot 2024-06-14 at 7 27 35 AM](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/1ea7a510-90d6-4041-9260-41a47d4ee03c)
+
 
 ## Current Tasks (Provide sufficient detail)
 

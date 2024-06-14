@@ -27,18 +27,24 @@
 ### 4  hours
 -completed the data flow diagrams and supporting documents
 
+# Cycle Summary (June 5 - June 7) - 19.5 hours
 
-  ## Wednesday June 5th
+## Wednesday June 5th
 ### 3  hours
 - Reviewing the project design documents
   
   
-
-
 ## Thursday June 6th
 ###  3.5 hours
 - Working on  front-end Login/logout design page
 - Learning react
+
+## Friday June 7th
+### 5 hours
+- User authentication feature implementation (5 hours)
+  - User authentication feature backend implementation
+  - User authentication frontend mock-up pages
+  - User authentication demo database ddl, and automated database seed put in docker-compose file
 
   
 - # Timesheet (June 7 - June 11) - 9.5 hours

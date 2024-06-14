@@ -27,34 +27,80 @@
 
 ### Times for team/individual
 
-
+![Cycle report clockify](./clockify reports/june12-june14.png)
 
 - ### Table view of completed tasks on project board (by which username)
-- Containerized/Dockerized Frontend: Colton
-- Containerized/Dcokerized Ollama llama3 model: Colton
-- Designed General Styling sheet (CSS): Colton
-- Built login page (Frontend): Colton
-- Built signup page (Frontend): Colton
-- Built professor and student dashboard (Frontend): Colton
-- Built modular cards, side menu, and nav bar with drop down menu as components (Frontend): Colton
-- Built forgot password page: Colton
-- Built Account page: Colton
-- Built join course page: Colton
-- Issue creation for backend: Chinmay
-- Built student view for submission: Chinmay
-- Built admin/prof login page: Chinmay
-- Backend containerization + DB integration: Chinmay
-- Verifying AI model (LLama3) for usage based on performance: Chinmay
-- Docker testing with all 3 containers for frontend, backend, DB: Chinmay & Jerry
-- 
-  
+
+<table border="1">
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>TEAM MEMBER</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>Create Course
+        </td>
+        <!-- Completed by? -->
+        <td>Jerry
+        </td>
+    </tr>
+  <tr>
+        <td>Login/Signup
+        </td>
+        <!-- Completed by? -->
+        <td>Colton, Jerry, Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td>Assigments page frontend
+        </td>
+        <!-- Completed by? -->
+        <td>Aayush
+        </td>
+    </tr>
+</table>
+
 
 - ### Table view of in progress tasks on project board (by which username)
-- Implement backend for login/signup: Colton
-- Set up reverse proxy with server and frontend container: Colton
-- Design change forgettign password page (page that user is sent to from email redirect): Colton
+<table border="1">
+<tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>TEAM MEMBER</strong>
+        </td>
+    </tr>
+<tr>
+        <td>Edit Account
+        </td>
+        <!-- Completed by? -->
+        <td>Omar
+        </td>
+    </tr>
+    <tr>
+        <td>Join a course
+        </td>
+        <!-- Completed by? -->
+        <td>Aayush
+        </td>
+    </tr>
+    <tr>
+        <td>Reverse Proxy
+        </td>
+        <!-- Completed by? -->
+        <td>Colton
+        </td>
+    </tr>
+    <tr>
+        <td>Forgot password
+        </td>
+        <!-- Completed by? -->
+        <td>Chinmay
+        </td>
+    </tr>
+</table>
 
-- ### Test report/testing status
+### Test report/testing status
 - Testing was writting to test the AI API Docker image but was unsuccessful (not much time was put into this and will work hard on this next cycle)
 - No other testing has been written yet.
 - More testing, and automated testing to be added with DroneCI in the following cycle.

@@ -27,7 +27,7 @@
 ### 4  hours
 -completed the data flow diagrams and supporting documents
 
-# Cycle Summary (June 5 - June 7) - 19.5 hours
+# Cycle Summary (June 5 - June 7) - 11.5 hours
 
 ## Wednesday June 5th
 ### 3  hours

@@ -51,6 +51,29 @@
 ###  2.5 hours
 
 - Worked on learning and understanding react
+
+# Timesheet (June 12 - June 14) - 14 hours
+## Friday June 14th
+### 2.5 hours
+- Adjust the Account page frontend page styles (0.5 hours)
+- Backend Account info edit feature implementation (1.5 hours)
+- Backend Account info edit and frontend integration (0.5 hours)
+- 
+## Thursday June 13th
+### 9 hours
+- Team meeting and planning (2 hours)
+- Finished implementing the course creation backend logic (2 hours)
+- Backend integration of the course creation feature (2 hours)
+- Backend and Front integration of the login/user registration feature (3 hours)
+
+## Wednesday June 12th
+### 2.5 hour
+- Built course creation function frontend page (localhost:5173/createcourse)
+  - The course object only has course code/course name and max number of students as attributes
+- Worked on creating course creation function backend logic
+
+# Cycle Goal Review
+I focused on implementing the features to get through Friday's presentation. The user authentication task#3 now works properly. Two other features were also implemented, the course creation and the account info edit (task #5 and #6). 
   
   
   

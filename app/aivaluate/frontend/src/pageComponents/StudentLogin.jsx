@@ -1,29 +1,32 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
+import '../GeneralStyling.css';
 
 const StudentLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await fetch('/stu/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({ email, password })
-  //     });
-  //     const data = await response.json();
-  //     console.log(data); // Handle response data based on server implementation
-  //     navigate('/dashboard'); // Redirect upon successful login
-  //   } catch (error) {
-  //     console.error('Error logging in:', error);
-  //   }
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:4000/login', {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        console.log('Login successful:', response.data);
+        navigate('/dashboard'); // Redirect to dashboard on successful login
+      } else {
+        console.error('Login failed:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
 
   const divStyle = {
     border: '1px solid black',
@@ -44,9 +47,29 @@ const StudentLogin = () => {
             <button className="auth-toggle-btn active">Login</button>
             <button className="auth-toggle-btn" onClick={() => navigate('/Signup')}>Signup</button>
           </div>
-          <form action="/stu/login" method="POST">
-            <input type="email" id="email" placeholder="Email Address" className="auth-input"  />
-            <input type="password" id="password" placeholder="Password" className="auth-input"  />
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <input 
+                type="email" 
+                id="email" 
+                placeholder="Email Address" 
+                className="auth-input" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+              />
+            </div>
+            <div className="form-group">
+              <input 
+                type="password" 
+                id="password" 
+                placeholder="Password" 
+                className="auth-input" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                required 
+              />
+            </div>
             <a href="forgotpassword" className="forgot-password primary-color-text">Forgot Password?</a>
             <button className="auth-submit primary-colorbg" type="submit">Login</button>
           </form>

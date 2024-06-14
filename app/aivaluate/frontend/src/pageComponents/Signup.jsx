@@ -14,7 +14,7 @@ const Signup = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/stu/signup', {
+      const response = await fetch('/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ const Signup = () => {
       });
       const data = await response.json();
       console.log(data); // Handle response data based on server implementation
-      navigate('/login/stu'); // Redirect upon successful signup
+      navigate('/login'); // Redirect upon successful signup
     } catch (error) {
       console.error('Error signing up:', error);
     }

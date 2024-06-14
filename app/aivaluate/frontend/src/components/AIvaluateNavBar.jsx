@@ -33,6 +33,6 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
                 </div>
             </header>
         </div>
-    )
+    ) 
 }
 export default AIvaluateNavBar;

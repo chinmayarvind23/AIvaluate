@@ -10,6 +10,8 @@ import Login from './pageComponents/Login';
 import Signup from './pageComponents/Signup';
 import CreateCourse from './pageComponents/CreateCourse';
 import HelpPage from './pageComponents/HelpPage';
+import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import AdminProfLogin from './pageComponents/AdminProfLogin';
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
 
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
           <Route path = "/createcourse" element={<CreateCourse />} />
+          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
+          <Route path="/admin-proflogin" element={<AdminProfLogin />} />
         </Routes>
       </div>
     </Router>

@@ -6,6 +6,8 @@ COPY package.json .
 COPY package-lock.json .
 
 RUN npm install
+RUN npm install axios
+RUN npm i -D @klarr-agency/circum-icons-react
 
 COPY . .
 

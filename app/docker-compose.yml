@@ -1,10 +1,13 @@
 version: '3.8'
 services:
   # frontend:
-  #   image: chinmayarvind/aivaluate-frontend-js-quantum-phoenix:dev
+  #   image: coltonpalfrey/aivaluate-frontend-quantum-phoenix:dev
   #   container_name: frontend_js
   #   ports:
   #     - "5173:5173"
+  #   volumes:
+  #     - ./aivaluate/frontend:/app
+  #   command: ["npm", "run", "dev"]
 
   db:
     image: postgres
@@ -36,4 +39,14 @@ services:
   #   - db
   #   env_file:
   #   - ./aivaluate/backend/.env
+
+  proxy:
+    image: nginx
+    volumes:
+      - type: bind
+        source: ./proxy/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+    ports:
+      - 80:80
 

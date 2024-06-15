@@ -12,9 +12,11 @@
 .rborder{border-radius: 60px;}
 a {text-decoration: none;}
 
+html{
+    background: var(--gradient-color);
+}
 body {
     font-family: Arial, sans-serif;
-    background: var(--gradient-color);
     color: var(--secondary-color);
     margin: 0;
     padding: 0;
@@ -74,3 +76,4 @@ body {
     text-decoration-color: var(--primary-color);
     background-color: var(--gradient-color);
   }
+

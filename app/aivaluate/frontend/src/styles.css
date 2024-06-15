@@ -32,6 +32,29 @@
     margin-top: 100px;
   }
   
+  .add-course-card{
+    background: rgb(255, 255, 255);
+    color: black;
+    border-radius: 60px;
+    width: 300px;
+    height: 440px;
+    margin: 20px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s ease-in-out;
+    border: 4px dashed var(--third-color);
+    opacity: 0.7;
+  }
+
+
+  .add-course-card img {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+    padding:0px;
+    border-radius: 60px 60px 0px 0px;
+  }
+
   .course-card {
     background: rgb(255, 255, 255);
     color: black;
@@ -43,6 +66,13 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.5s ease-in-out;
   }
+
+  .course-card div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+}
 
   .course-card:hover{
     transform: scale(1.1);
@@ -156,7 +186,7 @@
     font-size: bold;
   }
 
-  .message-container {
+  /* .message-container {
     padding: 20px;
     border-radius: 60px;
     position:absolute;
@@ -168,15 +198,49 @@
     min-width: 600px;
     height: 90px;
     font-size: 12px;
-  }
+  } */
 
-  .notification-container{
-    display:flex;
+  @keyframes growDown {
+    0% {
+      height: 0;
+      opacity: 0;
+    }
+    80% {
+      height: 95px;
+      opacity: 1;
+    }
+    100% {
+      height: 90px;
+      opacity: 1;
+    }
+  }
+  
+  .message-container {
+    padding: 20px;
+    border-radius: 60px;
+    position: absolute;
+    top: 20px;
+    left: 35px;
+    width: 40%;
+    padding-top: 115px;
+    padding-left: 30px;
+    min-width: 600px;
+    font-size: 12px;
+    overflow: hidden;
+    animation: growDown 1s ease-out 1s forwards;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+  
+  .notification-container {
+    display: flex;
     margin-top: 1px;
-    float:right;
+    float: right;
     font-weight: bold;
   }
 
+
+  
   .notificationBubble{
     color: rgb(255, 183, 0);
   }

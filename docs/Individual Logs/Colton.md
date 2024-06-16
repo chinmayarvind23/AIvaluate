@@ -238,5 +238,168 @@ Everything has gone really well for me this week and I feel asthough I have been
 - Made join course page
 - Team meeting and helped team with frontend setup
 
+- -----------------------------------------------------------------------------------
+## Wednesday June 12th - Friday June 14th
+
+### Current Tasks
+  * #1: Make login and signup page work with backend
+  * #2: Worked on mini presentation.
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Login feature
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Signup page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Mini presentation
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I had a very diffult time implementing the login and logout page. Chinmay, Jerry and I ended up workign togherther on this to try and figure out why things wourld woirk and spent about 7 hours each on this issue. Reflecting on it now I am very happy I reached out to my team members for help casue the 3 of us working toghether on this issue is what make the outcome a success.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Change reverse proxy to nginx
+- Fix Dashboard page and dashboad cards
+- Set up session memory for student login
+- Set up session memory for prof/T.A. + admin login
+- Implement clearing session memory for logout.
 -----------------------------------------------------------------------------------
+## Friday June 14th - Tuesday June 18th
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: Change reverse proxy to nginx
+  * #2: Fix Dashboard page and dashboad cards
+  * #3: Set up session memory for student login
+  * #4: Set up session memory for prof/T.A. + admin login
+  * #5: Implement clearing session memory for logout.
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>Reverse proxy
+        </td>
+        <!-- Status -->
+        <td>In Progress
+        </td>
+    </tr>
+    <tr>
+        <td>Fix Dashboard
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+    <tr>
+        <td>Set up session memory for student login
+        </td>
+        <!-- Status -->
+        <td>In Progress
+        </td>
+    </tr>
+    <tr>
+        <td>Set up session memory for prof/T.A. + admin login
+        </td>
+        <!-- Status -->
+        <td>In Progress
+        </td>
+    </tr>
+    <tr>
+        <td>Set up Clear session memory for logout
+        </td>
+        <!-- Status -->
+        <td>In Progress
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I went oh improving the look and layout of our dashboard for both Prof and Student view. I also changed our reverse proxy to nginx and set up session mememory. I had some dificulty setting up the proxy as I was runnign into alot of dokcer problems but after researching and wathcing some youtube videos I found out what was wrong.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+Next cycle I am going to have a little more focus on frontend design. Because I have alot more expirence in frontend compared to my team members I can make front end designs much faster and help up put more focus on backend. I will also be tryign to implement a file storage system.
+
+-----------------------------------------------------------------------------------
+## Wednesday June 19th - Friday June 21st
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: 
+  * #2: 
+  * #3: 
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+
+
 

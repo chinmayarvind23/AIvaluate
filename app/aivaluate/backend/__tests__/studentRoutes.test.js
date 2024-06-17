@@ -46,7 +46,7 @@ describe('Student Routes', () => {
 
   test('PUT /student/:studentId/firstName - should update student firstName', async () => {
     pool.query = jest.fn().mockResolvedValue({ rowCount: 1 });
-    const response = await request(app)
+    const response = await request(app)  
       .put('/student/1/firstName')
       .send({ firstName: 'Jane' });
     expect(response.status).toBe(200);

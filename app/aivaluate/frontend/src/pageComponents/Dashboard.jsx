@@ -5,6 +5,7 @@ import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import CourseCards from '../components/CourseCards';
 import '../styles.css';
 
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,6 +22,7 @@ const Dashboard = () => {
   }
 
   return (
+
     <div>
       <div className="secondary-colorbg message-container">
         <div className="notification-container">

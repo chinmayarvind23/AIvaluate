@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
-import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,16 +13,16 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent page reload
     try {
-      const response = await axios.post('http://localhost:4000/stu/login', {
+      const response = await axios.post('http://localhost:4000/stu/login', { // Send POST request to login endpoint with email and password in body of request
         email,
         password
       }, { withCredentials: true }); // Ensure cookies are sent/received
-      console.log('Login successful:', response.data);
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('There was an error logging in:', error);
+      console.log('Login successful:', response.data); // Log response data to console for debugging purposes 
+      navigate('/dashboard'); // Redirect to dashboard page on successful login 
+    } catch (error) { // Catch and log any errors
+      console.error('There was an error logging in:', error); // Log error to console for debugging purposes 
     }
   };
 
@@ -40,14 +40,14 @@ const Login = () => {
             <button className="auth-toggle-btn active">Login</button>
             <button className="auth-toggle-btn" onClick={() => navigate('/signup')}>Signup</button>
           </div>
-          <form onSubmit={handleSubmit}>
+           <form onSubmit={handleSubmit}> {/*ll handleSubmit function when form is submitted */}
             <div className="form-group">
               <input 
                 type="email" 
                 placeholder="Email Address" 
                 className="auth-input" 
                 value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                onChange={(e) => setEmail(e.target.value)} // Update email state when input changes
                 required 
               />
             </div>
@@ -57,7 +57,7 @@ const Login = () => {
                 placeholder="Password" 
                 className="auth-input" 
                 value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => setPassword(e.target.value)} // Update password state when input changes
                 required 
               />
             </div>

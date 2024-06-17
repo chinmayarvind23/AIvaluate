@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const studentRoutes = require('../routes/studentRoutes');
 const { pool } = require('../dbConfig');
 
+
 // Mock data
 const mockUser = { studentId: 1, firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', password: 'hashedpassword' };
 

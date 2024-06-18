@@ -154,7 +154,8 @@ VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
 INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA")
 VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
     (2, 'Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
-    (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false)
+    (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
+    (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true)
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Course table

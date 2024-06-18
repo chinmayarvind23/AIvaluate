@@ -6,10 +6,6 @@ import '../styles.css';
 import '../GeneralStyling.css';
 import '../CreateCourse.css';
 
-const aivaluatePurple = {
-  color: '#4d24d4'
-}
-
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
@@ -39,6 +35,11 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!courseName || !courseCode || !maxStudents) {
+      setErrorMessage('All fields are required.');
+      return;
+    }
 
     // Check if instructor is selected
     if (!instructorId) {
@@ -117,7 +118,7 @@ const CreateCourse = () => {
               {/* Select the instructor for the course */}
               <div className="form-group">
                 <h3>Instructor</h3>
-                <select value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
+                <select className="drop-down-menu" value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
                   <option value="">Select Instructor</option>
                   {instructors.map(instructor => (
                     <option key={instructor.instructorId} value={instructor.instructorId}>
@@ -131,7 +132,7 @@ const CreateCourse = () => {
               {/* Select the TA for the course */}
               <div className="form-group">
                 <h3>Teaching Assistant</h3>
-                <select value={taId} onChange={(e) => setTaId(e.target.value)}>
+                <select className="drop-down-menu"value={taId} onChange={(e) => setTaId(e.target.value)}>
                   <option value="">None</option>
                   {tas.map(ta => (
                     <option key={ta.instructorId} value={ta.instructorId}>

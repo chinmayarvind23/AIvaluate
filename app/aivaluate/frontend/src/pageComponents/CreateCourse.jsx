@@ -14,10 +14,27 @@ const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
   const [maxStudents, setMaxStudents] = useState('');
-  const [selectedInstructor, setSelectedInstructor] = useState('');
+  const [instructorId, setInstructorId] = useState('');
+  const [taId, setTaId] = useState('');
+  const [instructors, setInstructors] = useState([]);
   const [tas, setTAs] = useState([]);
-  const [selectedTA, setSelectedTA] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchInstructorsAndTAs = async () => {
+      try {
+        const instructorResponse = await axios.get('http://localhost:4000/instructors');
+        setInstructors(instructorResponse.data);
+        
+        const taResponse = await axios.get('http://localhost:4000/tas');
+        setTAs(taResponse.data);
+      } catch (error) {
+        console.error('Error fetching instructors and TAs:', error);
+      }
+    };
+
+    fetchInstructorsAndTAs();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +44,25 @@ const CreateCourse = () => {
         courseCode,
         maxStudents,
       });
+
+      const courseId = response.data.id;
+
+      // Add instructor to the Teaches table
+      if (instructorId) {
+        await axios.post('http://localhost:4000/teaches', {
+          courseId,
+          instructorId
+        });
+      }
+
+      // Add TA to the Teaches table
+      if (taId) {
+        await axios.post('http://localhost:4000/teaches', {
+          courseId,
+          taId
+        });
+      }
+
       console.log('Course created successfully:', response.data);
       navigate('/dashboard'); // Redirect to dashboard after successful creation
     } catch (error) {
@@ -70,12 +106,21 @@ const CreateCourse = () => {
               </div>
               <div className="form-group">
                 <h3>Instructor</h3>
-                <input
-                  type="text"
-                  className="instructor-input" /* Add class for styling */
-                  value={instructor}
-                  disabled
-                />
+                <select value={instructorId} onChange={(e) => setInstructorId(e.target.value)}>
+                  <option value="">Select Instructor</option>
+                  {instructors.map(instructor => (
+                    <option key={instructor.id} value={instructor.id}>{instructor.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <h3>Teaching Assistant</h3>
+                <select value={taId} onChange={(e) => setTaId(e.target.value)}>
+                  <option value="">Select TA</option>
+                  {tas.map(ta => (
+                    <option key={ta.id} value={ta.id}>{ta.name}</option>
+                  ))}
+                </select>
               </div>
               <button type="submit" className="create-course-button">Create Course</button>
             </form>

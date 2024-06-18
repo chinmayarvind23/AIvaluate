@@ -1,3 +1,8 @@
+// Last Edited: June 17, 2024
+// Contributor: Jerry Fan
+// Purpose: Backend Logic for student account information update
+// Used by the Account.jsx in frontend
+
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); // Adjust the path according to your project structure
@@ -115,6 +120,29 @@ router.get('/student/:studentId/password', async (req, res) => {
         res.status(200).json({ password: result.rows[0].password });
     } catch (error) {
         console.error('Error fetching student password:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+// Route to verify student password by studentId
+router.post('/student/:studentId/verifyPassword', async (req, res) => {
+    const studentId = parseInt(req.params.studentId);
+    const { currentPassword } = req.body;
+
+    try {
+        const result = await pool.query('SELECT "password" FROM "Student" WHERE "studentId" = $1', [studentId]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Student not found' });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, result.rows[0].password);
+        if (isMatch) {
+            res.status(200).json({ success: true });
+        } else {
+            res.status(401).json({ success: false, message: 'Incorrect password' });
+        }
+    } catch (error) {
+        console.error('Error verifying password:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });

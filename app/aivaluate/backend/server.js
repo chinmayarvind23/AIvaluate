@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 4000;
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
-  }));
+}));
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +42,27 @@ app.use(flash());
 
 app.use(courseRoutes);
 app.use(studentRoutes);
+
+// Log environment variables for debugging
+//console.log('Environment Variables:', {
+  //  DB_USER: process.env.DB_USER,
+  //  DB_PASSWORD: process.env.DB_PASSWORD,
+   // DB_HOST_LOCALHOST: process.env.DB_HOST_LOCALHOST,
+ //   DB_PORT: process.env.DB_PORT,
+   // DB_DATABASE: process.env.DB_DATABASE,
+   // NODE_ENV: process.env.NODE_ENV,
+//});
+
+// Database connectivity test endpoint
+app.get('/test-db', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT NOW()');
+        res.status(200).json({ status: 'success', time: result.rows[0].now });
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ status: 'error', message: error.message });
+    }
+});
 
 app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
@@ -135,6 +156,8 @@ function checkNotAuthenticated(req, res, next) {
     res.redirect("/stu/login");
 }
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = { app, server }; // Export the app and server for testing

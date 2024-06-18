@@ -38,3 +38,4 @@ trigger:
     - development
   event:
     - pull_request
+    - push

@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const courseRoutes = require('./routes/courseRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const instructorRoutes = require('./routes/instructorRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -42,6 +43,7 @@ app.use(flash());
 
 app.use(courseRoutes);
 app.use(studentRoutes);
+app.use(instructorRoutes);
 
 app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;

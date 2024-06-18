@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -14,7 +14,9 @@ const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
   const [maxStudents, setMaxStudents] = useState('');
-  const [instructor] = useState('Dr. Scott Fazackerley');
+  const [selectedInstructor, setSelectedInstructor] = useState('');
+  const [tas, setTAs] = useState([]);
+  const [selectedTA, setSelectedTA] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

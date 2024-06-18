@@ -7,7 +7,7 @@ import '../GeneralStyling.css';
 import '../CreateCourse.css';
 
 const aivaluatePurple = {
-    color: '#4d24d4'
+  color: '#4d24d4'
 }
 
 const CreateCourse = () => {
@@ -18,6 +18,7 @@ const CreateCourse = () => {
   const [taId, setTaId] = useState('');
   const [instructors, setInstructors] = useState([]);
   const [tas, setTAs] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const CreateCourse = () => {
       try {
         const instructorResponse = await axios.get('http://localhost:4000/instructors');
         setInstructors(instructorResponse.data);
-        
+
         const taResponse = await axios.get('http://localhost:4000/tas');
         setTAs(taResponse.data);
       } catch (error) {
@@ -38,6 +39,13 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if instructor is selected
+    if (!instructorId) {
+      setErrorMessage('Instructor selection is required.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:4000/courses', {
         courseName,
@@ -45,7 +53,7 @@ const CreateCourse = () => {
         maxStudents,
       });
 
-      const courseId = response.data.id;
+      const courseId = response.data.courseId;
 
       // Add instructor to the Teaches table
       if (instructorId) {
@@ -55,11 +63,11 @@ const CreateCourse = () => {
         });
       }
 
-      // Add TA to the Teaches table
+      // Add TA to the Teaches table if selected
       if (taId) {
         await axios.post('http://localhost:4000/teaches', {
           courseId,
-          taId
+          instructorId: taId
         });
       }
 
@@ -104,25 +112,36 @@ const CreateCourse = () => {
                   onChange={(e) => setMaxStudents(e.target.value)}
                 />
               </div>
+
+              {/* Display a dropdown of instructors */}
+              {/* Select the instructor for the course */}
               <div className="form-group">
                 <h3>Instructor</h3>
-                <select value={instructorId} onChange={(e) => setInstructorId(e.target.value)}>
+                <select value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
                   <option value="">Select Instructor</option>
                   {instructors.map(instructor => (
-                    <option key={instructor.id} value={instructor.id}>{instructor.name}</option>
+                    <option key={instructor.instructorId} value={instructor.instructorId}>
+                      {`${instructor.firstName} ${instructor.lastName}`}
+                    </option>
                   ))}
                 </select>
               </div>
+
+              {/* Display a dropdown of instructors */}
+              {/* Select the TA for the course */}
               <div className="form-group">
                 <h3>Teaching Assistant</h3>
                 <select value={taId} onChange={(e) => setTaId(e.target.value)}>
-                  <option value="">Select TA</option>
+                  <option value="">None</option>
                   {tas.map(ta => (
-                    <option key={ta.id} value={ta.id}>{ta.name}</option>
+                    <option key={ta.instructorId} value={ta.instructorId}>
+                      {`${ta.firstName} ${ta.lastName}`}
+                    </option>
                   ))}
                 </select>
               </div>
               <button type="submit" className="create-course-button">Create Course</button>
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
             </form>
           </div>
         </section>

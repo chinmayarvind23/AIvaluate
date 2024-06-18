@@ -38,6 +38,7 @@ trigger:
     - master
     - development
     - ci-cd-setup
+    - ci-cd-test
   event:
     - pull_request
     - push

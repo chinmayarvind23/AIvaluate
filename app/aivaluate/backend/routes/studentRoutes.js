@@ -6,7 +6,7 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); // Adjust the path according to your project structure
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 
 // Route to get current student's ID from session

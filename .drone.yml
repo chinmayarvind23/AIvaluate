@@ -22,6 +22,7 @@ steps:
     commands:
       - cd app/aivaluate/frontend
       - npm install
+      - npm test
       - npm run build
 
 services:

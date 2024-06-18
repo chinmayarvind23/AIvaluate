@@ -1,6 +1,6 @@
 # Colton Palfrey - Project Contribution Time Log
 -----------------------------------------------------------------------------------
-## Wednesday May 29th - Tuesday June 4th
+## Cycle 1 and 2: Wednesday May 29th - Tuesday June 4th
 
 ### Timesheet
 Clockify report
@@ -86,7 +86,7 @@ This week I spent alot of time working on learning docker and trying to figure o
 - Did code review and tested React app implementation from VEST
 
 -----------------------------------------------------------------------------------
-## Wednesday June 5th - Tuesday June 11th
+## Cycle 3: Wednesday June 5th - Tuesday June 11th
 
 ### Timesheet
 Clockify report
@@ -239,7 +239,7 @@ Everything has gone really well for me this week and I feel asthough I have been
 - Team meeting and helped team with frontend setup
 
 - -----------------------------------------------------------------------------------
-## Wednesday June 12th - Friday June 14th
+## Cycle 5: Wednesday June 12th - Friday June 14th
 
 ### Current Tasks
   * #1: Make login and signup page work with backend
@@ -287,7 +287,7 @@ This cycle I had a very diffult time implementing the login and logout page. Chi
 - Set up session memory for prof/T.A. + admin login
 - Implement clearing session memory for logout.
 -----------------------------------------------------------------------------------
-## Friday June 14th - Tuesday June 18th
+## Cycle 6: Friday June 14th - Tuesday June 19th
 
 ### Timesheet
 Clockify report
@@ -353,7 +353,7 @@ This cycle I went oh improving the look and layout of our dashboard for both Pro
 Next cycle I am going to have a little more focus on frontend design. Because I have alot more expirence in frontend compared to my team members I can make front end designs much faster and help up put more focus on backend. I will also be tryign to implement a file storage system.
 
 -----------------------------------------------------------------------------------
-## Wednesday June 19th - Friday June 21st
+## Cycle 7: Wednesday June 19th - Friday June 21st
 
 ### Timesheet
 Clockify report
@@ -401,5 +401,149 @@ Clockify report
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 
+-----------------------------------------------------------------------------------
+## Cycle 8: Friday June 21st - Wednesday June 21st
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: 
+  * #2: 
+  * #3: 
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
 
 
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+
+-----------------------------------------------------------------------------------
+## Cycle 9: Friday June 26th - Wednesday June 28th
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: 
+  * #2: 
+  * #3: 
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+
+-----------------------------------------------------------------------------------
+## Cycle 10: Friday June 28th - Wednesday July 3rd
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: 
+  * #2: 
+  * #3: 
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> --
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)

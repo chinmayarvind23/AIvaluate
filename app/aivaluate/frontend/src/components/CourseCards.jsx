@@ -32,10 +32,9 @@ const CourseCards = ({ navBarText }) => {
                     key={course.courseId} 
                     courseCode={course.courseCode} 
                     courseName={course.courseName} 
-                    user="prof"
                 />
             ))}
-            <Card courseCode="Create Course" courseName="Click to create a new course"/>
+            {/* <Card courseCode="Create Course" courseName="Click to create a new course"/> */}
         </div>
     );
 

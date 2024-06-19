@@ -147,7 +147,7 @@ const Signup = () => {
             />
 
             {/* Major is not required for now*/}
-            {/* <select 
+
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
             <select 
               className="auth-input" 

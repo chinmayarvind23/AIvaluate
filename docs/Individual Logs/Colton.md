@@ -300,6 +300,7 @@ Clockify report
   * #4: Implement clearing session memory for logout.
 
 ### Progress Update (since June 14th 2024) 
+
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -336,7 +337,6 @@ Clockify report
         <td>Done
         </td>
     </tr>
- 
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)

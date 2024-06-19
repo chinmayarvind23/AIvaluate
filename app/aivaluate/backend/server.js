@@ -1,3 +1,8 @@
+// Last Edited: June 17, 2024
+// Contributor: Jerry Fan
+// Purpose: Backend Logic for student account log in and sign up
+// Used by the Login.jsx and Signup.jsx in frontend
+
 const express = require('express');
 const path = require('path');
 const app = express();

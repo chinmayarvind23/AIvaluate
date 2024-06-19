@@ -1,6 +1,7 @@
-import React from 'react';
+//import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
+
 
 const AdminProfLogin = () => {
   const navigate = useNavigate();

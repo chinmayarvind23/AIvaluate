@@ -196,15 +196,79 @@
   - Creating issues for all features, finishable in 1-2 hours each
   - Setup DroneCI for CI/CD and automated testing
 
-## Friday (6/5- 6/7)
+12 June 8
 
-## Timesheet
+- Tasks worked on:
+  - Backend container fixing (3.25 hours)
+- Features being worked on and linked project board issues:
+  - Backend container fixing Issue #32
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Backend container fixing Issue #32 (Large, WIP)
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+13 June 9
+
+- Tasks worked on:
+  - Backend container fixing (2 hours)
+- Features being worked on and linked project board issues:
+  - Backend container fixing Issue #32
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Backend container fixing Issue #32 (Large, WIP)
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+14 June 10
+
+- Tasks worked on:
+  - Backend container fixing (1 hour)
+  - Issue creation for backend (1 hour)
+- Features being worked on and linked project board issues:
+  - Backend container fixing Issue #32
+  - Creating issues for backend based on project plan, design plan, and tech stack
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Backend container fixing Issue #32 (Large, Finished)
+  - Issue creation
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+15 June 11
+
+- Tasks worked on:
+  - Frontend (4 hours)
+- Features being worked on and linked project board issues:
+  - Student submissions page Issue [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#59](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/59)
+  - Admin/Prof Login page Issue #49
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Student submissions page Issue [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#59](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/59) (Medium, Finished)
+  - Admin/Prof Login page Issue #49 (Small, Finished)
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+## Friday (6/12 - 6/14)
+
+## Weekly Timesheet
 
 Clockify report: Total hours - 17 hours
 ![Screenshot 2024-06-14 at 7 27 35 AM](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/1ea7a510-90d6-4041-9260-41a47d4ee03c)
 
-
-## Current Tasks (Provide sufficient detail)
+## Current Tasks and Progress (Provide sufficient detail)
 
 - **#1:** Student Submission page, Issue #59
 - **#2:** Implementing forgot password functionality, Issue [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#75](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/75)
@@ -234,3 +298,41 @@ I completed Task 1 as planned, but Tasks 2-5 are in progress and depend on the l
 - Goal 2: To get role-based access of resources working
 - Goal 3: To add in automated testing with DroneCI
 - Goal 4: To get detailed testing done for user management, and course management
+
+## June (6/14- 6/19)
+
+## Timesheet
+
+Clockify report: Total hours - 18 hours
+![image](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/2d142f73-fc51-4c7b-9241-6a387af9cc7b)
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** CI/CD pipeline setup, Issue #153 (4 hours) (Large Task)
+- **#2:** DroneCI setup, Issue #40 (2 hours) (Medium Task)
+- **#3:** Client-side validation for login, Issue #131 (4 hours) (Medium Task)
+- **#4:** Client-side validation for signup, Issue #129 (4 hours) (Medium Task)
+- **#5:** Email API for forgot password, Issue #75 (4 hours) (Large Task)
+
+## Progress Update (since 6/14/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Complete, need to fix small errors with containers for pipeline to work correctly, will be fixed in the following cycle |
+| Task 2       | Complete, connected to repository, and webhooks set, but need to ensure valid delivery, will be fixed in the following cycle |
+| Task 3       | Complete and working, need to add tests, will be done in the next cycle |
+| Task 4       | Complete and working, need to add tests, will be done in the next cycle |
+| Task 5       | In Progress, will have functionality working and tested by the end of next cycle |
+
+## Cycle Goal Review
+
+I completed Tasks 1-4 as planned, but Task 5 is currently in progress, as the other tasks took a while to finish for me, and I will need to improve my time management for the next cycle and beyond.
+
+## Next Cycle Goals
+
+- Goal 1: Finish testing for login and signup features
+- Goal 2: To fix DroneCI pipeline to work with all the code
+- Goal 3: Finish forgot password implementation and testing (backend)
+- Goal 4: Student manager select student admin portal (frontend)
+- Goal 5: Create assignment page - PROF VIEW ONLY (frontend)
+- Goal 6: Evaluator portal selected user - admin portal (frontend)

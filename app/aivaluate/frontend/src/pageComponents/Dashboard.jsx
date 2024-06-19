@@ -8,7 +8,7 @@ import '../styles.css';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  var notification = true;
+  var notification = false;
   var notificationText = "YOU HAVE NO NEW NOTIFICATIONS...";
 
   const toggleMenu = () => {

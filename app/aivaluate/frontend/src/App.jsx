@@ -14,6 +14,7 @@ import HelpPage from './pageComponents/HelpPage';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import CourseHome from './pageComponents/CourseHome';
+import DesignAssignment from './pageComponents/DesignAssignment';
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
+          <Route path="/DesignAssignment" element={<DesignAssignment />} />
         </Routes>
       </div>
     </Router>

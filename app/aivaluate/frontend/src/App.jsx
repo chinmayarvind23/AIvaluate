@@ -14,6 +14,7 @@ import HelpPage from './pageComponents/HelpPage';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import CourseHome from './pageComponents/CourseHome';
+import ResetPassword from './pageComponents/ResetPassword';
 
 const App = () => {
   return (
@@ -23,17 +24,18 @@ const App = () => {
           <Route path="/" element={<Login />} /> {/* Default route */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path ="/dashboard" element={<Dashboard />} />
-          <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
-          <Route path ="/account" element={<Account />} />
-          <Route path ="/help" element={<HelpPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/assignmentoverview" element={<AssignmentOverview />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
-          <Route path ="/forgotpassword" element={<ForgotPassword />} />
-          <Route path ="/People" element={<People />} />
-          <Route path = "/createcourse" element={<CreateCourse />} />
-          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/people" element={<People />} />
+          <Route path="/createcourse" element={<CreateCourse />} />
+          <Route path="/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
-          <Route path="/CourseHome" element={<CourseHome />} />
+          <Route path="/coursehome" element={<CourseHome />} />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
         </Routes>
       </div>
     </Router>

@@ -8,11 +8,13 @@
 -- );
 
 CREATE TABLE IF NOT EXISTS "Student" (
-    "studentId" SERIAL NOT NULL PRIMARY KEY,
+    "studentId" SERIAL PRIMARY KEY,
     "firstName" VARCHAR(100),
     "lastName" VARCHAR(100),
-    "email" VARCHAR(200),
-    "password" VARCHAR(300)
+    "email" VARCHAR(200) UNIQUE NOT NULL,
+    "password" VARCHAR(300),
+    "resetPasswordToken" VARCHAR(300),
+    "resetPasswordExpires" TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS "Instructor"(
@@ -68,7 +70,7 @@ CREATE TABLE IF NOT EXISTS "CourseNotification"(
     PRIMARY KEY ("senderId", "receiverId"),
     "courseId" INT,
     "notificationMessage" VARCHAR(1000),
-    "isRead" BOOLEAN,
+    "isRead" BOOLEAN DEFAULT false,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
 );
 
@@ -81,7 +83,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
     "submissionFile" VARCHAR(500),
     "isSubmitted" BOOLEAN,
     "updatedAt" DATE,
-    "isGraded" BOOLEAN,
+    "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
@@ -94,7 +96,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
     "maxObtainableGrade" FLOAT,
     "AIassignedGrade" FLOAT,
     "InstructorAssignedFinalGrade" FLOAT,
-    "isGraded" BOOLEAN,
+    "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId"),
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId")
 );

@@ -196,7 +196,73 @@
   - Creating issues for all features, finishable in 1-2 hours each
   - Setup DroneCI for CI/CD and automated testing
 
-## Friday (6/5- 6/7)
+
+12 June 8
+
+- Tasks worked on:
+  - Backend container fixing (3.25 hours)
+- Features being worked on and linked project board issues:
+  - Backend container fixing Issue #32
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Backend container fixing Issue #32 (Large, WIP)
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+13 June 9
+
+- Tasks worked on:
+  - Backend container fixing (2 hours)
+- Features being worked on and linked project board issues:
+  - Backend container fixing Issue #32
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Backend container fixing Issue #32 (Large, WIP)
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+14 June 10
+
+- Tasks worked on:
+  - Backend container fixing (1 hour)
+  - Issue creation for backend (1 hour)
+- Features being worked on and linked project board issues:
+  - Backend container fixing Issue #32
+  - Creating issues for backend based on project plan, design plan, and tech stack
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Backend container fixing Issue #32 (Large, Finished)
+  - Issue creation
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+15 June 11
+
+- Tasks worked on:
+  - Frontend (4 hours)
+- Features being worked on and linked project board issues:
+  - Student submissions page Issue [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#59](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/59)
+  - Admin/Prof Login page Issue #49
+- Currently completed/in-progress since last reporting date (task completed, task size, WIP (work in progress)):
+  - Student submissions page Issue [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#59](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/59) (Medium, Finished)
+  - Admin/Prof Login page Issue #49 (Small, Finished)
+- Recap on my weekly goals (reflection on personal plan for the next cycle (3 days/4 days))
+  - Test login feature
+  - Setup hosting website for docker, website, and DB
+  - Create mini-presentation of project progress
+  - Creating issues for all features, finishable in 1-2 hours each
+  - Setup DroneCI for CI/CD and automated testing
+
+## Friday (6/12 - 6/14)
 
 ## Timesheet
 
@@ -213,7 +279,7 @@ Clockify report: Total hours - 17 hours
 - **#5:** Defining user roles for role-based access of resources based on authentication and http-proxy-middleware, Issue [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#82](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/82)
 - **#6:** Unit tests for course management and user account management, Issues [UBCO-COSC499-Summer-2024/team-8-capstone-team-8#104](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/issues/104) and #101
 
-## Progress Update (since 6/5/2024)
+## Progress Update (since 6/12/2024)
 
 | TASK/ISSUE # | STATUS      |
 |--------------|-------------|

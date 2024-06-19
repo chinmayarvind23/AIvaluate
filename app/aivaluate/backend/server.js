@@ -1,9 +1,14 @@
+// Last Edited: June 17, 2024
+// Contributor: Jerry Fan
+// Purpose: Backend Logic for student account log in and sign up
+// Used by the Login.jsx and Signup.jsx in frontend
+
 const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
 const { pool } = require('./dbConfig');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const flash = require("express-flash");
 const bodyParser = require('body-parser');

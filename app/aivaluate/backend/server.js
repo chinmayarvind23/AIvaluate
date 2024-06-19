@@ -100,6 +100,13 @@ app.use(flash());
 app.use(courseRoutes);
 app.use(studentRoutes);
 
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true
+  };
+  
+  app.use(cors(corsOptions));
+
 app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
 
@@ -163,20 +170,27 @@ app.get("/stu/dashboard", checkNotAuthenticated, (req, res) => {
 });
 
 app.get('/stu/logout', (req, res, next) => {
+    console.log('Attempting to logout...'); // Check if this message appears in the console
     req.logout((err) => {
         if (err) {
+            console.error('Logout error:', err); // Check if any logout error is logged
             return next(err);
         }
         req.flash('success_msg', "You have successfully logged out");
         req.session.destroy((err) => {
             if (err) {
+                console.error('Session destroy error:', err); // Check if any session destroy error is logged
                 return next(err);
             }
             res.clearCookie('connect.sid');
+            console.log('Logout successful'); // Check if this message appears in the console
             res.redirect('/stu/login');
         });
     });
 });
+
+
+
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

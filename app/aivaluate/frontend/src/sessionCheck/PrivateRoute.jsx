@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ element: Component, ...rest }) => {
+const PrivateRoute = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
-    
+
     useEffect(() => {
         axios.get('http://localhost:4000/stu/dashboard', { withCredentials: true })
             .then(response => {
@@ -18,21 +18,10 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
     }, []);
 
     if (isAuthenticated === null) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 
-    return (
-        <Route
-            {...rest}
-            element={
-                isAuthenticated ? (
-                    <Component />
-                ) : (
-                    <Navigate to="/stu/login" />
-                )
-            }
-        />
-    );
+    return isAuthenticated ? <Component /> : <Navigate to="/stu/login" />;
 };
 
 export default PrivateRoute;

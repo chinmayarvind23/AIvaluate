@@ -20,7 +20,7 @@ const Login = () => {
         password
       }, { withCredentials: true }); // Ensure cookies are sent/received
       console.log('Login successful:', response.data); // Log response data to console for debugging purposes 
-      navigate('/dashboard'); // Redirect to dashboard page on successful login 
+      navigate('/stu/dashboard'); // Redirect to dashboard page on successful login 
     } catch (error) { // Catch and log any errors
       console.error('There was an error logging in:', error); // Log error to console for debugging purposes 
     }
@@ -38,7 +38,7 @@ const Login = () => {
           <h2 className="auth-title third-color-text">Login</h2>
           <div className="auth-toggle" style={divStyle}>
             <button className="auth-toggle-btn active">Login</button>
-            <button className="auth-toggle-btn" onClick={() => navigate('/signup')}>Signup</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/stu/signup')}>Signup</button>
           </div>
            <form onSubmit={handleSubmit}> {/*ll handleSubmit function when form is submitted */}
             <div className="form-group">

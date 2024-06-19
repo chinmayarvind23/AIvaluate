@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import '../Auth.css';
 
 const Signup = () => {
@@ -29,7 +29,7 @@ const Signup = () => {
         major
       });
       console.log('Signup successful:', response.data);
-      navigate('/login'); // Redirect to login after successful signup
+      navigate('/stu/login'); // Redirect to login after successful signup
     } catch (error) {
       console.error('There was an error signing up:', error);
     }
@@ -46,7 +46,7 @@ const Signup = () => {
         <div className="auth-form secondary-colorbg">
           <h2 className="auth-title third-color-text">Signup</h2>
           <div className="auth-toggle" style={divStyle}>
-            <button className="auth-toggle-btn" onClick={() => navigate('/login')}>Login</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/stu/login')}>Login</button>
             <button className="auth-toggle-btn active">Signup</button>
           </div>
           <form onSubmit={handleSubmit}>

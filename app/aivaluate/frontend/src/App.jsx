@@ -22,21 +22,20 @@ const App = () => {
       <div className="app">
         <Routes>
           <Route path="/" element={<Login />} /> {/* Default route */}
-          
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          {/* <Route path ="/dashboard" element={<Dashboard />} component={PrivateRoute}/> */}
-          <PrivateRoute path="/stu/dashboard" component={<Dashboard />} />
-          <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
-          <Route path ="/account" element={<Account />} />
-          <Route path ="/help" element={<HelpPage />} />
-          <Route path="/joincourse" element={<JoinCourse />} />
+          <Route path="/stu/login" element={<Login />} />
+          <Route path="/stu/signup" element={<Signup />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={Dashboard} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={AssignmentOverview} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={Account} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={HelpPage} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={JoinCourse} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={People} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={CreateCourse} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={People} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={StudentViewSubmissions} />} />
+          <Route path="/stu/dashboard" element={<PrivateRoute element={CourseHome} />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
-          <Route path ="/People" element={<People />} />
-          <Route path = "/createcourse" element={<CreateCourse />} />
-          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
-          <Route path="/CourseHome" element={<CourseHome />} />
         </Routes>
       </div>
     </Router>

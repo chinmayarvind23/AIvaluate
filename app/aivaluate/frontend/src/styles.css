@@ -186,20 +186,6 @@
     font-size: bold;
   }
 
-  /* .message-container {
-    padding: 20px;
-    border-radius: 60px;
-    position:absolute;
-    top:20px;
-    left: 35px;
-    width:40%;
-    padding-top: 115px;
-    padding-left: 30px;
-    min-width: 600px;
-    height: 90px;
-    font-size: 12px;
-  } */
-
   @keyframes growDown {
     0% {
       height: 0;
@@ -243,4 +229,33 @@
   
   .notificationBubble{
     color: rgb(255, 183, 0);
+  }
+
+
+
+  .menu .dropdown .logout {
+    display: block;
+    padding: 10px 45px 20px;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    border:none;
+    border-radius: 0px;
+    width: fill-available;
+    height: 90px;
+    background: none;
+    text-align:left;
+    color:black;
+  }
+
+  .menu .dropdown .logout::before {
+    content: '•'; 
+    margin-right: 10px;
+    font-size: 40px;
+    text-decoration: none;
+  }
+
+  .menu .dropdown .logout:hover {
+    background: #eee;
+    color:var(--primary-color);
   }

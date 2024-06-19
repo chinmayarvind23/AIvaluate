@@ -75,6 +75,13 @@
         <td>Jerry
         </td>
     </tr>
+      <tr>
+        <td>Create course Page Features - select TA and Instructor
+        </td>
+        <!-- Completed by? -->
+        <td>Jerry
+        </td>
+    </tr>
   <tr>
         <td>Fix create course page
         </td>

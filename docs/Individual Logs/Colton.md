@@ -291,7 +291,7 @@ This cycle I had a very diffult time implementing the login and logout page. Chi
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/)
+![alt text](./clockify-images/colton-clockify_C6.png)
 
 ### Current Tasks
   * #1: Change reverse proxy to nginx

@@ -1,5 +1,50 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 14 - June 18) - 13 hours
+
+## Tuesday June 18th
+### 5 hours
+- Team meeting and planning of the next four cycles (1.5 hours)
+- Create course features - added the backend and frontend for selecting TAs and Instructors (3.5 hours)
+
+## Monday June 17th
+### 5.5 hours
+- Create course features - added the backend and frontend for selecting TAs and Instructors (1.5 hours)
+- Account Setting features - added the backend and frontend for editing password (3 hours)
+- Docker Container Fix - (1 hour)
+
+## Saturday June 15th
+### 0.5 hour
+- Code Review and merging of branches
+
+## Friday June 14th 
+### 2 hours
+- Team Meeting and deciding of task priorities, merging branches and code review (2 hours)
+
+# Current Tasks
+- #1 Fix Docker Container
+- #2 Polish account setting feature (password edit)
+- #3 Polish create course feature (select instructors/TAs)
+- #4 Implement Account Management Testings
+
+# Progress Update (since June 12)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Completed  |
+| Task #4 | In Progress  |
+
+# Cycle Goal Review
+I focused on fixing the docker container, and to polish our existing features to a level where they can be more usable. Tasks 1,2,3 are completed and testing will need to be implemented in the future.
+
+# Next Cycle 
+- #1 Implement account management testings
+- #2 Implment create course testings
+- #3 Frontend page, Design individual assisgnment page student view
+- #4 Frontend page, Design assignments overview page student view
+- #5 Frontend page, Deisng student manager page of the admin portal
+
 # Timesheet (June 12 - June 14) - 14 hours
 
 ## Friday June 14th

@@ -325,7 +325,7 @@ Clockify report
         <td>Set up session memory for student login
         </td>
         <!-- Status -->
-        <td>In Progress
+        <td>Done
         </td>
     </tr>
     

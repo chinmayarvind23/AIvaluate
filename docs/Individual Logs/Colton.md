@@ -333,7 +333,7 @@ Clockify report
         <td>Set up Clear session memory for logout
         </td>
         <!-- Status -->
-        <td>In Progress
+        <td>Done
         </td>
     </tr>
  

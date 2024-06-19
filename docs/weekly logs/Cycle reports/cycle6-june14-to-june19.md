@@ -32,11 +32,11 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="1020" alt="" src="">
+  <img width="1012" alt="Screenshot 2024-06-19 at 1 52 55 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/2949abde-52e5-47ac-9c8f-c8c77102b660">
 
 ### Times for team/individual
 
-![Cycle report clockify](./clockify reports/)
+<img width="1915" alt="Screenshot 2024-06-19 at 1 54 07 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/7b792ffd-0cad-41ea-a2fe-7308cb8cd686">
 
 - ### Table view of completed tasks on project board (by which username)
 

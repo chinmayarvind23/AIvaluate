@@ -25,3 +25,7 @@
 - Design specific assignment submission page - prof/TA view -Aayush
 - View individual assignment rubric/description page - prof/TA - Aayush
 - Design selected rubric page - prof view only  - Aayush
+
+### Project Progress
+- Frontend: 45% complete
+- Backend: 20% complete

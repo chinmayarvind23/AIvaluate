@@ -90,6 +90,20 @@
         </td>
     </tr>
   <tr>
+      <td>Client side validation for login
+        </td>
+        <!-- Completed by? -->
+        <td>Chinmay
+        </td>
+    </tr>
+  <tr>
+        <td>Client side validation for signup
+        </td>
+        <!-- Completed by? -->
+        <td>Chinmay
+        </td>
+    </tr>
+  <tr>
         <td>CICD pipeline
         </td>
         <!-- Completed by? -->
@@ -129,21 +143,6 @@
         <td>Jerry
         </td>
     </tr>
-    <tr>
-        <td>Client side validation for login
-        </td>
-        <!-- Completed by? -->
-        <td>Chinmay
-        </td>
-    </tr>
-  <tr>
-        <td>Client side validation for signup
-        </td>
-        <!-- Completed by? -->
-        <td>Chinmay
-        </td>
-    </tr>
-  <tr>
         <td>Testing for account management
         </td>
         <!-- Completed by? -->

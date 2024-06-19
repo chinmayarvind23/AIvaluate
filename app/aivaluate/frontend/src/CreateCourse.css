@@ -29,13 +29,15 @@
   width: 80%;
 }
 
-input {
-  width: 80%;
+input, .drop-down-menu {
+  width: 100%;
+  max-width: 500px;
   padding: 10px;
   border: 3px solid #3c00ff;
   border-radius: 60px;
   font-size: 1rem;
   color: #4d24d4;
+  box-sizing: border-box; 
 }
 
 input:disabled {
@@ -52,7 +54,7 @@ h3 {
 .instructor-input {
   width: 35%;
   margin-left: 0;
-  border:none;
+  border: none;
 }
 
 .create-course-button {
@@ -60,11 +62,18 @@ h3 {
   color: white;
   border-radius: 60px;
   font-size: 1rem;
-  position: absolute;
-  bottom: -5px;
-  right:10px;
+  margin-top: 50px; /* Adjust position */
+  width:500px;
+  display: block; 
+  box-sizing: border-box;
 }
 
 .create-course-button:hover {
   background-color: #030323;
 }
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+

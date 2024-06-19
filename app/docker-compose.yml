@@ -1,21 +1,41 @@
 version: '3'
 services:
-  backend:
-    build:
-      context: ./app/aivaluate/backend
-      dockerfile: Dockerfile
-    ports:
-      - 8000:8000
-    volumes:
-      - ./app/aivaluate/backend:/app
-    depends_on:
-      - database
-
   frontend:
-    build:
-      context: ./app/aivaluate/frontend
-      dockerfile: Dockerfile
+      image: coltonpalfrey/aivaluate-frontend:dev
+      container_name: frontend
+      ports:
+        - "5173:5173"
+
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    container_name: database
+    environment:
+      POSTGRES_DB: AIvaluatedb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+
+# A database manager can be accessed at http://localhost:8080/
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  
+# Backend container
+  backend:
+    image: chinmayarvind/aivaluate-backend-quantum-phoenix
+    container_name: backend
     ports:
       - 3000:3000
-    volumes:
-      - ./app/aivaluate/frontend:/app
+    depends_on:
+      - db
+    environment:
+      POSTGRES_DB: AIvaluatedb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_HOST: db

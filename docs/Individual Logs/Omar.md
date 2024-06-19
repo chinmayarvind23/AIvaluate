@@ -74,6 +74,10 @@ I successfully tackled Task 1, investing considerable effort in debugging and re
 
 Timesheet
 
+
+<img width="619" alt="Cycle6" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/1dd549d6-38fb-48b0-81ca-8d95ffe2c76f">
+
+
 ### Current Tasks
 
 - #1: Testing for Frontend and Backend

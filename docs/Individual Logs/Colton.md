@@ -329,7 +329,6 @@ Clockify report
         <td>Done
         </td>
     </tr>
-    
     <tr>
         <td>Set up Clear session memory for logout
         </td>
@@ -340,10 +339,10 @@ Clockify report
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-This cycle I went oh improving the look and layout of our dashboard for both Prof and Student view. I also changed our reverse proxy to nginx and set up session mememory. I had some dificulty setting up the proxy as I was runnign into alot of dokcer problems but after researching and wathcing some youtube videos I found out what was wrong.
+This cycle I went oh improving the look and layout of our dashboard for both Prof and Student view. I also changed our reverse proxy to nginx and set up session mememory. I had some dificulty setting up the proxy as I was running into alot of dokcer problems but after researching and wathcing some youtube videos I found out what was wrong. I also had ALOT of problems trying to make the logout work because it would not clear the session.
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
-Next cycle I am going to have a little more focus on frontend design. Because I have alot more expirence in frontend compared to my team members I can make front end designs much faster and help up put more focus on backend. I will also be tryign to implement a file storage system.
+Next cycle I am going to have a  more focus on frontend design. Because I have alot more expirence in frontend compared to my team members I can make front end designs much faster and help up put more focus on backend. Our team plan is to finish frontend next cycle.
 
 -----------------------------------------------------------------------------------
 ## Cycle 7: Wednesday June 19th - Friday June 21st

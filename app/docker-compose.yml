@@ -8,6 +8,14 @@ services:
     ports:
       - "5173:5173"
 
+  frontend:
+    build:
+      context: ./aivaluate/frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+
   db:
     image: postgres
     restart: always
@@ -27,6 +35,18 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+  backend:
+    build:
+      context: ./aivaluate/backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    env_file:
+      - ./aivaluate/backend/.env
 
   backend:
     build:

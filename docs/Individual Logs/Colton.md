@@ -297,8 +297,7 @@ Clockify report
   * #1: Change reverse proxy to nginx
   * #2: Fix Dashboard page and dashboad cards
   * #3: Set up session memory for student login
-  * #4: Set up session memory for prof/T.A. + admin login
-  * #5: Implement clearing session memory for logout.
+  * #4: Implement clearing session memory for logout.
 
 ### Progress Update (since June 14th 2024) 
 <table>
@@ -329,13 +328,7 @@ Clockify report
         <td>In Progress
         </td>
     </tr>
-    <tr>
-        <td>Set up session memory for prof/T.A. + admin login
-        </td>
-        <!-- Status -->
-        <td>In Progress
-        </td>
-    </tr>
+    
     <tr>
         <td>Set up Clear session memory for logout
         </td>
@@ -360,11 +353,11 @@ Clockify report
 ![alt text](./clockify-images/)
 
 ### Current Tasks
-  * #1: 
-  * #2: 
-  * #3: 
+  * #1: Student grades frontend
+  * #2: Prof/T.A. grade frontend
+  * #3: Evaluator manager (admin portal) frontend
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since June 19th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -372,28 +365,27 @@ Clockify report
         <td><strong>STATUS</strong>
         </td>
     </tr>
-    <tr>
-        <td> --
+ <tr>
+        <td>Student Grades frontend
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td>Prof/T.A. grade frontend page 
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td>Evaluator manager (admin portal) frontend
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
- 
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
@@ -409,11 +401,10 @@ Clockify report
 ![alt text](./clockify-images/)
 
 ### Current Tasks
-  * #1: 
-  * #2: 
-  * #3: 
+  * #1: Set up session memory for prof/T.A. + admin
+  * #2: Assignment submission page for student
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since June 21st 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -422,27 +413,19 @@ Clockify report
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Set up session memory for prof/T.A. + admin
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Assignment submission page for student backend
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
-    <tr>
-        <td> --
-        </td>
-        <!-- Status -->
-        <td> --
-        </td>
-    </tr>
- 
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
@@ -458,11 +441,11 @@ Clockify report
 ![alt text](./clockify-images/)
 
 ### Current Tasks
-  * #1: 
-  * #2: 
+  * #1: Testing for assignment submission page
+  * #2: Testing for Session storage
   * #3: 
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since June 26th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -471,27 +454,19 @@ Clockify report
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Testing for assignment submission page
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Testing for Session storage
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
-    <tr>
-        <td> --
-        </td>
-        <!-- Status -->
-        <td> --
-        </td>
-    </tr>
- 
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
@@ -507,11 +482,12 @@ Clockify report
 ![alt text](./clockify-images/)
 
 ### Current Tasks
-  * #1: 
-  * #2: 
-  * #3: 
+  * #1: Testing for notification system
+  * #2: Backend for assignment averages for the prof
+  * #3: Testing for assignemnt averages for the prof
+  * #4: Help other with testing
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since June 28th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -520,27 +496,33 @@ Clockify report
         </td>
     </tr>
     <tr>
-        <td> --
+        <td>Testing for notification system
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td>Backend for assignment averages for the prof
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td>Testing for assignemnt averages for the prof
         </td>
         <!-- Status -->
         <td> --
         </td>
     </tr>
- 
+  <tr>
+        <td>Help other with testing
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)

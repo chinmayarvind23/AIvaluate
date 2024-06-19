@@ -81,7 +81,7 @@
 - Worked on creating course creation function backend logic
   
 
-  ## Thursday June 13th
+## Thursday June 13th
 ### 10 hours
 - Team meeting and planning 
 - Worked on the backend of the search course 
@@ -92,6 +92,33 @@
 ## Friday June 14th
 ###  1.5 hours
 - Finalizing the presentation
+
+
+# Timesheet (June 14 - June 19) - 15 hours
+
+## Friday June 14th
+###  2 hours
+- Team meeting  
+- Assigning the issues
+
+
+## Tuesday June 18th
+### 11 hours
+- Completed the database testing 
+- Worked on Assignment submission frontend page
+- Team meeting and planning
+
+## Wednesday June 19th
+### 2 hours
+- Completed the Design assignment frontend page 
+- Completed the Assignment submission frontend page 
+
+
+
+
+
+
+
 
   
   

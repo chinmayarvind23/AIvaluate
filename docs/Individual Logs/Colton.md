@@ -1,6 +1,6 @@
 # Colton Palfrey - Project Contribution Time Log
 -----------------------------------------------------------------------------------
-## Wednesday May 29th - Tuesday June 4th
+## Cycle 1 and 2: Wednesday May 29th - Tuesday June 4th
 
 ### Timesheet
 Clockify report
@@ -86,7 +86,7 @@ This week I spent alot of time working on learning docker and trying to figure o
 - Did code review and tested React app implementation from VEST
 
 -----------------------------------------------------------------------------------
-## Wednesday June 5th - Tuesday June 11th
+## Cycle 3: Wednesday June 5th - Tuesday June 11th
 
 ### Timesheet
 Clockify report
@@ -238,5 +238,293 @@ Everything has gone really well for me this week and I feel asthough I have been
 - Made join course page
 - Team meeting and helped team with frontend setup
 
------------------------------------------------------------------------------------
+- -----------------------------------------------------------------------------------
+## Cycle 5: Wednesday June 12th - Friday June 14th
 
+### Current Tasks
+  * #1: Make login and signup page work with backend
+  * #2: Worked on mini presentation.
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Login feature
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Signup page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Mini presentation
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I had a very diffult time implementing the login and logout page. Chinmay, Jerry and I ended up workign togherther on this to try and figure out why things wourld woirk and spent about 7 hours each on this issue. Reflecting on it now I am very happy I reached out to my team members for help casue the 3 of us working toghether on this issue is what make the outcome a success.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Change reverse proxy to nginx
+- Fix Dashboard page and dashboad cards
+- Set up session memory for student login
+- Set up session memory for prof/T.A. + admin login
+- Implement clearing session memory for logout.
+-----------------------------------------------------------------------------------
+## Cycle 6: Friday June 14th - Tuesday June 19th
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C6.png)
+
+### Current Tasks
+  * #1: Change reverse proxy to nginx
+  * #2: Fix Dashboard page and dashboad cards
+  * #3: Set up session memory for student login
+  * #4: Implement clearing session memory for logout.
+
+### Progress Update (since June 14th 2024) 
+
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>Reverse proxy
+        </td>
+        <!-- Status -->
+        <td>In Progress
+        </td>
+    </tr>
+    <tr>
+        <td>Fix Dashboard
+        </td>
+        <!-- Status -->
+        <td>Complete
+        </td>
+    </tr>
+    <tr>
+        <td>Set up session memory for student login
+        </td>
+        <!-- Status -->
+        <td>Done
+        </td>
+    </tr>
+    <tr>
+        <td>Set up Clear session memory for logout
+        </td>
+        <!-- Status -->
+        <td>Done
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I went oh improving the look and layout of our dashboard for both Prof and Student view. I also changed our reverse proxy to nginx and set up session mememory. I had some dificulty setting up the proxy as I was running into alot of dokcer problems but after researching and wathcing some youtube videos I found out what was wrong. I also had ALOT of problems trying to make the logout work because it would not clear the session.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+Next cycle I am going to have a  more focus on frontend design. Because I have alot more expirence in frontend compared to my team members I can make front end designs much faster and help up put more focus on backend. Our team plan is to finish frontend next cycle.
+
+-----------------------------------------------------------------------------------
+## Cycle 7: Wednesday June 19th - Friday June 21st
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: Student grades frontend
+  * #2: Prof/T.A. grade frontend
+  * #3: Evaluator manager (admin portal) frontend
+
+### Progress Update (since June 19th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+ <tr>
+        <td>Student Grades frontend
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td>Prof/T.A. grade frontend page 
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td>Evaluator manager (admin portal) frontend
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+
+-----------------------------------------------------------------------------------
+## Cycle 8: Friday June 21st - Wednesday June 21st
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: Set up session memory for prof/T.A. + admin
+  * #2: Assignment submission page for student
+
+### Progress Update (since June 21st 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Set up session memory for prof/T.A. + admin
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> Assignment submission page for student backend
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+
+-----------------------------------------------------------------------------------
+## Cycle 9: Friday June 26th - Wednesday June 28th
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: Testing for assignment submission page
+  * #2: Testing for Session storage
+  * #3: 
+
+### Progress Update (since June 26th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Testing for assignment submission page
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td> Testing for Session storage
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+
+-----------------------------------------------------------------------------------
+## Cycle 10: Friday June 28th - Wednesday July 3rd
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/)
+
+### Current Tasks
+  * #1: Testing for notification system
+  * #2: Backend for assignment averages for the prof
+  * #3: Testing for assignemnt averages for the prof
+  * #4: Help other with testing
+
+### Progress Update (since June 28th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>Testing for notification system
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td>Backend for assignment averages for the prof
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+    <tr>
+        <td>Testing for assignemnt averages for the prof
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+  <tr>
+        <td>Help other with testing
+        </td>
+        <!-- Status -->
+        <td> --
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)

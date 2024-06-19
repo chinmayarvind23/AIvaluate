@@ -6,7 +6,7 @@ import SideMenuBar from '../components/SideMenuBar';
 import '../styles.css';
 
 const aivaluatePurple = {
-    color: '#4d24d4'//test
+    color: '#4d24d4'//test123
   }
 
 const AssignmentOverview = () => {

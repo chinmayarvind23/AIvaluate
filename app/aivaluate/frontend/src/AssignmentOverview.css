@@ -1,0 +1,42 @@
+.assignment-table-container {
+    width: 100%;
+    margin: 20px auto;
+    background-color: #1e2a38;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .assignment-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .assignment-table th, .assignment-table td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .assignment-table th {
+    background-color: #3b4f6b;
+    color: #ffffff;
+    border-bottom: 2px solid #4c5b78;
+  }
+  
+  .assignment-table td {
+    background-color: #2e3b4e;
+    color: #ffffff;
+    border-bottom: 1px solid #4c5b78;
+  }
+  
+  .assignment-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .assignment-table th, .assignment-table td:first-child {
+    border-radius: 10px 0 0 10px;
+  }
+  
+  .assignment-table th, .assignment-table td:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+  

@@ -87,11 +87,11 @@
     align-items: center;
     width: fill-parent;
     background: none;
+    
   }
   
   
   .file-item {
-    
     display: flex;
     align-items: center;
     width: 92%;
@@ -106,7 +106,7 @@
   }
 
   .file-name{
-    width: fill;
+    width: stretch;
     overflow: none;
   }
   .file-status{
@@ -121,6 +121,10 @@
     position:relative;
     margin-left: 10px;
     margin-right: 10px;
+  }
+
+  .folder-icon{
+    margin-right: 20px;
   }
 
   .file-icon:hover{

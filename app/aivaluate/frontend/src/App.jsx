@@ -8,6 +8,7 @@ import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import HelpPage from './pageComponents/HelpPage';
@@ -15,9 +16,9 @@ import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
 import Signup from './pageComponents/Signup';
+import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
-import StudentGrades from './pageComponents/StudentGrades';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/stu/grades" element={<StudentGrades />} />
+          <Route path="eval/grades" element={<EvaluatorGrades />} />
         </Routes>
       </div>
     </Router>

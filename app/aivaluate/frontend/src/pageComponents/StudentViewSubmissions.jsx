@@ -6,6 +6,7 @@ import '../GeneralStyling.css';
 import '../StudentViewSubmissions.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
+import '../styles.css';
 
 const StudentViewSubmissions = () => {
   const navigate = useNavigate();

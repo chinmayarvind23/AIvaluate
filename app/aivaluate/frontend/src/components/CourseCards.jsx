@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import '../styles.css';
+import '../CourseCards.css';
 import Card from './card';
 
 const CourseCards = ({ navBarText }) => {
@@ -25,27 +25,27 @@ const CourseCards = ({ navBarText }) => {
 - Adding a car component with the courseCode="Create Course" and courseName="Click to create a new course" 
   will create a card that will allow the user to create a new course.
  */
-    return (
-        <div className="dashboard">
-            {courses.map(course => (
-                <Card 
-                    key={course.courseId} 
-                    courseCode={course.courseCode} 
-                    courseName={course.courseName} 
-                />
-            ))}
-            {/* <Card courseCode="Create Course" courseName="Click to create a new course"/> */}
-        </div>
-    );
-
-    // return(
+    // return (
     //     <div className="dashboard">
-    //             <Card courseCode="COSC 499" courseName="Software Engineering Capstone" user="prof"/>
-    //             <Card courseCode="COSC 360" courseName="Intro to Web Development" user="prof"/>
-    //             <Card courseCode="COSC 395" courseName="Intro to Frontend Development" user="prof"/>
-    //             <Card courseCode="Create Course" courseName="Click to create a new course"/>
+    //         {courses.map(course => (
+    //             <Card 
+    //                 key={course.courseId} 
+    //                 courseCode={course.courseCode} 
+    //                 courseName={course.courseName} 
+    //             />
+    //         ))}
+    //         {/* <Card courseCode="Create Course" courseName="Click to create a new course"/> */}
     //     </div>
     // );
+
+    return(
+        <div className="dashboard">
+                <Card courseCode="COSC 499" courseName="Software Engineering Capstone" user="prof"/>
+                <Card courseCode="COSC 360" courseName="Intro to Web Development" user="prof"/>
+                <Card courseCode="COSC 395" courseName="Intro to Frontend Development" user="prof"/>
+                <Card courseCode="Create Course" courseName="Click to create a new course"/>
+        </div>
+    );
 };
 
 export default CourseCards;

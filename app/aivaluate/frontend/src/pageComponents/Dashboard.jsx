@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../CourseCards.css';
+import '../Dashboard.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import CourseCards from '../components/CourseCards';
-import '../styles.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();

@@ -14,6 +14,7 @@ import HelpPage from './pageComponents/HelpPage';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import CourseHome from './pageComponents/CourseHome';
+import EvaluatorManager from './pageComponents/EvaluatorManager';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path ="/dashboard" element={<Dashboard />} />
+          <Route path ="/admin/evaluatormanager" element={<EvaluatorManager />} />
           <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
           <Route path ="/account" element={<Account />} />
           <Route path ="/help" element={<HelpPage />} />

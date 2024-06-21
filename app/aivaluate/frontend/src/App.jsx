@@ -17,6 +17,7 @@ import People from './pageComponents/People';
 import Signup from './pageComponents/Signup';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import StudentGrades from './pageComponents/StudentGrades';
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/stu/grades" element={<StudentGrades />} />
         </Routes>
       </div>
     </Router>

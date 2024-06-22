@@ -1,6 +1,6 @@
 .assignment-table-content {
   flex-grow: 1;
-  height:100%;
+  height: 100%;
   margin-top: 50px;
   margin-right: 50px;
   margin-left: 400px;
@@ -31,21 +31,8 @@
   margin-right: 10px;
 }
 
-.search-container {
-  width: 700px;
+.assignment-search-container {
+  margin-top:40px;
+  margin-left:400px;
 }
 
-.search-box {
-  margin-top: 20px;
-  margin-left: 400px;
-}
-
-.search-box input {
-  padding: 10px;
-  font-size: 18px;
-  width: 100%;
-}
-
-.search-icon {
-  font-size: 1.5rem;
-}

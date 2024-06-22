@@ -37,6 +37,7 @@ const AssignmentOverview = () => {
     <div>
       <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
       <SideMenuBar tab='assignments' />
+      <div className="assignment-search-container">
       <div className="search-container">
             <div className="search-box">
               <FaSearch className="search-icon" />
@@ -47,6 +48,7 @@ const AssignmentOverview = () => {
                 onChange={handleSearchChange}
               />
             </div>
+          </div>
       </div>
           <div className="table-container">
             <main className="assignment-table-content">

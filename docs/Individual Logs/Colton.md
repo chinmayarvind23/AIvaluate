@@ -349,12 +349,13 @@ Next cycle I am going to have a  more focus on frontend design. Because I have a
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/)
+![alt text](./clockify-images/colton-clockify_C7.png)
 
 ### Current Tasks
   * #1: Student grades frontend
   * #2: Prof/T.A. grade frontend
   * #3: Evaluator manager (admin portal) frontend
+  * #4: Student manager (admin portal) frontend
 
 ### Progress Update (since June 19th 2024) 
 <table>
@@ -368,29 +369,40 @@ Clockify report
         <td>Student Grades frontend
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
     <tr>
         <td>Prof/T.A. grade frontend page 
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
     <tr>
         <td>Evaluator manager (admin portal) frontend
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td>Evaluator manager (admin portal) frontend
+        </td>
+        <!-- Status -->
+        <td> Complete
         </td>
     </tr>
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-
+In this cycle the frontend design actually went really well for me. I had a little bit of trouble implementing the search feature for a few of my pages but once it was working it was perfect!
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
+I the next Cycle I am going to be implementing all of the backend for the frontend I just implemented this cycle which entails:
+- Backend for student and evaluator admin portals
+- Backend for student and profs grade view
+- Make a fix in our Nginx reverse proxy so that everything run off of one back end system for now.
 
 -----------------------------------------------------------------------------------
 ## Cycle 8: Friday June 21st - Wednesday June 21st

@@ -1,19 +1,18 @@
 .assignment-table-content {
   flex-grow: 1;
-  padding: 20px;
-  border-radius: 20px;
   height:100%;
   margin-top: 50px;
   margin-right: 50px;
   margin-left: 400px;
-  border: 5px solid transparent; /* Transparent border to maintain inner border radius */
-  border-radius: 20px; /* Inner border radius */
+  border: 10px solid transparent;
+  border-radius: 50px; 
   padding: 20px;
-
+  font-size: 1.5em;
 }
 
 .table-section {
-  overflow-x: auto; /* Ensures the table is scrollable if it overflows the container */
+  overflow-x: auto;
+  padding-top: 0px;
 }
 
 .assignment-table {
@@ -24,14 +23,29 @@
 
 .assignment-table th, 
 .assignment-table td {
-  padding: 15px;
+  padding: 20px;
   text-align: left;
-  background: none; /* Remove background color */
 }
-
-
 
 .assignment-table .file-icon {
-  margin-right: 10px; /* Space between icon and text */
+  margin-right: 10px;
 }
 
+.search-container {
+  width: 700px;
+}
+
+.search-box {
+  margin-top: 20px;
+  margin-left: 400px;
+}
+
+.search-box input {
+  padding: 10px;
+  font-size: 18px;
+  width: 100%;
+}
+
+.search-icon {
+  font-size: 1.5rem;
+}

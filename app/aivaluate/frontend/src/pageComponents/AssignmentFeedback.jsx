@@ -1,10 +1,10 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import '../Assignment.css'; // Ensure the correct CSS file name is used
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 import '../styles.css';
-import '../Assignment.css'; // Ensure the correct CSS file name is used
 
 const AssignmentFeedback = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const AssignmentFeedback = () => {
         <main className="assignment-content">
           <header className="assignment-content-header">
           <button className="back-button" onClick={() => navigate('/assignmentoverview')}>
-              <span className="back-arrow">&lt;</span>
+              <span className="back-arrow"><CircumIcon name="circle_chev_left"/></span>
             </button>
             <h2 className="assignment-title">Feedback - Assignment 1</h2>
             <div className="score-container">

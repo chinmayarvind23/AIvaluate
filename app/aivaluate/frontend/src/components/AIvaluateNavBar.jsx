@@ -12,20 +12,27 @@ const AIvaluateNavBar = ({ navBarText, tab }) => {
   };
 
   const handleLogout = async () => {
+    window.location.href = '/stu/login';
     try {
-        const response = await axios.get('/stu/logout');
-        // Optionally handle success message or redirect from the response
-        console.log(response.data); // Assuming your backend sends a response
-    } catch (error) {
-        console.error('Logout failed:', error);
-        // Optionally handle error messages
-    }
-};
+      const response = await axios.get('http://localhost:4000/stu/logout', {
+        withCredentials: true // Ensures cookies are included in the request
+      });
 
-const logoutFromAccount = () => {
-  window.localStorage.clear();
-  window.location.href = '/stu/login';
-};
+      if (response.status === 200) {
+        // Clear local storage
+        window.localStorage.clear();
+
+        // Redirect to login page
+        history.push('/stu/login'); // Use history.push to navigate to the login page
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Optionally handle error messages
+    }
+  };
+
 
   const boostFromTop = {
     marginTop: '120px',
@@ -53,7 +60,7 @@ const logoutFromAccount = () => {
             <a href="help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
               Get Help...
             </a>
-            <button onClick={logoutFromAccount} className="logout">Logout</button>
+            <button onClick={handleLogout} className="logout">Logout</button>
           </div>
         </div>
       </header>

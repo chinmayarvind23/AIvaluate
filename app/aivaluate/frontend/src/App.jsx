@@ -7,15 +7,15 @@ import AssignmentOverview from './pageComponents/AssignmentOverview';
 import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
-import ForgotPassword from './pageComponents/ForgotPassword';
-import GradingAssignments from './pageComponents/GradingAssignments';
 import DashboardEval from './pageComponents/DashboardEval';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
+import GradingAssignments from './pageComponents/GradingAssignments';
 import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
+import Rubrics from './pageComponents/Rubrics';
 import Signup from './pageComponents/Signup';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
@@ -43,6 +43,7 @@ const App = () => {
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="eval/rubrics" element={<Rubrics />} />
         </Routes>
       </div>
     </Router>

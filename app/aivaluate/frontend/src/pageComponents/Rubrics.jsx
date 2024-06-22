@@ -8,7 +8,7 @@ import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
-const StudentViewSubmissions = () => {
+const Rubrics = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -16,18 +16,10 @@ const StudentViewSubmissions = () => {
   const [filteredFiles, setFilteredFiles] = useState([]);
 
   const files = [
-    'index.html',
-    'index.css',
-    'login.html',
-    'login.css',
-    'dashboard.html',
-    'dashboard.css',
-    'report.html',
-    'report.css',
-    'about.html',
-    'about.css',
-    'contact.html',
-    'contact.css',
+    'Build a Personal Portfolio Page',
+    'Design a Homepage',
+    'Design Account Page',
+    'Design a Login Page',
   ];
 
     useEffect(() => {
@@ -71,7 +63,7 @@ const StudentViewSubmissions = () => {
         <div className="portal-all">
             <div className="portal-container">
                 <div className="topBar">
-                    <h1>Submissions</h1>
+                    <h1>Your Rubrics</h1>
                     <div className="search-container">
                         <div className="search-box">
                             <FaSearch className="search-icon" />
@@ -87,7 +79,7 @@ const StudentViewSubmissions = () => {
                 <div className="filetab">
                     {currentFiles.map((file, index) => (
                         <div className="file-item" key={index}>
-                            <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                            <div className="folder-icon"><CircumIcon name="file_on"/></div>
                             <div className="file-name">{file}</div>
                         </div>
                     ))}
@@ -106,4 +98,4 @@ const StudentViewSubmissions = () => {
   );
 };
 
-export default StudentViewSubmissions;
+export default Rubrics;

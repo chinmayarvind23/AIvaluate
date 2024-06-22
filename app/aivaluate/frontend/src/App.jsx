@@ -19,6 +19,7 @@ import Signup from './pageComponents/Signup';
 import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import AssignmentSubpage from './pageComponents/AssignmentSubpage';
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/stu/grades" element={<StudentGrades />} />
           <Route path="eval/grades" element={<EvaluatorGrades />} />
+          <Route path="/assignmentSubpage" element={<AssignmentSubpage />} />
         </Routes>
       </div>
     </Router>

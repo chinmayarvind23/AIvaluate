@@ -11,6 +11,7 @@ const passport = require("passport");
 const courseRoutes = require('./routes/courseRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
+const assignmentRoutes = require('./routes/assignmentRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -44,6 +45,7 @@ app.use(flash());
 app.use(courseRoutes);
 app.use(studentRoutes);
 app.use(instructorRoutes);
+app.use(assignmentRoutes);
 
 app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;

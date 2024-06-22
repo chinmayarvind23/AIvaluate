@@ -18,6 +18,7 @@ import Signup from './pageComponents/Signup';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminHome from './pageComponents/AdminHome';
+import CreateAssignment from './pageComponents/CreateAssignment';
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/adminhome" element={<AdminHome />} />
+          <Route path="/create-assignment" element={<CreateAssignment />} />
         </Routes>
       </div>
     </Router>

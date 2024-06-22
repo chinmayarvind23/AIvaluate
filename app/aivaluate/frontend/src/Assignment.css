@@ -1,75 +1,92 @@
-/* Assignments.css */
-
 .assignments-container {
-    display: flex;
-    width: 100%;
-  }
-  
-  .sidebar {
-    width: 250px;
-    background-color: white;
-    padding: 20px;
-    /* position:absolute;
-    top:90px;
-    left: 20px; */
-    border-radius: 0px 0px 60px 60px;
-    z-index: 1;
-    float:left;
-    margin-left:20px;
-    height: 500px;
-    width: 400px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  nav ul li {
-    padding: 10px 0;
-    color: white;
-    cursor: pointer;
-  }
-  
-  nav ul li.selected {
-    color: #4d24d4;
-    text-decoration: underline;
-  }
-  
-  .assignment-content {
-    flex-grow: 1;
-    background: #4d24d4;
-    padding: 20px;
-    border-radius: 20px;
-    margin: 20px;
-    color: black;
-    height:100%;
-    margin-left: 500px;
-  }
+  display: flex;
+  width: 100%;
+  border-radius: 60px;
+}
 
+.assignment-content {
+  flex-grow: 1;
+  background: var(--primary-color);
+  padding: 20px;
+  border-radius: 60px;
+  margin: 20px;
+  color: var(--third-color);
+  height: 100%;
+  margin-left: 400px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box; 
+}
 
-  .back-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .feedback-section {
-    background: white;
-    color: black;
-    padding: 20px;
-    border-radius: 20px;
-    margin-top: 20px;
-    float:right;
-    margin-left:300px;
-  }
-  
-  .feedback-content {
-    background: #f4f4ff;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
-  
+.back-button {
+  background: var(--secondary-color);
+  border: none;
+  color: var(--primary-color); 
+  font-size: 1.4rem; 
+  cursor: pointer;
+  border-radius: 50%; 
+  width: 60px;
+  height: 60px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback-section {
+  background: var(--secondary-color);
+  color: var(--third-color);
+  border-radius: 60px; 
+  margin-top: 20px;
+  width: 100%;
+  padding: 30px; 
+  box-sizing: border-box; 
+}
+
+.feedback-content {
+  background: #e9e9fc;
+  padding: 60px; 
+  border-radius: 60px; 
+  margin-top: 10px;
+  text-align: left;
+  font-size: 1.5rem; 
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.evaluator-comment {
+  background: #e9e9fc;
+  padding: 60px; 
+  border-radius: 60px; 
+  margin-top: 10px;
+  text-align: left;
+  font-size: 1.5rem;
+  flex-grow: 1;
+  box-sizing: border-box; 
+}
+
+.assignment-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.assignment-content-header h2 {
+  margin-left: 20px;
+  font-size: 2rem;
+  color: var(--secondary-color);
+}
+
+.score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color);
+  padding: 10px 50px; 
+  border-radius: 60px;
+  color: var(--primary-color);
+  margin-left: auto;
+  font-size: 2rem; 
+  text-align: center;
+}

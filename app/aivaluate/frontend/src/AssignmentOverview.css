@@ -23,7 +23,7 @@
 
 .assignment-table th, 
 .assignment-table td {
-  padding: 20px;
+  padding: 0px;
   text-align: left;
 }
 
@@ -36,3 +36,22 @@
   margin-left:400px;
 }
 
+.icon-button, .link-button {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  padding: 0; 
+  margin: 0; 
+  display: inline;
+}
+
+.icon-button .file-icon {
+  font-size: inherit;
+}
+
+.icon-button:focus, .link-button:focus {
+  outline: none;
+}

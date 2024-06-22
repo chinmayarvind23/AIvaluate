@@ -17,10 +17,8 @@ import People from './pageComponents/People';
 import Signup from './pageComponents/Signup';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
-import AdminProfLogin from './pageComponents/AdminProfLogin';
-import CourseHome from './pageComponents/CourseHome';
 import CreateAccPT from './pageComponents/CreateAccPT'
-
+import AssignmentSubpage from './pageComponents/AssignmentSubpage';
 
 const App = () => {
   return (
@@ -45,6 +43,7 @@ const App = () => {
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="/CreateAccPT" element={<CreateAccPT/>} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/assignmentSubpage" element={<AssignmentSubpage />} />
         </Routes>
       </div>
     </Router>

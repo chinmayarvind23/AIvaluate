@@ -1,0 +1,74 @@
+/* Assignments.css */
+
+.assignments-container {
+    display: flex;
+    width: 100%;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: white;
+    padding: 20px;
+    /* position:absolute;
+    top:90px;
+    left: 20px; */
+    border-radius: 0px 0px 60px 60px;
+    z-index: 1;
+    float:left;
+    margin-left:20px;
+    height: 500px;
+    width: 400px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  nav ul li {
+    padding: 10px 0;
+    color: white;
+    cursor: pointer;
+  }
+  
+  nav ul li.selected {
+    color: #4d24d4;
+    text-decoration: underline;
+  }
+  
+  .content {
+    flex-grow: 1;
+    background: #4d24d4;
+    padding: 20px;
+    border-radius: 20px;
+    margin: 20px;
+    color: black;
+    height:100%;
+    margin-left: 500px;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .feedback-section {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    float:right;
+    margin-left:300px;
+  }
+  
+  .feedback-content {
+    background: #f4f4ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  

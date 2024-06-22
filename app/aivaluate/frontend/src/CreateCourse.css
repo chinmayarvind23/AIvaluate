@@ -1,0 +1,79 @@
+.form-container {
+  padding: 20px;
+  border-radius: 60px;
+  position: absolute;
+  top: 20px;
+  left: 35px;
+  width: 40%;
+  padding-top: 150px;
+  padding-left: 30px;
+  min-width: 600px;
+}
+
+.form-content {
+  color: var(--third-color);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: -50px;
+  position: relative;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.prof-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  width: 80%;
+}
+
+input, .drop-down-menu {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  border: 3px solid var(--primary-color);
+  border-radius: 60px;
+  font-size: 1rem;
+  color: var(--primary-color);
+  box-sizing: border-box; 
+}
+
+input:disabled {
+  background-color: #d2c7f4;
+  color: #eee;
+  font-weight: bold;
+  text-align: center;
+}
+
+h3 {
+  margin-bottom: 0px;
+}
+
+.instructor-input {
+  width: 35%;
+  margin-left: 0;
+  border: none;
+}
+
+.create-course-button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 60px;
+  font-size: 1rem;
+  margin-top: 50px; /* Adjust position */
+  width:500px;
+  display: block; 
+  box-sizing: border-box;
+}
+
+.create-course-button:hover {
+  background-color: var(third-color);
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+

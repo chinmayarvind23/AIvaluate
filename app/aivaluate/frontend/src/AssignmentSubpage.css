@@ -9,8 +9,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
-    color: rgb(11, 1, 1);
+    background-color: var(--secondary-color);
+    color: var(--third-color);
     padding: 20px 10px;
     border-radius: 5px;
     width: 100%;
@@ -23,8 +23,8 @@
 }
 
 .back-button {
-    background-color: #4e54c8; /* Button background color */
-    color: white; /* Arrow color */
+    background-color: var(--primary-color); /* Button background color */
+    color: var(--secondary-color); /* Arrow color */
     border: none; /* Remove default border */
     border-radius: 50%; /* Make the button circular */
     width: 50px; /* Width of the button */
@@ -39,20 +39,19 @@
 }
 
 
-    .due-date {
-        color: red;
-        font-weight: bold;
-    }
-
+.due-date {
+    color: red;
+    font-weight: bold;
+}
 
 .con {
     margin-top: 0px;
-    background-color: #ffffff;
+    background-color: var(--secondary-color);
     margin-left: 35%;
     width: 80%;
-    margin-right : 10%;
+    margin-right: 10%;
     margin-top: 5%;
-    color: rgb(11, 1, 1);
+    color: var(--third-color);
     padding: 20px 10px;
     border-radius: 5px;
     width: 100%;
@@ -62,7 +61,7 @@
     border-bottom-left-radius: 30px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
-
+}
 
 .upload-button, .submit-button {
     display: block;
@@ -74,20 +73,17 @@
     border-bottom-left-radius: 30px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
-
-   
-   
 }
 
 .upload-button {
-    background-color: #030001d1;
-    color: white;
+    background-color: var(--third-color);
+    color: var(--secondary-color);
     width: 70%;
 }
 
 .submit-button {
-    background-color: #1d1d2e;
-    color: white;
+    background-color: var(--third-color);
+    color: var(--secondary-color);
     position: relative;
     top: -58px;
     width: 15%;
@@ -111,14 +107,6 @@
 .requirements li ul {
     list-style-type: circle;
 }
-}
-
-    
-   
-    
-    
-    
-    
 
     
     

@@ -1,5 +1,48 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 19 - June 22 Morning) - 10 hours
+
+## Saturday June 22th (Until 7 AM)
+### 4.5 hours
+- Code Review (12 pull requests) (3 hours)
+- Finished Design Frontend Assignment Overview Page (0.5 hour)
+- Fixed The Assignment Feedback Page UI (1 hour)
+
+## Friday June 21th
+### 2.5 hours
+- Code Review (0.5 hour)
+- Working on Design Frontend Assignment Overview Page (2 hours)
+
+## Thursday June 20th
+### 1 hour
+- Working on Design Frontend Assignment Overview Page (1 hour)
+
+## Wednesday June 19th 
+### 2 hours
+- Team Meetings and deciding on task priorities, merging branches and code review (2 hours)
+
+# Current Tasks
+- #1 Design frontend student assignment overview page
+- #2 Design frontend assignment graded feedback page
+- #3 Design frontend admin portal student manager page 
+- #4 Implement Account Management Testings
+
+# Progress Update (since June 12)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Passed to Colton  |
+| Task #4 | Postponed to cycle 10 |
+
+# Cycle Goal Review
+During this cycle, we focused on finishing all the front-end pages. I completed two out of three pages assigned to me. The last page, which is the same as another page Colton was doing, was passed to him.
+
+# Next Cycle 
+- #1 Create API endpoints to allow instructors to create assignments
+- #2 Create API endpoints to allow instructors to update course details
+- #3 Create API endpoints to allow  instructors to upload rubrics or answers to an assignment
+
 # Timesheet (June 14 - June 18) - 13 hours
 
 ## Tuesday June 18th

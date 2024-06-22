@@ -1,7 +1,8 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import '../CreateAccPT.css';
+import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
 const CreateAccPT = () => {
@@ -35,9 +36,9 @@ const CreateAccPT = () => {
     <div className="admin-home-portal">
       <AIvaluateNavBar navBarText="Admin Home Portal" />
       <div className="main-content">
-        <SideMenuBarAdmin />
+        <SideMenuBarAdmin tab="evalManager"/>
         <div className="content">
-          <button className="back-button" onClick={() => navigate(-1)}>&lt;</button>
+          <button className="back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
           <form className="user-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <div className="box">

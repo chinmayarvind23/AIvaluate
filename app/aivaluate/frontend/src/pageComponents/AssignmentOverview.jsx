@@ -3,14 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import '../AssignmentOverview.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
-import '../styles.css';
-
-const aivaluatePurple = {
-  color: '#4d24d4'
-};
+import '../GeneralStyling.css';
+import { FaFile } from 'react-icons/fa'; // Import FontAwesome file icon
 
 const assignments = [
-  { name: 'Project Planning - Requirement video', date: 'May 30 at 11:59pm', grade: '-1 pts' },
+  { name: 'Project Planning - Requirement video', date: 'May 30 at 11:59pm', grade: '-/1 pts' },
   { name: 'Individual Exercise: Resolving Merge conflicts', date: 'May 24 at 11:59pm', grade: '8/8 pts' }
 ];
 
@@ -28,16 +25,14 @@ const AssignmentOverview = () => {
     <div>
       <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
       <SideMenuBar tab='assignments' />
-      <div className="assignments-container">
-        <main className="content">
-          <header className="content-header">
-            <button className="back-button" onClick={() => navigate(-1)}>&lt;</button>
-            <h2>Assignment Overview</h2>
-          </header>
+      
+      <div className="table-container">
+        <main className="assignment-table-content">
           <section className="table-section">
             <table className="assignment-table">
               <thead>
                 <tr>
+                  <th></th> {/* Empty header for the icon column */}
                   <th>Name</th>
                   <th>Date</th>
                   <th>Grade</th>
@@ -46,6 +41,7 @@ const AssignmentOverview = () => {
               <tbody>
                 {assignments.map((assignment, index) => (
                   <tr key={index}>
+                    <td><FaFile className="file-icon" /></td> {/* File icon */}
                     <td>{assignment.name}</td>
                     <td>{assignment.date}</td>
                     <td>{assignment.grade}</td>

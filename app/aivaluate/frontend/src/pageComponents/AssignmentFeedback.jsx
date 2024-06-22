@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Assignment.css';
+
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 import '../styles.css';
-
-const aivaluatePurple = {
-    color: '#4d24d4'
-  }
 
 const AssignmentFeedback = () => {
   const navigate = useNavigate();
@@ -35,7 +31,7 @@ const AssignmentFeedback = () => {
       <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone'  />
       <SideMenuBar tab='assignments' />
       <div className="assignments-container">
-        <main className="content">
+        <main className="assignment-content">
           <header className="content-header">
             <button className="back-button">&lt;</button>
             <h2>Feedback - Assignment 1</h2>

@@ -4,14 +4,13 @@ import './App.css';
 import Account from './pageComponents/Account';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
-import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
-import ForgotPassword from './pageComponents/ForgotPassword';
-import GradingAssignments from './pageComponents/GradingAssignments';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
+import GradingAssignments from './pageComponents/GradingAssignments';
 import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
@@ -36,13 +35,13 @@ const App = () => {
           <Route path ="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
-          <Route path ="/People" element={<People />} />
+          <Route path ="/people" element={<People />} />
           <Route path = "/createcourse" element={<CreateCourse />} />
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
-          <Route path="/admin-proflogin" element={<AdminProfLogin />} />
-          <Route path="/CourseHome" element={<CourseHome />} />
+          <Route path="/global/login" element={<AdminProfLogin />} />
           <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/eval/submissions" element={<EvalViewSubmissions />} />
         </Routes>
       </div>
     </Router>

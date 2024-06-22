@@ -1,0 +1,31 @@
+.left-button{
+    display:flex;
+
+}
+
+.right-button{
+    display:flex;
+}
+
+.assignButton{
+    display:flex;
+    width: 400px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border-radius: 60px;
+}
+
+.blank-space{
+    display:flex;
+    width: stretch;
+}
+
+.topBarButton{
+    display:flex;
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 20px;
+    margin: stretch;
+}

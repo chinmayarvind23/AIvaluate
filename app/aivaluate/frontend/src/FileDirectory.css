@@ -87,7 +87,6 @@
     align-items: center;
     width: fill-parent;
     background: none;
-    
   }
   
   
@@ -103,6 +102,11 @@
     border-radius: 5px;
     font-size: 2rem;
     text-align: left;
+  }
+
+  .file-item:hover {
+    text-decoration: underline;
+    transform: scale(1.01);
   }
 
   .file-name{

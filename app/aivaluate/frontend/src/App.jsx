@@ -4,6 +4,7 @@ import './App.css';
 import Account from './pageComponents/Account';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
+import AssignmentProf from './pageComponents/AssignmentProf';
 import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="eval/assignment" element={<AssignmentProf />} />
         </Routes>
       </div>
     </Router>

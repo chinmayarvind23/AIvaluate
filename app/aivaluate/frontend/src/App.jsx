@@ -7,6 +7,8 @@ import AssignmentOverview from './pageComponents/AssignmentOverview';
 import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
+import ForgotPassword from './pageComponents/ForgotPassword';
+import GradingAssignments from './pageComponents/GradingAssignments';
 import DashboardEval from './pageComponents/DashboardEval';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
@@ -39,6 +41,7 @@ const App = () => {
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
+          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
         </Routes>
       </div>

@@ -2,19 +2,19 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Account from './pageComponents/Account';
-import AssignmentOverview from './pageComponents/AssignmentOverview';
-import Dashboard from './pageComponents/Dashboard';
-import JoinCourse from './pageComponents/JoinCourse';
-import ForgotPassword from './pageComponents/ForgotPassword';
-import Login from './pageComponents/Login';
-import Signup from './pageComponents/Signup';
-import People from './pageComponents/People';
-import CreateCourse from './pageComponents/CreateCourse';
-import HelpPage from './pageComponents/HelpPage';
-import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
+import AssignmentOverview from './pageComponents/AssignmentOverview';
 import CourseHome from './pageComponents/CourseHome';
+import CreateCourse from './pageComponents/CreateCourse';
+import Dashboard from './pageComponents/Dashboard';
+import ForgotPassword from './pageComponents/ForgotPassword';
 import GradingAssignments from './pageComponents/GradingAssignments';
+import HelpPage from './pageComponents/HelpPage';
+import JoinCourse from './pageComponents/JoinCourse';
+import Login from './pageComponents/Login';
+import People from './pageComponents/People';
+import Signup from './pageComponents/Signup';
+import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
-          <Route path="/GradingAssignments" element={<GradingAssignments />} />
+          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
         </Routes>
       </div>
     </Router>

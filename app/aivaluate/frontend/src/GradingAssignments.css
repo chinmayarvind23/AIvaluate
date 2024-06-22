@@ -5,7 +5,7 @@
   max-width: 2000px;
   margin-left: 350px;
   margin-right: 300px;
-  border-radius: 10px;
+  border-radius: 50px;
   box-shadow: 0 2px 4px #0000001a;
 }
 
@@ -30,11 +30,11 @@
 }
 
 .back-button, .confirm-button, .mark-complete {
-  background-color: #6200ea;
+  background-color: var(--primary-color);
   border: none;
   color: white;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
 }
 
@@ -57,7 +57,7 @@
 .student-info {
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 50px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -82,25 +82,27 @@
   border: none;
   color: white;
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   margin-left: 10px;
 }
 
 .feedback, .evaluator-comments, .student-submission {
   margin-bottom: 20px;
+  
 }
 
 .feedback h4, .evaluator-comments h4, .student-submission h4 {
   margin: 0 0 10px;
+  
 }
 
 .evaluator-comments textarea {
   width: 1060px;
   height: 100px;
-  padding: 10px;
+  padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 40px;
   resize: none;
 }
 
@@ -108,9 +110,9 @@
   display: block;
   padding: 10px;
   background-color: #eee;
-  border-radius: 5px;
+  border-radius: 50px;
   text-decoration: none;
-  color: #6200ea;
+  color: var(--primary-color);
 }
 
 .mark-complete {
@@ -124,7 +126,7 @@
   width: 100px;
   padding: 5px;
   border: 0.5px solid #ff0000;
-  border-radius: 5px;
+  border-radius: 50px;
   text-align: center;
 }
 
@@ -132,8 +134,6 @@
   flex-grow: 2;
   margin: 0;
   font-size: 24px;
-  color: rgb(255, 255, 255);
+  color: var(--secondary-color);
 }
-
-/* Additional styling for sidebar and navigation */
 

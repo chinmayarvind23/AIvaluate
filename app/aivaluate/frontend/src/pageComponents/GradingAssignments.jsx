@@ -1,8 +1,9 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../GradingAssignments.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import SideMenuBar2 from '../components/SideMenuBar2';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const GradingAssignments = () => {
   const navigate = useNavigate();
@@ -35,10 +36,10 @@ const GradingAssignments = () => {
     <div>
       <AIvaluateNavBar navBarText='Assignment 1' tab="assignments" />
       <div className="grading-container">
-        <SideMenuBar2 />
-        <div className="content">
-          <div className="assignment-header">
-            <button className="back-button" onClick={() => navigate(-1)}>{'<'}</button>
+        <SideMenuBarEval tab="assignments" />
+        <div className="content ">
+          <div className="assignment-header ">
+            <button className="back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
             <h2>Assignment 1</h2>
             <p className="aiscore">AIScore: 25/34</p>
             <div className="final-score">
@@ -48,7 +49,7 @@ const GradingAssignments = () => {
                   type="text"
                   value={finalScore}
                   onChange={handleScoreChange}
-                  placeholder="--/34"
+                  placeholder="--"
                 />
               </div>
             </div>

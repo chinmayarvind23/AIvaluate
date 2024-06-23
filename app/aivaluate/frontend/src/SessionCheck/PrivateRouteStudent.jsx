@@ -6,7 +6,7 @@ const PrivateRoute = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/stu/checksession', { withCredentials: true })
+        axios.get('http://localhost:4000/stu/dashboard', { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setIsAuthenticated(true);

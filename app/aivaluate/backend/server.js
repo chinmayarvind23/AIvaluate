@@ -131,7 +131,7 @@ app.post("/stu/login", passport.authenticate("local", {
     failureFlash: true
 }));
 
-app.get("/stu/checksession", checkNotAuthenticated, (req, res) => {
+app.get("/stu/dashboard", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
 });
 

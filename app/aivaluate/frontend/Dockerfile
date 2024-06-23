@@ -21,6 +21,9 @@ FROM nginx:alpine
 # Copy the build files from the previous stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# Copy the public folder to the nginx html directory
+COPY --from=build /app/public /usr/share/nginx/html
+
 # Copy the custom NGINX configuration file to conf.d
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 

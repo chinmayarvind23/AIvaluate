@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
-import AdminProfLogin from './pageComponents/AdminProfLogin';
-import AssignmentOverview from './pageComponents/AssignmentOverview';
-import CourseHome from './pageComponents/CourseHome';
+import AdminLogin from './pageComponents/AdminLogin';
+import AssignmentFeedback from './pageComponents/AssignmentFeedback';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
-import ForgotPassword from './pageComponents/ForgotPassword';
-import GradingAssignments from './pageComponents/GradingAssignments';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvalLogin from './pageComponents/EvalLogin';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
+import GradingAssignments from './pageComponents/GradingAssignments';
 import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
@@ -25,24 +25,29 @@ const App = () => {
     <Router>
       <div className="app">
         <Routes>
+          {/* No session validation routes required */}
           <Route path="/" element={<Login />} /> {/* Default route */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path ="/dashboard" element={<Dashboard />} />
-          <Route path ="/admin/evaluatormanager" element={<EvaluatorManager />} />
-          <Route path ="/admin/studentmanager" element={<StudentManager />} />
-          <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
-          <Route path ="/account" element={<Account />} />
-          <Route path ="/help" element={<HelpPage />} />
-          <Route path="/joincourse" element={<JoinCourse />} />
+          <Route path="/stu/login" element={<Login />} />
+          <Route path="/stu/signup" element={<Signup />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
-          <Route path ="/People" element={<People />} />
-          <Route path = "/createcourse" element={<CreateCourse />} />
-          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
-          <Route path="/admin-proflogin" element={<AdminProfLogin />} />
-          <Route path="/CourseHome" element={<CourseHome />} />
-          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/eval/login" element={<EvalLogin />} />
+          {/* Session validation routes */}
+          <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
+          <Route path="/stu/assignment-feedback" element={<PrivateRouteStu element={AssignmentFeedback} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}
+          <Route path="/stu/account" element={<PrivateRouteStu element={Account} />} />
+          <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
+          <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
+          <Route path="/stu/people" element={<PrivateRouteStu element={People} />} />
+          <Route path="/stu/create-course" element={<PrivateRouteStu element={CreateCourse} />} />
+          <Route path="/stu/submissions" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
+          {/* Session not implemented yet for Evaluators or Admin */}
+          <Route path="/admin/evaluatormanager" element={<EvaluatorManager />} />
+          <Route path="/admin/studentmanager" element={<StudentManager />} />
+          
+          <Route path="/eval/grading" element={<GradingAssignments />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+
         </Routes>
       </div>
     </Router>

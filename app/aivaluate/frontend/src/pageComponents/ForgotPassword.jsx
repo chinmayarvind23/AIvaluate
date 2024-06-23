@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
 
   return (
@@ -18,11 +18,11 @@ const Login = () => {
           <input type="email" placeholder="Enter email address" className="auth-input" />
           <input type="email" placeholder="Confirm email address" className="auth-input" />
           <button className="auth-submit primary-colorbg" onClick={() => navigate('/Dashboard')}>Send Email</button>
-          <a href="login" className="back-to-login primary-color-text">Back to login</a>
+          <a href="/stu/login" className="back-to-login primary-color-text">Back to login</a>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;

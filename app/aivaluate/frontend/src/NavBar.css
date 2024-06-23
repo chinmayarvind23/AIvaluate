@@ -84,3 +84,30 @@
   .menu .dropdown.show {
     display: block;
   }
+
+  .menu .dropdown .logout {
+    display: block;
+    padding: 10px 45px 20px;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    border:none;
+    border-radius: 0px;
+    width: stretch;
+    height: 90px;
+    background: none;
+    text-align:left;
+    color:black;
+  }
+
+  .menu .dropdown .logout::before {
+    content: '•'; 
+    margin-right: 10px;
+    font-size: 40px;
+    text-decoration: none;
+  }
+
+  .menu .dropdown .logout:hover {
+    background: #eee;
+    color:var(--primary-color);
+  }

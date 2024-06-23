@@ -8,7 +8,7 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const { pool } = require('./dbConfig');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); //possible require('bcryptjs')
 const session = require('express-session');
 const flash = require("express-flash");
 const bodyParser = require('body-parser');
@@ -34,13 +34,36 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
-app.use(
-    session({
-        secret: 'secret',
-        resave: false,
-        saveUninitialized: false
-    })
-);
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 // 24 hours
+    }
+}));
+
+// Middleware to parse JSON
+app.use(express.json());
+
+
+// Test route
+app.get('/', (req, res) => {
+    if (req.session.views) {
+        req.session.views++;
+        res.send(`Number of views: ${req.session.views}`);
+    } else {
+        req.session.views = 1;
+        res.send('Welcome to the session demo. Refresh!');
+    }
+});
+
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -108,21 +131,25 @@ app.post("/stu/login", passport.authenticate("local", {
     failureFlash: true
 }));
 
-app.get("/stu/dashboard", checkNotAuthenticated, (req, res) => {
+app.get("/stu/checksession", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
 });
 
 app.get('/stu/logout', (req, res, next) => {
+    console.log('Attempting to logout...'); // Check if this message appears in the console
     req.logout((err) => {
         if (err) {
+            console.error('Logout error:', err); // Check if any logout error is logged
             return next(err);
         }
         req.flash('success_msg', "You have successfully logged out");
         req.session.destroy((err) => {
             if (err) {
+                console.error('Session destroy error:', err); // Check if any session destroy error is logged
                 return next(err);
             }
             res.clearCookie('connect.sid');
+            console.log('Logout successful'); // Check if this message appears in the console
             res.redirect('/stu/login');
         });
     });

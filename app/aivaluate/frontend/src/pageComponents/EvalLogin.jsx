@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
-const AdminProfLogin = () => {
+const EvalLogin = () => {
   const navigate = useNavigate();
   const divStyle = {
     border: '1px solid black',
@@ -29,4 +29,4 @@ const AdminProfLogin = () => {
   );
 };
 
-export default AdminProfLogin;
+export default EvalLogin;

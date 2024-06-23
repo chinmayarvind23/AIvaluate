@@ -147,7 +147,12 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 INSERT INTO "Student" ("firstName", "lastName", "email", "password")
 VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
     ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-    ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3')
+    ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
+    ('Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table
@@ -155,7 +160,9 @@ INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "pas
 VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
     (2, 'Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
     (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
-    (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true)
+    (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
+    (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false)
+    (6, 'TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Course table
@@ -174,7 +181,7 @@ VALUES (1, 1, 90),
 
 -- Insert dummy data into SystemAdministrator table
 INSERT INTO "SystemAdministrator" ("adminId", "firstName", "lastName", "email", "password")
-VALUES (1, 'Admin', 'User', 'admin@example.com', 'adminpassword')
+VALUES (1, 'Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Assignment table
@@ -225,3 +232,4 @@ VALUES (1, 1, 1, 'Correctness, Efficiency, Documentation'),
     (2, 2, 2, 'Problem Solving, Mathematical Reasoning'),
     (3, 3, 3, 'Experimental Design, Analysis')
     ON CONFLICT DO NOTHING;
+

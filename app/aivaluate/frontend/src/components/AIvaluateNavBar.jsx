@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import '../GeneralStyling.css';
-import '../styles.css';
+// import '../styles.css';
 
 const AIvaluateNavBar = ({ navBarText, tab }) => {
   const [menuOpen, setMenuOpen] = useState(false);

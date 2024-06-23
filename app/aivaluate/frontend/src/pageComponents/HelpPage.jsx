@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import '../HelpPage.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../styles.css';
+// import '../styles.css';
 import '../GeneralStyling.css';
 
 

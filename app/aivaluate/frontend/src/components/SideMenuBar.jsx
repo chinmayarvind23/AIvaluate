@@ -1,6 +1,6 @@
 import React from 'react';
 import '../GeneralStyling.css';
-import '../styles.css';
+// import '../styles.css';
 
 const SideMenuBar = ({tab}) => {
   

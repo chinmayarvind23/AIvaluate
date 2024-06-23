@@ -1,10 +1,10 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../styles.css';
-import '../GeneralStyling.css';
+// import '../styles.css';
 import '../CreateCourse.css';
+import '../GeneralStyling.css';
 
 const aivaluatePurple = {
     color: '#4d24d4'

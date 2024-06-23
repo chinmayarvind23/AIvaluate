@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../Assignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
-import '../styles.css';
+// import '../styles.css';
 
 const aivaluatePurple = {
     color: '#4d24d4'

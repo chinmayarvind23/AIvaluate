@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import '../styles.css';
+// import '../styles.css';
 import Card from './card';
 
 const CourseCards = ({ navBarText }) => {

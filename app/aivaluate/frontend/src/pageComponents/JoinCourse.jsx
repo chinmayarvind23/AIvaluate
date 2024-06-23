@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import CourseCards from '../components/CourseCards';
-import '../styles.css';
+// import '../styles.css';
 
 const JoinCourse = () => {
   const navigate = useNavigate();

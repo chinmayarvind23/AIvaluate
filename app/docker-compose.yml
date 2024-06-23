@@ -1,12 +1,12 @@
 version: '3.8'
 services:
-  # frontend:
-  #   build:
-  #     context: ./aivaluate/frontend
-  #     dockerfile: Dockerfile
-  #   container_name: frontend
-  #   ports:
-  #     - "5173:5173"
+  frontend:
+    build:
+      context: ./aivaluate/frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
 
   db:
     image: postgres
@@ -42,18 +42,18 @@ services:
     env_file:
       - ./aivaluate/backend/.env
 
-  # drone-server:
-  #   image: drone/drone:latest
-  #   container_name: drone-server
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - /var/lib/drone:/data
-  #   environment:
-  #     DRONE_GITHUB_CLIENT_ID: Ov23liZvCwyDq8H6y4kq
-  #     DRONE_GITHUB_CLIENT_SECRET: 165c9dcb9fd1eb31f35512212abf4e3c74876551
-  #     DRONE_RPC_SECRET: ci-cd-setup-team-8
-  #     DRONE_SERVER_HOST: droneci.ok.ubc.ca
-  #     DRONE_SERVER_PROTO: https
+  drone-server:
+    image: drone/drone:latest
+    container_name: drone-server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/lib/drone:/data
+    environment:
+      DRONE_GITHUB_CLIENT_ID: Ov23liZvCwyDq8H6y4kq
+      DRONE_GITHUB_CLIENT_SECRET: 165c9dcb9fd1eb31f35512212abf4e3c74876551
+      DRONE_RPC_SECRET: ci-cd-setup-team-8
+      DRONE_SERVER_HOST: droneci.ok.ubc.ca
+      DRONE_SERVER_PROTO: https
 

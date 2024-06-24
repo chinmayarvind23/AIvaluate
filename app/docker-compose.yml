@@ -71,7 +71,7 @@ services:
       dockerfile: Dockerfile
     container_name: backend-eval
     ports:
-      - "2000:2000"
+      - "6000:6000"
     depends_on:
       - db
     env_file:

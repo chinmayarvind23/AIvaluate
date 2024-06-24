@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ element: Component }) => {
+const PrivateRouteEval = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     useEffect(() => {
@@ -24,4 +24,4 @@ const PrivateRoute = ({ element: Component }) => {
     return isAuthenticated ? <Component /> : <Navigate to="/eval/login" />;
 };
 
-export default PrivateRoute;
+export default PrivateRouteEval;

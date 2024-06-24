@@ -65,6 +65,20 @@ services:
     networks:
       - aivaluate-net
 
+  backend-eval:
+    build:
+      context: ./aivaluate/backend-eval
+      dockerfile: Dockerfile
+    container_name: backend-eval
+    ports:
+      - "2000:2000"
+    depends_on:
+      - db
+    env_file:
+      - ./aivaluate/backend-eval/.env
+    networks:
+      - aivaluate-net
+
   drone-server:
     image: drone/drone:latest
     container_name: drone-server

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 import '../Dashboard.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import CourseCards from '../components/CourseCards';
 
 const DashboardEval = () => {
@@ -30,7 +30,7 @@ const DashboardEval = () => {
         <h1>Here are your courses...</h1>
         
       </div>
-      <AIvaluateNavBar navBarText='Hello Colton' tab="home" />
+      <AIvaluateNavBarEval navBarText='Hello Colton' tab="home" />
       <CourseCards page="prof/dashboard"/>
     </div>
   );

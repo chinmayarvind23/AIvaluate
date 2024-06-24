@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import PrivateRouteAdmin from './SessionCheck/PrivateRouteAdmin';
+import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
 import AdminLogin from './pageComponents/AdminLogin';
@@ -47,9 +48,9 @@ const App = () => {
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
-          {/* Session not implemented yet for Evaluators*/}
-          <Route path="/eval/grading" element={<GradingAssignments />} />
-          <Route path="eval/dashboard" element={<DashboardEval />} />
+          {/* Session validation routes for evaluators */}
+          <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />
+          <Route path="/eval/dashboard" element={<PrivateRouteEval element={DashboardEval} />} />
 
         </Routes>
       </div>

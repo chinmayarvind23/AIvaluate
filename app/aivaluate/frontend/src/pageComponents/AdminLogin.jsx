@@ -55,6 +55,7 @@ const AdminLogin = () => {
       <div className="logo">
         <div className="logoText">
           <h1 className="primary-color-text">AI</h1><h1 className="secondary-color-text">valuate</h1>
+          <div className="center-text-admin"><h3>Administration</h3></div>
         </div>
       </div>
       <div className="auth-container">
@@ -62,7 +63,7 @@ const AdminLogin = () => {
           <h2 className="auth-title third-color-text">Login</h2>
           <div className="auth-toggle" style={divStyle}>
             <button className="auth-toggle-btn active">Login</button>
-            <button className="auth-toggle-btn" onClick={() => navigate('/stu/signup')}>Signup</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/admin/signup')}>Signup</button>
           </div>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>

@@ -6,7 +6,7 @@ const PrivateRoute = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5173/stu-api/dashboard', { withCredentials: true })
+        axios.get('http://localhost:5173/admin-api/dashboard', { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
                     setIsAuthenticated(true);
@@ -21,7 +21,7 @@ const PrivateRoute = ({ element: Component }) => {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? <Component /> : <Navigate to="/stu/login" />;
+    return isAuthenticated ? <Component /> : <Navigate to="/admin/login" />;
 };
 
 export default PrivateRoute;

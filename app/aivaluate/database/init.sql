@@ -176,7 +176,8 @@ VALUES ('Introduction to Programming', 'CS101', 'An introductory course on progr
 INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
 VALUES (1, 1, 90),
     (2, 1, 85),
-    (3, 2, 92)
+    (3, 2, 92),
+    (5, 2, 88)
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into SystemAdministrator table

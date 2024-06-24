@@ -115,6 +115,7 @@ app.get("/admin-api/dashboard", checkNotAuthenticated, (req, res) => {
 });
 
 app.get('/admin-api/logout', (req, res, next) => {
+    console.log('Attempting to logout...'); // Check if this message appears in the console
     req.logout((err) => {
         if (err) {
             console.error('Logout error:', err);
@@ -127,6 +128,7 @@ app.get('/admin-api/logout', (req, res, next) => {
                 return next(err);
             }
             res.clearCookie('connect.sid');
+            console.log('Logout successful'); // Check if this message appears in the console
             res.redirect('/admin-api/login');
         });
     });

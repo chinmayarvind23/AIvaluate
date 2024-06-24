@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import '../Auth.css';
 
 const Signup = () => {
@@ -57,7 +57,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/stu/signup', {
+      const response = await axios.post('http://localhost:5173/stu-api/signup', {
         firstName,
         lastName,
         email,

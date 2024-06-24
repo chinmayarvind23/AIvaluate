@@ -35,7 +35,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/stu/login', {
+      const response = await axios.post('http://localhost:5173/stu-api/login', {
         email,
         password
       }, { withCredentials: true }); // Ensure cookies are sent/received

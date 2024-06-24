@@ -1,6 +1,6 @@
 FROM node:20.14.0-buster as build
 
-WORKDIR /app/aivaluate/backendAdmin
+WORKDIR /app/aivaluate/backend-admin
 
 RUN apt-get update && \
     apt-get install -y netcat-openbsd postgresql-client && \

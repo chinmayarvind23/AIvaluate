@@ -69,11 +69,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use(courseRoutes);
-app.use(studentRoutes);
-app.use(instructorRoutes);
+app.use('/stu-api', courseRoutes);
+app.use('/stu-api', studentRoutes);
+app.use('/stu-api', instructorRoutes);
 
-app.post("/stu/signup", async (req, res) => {
+app.post("/stu-api/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
 
     let errors = [];
@@ -125,17 +125,17 @@ app.post("/stu/signup", async (req, res) => {
     }
 });
 
-app.post("/stu/login", passport.authenticate("local", {
-    successRedirect: "/stu/dashboard",
-    failureRedirect: "/stu/login",
+app.post("/stu-api/login", passport.authenticate("local", {
+    successRedirect: "/stu-api/dashboard",
+    failureRedirect: "/stu-api/login",
     failureFlash: true
 }));
 
-app.get("/stu/dashboard", checkNotAuthenticated, (req, res) => {
+app.get("/stu-api/dashboard", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
 });
 
-app.get('/stu/logout', (req, res, next) => {
+app.get('/stu-api/logout', (req, res, next) => {
     console.log('Attempting to logout...'); // Check if this message appears in the console
     req.logout((err) => {
         if (err) {
@@ -150,14 +150,14 @@ app.get('/stu/logout', (req, res, next) => {
             }
             res.clearCookie('connect.sid');
             console.log('Logout successful'); // Check if this message appears in the console
-            res.redirect('/stu/login');
+            res.redirect('/stu-api/login');
         });
     });
 });
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect('/stu/dashboard');
+        return res.redirect('/stu-api/dashboard');
     }
     next();
 }
@@ -166,7 +166,7 @@ function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect("/stu/login");
+    res.redirect("/stu-api/login");
 }
 
 app.listen(PORT, () => {

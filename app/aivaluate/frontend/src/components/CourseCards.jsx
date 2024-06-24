@@ -12,7 +12,7 @@ const CourseCards = ({ navBarText, page}) => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/courses');
+                const response = await axios.get('http://localhost:5173/stu-api/courses');
                 setCourses(response.data);
             } catch (error) {
                 console.error('Error fetching courses:', error);

@@ -62,13 +62,21 @@ The project goals for the AI-Powered Web Development Course Platform are to auto
 - We will also have meetings with the client and establish a feedback loop with them to iteratively improve our software product.
 
 ### Feature List
-1. User authentication and user account management (modify, delete, grant permissions)
-2. Course management (edit, delete, restore)
-3. Assignment management (create, modify, delete assignments, upload rubrics and answer keys, AI-powered grading, human review of AI grading)
-4. Assignment submission (submitting assignments, AI-powered feedback on assignment for student and instructor)
-5. Security and privacy (anonymization of student data for storage and transfer)
-6. Notifications (in-app notifications for assignment due dates, grades, and feedback)
-7. Analytics (dashboard with class analytics for assignment to be viewed by admins and instructors for feedback on class performance, and AI grading accuracy)
+- 1: Login/signup
+- 2: Changing account details
+- 3: Join/create a course
+- 4: Session management and storage
+- 5: Forgot password email implementation
+- 6: AI API implementation
+- 7: Create or edit an Assignment
+- 8: New grade notification
+- 9: Summary of grades for teacher
+- 10: Edit AI grading for professor
+- 11: Publish or private assignments
+- 12: Assignment submissions
+- 13: File management
+- 14: Delete user admin
+- 15: Admin register Prof or TA
 
 ### Measurable project objectives and related success criteria (scope of project)
 **Feature 1: User authentication and user account management (modify, delete, grant permissions)**

@@ -161,7 +161,7 @@ VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer
     (2, 'Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
     (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
     (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
-    (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false),
+    (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false)
     (6, 'TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
     ON CONFLICT DO NOTHING;
 

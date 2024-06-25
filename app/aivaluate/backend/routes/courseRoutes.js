@@ -1,8 +1,3 @@
-// Last Edited: June 17, 2024
-// Contributor: Jerry Fan
-// Purpose: Backend Logic for course creation and fetching
-// Used by the CreateCourse.jsx in frontend
-
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); 
@@ -31,6 +26,30 @@ router.get('/courses', async (req, res) => {
     } catch (error) {
         console.error('Error fetching courses:', error);
         res.status(500).send({ message: 'Error fetching courses' });
+    }
+});
+
+router.delete('/courses/:id', async (req, res) => {
+    if (req.isAuthenticated()) {
+        const courseId = req.params.id;  // Get the course ID from the request parameters
+
+        try {
+            const deleteResults = await pool.query(
+                'DELETE FROM "Course" WHERE "courseId" = $1 RETURNING *',  // Make sure to return something to confirm deletion
+                [courseId]
+            );
+
+            if (deleteResults.rowCount > 0) {
+                res.status(200).json({ message: 'Course deleted successfully', deletedCourse: deleteResults.rows[0] });
+            } else {
+                res.status(404).json({ error: 'Course not found' });
+            }
+        } catch (err) {
+            console.error('Error deleting course:', err);
+            res.status(500).json({ error: 'Database error' });
+        }
+    } else {
+        res.status(401).json({ error: 'Unauthorized' });
     }
 });
 

@@ -7,7 +7,7 @@
   
   .sidebar {
     width: 250px;
-    background-color: white;
+    background-color: var(--secondary-color);
     padding: 20px;
     /* position:absolute;
     top:90px;
@@ -27,22 +27,22 @@
   
   nav ul li {
     padding: 10px 0;
-    color: white;
+    color: var(--secondary-color);
     cursor: pointer;
   }
   
   nav ul li.selected {
-    color: #4d24d4;
+    color: var(--primary-color);
     text-decoration: underline;
   }
   
   .content {
     flex-grow: 1;
-    background: #4d24d4;
+    background: var(--primary-color);
     padding: 20px;
     border-radius: 20px;
     margin: 20px;
-    color: black;
+    color: var(--third-color);
     height:100%;
     margin-left: 500px;
   }
@@ -50,14 +50,14 @@
   .back-button {
     background: none;
     border: none;
-    color: white;
+    color: var(--secondary-color);
     font-size: 1.5rem;
     cursor: pointer;
   }
   
   .feedback-section {
-    background: white;
-    color: black;
+    background: var(--secondary-color);
+    color: var(--third-color);
     padding: 20px;
     border-radius: 20px;
     margin-top: 20px;
@@ -66,9 +66,17 @@
   }
   
   .feedback-content {
-    background: #f4f4ff;
+    background: var(--secondary-color);
     padding: 20px;
     border-radius: 10px;
     margin-top: 10px;
   }
-  
+
+  .buttonStyle {
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    padding: 10px 20px; 
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

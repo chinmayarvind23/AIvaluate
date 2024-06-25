@@ -6,7 +6,7 @@ import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import CourseCards from '../components/CourseCards';
 
-const Dashboard = () => {
+const DashboardEval = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   var notification = false;
@@ -27,13 +27,13 @@ const Dashboard = () => {
         <div className="notification-container">
         <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>
-        <h1>Your courses...</h1>
+        <h1>Here are your courses...</h1>
         
       </div>
       <AIvaluateNavBar navBarText='Hello Colton' tab="home" />
-      <CourseCards page="stu/dashboard"/>
+      <CourseCards page="prof/dashboard"/>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardEval;

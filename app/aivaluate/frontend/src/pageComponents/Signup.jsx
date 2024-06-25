@@ -145,6 +145,9 @@ const Signup = () => {
               onChange={(e) => setPassword2(e.target.value)}
               required 
             />
+
+            {/* Major is not required for now*/}
+
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
             <select 
               className="auth-input" 
@@ -156,6 +159,7 @@ const Signup = () => {
               <option value="Computer Science">Computer Science</option>
               <option value="Mathematics">Mathematics</option>
               <option value="Engineering">Engineering</option>
+
             </select>
             {errors.major && <p className="error-message">{errors.major}</p>}
             <button className="auth-submit primary-colorbg" type="submit">Create Account</button>

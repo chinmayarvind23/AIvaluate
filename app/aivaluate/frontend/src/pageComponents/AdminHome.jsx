@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import '../GeneralStyling.css';
-import '../styles.css';
+import React, { useEffect, useState } from 'react';
 import '../Admin.css';
+import '../GeneralStyling.css';
+import AIvaluateNavBarAdmin from '../components/AIvaluateNavBar';
+import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
+import '../styles.css';
 
 const AdminHome = () => {
     const [students, setStudents] = useState([]);
@@ -59,46 +61,43 @@ const AdminHome = () => {
     };
 
     return (
-        <div className="admin-container">
-            <div className="side-menu">
-                <a href="/evaluator-manager">Evaluator Manager</a>
-                <a href="/student-manager" className="active">Student Manager</a>
-            </div>
-            <div className="main-content">
-                <div className="header primary-colorbg">
-                    <div className="circle secondary-colorbg"></div>
-                    <h1>Admin Home Portal</h1>
-                </div>
-                {selectedStudent ? (
-                    <div className="user-info">
-                        <button className="back-button" onClick={handleBackButtonClick}>Back</button>
-                        <div className="user-details">
-                            <span><strong>Name:</strong> {selectedStudent.firstName} {selectedStudent.lastName}</span>
-                            <span><strong>Email:</strong> {selectedStudent.email}</span>
-                            <span><strong>Student ID:</strong> {selectedStudent.studentId}</span>
-                            <span><strong>Major:</strong> {selectedStudent.major}</span>
-                            <span><strong>Password:</strong> **********</span>
+        <div>
+            <SideMenuBarAdmin tab="home"/>
+            <AIvaluateNavBarAdmin navBarText="Admin Home Portal" tab="home"/>
+            <div className="admin-container">
+                <div className="main-content">
+                    
+                    {selectedStudent ? (
+                        <div className="user-info">
+                            <button className="back-button" onClick={handleBackButtonClick}>Back</button>
+                            <div className="user-details">
+                                <span><strong>Name:</strong> {selectedStudent.firstName} {selectedStudent.lastName}</span>
+                                <span><strong>Email:</strong> {selectedStudent.email}</span>
+                                <span><strong>Student ID:</strong> {selectedStudent.studentId}</span>
+                                <span><strong>Major:</strong> {selectedStudent.major}</span>
+                                <span><strong>Password:</strong> **********</span>
+                            </div>
+                            <button onClick={() => handleDeleteStudent(selectedStudent.studentId)} className="delete-button">Delete user</button>
+                            <h3>Courses:</h3>
+                            <ul className="student-list">
+                                {selectedStudent.courses && selectedStudent.courses.map(course => (
+                                    <li key={course.courseCode}>
+                                        {course.courseName} ({course.courseCode})
+                                        <button className="delete-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        <button onClick={() => handleDeleteStudent(selectedStudent.studentId)} className="delete-button">Delete user</button>
-                        <h3>Courses:</h3>
+                    ) : (
                         <ul className="student-list">
-                            {selectedStudent.courses && selectedStudent.courses.map(course => (
-                                <li key={course.courseCode}>
-                                    {course.courseName} ({course.courseCode})
-                                    <button className="delete-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
+                            {students.map(student => (
+                                <li key={student.studentId} onClick={() => handleSelectStudent(student)}>
+                                    {student.firstName} {student.lastName} ({student.email})
                                 </li>
                             ))}
                         </ul>
-                    </div>
-                ) : (
-                    <ul className="student-list">
-                        {students.map(student => (
-                            <li key={student.studentId} onClick={() => handleSelectStudent(student)}>
-                                {student.firstName} {student.lastName} ({student.email})
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -4,12 +4,11 @@ import '../CreateAssignment.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
-
 const CreateAssignment = () => {
     const [assignment, setAssignment] = useState({
-        assignmentName: '',  // Added assignmentName field
+        assignmentName: '',
         dueDate: '',
-        assignmentRubric: '', // Renamed to match the textarea name
+        assignmentRubric: '',
         maxPoints: '',
         assignmentDescription: ''
     });
@@ -101,7 +100,7 @@ const CreateAssignment = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <label htmlFor="maxPoints">Max Points:</label> {/* Add this label and input field */}
+                            <label htmlFor="maxPoints">Max Points:</label>
                             <input
                                 type="number"
                                 id="maxPoints"

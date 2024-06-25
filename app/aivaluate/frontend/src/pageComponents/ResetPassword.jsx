@@ -6,14 +6,25 @@ const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
+    if (password.length < 6 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+      setMessage('Password must be longer than 6 characters and include a combination of letters and numbers');
+      return;
+    }
     try {
-      const response = await axios.post(`http://localhost:4000/stu/reset/${token}`, { password });
+      const response = await axios.post(`http://localhost:4000/stu/reset/${token}`, { password, confirmPassword });
       setMessage(response.data.message);
-      navigate('/login');
+      if (response.data.message === 'Password has been reset successfully') {
+        navigate('/login');
+      }
     } catch (error) {
       setMessage('Error resetting password');
     }
@@ -32,6 +43,16 @@ const ResetPassword = () => {
               className="auth-input" 
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
+          </div>
+          <div className="form-group">
+            <input 
+              type="password" 
+              placeholder="Confirm New Password" 
+              className="auth-input" 
+              value={confirmPassword} 
+              onChange={(e) => setConfirmPassword(e.target.value)} 
               required 
             />
           </div>

@@ -15,23 +15,27 @@ const ForgotPassword = () => {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     if (!email || !confirmEmail) {
-      setError('Both email fields are required');
-      return;
+        setError('Both email fields are required');
+        return;
     }
     if (email !== confirmEmail) {
-      setError('Email addresses do not match');
-      return;
+        setError('Email addresses do not match');
+        return;
     }
     if (!validateEmail(email)) {
-      setError('Invalid email address');
-      return;
+        setError('Invalid email address');
+        return;
     }
     try {
-      const response = await axios.post('http://localhost:4000/stu/forgotpassword', { email });
-      setMessage(response.data.message);
-      setError('');
+        const response = await axios.post('http://localhost:4000/stu/forgotpassword', { email });
+        setMessage(response.data.message);
+        setError('');
     } catch (error) {
-      setMessage('Error sending reset email');
+        if (error.response && error.response.status === 404) {
+            setError('No account with this email found');
+        } else {
+            setMessage('Error sending reset email');
+        }
     }
   };
 

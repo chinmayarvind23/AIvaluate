@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
     "adminId" SERIAL NOT NULL PRIMARY KEY,
     "firstName" VARCHAR(100),
     "lastName" VARCHAR(100),
-    "email" VARCHAR(200),
+    "email" VARCHAR(200) UNIQUE NOT NULL,
     "password" VARCHAR(300)
 );
 
@@ -181,9 +181,10 @@ VALUES (1, 1, 90),
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into SystemAdministrator table
-INSERT INTO "SystemAdministrator" ("adminId", "firstName", "lastName", "email", "password")
-VALUES (1, 'Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "SystemAdministrator" ("firstName", "lastName", "email", "password")
+VALUES ('Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
+ON CONFLICT DO NOTHING;
+
 
 -- Insert dummy data into Assignment table
 INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")

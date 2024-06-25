@@ -1,8 +1,3 @@
-// Last Edited: June 17, 2024
-// Contributor: Jerry Fan
-// Purpose: Backend Logic for student account information update
-// Used by the Account.jsx in frontend
-
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');

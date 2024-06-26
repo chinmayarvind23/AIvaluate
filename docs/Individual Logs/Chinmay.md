@@ -478,7 +478,5 @@ I am working on fixing Tasks 1 and 6, but I completed tasks 2-5 completed as pla
 - Goal 1: Finish setting up node volume file stoage
 - Goal 2: To fix CI-CD pipeline
 - Goal 3: Any PR reviews feedback implementation
-- Goal 4: Docker containers submitted to app server
-- Goal 5: Backend for admin view of students
-- Goal 6: Backend for admin view of instructors
-- Goal 7: Notifications system creation
+- Goal 4: Docker containers submitted to app server and hosting
+- Goal 5: Notifications system creation

@@ -19,6 +19,7 @@ router.post('/courses', async (req, res) => {
     }
 });
 
+// Get all courses
 router.get('/courses', async (req, res) => {
     try {
         const courses = await pool.query('SELECT * FROM "Course"');
@@ -29,27 +30,38 @@ router.get('/courses', async (req, res) => {
     }
 });
 
-router.delete('/courses/:id', async (req, res) => {
-    if (req.isAuthenticated()) {
-        const courseId = req.params.id;  // Get the course ID from the request parameters
+// Get a single course by ID
+router.get('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
 
-        try {
-            const deleteResults = await pool.query(
-                'DELETE FROM "Course" WHERE "courseId" = $1 RETURNING *',  // Make sure to return something to confirm deletion
-                [courseId]
-            );
+    try {
+        const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
 
-            if (deleteResults.rowCount > 0) {
-                res.status(200).json({ message: 'Course deleted successfully', deletedCourse: deleteResults.rows[0] });
-            } else {
-                res.status(404).json({ error: 'Course not found' });
-            }
-        } catch (err) {
-            console.error('Error deleting course:', err);
-            res.status(500).json({ error: 'Database error' });
+        if (course.rowCount > 0) {
+            res.status(200).send(course.rows[0]);
+        } else {
+            res.status(404).send({ message: 'Course not found' });
         }
-    } else {
-        res.status(401).json({ error: 'Unauthorized' });
+    } catch (error) {
+        console.error('Error fetching course:', error);
+        res.status(500).send({ message: 'Error fetching course' });
+    }
+});
+
+router.delete('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
+
+    try {
+        const result = await pool.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        if (result.rowCount > 0) {
+            res.status(200).send({ message: 'Course deleted successfully' });
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting course:', error);
+        res.status(500).send({ message: 'Error deleting course' });
     }
 });
 

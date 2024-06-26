@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS "EnrolledIn"(
     "studentGrade" FLOAT,
     PRIMARY KEY ("studentId", "courseId"),
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
@@ -66,7 +66,8 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentKey" VARCHAR(500),
     "maxObtainableGrade" FLOAT,
     "assignmentDescription" VARCHAR(1000),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") 
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "CourseNotification"(
@@ -76,7 +77,7 @@ CREATE TABLE IF NOT EXISTS "CourseNotification"(
     "courseId" INT,
     "notificationMessage" VARCHAR(1000),
     "isRead" BOOLEAN,
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
@@ -89,9 +90,10 @@ CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
     "isSubmitted" BOOLEAN,
     "updatedAt" DATE,
     "isGraded" BOOLEAN,
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"), 
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"), 
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") 
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
@@ -103,7 +105,8 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
     "InstructorAssignedFinalGrade" FLOAT,
     "isGraded" BOOLEAN,
     FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId")
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") 
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedback"(
@@ -116,6 +119,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedback"(
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
@@ -130,6 +134,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
@@ -139,6 +144,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "criteria" VARCHAR(1000), /* Rubric upload as a file */
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 -- Insert dummy data for testing

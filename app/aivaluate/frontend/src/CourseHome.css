@@ -72,11 +72,11 @@
     margin-top: 10px;
   }
 
-  .buttonStyle {
+  .delete-button {
     color: var(--secondary-color);
     background-color: var(--primary-color);
     padding: 10px 20px; 
-    margin: 10px;
+    margin-left: 400px;
     border-radius: 5px;
     cursor: pointer;
 }

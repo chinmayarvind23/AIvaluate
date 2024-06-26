@@ -383,6 +383,6 @@ router.post('/stu/reset/:token', async (req, res) => {
         console.error('Error during password reset:', error);
         res.status(500).json({ message: 'Server error' });
     }
-});
+})};
 
-module.exports = router;
+module.exports = router;});

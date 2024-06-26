@@ -144,13 +144,20 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 );
 
 -- Insert dummy data for testing
+
+-- Insert dummy data into Course table
+INSERT INTO "Course" ("courseName", "courseCode", "maxStudents", "courseDescription")
+VALUES ('Introduction to Programming', 'CS101', 50, 'An introductory course on programming'),
+('Calculus I', 'MATH101', 60, 'A course on basic calculus'),
+('Physics I', 'PHYS101', 70, 'An introductory course on physics')
+ON CONFLICT DO NOTHING;
+
 -- Insert dummy data into Assignment table
 INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
 VALUES (1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
-       (2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
-       (3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
+(2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
+(3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
 ON CONFLICT DO NOTHING;
-
 
 -- Insert dummy data into Student table
 INSERT INTO "Student" ("firstName", "lastName", "email", "password")
@@ -165,13 +172,6 @@ VALUES ('Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Sc
        ('Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
        ('Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
        ('Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true)
-ON CONFLICT DO NOTHING;
-
--- Insert dummy data into Course table
-INSERT INTO "Course" ("courseName", "courseCode", "maxStudents", "courseDescription")
-VALUES ('Introduction to Programming', 'CS101', 50, 'An introductory course on programming'),
-       ('Calculus I', 'MATH101', 60, 'A course on basic calculus'),
-       ('Physics I', 'PHYS101', 70, 'An introductory course on physics')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table

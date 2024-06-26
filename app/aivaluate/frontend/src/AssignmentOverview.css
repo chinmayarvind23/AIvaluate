@@ -1,0 +1,38 @@
+.assignment-table-content {
+  flex-grow: 1;
+  height: 100%;
+  margin-top: 50px;
+  margin-right: 50px;
+  margin-left: 400px;
+  border: 10px solid transparent;
+  border-radius: 50px; 
+  padding: 20px;
+  font-size: 1.5em;
+}
+
+.table-section {
+  overflow-x: auto;
+  padding-top: 0px;
+}
+
+.assignment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.assignment-table th, 
+.assignment-table td {
+  padding: 20px;
+  text-align: left;
+}
+
+.assignment-table .file-icon {
+  margin-right: 10px;
+}
+
+.assignment-search-container {
+  margin-top:40px;
+  margin-left:400px;
+}
+

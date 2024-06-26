@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Account from './pageComponents/Account';
+import AssignmentFeedback from './pageComponents/AssignmentFeedback';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import CourseHome from './pageComponents/CourseHome';
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path ="/dashboard" element={<Dashboard />} />
+          <Route path ="/assignmentfeedback" element={<AssignmentFeedback />} />
           <Route path ="/admin/evaluatormanager" element={<EvaluatorManager />} />
           <Route path ="/admin/studentmanager" element={<StudentManager />} />
           <Route path ="/assignmentoverview" element={<AssignmentOverview />} />

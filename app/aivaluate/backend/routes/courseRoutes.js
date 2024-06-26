@@ -140,16 +140,3 @@ router.get('/courses/:id/instructor', async (req, res) => {
 
 module.exports = router;
 
-// Drop a course
-router.delete('/courses/:courseId', (req, res) => {
-    const courseId = req.params.courseId;
-    pool.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId], (err, results) => {
-        if (err) {
-            console.error('Error dropping course:', err);
-            return res.status(500).json({ error: 'Database error' });
-        }
-        res.status(204).send();
-    });
-});
-
-module.exports = router;

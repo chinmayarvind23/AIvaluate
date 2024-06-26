@@ -20,7 +20,7 @@ import Signup from './pageComponents/Signup';
 import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
-import StuAssignmnentSubmissionpage from './pageComponents/StuAssignmentSubmissionpage.jsx';
+import StuAssignmentSubmissionpage from './pageComponents/StuAssignmentSubmissionpage';
 
 const App = () => {
   return (
@@ -50,6 +50,10 @@ const App = () => {
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/stuassignmentsubmissionpage" element={<StuAssignmentSubmissionpage/>} />
+          
+        
+          
           
         </Routes>
       </div>

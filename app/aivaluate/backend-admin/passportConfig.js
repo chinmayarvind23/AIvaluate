@@ -8,7 +8,7 @@ function initialize(passport) {
   const authenticateUser = (email, password, done) => {
     console.log(email, password);
     pool.query(
-      `SELECT * FROM "Student" WHERE email = $1`,
+      `SELECT * FROM "SystemAdministrator" WHERE email = $1`,
       [email],
       (err, results) => {
         if (err) {
@@ -46,35 +46,27 @@ function initialize(passport) {
       authenticateUser
     )
   );
-  // Stores user details inside session. serializeUser determines which data of the user
-  // object should be stored in the session. The result of the serializeUser method is attached
-  // to the session as req.session.passport.user = {}. Here for instance, it would be (as we provide
-  //   the user id as the key) req.session.passport.user = {id: 'xyz'}
 
   passport.serializeUser((user, done) => {
     const sessionData = {
-      userId: user.studentId,
-      userType: "stu"
+      userId: user.adminId,
+      userType: "admin"
     };
     done(null, sessionData);
   });
 
-  // In deserializeUser that key is matched with the in memory array / database or any data resource.
-  // The fetched object is attached to the request object as req.user
-
-
-passport.deserializeUser((sessionData, done) => {
-  pool.query(`SELECT * FROM "Student" WHERE "studentId" = $1`, [sessionData.userId], (err, results) => {
-    if (err) {
-      return done(err);
-    }
-    const user = results.rows[0];
-    user.userType = sessionData.userType; // Add userType to the user object
-    console.log(`ID is ${user.studentId}`);
-    console.log(`User type is ${user.userType}`);
-    return done(null, user);
+  passport.deserializeUser((sessionData, done) => {
+    pool.query(`SELECT * FROM "SystemAdministrator" WHERE "adminId" = $1`, [sessionData.userId], (err, results) => {
+      if (err) {
+        return done(err);
+      }
+      const user = results.rows[0];
+      user.userType = sessionData.userType; // Add userType to the user object
+      console.log(`ID is ${user.adminId}`);
+      console.log(`User type is ${user.userType}`);
+      return done(null, user);
+    });
   });
-});
 }
 
 module.exports = initialize;

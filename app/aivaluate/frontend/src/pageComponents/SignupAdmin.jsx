@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
-const Signup = () => {
+const SignupAdmin = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
-  const [major, setMajor] = useState('');
+  const [accessKey, setAccessKey] = useState('');
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const Signup = () => {
     if (!email) newErrors.email = 'Email is required';
     if (!password) newErrors.password = 'Password is required';
     if (!password2) newErrors.password2 = 'Confirm Password is required';
-    if (!major) newErrors.major = 'Major is required';
+    if (!accessKey) newErrors.major = 'Access key is required';
 
     if (!validateEmail(email)) {
       newErrors.email = 'Invalid email address';
@@ -51,22 +51,26 @@ const Signup = () => {
       newErrors.password2 = 'Passwords do not match';
     }
 
+    if(accessKey !== "ubcadmin"){
+        newErrors.accessKey = 'Invalid access key';
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5173/stu-api/signup', {
+      const response = await axios.post('http://localhost:5173/admin-api/signup', {
         firstName,
         lastName,
         email,
         password,
         password2,
-        major
+        accessKey
       });
       console.log('Signup successful:', response.data);
-      navigate('/stu/login'); // Redirect to login after successful signup
+      navigate('/admin/login'); // Redirect to login after successful signup
     } catch (error) {
       console.error('There was an error signing up:', error);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -90,13 +94,15 @@ const Signup = () => {
       <div className="logo">
         <div className="logoText">
           <h1 className="primary-color-text">AI</h1><h1 className="secondary-color-bg">valuate</h1>
+          <div className="center-text-admin"><h3>Administration</h3></div>
         </div>
       </div>
       <div className="auth-container">
         <div className="auth-form secondary-colorbg">
           <h2 className="auth-title third-color-text">Signup</h2>
+          <h3 className="auth-title third-color-text">**ACCESS KEY NEEDED**</h3>
           <div className="auth-toggle" style={divStyle}>
-            <button className="auth-toggle-btn" onClick={() => navigate('/stu/login')}>Login</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/admin/login')}>Login</button>
             <button className="auth-toggle-btn active">Signup</button>
           </div>
           {errors.server && <p className="error-message">{errors.server}</p>}
@@ -149,18 +155,14 @@ const Signup = () => {
             {/* Major is not required for now*/}
 
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
-            <select 
-              className="auth-input" 
-              value={major}
-              onChange={(e) => setMajor(e.target.value)}
-              required
-            >
-              <option value="">Select Major</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Engineering">Engineering</option>
-
-            </select>
+            <input
+                type="password"
+                placeholder="Access Key"
+                className="auth-input"
+                value={accessKey}
+                onChange={(e) => setAccessKey(e.target.value)}
+                required
+            />
             {errors.major && <p className="error-message">{errors.major}</p>}
             <button className="auth-submit primary-colorbg" type="submit">Create Account</button>
           </form>
@@ -170,4 +172,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupAdmin;

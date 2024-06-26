@@ -9,6 +9,7 @@ services:
       - "5173:80"
     depends_on:
       - backend
+      - backend-admin
     networks:
       - aivaluate-net
 
@@ -47,6 +48,34 @@ services:
       - db
     env_file:
       - ./aivaluate/backend/.env
+    networks:
+      - aivaluate-net
+
+  backend-admin:
+    build:
+      context: ./aivaluate/backend-admin
+      dockerfile: Dockerfile
+    container_name: backend-admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - ./aivaluate/backend-admin/.env
+    networks:
+      - aivaluate-net
+
+  backend-eval:
+    build:
+      context: ./aivaluate/backend-eval
+      dockerfile: Dockerfile
+    container_name: backend-eval
+    ports:
+      - "6000:6000"
+    depends_on:
+      - db
+    env_file:
+      - ./aivaluate/backend-eval/.env
     networks:
       - aivaluate-net
 

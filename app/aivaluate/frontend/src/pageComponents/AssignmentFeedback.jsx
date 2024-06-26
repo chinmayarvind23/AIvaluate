@@ -1,14 +1,21 @@
-import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FaFile, FaSearch } from 'react-icons/fa'; // Import FontAwesome file icon
 import { useNavigate } from 'react-router-dom';
-import '../Assignment.css'; // Ensure the correct CSS file name is used
+import '../AssignmentOverview.css';
+import '../CourseHome.css';
+import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
-import '../styles.css';
 
-const AssignmentFeedback = () => {
+const assignments = [
+  { name: 'Project Planning - Requirement video', date: 'May 30 at 11:59pm', grade: '-/1 pts' },
+  { name: 'Individual Exercise: Resolving Merge conflicts', date: 'May 24 at 11:59pm', grade: '8/8 pts' }
+];
+
+const AssignmentOverview = () => {
   const navigate = useNavigate();
-
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredAssignments, setFilteredAssignments] = useState(assignments);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -16,45 +23,74 @@ const AssignmentFeedback = () => {
     console.log(`menu open - ${!menuOpen}`); // Logging state change
   };
 
-  const clickedMenu = {
-    color: 'white',
-    background: '#4d24d4',
-    float: 'right',
-    marginBottom: '10px'
-  };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };  
 
-  const boostFromTop = {
-    marginTop: '120px',
-    color: '#4d24d4',
+  useEffect(() => {
+    const filtered = assignments.filter(assignment =>
+      assignment.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredAssignments(filtered);
+  }, [searchTerm]);
+
+  const handleNavigate = () => {
+    navigate('/assignmentfeedback');
   };
 
   return (
     <div>
       <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
       <SideMenuBar tab='assignments' />
-      <div className="assignments-container">
-        <main className="assignment-content">
-          <header className="assignment-content-header">
-          <button className="back-button" onClick={() => navigate('/assignmentoverview')}>
-              <span className="back-arrow"><CircumIcon name="circle_chev_left"/></span>
-            </button>
-            <h2 className="assignment-title">Feedback - Assignment 1</h2>
-            <div className="score-container">
-              <span>Score: 25/34</span>
+      <div className="assignment-search-container">
+      <div className="search-container">
+            <div className="search-box">
+              <FaSearch className="search-icon" />
+              <input
+                type="text" 
+                placeholder="Search..." 
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
             </div>
-          </header>
-          <section className="feedback-section">
-            <h2>AI Feedback</h2>
-            <div className="feedback-content">
-              The overall structure of the HTML document is well-organized, and semantic tags such as <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code> are used correctly. However, there are a few instances where divs could be replaced with more appropriate HTML5 elements.
-            </div>
-            <h2>Evaluator Comments</h2>
-            <div className="evaluator-comment"></div>
-          </section>
-        </main>
+          </div>
       </div>
-    </div>
+          <div className="table-container">
+            <main className="assignment-table-content">
+              <section className="table-section">
+                <table className="assignment-table">
+                  <thead>
+                    <tr>
+                      <th></th> {/* Empty header for the icon column */}
+                      <th>Name</th>
+                      <th>Date</th>
+                      <th>Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {filteredAssignments.map((assignment, index) => (
+                  <tr key={index}>
+                    <td>
+                      <button className="icon-button" onClick={handleNavigate}>
+                        <FaFile className="file-icon" />
+                      </button>
+                    </td> {/* File icon */}
+                    <td>
+                      <button className="link-button" onClick={handleNavigate}>
+                        {assignment.name}
+                      </button>
+                    </td>
+                    <td>{assignment.date}</td>
+                    <td>{assignment.grade}</td>
+                  </tr>
+                ))}
+              </tbody>
+                </table>
+              </section>
+            </main>
+          </div>
+        </div>
   );
 };
 
-export default AssignmentFeedback;
+export default AssignmentOverview;

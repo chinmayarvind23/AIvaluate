@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import '../GeneralStyling.css';
 import '../NavBar.css';
 
-const AIvaluateNavBar = ({navBarText , tab}) => {
+const AIvaluateNavBarAdmin = ({navBarText , tab}) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -16,9 +16,9 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
   };
 
   const handleLogout = async () => {
-    window.location.href = '/stu/login';
+    window.location.href = '/admin/login';
     try {
-      const response = await axios.get('http://localhost:5173/stu-api/logout', {
+      const response = await axios.get('http://localhost:5173/admin-api/logout', {
         withCredentials: true // Ensures cookies are included in the request
       });
 
@@ -27,7 +27,7 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
         window.localStorage.clear();
 
         // Redirect to login page
-        history.push('/stu/login'); // Use history.push to navigate to the login page
+        history.push('/admin/login'); // Use history.push to navigate to the login page
       } else {
         console.error('Logout failed');
       }
@@ -47,14 +47,8 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
                     &#9776;
                 </button>
                 <div className={`dropdown ${menuOpen ? 'show secondary-colorbg' : 'primary-colorbg'}`}>
-                <a href="dashboard" style={boostFromTop} className={`${tab === 'home' ? 'primary-color-text' : 'third-color-text'}`}>
-                  Home
-                </a>
-                <a href="account" className={`${tab === 'account' ? 'primary-color-text' : 'third-color-text'}`}>
+                <a href="/admin/account" style={boostFromTop} className={`${tab === 'account' ? 'primary-color-text' : 'third-color-text'}`}>
                   Account
-                </a>
-                <a href="joincourse" className={`${tab === 'join-course' ? 'primary-color-text' : 'third-color-text'}`}>
-                  Join a Course
                 </a>
                 <a href="help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
                   Get Help...
@@ -66,4 +60,4 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
         </div>
     ) 
 }
-export default AIvaluateNavBar;
+export default AIvaluateNavBarAdmin;

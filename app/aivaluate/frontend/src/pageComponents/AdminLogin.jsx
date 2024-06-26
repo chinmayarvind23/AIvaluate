@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
+// import e from 'express';
 
-const Login = () => {
+const AdminLogin = () => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,16 +37,17 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5173/stu-api/login', {
+      const response = await axios.post('http://localhost:5173/admin-api/login', {
         email,
         password
       }, { withCredentials: true }); // Ensure cookies are sent/received
       console.log('Login successful:', response.data);
-      navigate('/stu/dashboard');
-    } catch (error) {
+      navigate('/admin/evaluatormanager');
+    }catch (error) {
       console.error('There was an error logging in:', error);
       setError('Invalid email or password. Please try again.');
     }
+
   };
 
   return (
@@ -52,6 +55,7 @@ const Login = () => {
       <div className="logo">
         <div className="logoText">
           <h1 className="primary-color-text">AI</h1><h1 className="secondary-color-text">valuate</h1>
+          <div className="center-text-admin"><h3>Administration</h3></div>
         </div>
       </div>
       <div className="auth-container">
@@ -59,7 +63,7 @@ const Login = () => {
           <h2 className="auth-title third-color-text">Login</h2>
           <div className="auth-toggle" style={divStyle}>
             <button className="auth-toggle-btn active">Login</button>
-            <button className="auth-toggle-btn" onClick={() => navigate('/stu/signup')}>Signup</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/admin/signup')}>Signup</button>
           </div>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
@@ -93,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

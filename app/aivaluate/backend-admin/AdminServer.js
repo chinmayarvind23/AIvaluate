@@ -3,30 +3,27 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const { pool } = require('./dbConfig');
-const bcrypt = require('bcryptjs'); //possible require('bcryptjs')
+const bcrypt = require('bcryptjs'); 
 const session = require('express-session');
 const flash = require("express-flash");
 const bodyParser = require('body-parser');
 const passport = require("passport");
-const courseRoutes = require('./routes/courseRoutes');
-const studentRoutes = require('./routes/studentRoutes');
-const instructorRoutes = require('./routes/instructorRoutes');
-const assignmentRoutes = require('./routes/assignmentRoutes');
 
+const adminRoutes = require('./routes/adminRoutes');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
-  }));
+}));
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -42,18 +39,6 @@ app.use(session({
 // Middleware to parse JSON
 app.use(express.json());
 
-
-// Test route
-app.get('/', (req, res) => {
-    if (req.session.views) {
-        req.session.views++;
-        res.send(`Number of views: ${req.session.views}`);
-    } else {
-        req.session.views = 1;
-        res.send('Welcome to the session demo. Refresh!');
-    }
-});
-
 const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true
@@ -65,12 +50,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/stu-api', courseRoutes);
-app.use('/stu-api', studentRoutes);
-app.use('/stu-api', instructorRoutes);
-app.use('/stu-api', assignmentRoutes);
+app.use('/admin-api', adminRoutes);
 
-app.post("/stu-api/signup", async (req, res) => {
+app.post("/admin-api/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
 
     let errors = [];
@@ -93,7 +75,7 @@ app.post("/stu-api/signup", async (req, res) => {
         let hashedPassword = await bcrypt.hash(password, 10);
 
         pool.query(
-            'SELECT * FROM "Student" WHERE email = $1',
+            'SELECT * FROM "SystemAdministrator" WHERE email = $1',
             [email],
             (err, results) => {
                 if (err) {
@@ -106,7 +88,7 @@ app.post("/stu-api/signup", async (req, res) => {
                     return res.status(400).json({ errors });
                 } else {
                     pool.query(
-                        'INSERT INTO "Student" ("firstName", "lastName", email, password) VALUES ($1, $2, $3, $4) RETURNING "studentId", password',
+                        'INSERT INTO "SystemAdministrator" ("firstName", "lastName", email, password) VALUES ($1, $2, $3, $4) RETURNING "adminId", password',
                         [firstName, lastName, email, hashedPassword],
                         (err, results) => {
                             if (err) {
@@ -122,39 +104,39 @@ app.post("/stu-api/signup", async (req, res) => {
     }
 });
 
-app.post("/stu-api/login", passport.authenticate("local", {
-    successRedirect: "/stu-api/dashboard",
-    failureRedirect: "/stu-api/login",
+app.post("/admin-api/login", passport.authenticate("local", {
+    successRedirect: "/admin-api/dashboard",
+    failureRedirect: "/admin-api/login",
     failureFlash: true
 }));
 
-app.get("/stu-api/dashboard", checkNotAuthenticated, (req, res) => {
+app.get("/admin-api/dashboard", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
 });
 
-app.get('/stu-api/logout', (req, res, next) => {
+app.get('/admin-api/logout', (req, res, next) => {
     console.log('Attempting to logout...'); // Check if this message appears in the console
     req.logout((err) => {
         if (err) {
-            console.error('Logout error:', err); // Check if any logout error is logged
+            console.error('Logout error:', err);
             return next(err);
         }
         req.flash('success_msg', "You have successfully logged out");
         req.session.destroy((err) => {
             if (err) {
-                console.error('Session destroy error:', err); // Check if any session destroy error is logged
+                console.error('Session destroy error:', err);
                 return next(err);
             }
             res.clearCookie('connect.sid');
             console.log('Logout successful'); // Check if this message appears in the console
-            res.redirect('/stu-api/login');
+            res.redirect('/admin-api/login');
         });
     });
 });
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return res.redirect('/stu-api/dashboard');
+        return res.redirect('/admin-api/dashboard');
     }
     next();
 }
@@ -163,7 +145,7 @@ function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect("/stu-api/login");
+    res.redirect("/admin-api/login");
 }
 
 app.listen(PORT, () => {

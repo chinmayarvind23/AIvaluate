@@ -10,6 +10,7 @@ import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
+import GradingAssignments from './pageComponents/GradingAssignments';
 import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
@@ -44,6 +45,8 @@ const App = () => {
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/stu/grades" element={<StudentGrades />} />
           <Route path="/assignmentSubpage" element={<AssignmentSubpage />} />
+          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
+          <Route path="eval/dashboard" element={<DashboardEval />} />
         </Routes>
       </div>
     </Router>

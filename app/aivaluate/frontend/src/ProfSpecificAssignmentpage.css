@@ -1,0 +1,111 @@
+.app {
+    display: flex;
+  
+    height: 20000%;
+  }
+  
+    
+    .sidebar {
+      width: 250px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 0px 0px 60px 60px;
+      height: 100%;
+    }
+    
+    
+    
+    
+    .contentt {
+      float: right;
+      flex-grow: 1;
+      background-color: var(--primary-color);
+      padding: 20px;
+      margin-left: 380px;
+      border-radius: 10px;
+      color: rgb(170, 28, 28);
+      height: 750px; /* Adjust the height as needed */
+      width: 1000px;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    
+    .course-card {
+      background: white;
+      color: black;
+      border-radius: 40px;
+      width: 900px;
+      height: 7%; /* Adjust height to auto for dynamic content adjustment */
+      margin: 30px;
+      padding: 15px;
+      text-align: start;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack children vertically */
+      justify-content: space-between; /* Distribute space around items */
+      margin-right: 25%;
+  }
+  
+  .course-card h3 {
+      font-size: 24px; /* Specific font size for h3 */
+      font-weight: bold; /* Bold font weight for h3 */
+      margin-bottom: 10px; /* Space between h3 and p */
+  }
+  
+  .course-card p {
+      font-size: 16px; /* Smaller font size for p */
+      text-align: right; /* Align p text to the right */
+      margin-top: -10%; /* Push p to the bottom of the container */
+  }
+/* .buttons {
+   
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 30px;
+    cursor: pointer;
+    height: 10%;
+    margin-left: 5%;
+    margin-right:0%;
+} */
+
+.back-button{
+    background-color: #f5f6fa;
+  color: black;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+.bb1 {
+    background-color: var(--secondary-color);;
+  color: red;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  
+  }
+  .bb2{
+    background-color: var(--secondary-color);;
+  color: green;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 2%;
+
+  }
+  .p-text{color:var(--secondary-color);
+    }

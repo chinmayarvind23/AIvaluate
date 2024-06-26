@@ -6,7 +6,7 @@ import '../SideMenu.css';
 
  return (
          <div className="fourth-colorbg side-menu rborder">
-             <a href="DashboardEval" className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Home</a>
+             <a href="management" className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Management</a>
              <a className={`${tab === "grades" ? 'primary-color-text' : 'third-color-text'}`}>Student Grades</a>
              <a href="AssignmentOverview" className={`${tab === "assignments" ? 'primary-color-text' : 'third-color-text'}`}>Assignments</a>
              <a href="People" className={`${tab === "students" ? 'primary-color-text' : 'third-color-text'}`}>Students</a>

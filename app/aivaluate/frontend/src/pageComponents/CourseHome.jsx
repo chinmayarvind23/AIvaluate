@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../CourseHome.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import SideMenuBar from '../components/SideMenuBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 import '../styles.css';
-import '../CourseHome.css';
-import axios from 'axios';
-import CourseEditModal from './CourseEditModal';
 import AssignTaModal from './AssignTaModal';
+import CourseEditModal from './CourseEditModal';
 
 const CourseHome = () => {
     const { courseId } = useParams();
@@ -94,8 +93,8 @@ const CourseHome = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText={course?.courseName} />
-            <SideMenuBar tab='home' />
+            <AIvaluateNavBarEval navBarText={course?.courseName} />
+            <SideMenuBarEval tab='management' />
             <div style={{marginTop: '120px'}}>
                 <button className="course-delete-button" onClick={handleDeleteCourse}>Delete Course</button>
                 <br />

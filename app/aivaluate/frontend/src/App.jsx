@@ -59,9 +59,7 @@ const App = () => {
           <Route path="/createcourse" element={<CreateCourse />} />
           <Route path="/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
-          <Route path="/coursehome" element={<CourseHome />} />
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
-          <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/adminhome" element={<AdminHome />} />
           <Route path="/admin/create-assignment" element={<CreateAssignment />} />

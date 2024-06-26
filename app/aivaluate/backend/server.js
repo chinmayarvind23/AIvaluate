@@ -43,16 +43,6 @@ app.use(flash());
 app.use(courseRoutes);
 app.use(studentRoutes);
 
-// Log environment variables for debugging
-//console.log('Environment Variables:', {
-  //  DB_USER: process.env.DB_USER,
-  //  DB_PASSWORD: process.env.DB_PASSWORD,
-   // DB_HOST_LOCALHOST: process.env.DB_HOST_LOCALHOST,
- //   DB_PORT: process.env.DB_PORT,
-   // DB_DATABASE: process.env.DB_DATABASE,
-   // NODE_ENV: process.env.NODE_ENV,
-//});
-
 // Database connectivity test endpoint
 app.get('/test-db', async (req, res) => {
     try {
@@ -66,7 +56,6 @@ app.get('/test-db', async (req, res) => {
 
 app.post("/stu/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
-
     let errors = [];
 
     if (!firstName || !lastName || !email || !password || !password2) {
@@ -124,22 +113,6 @@ app.post("/stu/login", passport.authenticate("local", {
 
 app.get("/stu/dashboard", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
-});
-
-app.get('/stu/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash('success_msg', "You have successfully logged out");
-        req.session.destroy((err) => {
-            if (err) {
-                return next(err);
-            }
-            res.clearCookie('connect.sid');
-            res.redirect('/stu/login');
-        });
-    });
 });
 
 function checkAuthenticated(req, res, next) {

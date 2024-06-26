@@ -25,7 +25,6 @@ import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import AdminHome from './pageComponents/AdminHome';
 import CreateAssignment from './pageComponents/CreateAssignment';
-import CourseHome from './pageComponents/CourseHome';
 
 const App = () => {
   return (

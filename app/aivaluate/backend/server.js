@@ -1,8 +1,3 @@
-// Last Edited: June 17, 2024
-// Contributor: Jerry Fan
-// Purpose: Backend Logic for student account log in and sign up
-// Used by the Login.jsx and Signup.jsx in frontend
-
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -16,6 +11,7 @@ const passport = require("passport");
 const courseRoutes = require('./routes/courseRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
+const assignmentRoutes = require('./routes/assignmentRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -30,7 +26,7 @@ app.use(cors({
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
-
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -72,6 +68,7 @@ app.use(flash());
 app.use('/stu-api', courseRoutes);
 app.use('/stu-api', studentRoutes);
 app.use('/stu-api', instructorRoutes);
+app.use('/stu-api', assignmentRoutes);
 
 app.post("/stu-api/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;

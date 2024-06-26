@@ -83,3 +83,18 @@ body {
     display:none;
     visibility: hidden;
 }
+
+/* AssignmentOverview.css styling */
+
+.assignment-table tr {
+    border-bottom: 3px solid var(--third-color); /* Line separating each row */
+}
+
+.assignment-table-content {
+    background: var(--secondary-color);
+    box-shadow: 0 0 0 10px var(--primary-color) /* Simulated thicker border with box-shadow */
+}
+.assignment-table th,
+.assignment-table td {
+    color: var(--third-color); /* Ensure text color is visible */
+  }

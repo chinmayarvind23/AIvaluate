@@ -7,10 +7,14 @@ import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentFeedback from './pageComponents/AssignmentFeedback';
+import CourseHome from './pageComponents/CourseHome';
+import CreateAssignment from './pageComponents/CreateAssignment';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
 import EvalLogin from './pageComponents/EvalLogin';
+import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
+import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import GradingAssignments from './pageComponents/GradingAssignments';
@@ -18,6 +22,7 @@ import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
+import Rubrics from './pageComponents/Rubrics';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
 import StudentManager from './pageComponents/StudentManager';
@@ -48,9 +53,17 @@ const App = () => {
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
+          
           {/* Session validation routes for evaluators */}
           <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />
           <Route path="/eval/dashboard" element={<PrivateRouteEval element={DashboardEval} />} />
+          <Route path="/eval/submissions" element={<PrivateRouteEval element={EvalViewSubmissions} />} />
+          <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} />
+          <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} />
+          <Route path="/eval/create-assignment" element={<PrivateRouteEval element={CreateAssignment} />} />
+          <Route path="/eval/rubrics" element={<PrivateRouteEval element={Rubrics} />} />
+          <Route path="/eval/grades" element={<PrivateRouteEval element={EvaluatorGrades} />} />
+          <Route path="/eval/gradingassignments" element={<PrivateRouteEval element={GradingAssignments} />} />
         </Routes>
       </div>
     </Router>

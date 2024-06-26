@@ -36,4 +36,16 @@ router.post('/teaches', async (req, res) => {
     }
 });
 
+// Remove an instructor or TA from a course
+router.delete('/teaches/:courseId/:instructorId', async (req, res) => {
+    const { courseId, instructorId } = req.params;
+    try {
+        await pool.query('DELETE FROM "Teaches" WHERE "courseId" = $1 AND "instructorId" = $2', [courseId, instructorId]);
+        res.status(200).send({ message: 'Instructor/TA removed from course successfully' });
+    } catch (error) {
+        console.error('Error removing Instructor/TA from course:', error);
+        res.status(500).send({ message: 'Error removing Instructor/TA from course' });
+    }
+});
+
 module.exports = router;

@@ -3,7 +3,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 
-const Card = ({courseCode, courseName, user="stu"}) => {
+const Card = ({courseId, courseCode, courseName, maxStudents, user="stu"}) => {
+  // console.log("Card props:", { courseId, courseCode, courseName, maxStudents, user });
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -12,7 +13,7 @@ const Card = ({courseCode, courseName, user="stu"}) => {
     if (courseCode === 'Create Course') {
       navigate('/CreateCourse');
     } else {
-      navigate('/CourseHome');
+      navigate(`/CourseHome/${courseId}`);
     }
   };
   

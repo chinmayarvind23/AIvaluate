@@ -22,8 +22,8 @@ const CourseCards = ({ navBarText, page}) => {
         fetchCourses();
     }, []);
 /* 
-- Card has 3 different variables that can be passed in: courseCode, courseName, and user
-- courseCode and courseName are required, while user is optional
+- Card has 5 different variables that can be passed in: courseId, maxStudents, courseCode, courseName, and user
+- courseId, maxStudents, courseCode and courseName are required, while user is optional
 - user is set to "stu" by default, but can be changed to "prof" which changing the course image.
 - Adding a car component with the courseCode="Create Course" and courseName="Click to create a new course" 
   will create a card that will allow the user to create a new course.
@@ -36,7 +36,9 @@ const CourseCards = ({ navBarText, page}) => {
         // Filter courses based on search term
         const filteredCourses = courses.filter(course =>
             course.courseCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
+            course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            course.courseId.toString().includes(searchTerm) ||
+            course.maxStudents.toString().includes(searchTerm)
         );
 
         const handleSearchChange = (e) => {
@@ -63,6 +65,8 @@ const CourseCards = ({ navBarText, page}) => {
                             key={course.courseId} 
                             courseCode={course.courseCode} 
                             courseName={course.courseName} 
+                            courseId={course.courseId}
+                            courseMaxStudents={course.maxStudents}
                             user="stu"
                         />
                     ))}
@@ -99,6 +103,8 @@ const CourseCards = ({ navBarText, page}) => {
                         key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
+                        courseId={course.courseId}
+                        courseMaxStudents={course.maxStudents}
                         user="stu"
                     />
                 ))}
@@ -120,6 +126,8 @@ const CourseCards = ({ navBarText, page}) => {
                         key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
+                        courseId={course.courseId}
+                        courseMaxStudents={course.maxStudents}
                         user="prof" 
                     />
                 ))}

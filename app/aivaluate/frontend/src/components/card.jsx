@@ -20,7 +20,7 @@ const Card = ({courseId, courseCode, courseName, maxStudents, user="stu"}) => {
   return (
     <div className={courseCode === 'Create Course' ? "add-course-card course-card" : "course-card"}  onClick={handleClick}>
         {courseCode === 'Create Course' ? (
-        <img src="../../create-course2.svg" alt="Default Course Image" />
+        <img src="../../public/create-course2.svg" alt="Default Course Image" />
       ) : (
         user === 'stu' ? (
           <img src="../../public/student-course-image.svg" alt="Student Course Image" />

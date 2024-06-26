@@ -17,6 +17,7 @@ import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
+import Rubrics from './pageComponents/Rubrics';
 import ResetPassword from './pageComponents/ResetPassword';
 import Signup from './pageComponents/Signup';
 import StudentGrades from './pageComponents/StudentGrades';
@@ -60,6 +61,7 @@ const App = () => {
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="eval/rubrics" element={<Rubrics />} />
           <Route path="/stu/grades" element={<StudentGrades />} />
           <Route path="/eval/grades" element={<EvaluatorGrades />} />
           <Route path="/eval/gradingassignments" element={<GradingAssignments />} />

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import '../StuAssignmentSubmisssonpage.css'; // Adjust the path if needed
+import '../StuAssignmentSubmissionpage.css'; // Adjust the path if needed
 import '../styles.css'; // Adjust the path if needed
 import SideMenuBar from '../components/SideMenuBar';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';

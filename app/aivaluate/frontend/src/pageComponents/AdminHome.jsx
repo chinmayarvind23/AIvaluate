@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../Admin.css';
+import '../AdminHome.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';

@@ -33,6 +33,10 @@ const AssignmentOverview = () => {
     setFilteredAssignments(filtered);
   }, [searchTerm]);
 
+  const handleNavigate = () => {
+    navigate('/assignmentfeedback');
+  };
+
   return (
     <div>
       <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
@@ -63,15 +67,23 @@ const AssignmentOverview = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredAssignments.map((assignment, index) => (
-                      <tr key={index}>
-                        <td><FaFile className="file-icon" /></td> {/* File icon */}
-                        <td>{assignment.name}</td>
-                        <td>{assignment.date}</td>
-                        <td>{assignment.grade}</td>
-                      </tr>
-                    ))}
-                  </tbody>
+                {filteredAssignments.map((assignment, index) => (
+                  <tr key={index}>
+                    <td>
+                      <button className="icon-button" onClick={handleNavigate}>
+                        <FaFile className="file-icon" />
+                      </button>
+                    </td> {/* File icon */}
+                    <td>
+                      <button className="link-button" onClick={handleNavigate}>
+                        {assignment.name}
+                      </button>
+                    </td>
+                    <td>{assignment.date}</td>
+                    <td>{assignment.grade}</td>
+                  </tr>
+                ))}
+              </tbody>
                 </table>
               </section>
             </main>

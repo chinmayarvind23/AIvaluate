@@ -1,41 +1,111 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../Assignment.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import SideMenuBar from '../components/SideMenuBar';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import '../CourseHome.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 import '../styles.css';
+import AssignTaModal from './AssignTaModal';
+import CourseEditModal from './CourseEditModal';
 
-const aivaluatePurple = {
-    color: '#4d24d4'
-  }
+const CourseHome = () => {
+    const { courseId } = useParams();
+    const navigate = useNavigate();
+    const [course, setCourse] = useState([]);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isTaModalOpen, setIsTaModalOpen] = useState(false);
 
-const AssignmentOverview = () => {
-  const navigate = useNavigate();
+    useEffect(() => {
+        axios.get(`http://localhost:4000/courses/${courseId}`)
+            .then(response => {
+                setCourse(response.data);
+            })
+            .catch(error => {
+                console.error('Failed to fetch course details', error);
+                navigate('/dashboard'); // redirect if the course is not found or error occurs
+            });
+    }, [courseId, navigate]);
 
-  const [menuOpen, setMenuOpen] = useState(false);
+    const handleEditCourse = () => {
+        setIsEditModalOpen(true);
+    };
+    
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+    };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-    console.log(`menu open - ${!menuOpen}`); // Logging state change
-  };
+    const handleTaModal = () => {
+        setIsTaModalOpen(true);
+    };
 
-  const clickedMenu = {
-    color: 'white',
-    background: '#4d24d4',
-    float: 'right',
-    marginBottom: '10px'
-  };
+    const closeTaModal = () => {
+        setIsTaModalOpen(false);
+    };
 
-  const boostFromTop = {
-    marginTop: '120px',
-    color: '#4d24d4',
-  };
-  return (
-    <div>
-      <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone'  />
-      <SideMenuBar tab='home' />`
-    </div>
-  );
+    const saveCourseEdits = (editedCourse) => {
+        axios.put(`http://localhost:4000/courses/${courseId}`, editedCourse)
+            .then(response => {
+                console.log('Course updated:', response.data);
+                setCourse(response.data); // Update the course details displayed      
+                closeEditModal();
+            })
+            .catch(error => {
+                console.error('Failed to update course', error);
+                // Optionally show an error message here
+            });
+    };
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+        console.log(`menu open - ${!menuOpen}`); // Logging state change
+    };
+
+    const clickedMenu = {
+        color: 'white',
+        background: '#4d24d4',
+        float: 'right',
+        marginBottom: '10px'
+    };
+
+    const boostFromTop = {
+        marginTop: '120px',
+        color: '#4d24d4',
+    };
+
+    const handleDeleteCourse = () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this course? Deleting this course will remove all associated assignments, rubrics, and student grades permanently.");
+        
+        if (!confirmDelete) {
+            return;
+        }
+        axios.delete(`http://localhost:4000/courses/${courseId}`)
+            .then(response => {
+                console.log(response.data);
+                window.confirm('Course deleted successfully');
+                navigate('/dashboard');
+            })
+            .catch(error => {
+                console.error('Failed to delete course', error);
+                // Handle failure properly
+            });
+    }
+
+    return (
+        <div>
+            <AIvaluateNavBarEval navBarText={course?.courseName} />
+            <SideMenuBarEval tab='management' />
+            <div style={{marginTop: '120px'}}>
+                <button className="course-delete-button" onClick={handleDeleteCourse}>Delete Course</button>
+                <br />
+                <button className="course-edit-button" onClick={handleEditCourse}>Edit Course</button>
+                <CourseEditModal isOpen={isEditModalOpen} onClose={closeEditModal} course={course} onSave={saveCourseEdits} />
+                <br />
+                <button className="course-ta-button" onClick={handleTaModal}>Assign TA</button>
+                <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
+            </div>
+        </div>
+    );
 };
 
-export default AssignmentOverview;
+export default CourseHome;

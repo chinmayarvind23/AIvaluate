@@ -1,8 +1,3 @@
-// Contributor: Jerry Fan
-// Last Edited: June 17, 2024
-// Purpose: This file contains the routes for the instructor and TA endpoints
-// These routes are called in the CreateCourse.jsx
-
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); 
@@ -38,6 +33,18 @@ router.post('/teaches', async (req, res) => {
     } catch (error) {
         console.error('Error adding Instructor/TA to course:', error);
         res.status(500).send({ message: 'Error adding Instructor/TA to course' });
+    }
+});
+
+// Remove an instructor or TA from a course
+router.delete('/teaches/:courseId/:instructorId', async (req, res) => {
+    const { courseId, instructorId } = req.params;
+    try {
+        await pool.query('DELETE FROM "Teaches" WHERE "courseId" = $1 AND "instructorId" = $2', [courseId, instructorId]);
+        res.status(200).send({ message: 'Instructor/TA removed from course successfully' });
+    } catch (error) {
+        console.error('Error removing Instructor/TA from course:', error);
+        res.status(500).send({ message: 'Error removing Instructor/TA from course' });
     }
 });
 

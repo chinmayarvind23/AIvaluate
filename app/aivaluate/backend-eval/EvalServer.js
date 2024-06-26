@@ -10,6 +10,9 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 
 const evalRoutes = require('./routes/evalRoutes');
+const courseRoutes = require('./routes/courseRoutes');
+const assignmentRoutes = require('./routes/assignmentRoutes');
+const instructorRoutes = require('./routes/instructorRoutes');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -51,6 +54,9 @@ app.use(passport.session());
 app.use(flash());
 
 app.use('/eval-api', evalRoutes);
+app.use('/eval-api', courseRoutes);
+app.use('/eval-api', assignmentRoutes);
+app.use('/eval-api', instructorRoutes);
 
 app.post("/eval-api/login", passport.authenticate("local", {
     successRedirect: "/eval-api/dashboard",

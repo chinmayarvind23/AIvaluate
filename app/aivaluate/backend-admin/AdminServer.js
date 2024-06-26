@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 
 const adminRoutes = require('./routes/adminRoutes');
+const studentRoutes = require('./routes/studentRoutes');
+const instructorRoutes = require('./routes/instructorRoutes');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -51,6 +53,8 @@ app.use(passport.session());
 app.use(flash());
 
 app.use('/admin-api', adminRoutes);
+app.use('/admin-api', studentRoutes);
+app.use('/admin-api', instructorRoutes);
 
 app.post("/admin-api/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;

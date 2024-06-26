@@ -10,6 +10,7 @@ RUN which nc && nc -h
 
 COPY package*.json ./
 
+RUN npm install nodemailer
 RUN npm install
 
 COPY . .

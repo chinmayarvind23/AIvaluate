@@ -17,7 +17,7 @@ const CreateAssignment = () => {
     const [solutionFile, setSolutionFile] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/rubrics')
+        axios.get('http://localhost:5173/eval-api/rubrics')
             .then(response => {
                 setRubrics(response.data);
             })
@@ -40,13 +40,13 @@ const CreateAssignment = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:4000/assignments', assignment)
+        axios.post('http://localhost:5173/eval-api/assignments', assignment)
             .then(response => {
                 console.log('Assignment created:', response.data);
                 if (solutionFile) {
                     const formData = new FormData();
                     formData.append('solutionFile', solutionFile);
-                    axios.post(`http://localhost:4000/assignments/${response.data.assignmentId}/solutions`, formData)
+                    axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData)
                         .then(res => {
                             console.log('Solution added:', res.data);
                         })

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 import '../AssignTaModal.css'; // Import the CSS file for styling
 
 const AssignTaModal = ({ isOpen, onClose, courseId }) => {
@@ -15,7 +15,7 @@ const AssignTaModal = ({ isOpen, onClose, courseId }) => {
             setLoading(true);
             setError('');
             // Fetch all TAs
-            axios.get(`http://localhost:4000/tas`)
+            axios.get(`http://localhost:5173/eval-api/tas`)
                 .then(response => {
                     setAvailableTAs(response.data);
                     setLoading(false);
@@ -26,7 +26,7 @@ const AssignTaModal = ({ isOpen, onClose, courseId }) => {
                     setLoading(false);
                 });
             // Fetch current TAs for the course
-            axios.get(`http://localhost:4000/courses/${courseId}/tas`)
+            axios.get(`http://localhost:5173/eval-api/courses/${courseId}/tas`)
                 .then(response => {
                     const currentTAsSet = new Set(response.data.map(ta => ta.instructorId));
                     setCurrentTAs(currentTAsSet);

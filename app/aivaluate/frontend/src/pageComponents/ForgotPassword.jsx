@@ -27,7 +27,7 @@ const ForgotPassword = () => {
         return;
     }
     try {
-        const response = await axios.post('http://localhost:4000/stu/forgotpassword', { email });
+        const response = await axios.post('http://localhost:5173/stu-api/stu/forgotpassword', { email });
         setMessage(response.data.message);
         setError('');
     } catch (error) {

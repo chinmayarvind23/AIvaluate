@@ -3,12 +3,14 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Account from './pageComponents/Account';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
+import AssignmentFeedback from './pageComponents/AssignmentFeedback';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import AssignmentProf from './pageComponents/AssignmentProf';
 import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import GradingAssignments from './pageComponents/GradingAssignments';
@@ -35,6 +37,7 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/help" element={<HelpPage />} />
           <Route path ="/dashboard" element={<Dashboard />} />
+          <Route path ="/assignmentfeedback" element={<AssignmentFeedback />} />
           <Route path ="/admin/evaluatormanager" element={<EvaluatorManager />} />
           <Route path ="/admin/studentmanager" element={<StudentManager />} />
           <Route path ="/assignmentoverview" element={<AssignmentOverview />} />
@@ -50,7 +53,9 @@ const App = () => {
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="eval/assignment" element={<AssignmentProf />} />
           <Route path="/stu/grades" element={<StudentGrades />} />
+          <Route path="/eval/grades" element={<EvaluatorGrades />} />
           <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="eval/assignment" element={<AssignmentProf />} />

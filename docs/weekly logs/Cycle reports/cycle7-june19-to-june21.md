@@ -22,14 +22,20 @@
   * #7: Set up admin and evaluator session logout: Colton
   * #8: Set up admin and evaluator side menu bar and proper page navigation: Colton
   * #9: Set up the proper display and storage of site images in the reverse proxy frontend container: Colton
+  * #10: Forgot password, Email API: Chinmay
+  * #11: Reset password: Chinmay
+  * #12: CI-CD pipeline fix: Chinmay
+  * #14: Admin view of students (frontend): Chinmay
+  * #15: Admin view of students (backend): Chinmay
+  * #16: Implementing fixes for PR reviews on frontend and backend for admin view of students: Chinmay
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="1020" alt="" src="">
+    <img width="1017" alt="Screenshot 2024-06-25 at 10 54 56 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/7156ff66-ce8c-4689-90ea-ffd921cb2d42">
 
 ### Times for team/individual
 
-![Cycle report clockify](./clockify reports/june-19-june21.png)
+<img width="1909" alt="Screenshot 2024-06-25 at 10 56 05 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/ec485bb1-4027-42bc-8bd0-c76ea6ebf1fa">
 
 - ### Table view of completed tasks on project board (by which username)
 
@@ -65,24 +71,21 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Email API, Forgot Password
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Admin view of students frontend
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Admin view of students backend
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
   <tr>
@@ -126,17 +129,15 @@
         </td>
     </tr>
 <tr>
-        <td> --
+        <td> CI-CD pipeline fix
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Backend for admin views components
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>
@@ -205,3 +206,4 @@
 </table>
 
 ### Test report/testing status
+- We are building the final parts of our backend and frontend, and should be able to begin intensive testing along with the unit tests within the next 2 cycles.

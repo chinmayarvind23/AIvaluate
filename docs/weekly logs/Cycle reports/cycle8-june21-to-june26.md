@@ -15,21 +15,26 @@
   * #9: Set up the proper display and storage of site images in the reverse proxy frontend container.
 
 - ### Which tasks from the project board are associated with these features?
-
+Remaining tasks in the Kanban board that are in the In progress, and product backlog columns.
 
 ### Which tasks are going to be targeted from the next cycle with time estimates and owners (ie planning and who is going to own/work on each task)
 - Student Grades backend: Colton
 - Prof/T.A. grade backend: Colton
 - Evaluator manager (admin portal) backend: Colton
 - Student manager (admin portal) backend: Colton
+- Notifications system: Chinmay
+- CI-CD fix: Chinmay
+- Node file storage: Chinmay
+- Docker containers and hosting of DB, website, and containers: Chinmay
+
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="1020" alt="" src="">
+    <img width="1019" alt="Screenshot 2024-06-25 at 11 23 12 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/b60e2a67-0d3c-4e33-ada8-38d53b20d5b6">
 
 ### Times for team/individual
 
-![Cycle report clockify](./clockify reports/)
+<img width="1917" alt="Screenshot 2024-06-25 at 11 22 37 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/6a8db74f-aaa8-42b0-a1e9-882b564605e8">
 
 - ### Table view of completed tasks on project board (by which username)
 
@@ -95,51 +100,44 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Forgot and reset password
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Implementing Review feedback for frontend for Student manager select student admin portal
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>
+        <td> Create assignment page - PROF VIEW ONLY (frontend)
+        </td>
+        <td> Chinmay
+        </td>
+    </tr>
+  <tr>
+        <td> Create assignment page - PROF VIEW ONLY (backend)
+        </td>
+        <td> Chinmay
+        </td>
+    </tr>
+  <tr>
+        <td> Implementing review feedback for frontend for Create assignment page - PROF VIEW ONLY
+        </td>
+        <td> Chinmay
+        </td>
+    </tr>
+  <tr>
         <td> --
         </td>
-        <!-- Completed by? -->
         <td> --
         </td>
     </tr>
   <tr>
         <td> --
         </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
         <td> --
         </td>
     </tr>
@@ -156,17 +154,15 @@
         </td>
     </tr>
 <tr>
-        <td> --
+        <td> CI-CD pipeline fix
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Node file storage
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>

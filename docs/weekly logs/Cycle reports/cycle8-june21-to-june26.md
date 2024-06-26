@@ -13,6 +13,9 @@
   * #7: Set up admin and evaluator session logout 
   * #8: Set up admin and evaluator side menu bar and proper page navigation
   * #9: Set up the proper display and storage of site images in the reverse proxy frontend container.
+  * #10: Set up frontend and backend for course editing.
+  * #11: Set up frontend and backend for course deletion.
+  * #12: Set up frontend and backend for adding/removing course TAs.
 
 - ### Which tasks from the project board are associated with these features?
 Remaining tasks in the Kanban board that are in the In progress, and product backlog columns.
@@ -26,6 +29,9 @@ Remaining tasks in the Kanban board that are in the In progress, and product bac
 - CI-CD fix: Chinmay
 - Node file storage: Chinmay
 - Docker containers and hosting of DB, website, and containers: Chinmay
+- Uploading Rubrics and Answer keys to assignment: Jerry
+- Creating Assignments for a course: Jerry
+- Various backend testings: Jerry
 
 ### Burn-up chart (velocity)
 
@@ -130,9 +136,21 @@ Remaining tasks in the Kanban board that are in the In progress, and product bac
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Implement a feature that allows instructors to update course details
         </td>
-        <td> --
+        <td> Jerry
+        </td>
+    </tr>
+  <tr>
+        <td> Implement a feature that allows instructors to delete courses
+        </td>
+        <td> Jerry
+        </td>
+    </tr>
+  <tr>
+        <td> Implement a feature that allows instructors to delete and add TA to a course
+        </td>
+        <td> Jerry
         </td>
     </tr>
   <tr>
@@ -166,23 +184,23 @@ Remaining tasks in the Kanban board that are in the In progress, and product bac
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Create an API endpoint for instructors to create new assignments
         </td>
-        <!-- Completed by? -->
+        <td> Jerry
         <td> --
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Develop functionality for instructors to upload rubrics and answer keys for assignment
         </td>
-        <!-- Completed by? -->
+        <td> Jerry
         <td> --
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Testing for account management
         </td>
-        <!-- Completed by? -->
+        <td> Jerry
         <td> --
         </td>
     </tr>

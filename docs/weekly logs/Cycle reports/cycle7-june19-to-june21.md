@@ -7,6 +7,8 @@
   * #2: Prof/T.A. grade frontend
   * #3: Evaluator manager (admin portal) frontend
   * #4: Student manager (admin portal) frontend
+  * #5: Assignment Overview frontend
+  * #6: Assignment Feedback frontend
 
 - ### Which tasks from the project board are associated with these features?
 
@@ -28,9 +30,15 @@
   * #14: Admin view of students (frontend): Chinmay
   * #15: Admin view of students (backend): Chinmay
   * #16: Implementing fixes for PR reviews on frontend and backend for admin view of students: Chinmay
-  * #17: Design all submissions page - Prof/TA view (Frontend): Omar
-  * #18: Design view all rubrics  page - Prof view (Frontend): Omar
-  * #19: Design create an account - Prof/TA view (Frontend): Omar
+  * #17: Implementing deleting a course on both frontend and backend: Jerry
+  * #18: Implementing editing a course on both frontend and backend: Jerry
+  * #19: Implementing assignment TAs to course on both frontend and backend: Jerry
+  * #20: Implementing uploading rubrics and answer keys to an assignment: Jerry
+  * #21: Implementing creating an assignment for a course: Jerry
+  * #22: Design all submissions page - Prof/TA view (Frontend): Omar
+  * #23: Design view all rubrics  page - Prof view (Frontend): Omar
+  * #24: Design create an account - Prof/TA view (Frontend): Omar
+
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
@@ -101,7 +109,19 @@
         <td> View all rubrics Frontend
         </td>
         <td> Omar
+         </td>
+    </tr>
+     <tr>
+        <td> Assignment Overview Frontend
         </td>
+        <td> Jerry
+        <td> --
+    </tr>
+  <tr>
+        <td> Assignment Feedback Frontend
+        </td>
+        <td> Jerry
+        <td> --
     </tr>
   <tr>
         <td> create an account Frontend

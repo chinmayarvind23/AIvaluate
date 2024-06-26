@@ -406,3 +406,79 @@ I completed Tasks 1-4 as planned, but Task 5 is currently in progress, as the ot
 - Goal 4: Student manager select student admin portal (frontend)
 - Goal 5: Create assignment page - PROF VIEW ONLY (frontend)
 - Goal 6: Evaluator portal selected user - admin portal (frontend)
+
+## June (6/19 - 6/21)
+
+## Timesheet
+
+Clockify report: Total hours - 14 hours
+<img width="1916" alt="Screenshot 2024-06-25 at 9 38 09 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/980b3747-0475-47da-8d09-1b5cc759db36">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** Email API for forgot password, Issue #75 (4 hours) (Large Task)
+- **#2:** CI-CD pipeline fix, Issue #141 (2 hours) (Large Task)
+- **#3:** Admin view of students (frontend + backend), Issue #70 (8 hours) (XL Task)
+
+## Progress Update (since 6/14/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Near complete, need to fix small errors from PR reviews to work correctly, will be fixed in the following cycle |
+| Task 2       | In progress, need to ensure valid delivery via webhooks and solve netcat issue, will be fixed in the following cycle or two |
+| Task 3       | Frontend and part of backend complete, waiting on PR reviews for confirmation |
+
+## Cycle Goal Review
+
+I completed Tasks 1 and 3 (nearly) as planned, but Task 2 is currently in progress, and I believe this may take some time to diagnose and will seek help from my teammates to try and get the issue sorted in the CICD pipeline.
+
+## Next Cycle Goals
+
+- Goal 1: Finish implementing review feedback for frontend for Student manager select student admin portal (frontend)
+- Goal 2: Finish forgot password implementation and testing (backend)
+- Goal 3: Finish Create assignment page - PROF VIEW ONLY (frontend)
+- Goal 4: Finish Evaluator portal selected user - admin portal (frontend)
+- Goal 5: Finish CI-CD pipeline fix
+- Goal 6: Finish node volume file storage setup
+
+
+## June (6/21 - 6/26)
+
+## Timesheet
+
+Clockify report: Total hours - 19 hours
+<img width="1919" alt="Screenshot 2024-06-25 at 9 50 22 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/c5ae4515-10a0-4e34-baf5-d999ee9d97e8">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** Finish setting up node volume file storage, Issue #33 (2 hours) (XL Task)
+- **#2:** Forgot password finish, Issue #75 (2 hours) (Medium Task)
+- **#3:** Finish implementing review feedback for frontend for Student manager select student admin portal (frontend) (5 hours) (Large Task)
+- **#4:** Finish Create assignment page - PROF VIEW ONLY, Issue #65 (5 hours) (Large Task)
+- **#5:** Finish implementing review feedback for frontend for Create assignment page - PROF VIEW ONLY, Issue # (5 hours) (Large Task)
+- **#6:** Fixing netcat issues on CI-CD pipeline, Issue #141 (0 hours) (Large Task)
+
+## Progress Update (since 6/14/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Started, but ran into issues with backend, so had to delete the branch and restart, will be worked in the following cycle |
+| Task 2       | Complete, connected to repository, and webhooks set, but need to ensure valid delivery, will be fixed in the following cycle |
+| Task 3       | Complete and working |
+| Task 4       | Complete and working |
+| Task 5       | Complete and working|
+| Task 6       | Running into netcat issues, will be fixed in the following cycle |
+
+## Cycle Goal Review
+
+I am working on fixing Tasks 1 and 6, but I completed tasks 2-5 completed as planned, I was stuck with the frontend and got some help from my teammates to get unstuck and keep moving but it took a while, so that may have caused me to not finish all the issues, and I will ask for help earlier to avoid time wastage for the next cycle and beyond.
+
+## Next Cycle Goals
+
+- Goal 1: Finish setting up node volume file stoage
+- Goal 2: To fix CI-CD pipeline
+- Goal 3: Any PR reviews feedback implementation
+- Goal 4: Docker containers submitted to app server
+- Goal 5: Backend for admin view of students
+- Goal 6: Backend for admin view of instructors
+- Goal 7: Notifications system creation

@@ -17,6 +17,7 @@ import People from './pageComponents/People';
 import Signup from './pageComponents/Signup';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import StuAssignmnentSubmissonpage from '/Users/aayushchaudhary/Documents/GitHub/team-8-capstone-team-8/app/aivaluate/frontend/src/pageComponents/StuAssignmentSubmisssonpage.jsx';
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/stuassignmentsubmissionpage" element={<StuAssignmnentSubmissonpage />} />
         </Routes>
       </div>
     </Router>

@@ -5,10 +5,10 @@ import Account from './pageComponents/Account';
 import AssignmentFeedback from './pageComponents/AssignmentFeedback';
 import AdminProfLogin from './pageComponents/AdminProfLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
-import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
 import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
@@ -43,6 +43,14 @@ const App = () => {
           <Route path ="/account" element={<Account />} />
           <Route path ="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
+          <Route path ="/forgotpassword" element={<ForgotPassword />} />
+          <Route path ="/people" element={<People />} />
+          <Route path = "/createcourse" element={<CreateCourse />} />
+          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
+          <Route path="/global/login" element={<AdminProfLogin />} />
+          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
+          <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/eval/submissions" element={<EvalViewSubmissions />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/people" element={<People />} />
           <Route path="/createcourse" element={<CreateCourse />} />

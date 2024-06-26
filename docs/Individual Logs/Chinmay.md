@@ -420,7 +420,7 @@ Clockify report: Total hours - 14 hours
 - **#2:** CI-CD pipeline fix, Issue #141 (2 hours) (Large Task)
 - **#3:** Admin view of students (frontend + backend), Issue #70 (8 hours) (XL Task)
 
-## Progress Update (since 6/14/2024)
+## Progress Update (since 6/19/2024)
 
 | TASK/ISSUE # | STATUS      |
 |--------------|-------------|
@@ -458,7 +458,7 @@ Clockify report: Total hours - 19 hours
 - **#5:** Finish implementing review feedback for frontend for Create assignment page - PROF VIEW ONLY, Issue # (5 hours) (Large Task)
 - **#6:** Fixing netcat issues on CI-CD pipeline, Issue #141 (0 hours) (Large Task)
 
-## Progress Update (since 6/14/2024)
+## Progress Update (since 6/21/2024)
 
 | TASK/ISSUE # | STATUS      |
 |--------------|-------------|

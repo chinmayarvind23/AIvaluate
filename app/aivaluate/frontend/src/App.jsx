@@ -23,6 +23,7 @@ import Signup from './pageComponents/Signup';
 import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import CourseHome from './pageComponents/CourseHome';
 
 const App = () => {
   return (

@@ -8,6 +8,7 @@ import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import GradingAssignments from './pageComponents/GradingAssignments';
@@ -15,7 +16,9 @@ import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
+import ResetPassword from './pageComponents/ResetPassword';
 import Signup from './pageComponents/Signup';
+import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 
@@ -27,6 +30,10 @@ const App = () => {
           <Route path="/" element={<Login />} /> {/* Default route */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/assignmentoverview" element={<AssignmentOverview />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/help" element={<HelpPage />} />
           <Route path ="/dashboard" element={<Dashboard />} />
           <Route path ="/admin/evaluatormanager" element={<EvaluatorManager />} />
           <Route path ="/admin/studentmanager" element={<StudentManager />} />
@@ -34,14 +41,17 @@ const App = () => {
           <Route path ="/account" element={<Account />} />
           <Route path ="/help" element={<HelpPage />} />
           <Route path="/joincourse" element={<JoinCourse />} />
-          <Route path ="/forgotpassword" element={<ForgotPassword />} />
-          <Route path ="/People" element={<People />} />
-          <Route path = "/createcourse" element={<CreateCourse />} />
-          <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/people" element={<People />} />
+          <Route path="/createcourse" element={<CreateCourse />} />
+          <Route path="/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/coursehome/:courseId" element={<CourseHome />} />
-          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
+          <Route path="/stu/grades" element={<StudentGrades />} />
+          <Route path="/eval/grades" element={<EvaluatorGrades />} />
+          <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
         </Routes>
       </div>
     </Router>

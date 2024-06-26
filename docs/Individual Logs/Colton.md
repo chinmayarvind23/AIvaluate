@@ -387,7 +387,7 @@ Clockify report
         </td>
     </tr>
     <tr>
-        <td>Evaluator manager (admin portal) frontend
+        <td>Student manager (admin portal) frontend
         </td>
         <!-- Status -->
         <td> Complete
@@ -405,15 +405,23 @@ I the next Cycle I am going to be implementing all of the backend for the fronte
 - Make a fix in our Nginx reverse proxy so that everything run off of one back end system for now.
 
 -----------------------------------------------------------------------------------
-## Cycle 8: Friday June 21st - Wednesday June 21st
+## Cycle 8: Friday June 21st - Wednesday June 25th
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/)
+![alt text](./clockify-images/colton-clockify_C8.png)
 
 ### Current Tasks
   * #1: Set up session memory for prof/T.A. + admin
-  * #2: Assignment submission page for student
+  * #2: Containerized admin backend and routed reverse proxy for backend calls
+  * #3: Containerized evaluator backend and routed reverse proxy for backend calls
+  * #4: Stored important user information about user types in the session when a user logs in so we know what to display to them
+  * #5: Set up frontend and backend for admin signin and account creation (with access key)
+  * #6: Set up frontend and backend for evaluator signin
+  * #6: Set up session storages and locked pages for both the evulator and Admin.
+  * #7: Set up admin and evaluator session logout 
+  * #8: Set up admin and evaluator side menu bar and proper page navigation
+  * #9: Set up the proper display and storage of site images in the reverse proxy frontend container.
 
 ### Progress Update (since June 21st 2024) 
 <table>
@@ -427,22 +435,75 @@ Clockify report
         <td> Set up session memory for prof/T.A. + admin
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
     <tr>
-        <td> Assignment submission page for student backend
+        <td> Containerized admin backend and routed reverse proxy for backend calls
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Stored important user information about user types in the session when a user logs in so we know what to display to them
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up frontend and backend for admin signin and account creation (with access key)
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up frontend and backend for evaluator signin
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up session storages and locked pages for both the evulator and Admin.
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up admin and evaluator session logout 
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> set up admin and evaluator side menu bar and proper page navigation
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up the proper display and storage of site images in the reverse proxy frontend container.
+        </td>
+        <!-- Status -->
+        <td> Complete
         </td>
     </tr>
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-
+Although I did have some difficulties with session storage I am very happy with how this cycle went for me and I am really glad I was able to get our 3 backend systems containerized and set up wiht our proxy as now this isn't something we have to deal with in the future which would've taken way more time. I think the one thing that could have gone better was my team and I didn't have any meetings and only communicated through text on discord or through PR reviews and I beilive this will cause a lot of PR issues for us to go through on wednesday.
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Student Grades backend
+- Prof/T.A. grade backend
+- Evaluator manager (admin portal) backend
+- Student manager (admin portal) backend
 
 -----------------------------------------------------------------------------------
 ## Cycle 9: Friday June 26th - Wednesday June 28th

@@ -30,12 +30,15 @@
   * #14: Admin view of students (frontend): Chinmay
   * #15: Admin view of students (backend): Chinmay
   * #16: Implementing fixes for PR reviews on frontend and backend for admin view of students: Chinmay
-  * #18: Implementing deleting a course on both frontend and backend: Jerry
-  * #19: Implementing editing a course on both frontend and backend: Jerry
-  * #20: Implementing assignment TAs to course on both frontend and backend: Jerry
-  * #21: Implementing uploading rubrics and answer keys to an assignment: Jerry
-  * #22: Implementing creating an assignment for a course: Jerry
-    
+  * #17: Implementing deleting a course on both frontend and backend: Jerry
+  * #18: Implementing editing a course on both frontend and backend: Jerry
+  * #19: Implementing assignment TAs to course on both frontend and backend: Jerry
+  * #20: Implementing uploading rubrics and answer keys to an assignment: Jerry
+  * #21: Implementing creating an assignment for a course: Jerry
+  * #22: Design all submissions page - Prof/TA view (Frontend): Omar
+  * #23: Design view all rubrics  page - Prof view (Frontend): Omar
+  * #24: Design create an account - Prof/TA view (Frontend): Omar
+
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
@@ -97,24 +100,33 @@
         </td>
     </tr>
   <tr>
+        <td> All submissions page Frontend
+        </td>
+        <td> Omar
+        </td>
+    </tr>
+  <tr>
+        <td> View all rubrics Frontend
+        </td>
+        <td> Omar
+         </td>
+    </tr>
+     <tr>
         <td> Assignment Overview Frontend
         </td>
         <td> Jerry
         <td> --
-        </td>
     </tr>
   <tr>
         <td> Assignment Feedback Frontend
         </td>
         <td> Jerry
         <td> --
-        </td>
     </tr>
   <tr>
-        <td> --
+        <td> create an account Frontend
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Omar
         </td>
     </tr>
   <tr>
@@ -149,10 +161,10 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> 
         </td>
         <!-- Completed by? -->
-        <td> --
+        <td> 
         </td>
     </tr>
     <tr>

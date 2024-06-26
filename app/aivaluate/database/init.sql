@@ -94,10 +94,9 @@ CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
     "isSubmitted" BOOLEAN,
     "updatedAt" DATE,
     "isGraded" BOOLEAN DEFAULT false,
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"), 
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"), 
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") 
-    ON DELETE CASCADE
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
@@ -108,9 +107,8 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
     "AIassignedGrade" FLOAT,
     "InstructorAssignedFinalGrade" FLOAT,
     "isGraded" BOOLEAN DEFAULT false,
-    FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") 
-    ON DELETE CASCADE
+    FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedback"(
@@ -120,10 +118,9 @@ CREATE TABLE IF NOT EXISTS "StudentFeedback"(
     "courseId" INT NOT NULL,
     "AIFeedbackText" VARCHAR(1000),
     "InstructorFeedbackText" VARCHAR(1000),
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
-    ON DELETE CASCADE
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(

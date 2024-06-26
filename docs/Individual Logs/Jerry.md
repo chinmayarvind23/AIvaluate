@@ -1,5 +1,46 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 22 - June 26 Morning) - 10.75 hours
+
+## Wednesday June 26th (Until 7 AM)
+### 3 hours
+- Add and Remove TAs from a course, both frontend and backend (3 hours)
+
+## Tuesday June 25th
+### 5.75 hours
+- Update Course Details Feature, both frontend and backend (4.5 hours)
+- Deleting Course Feature, both frontend and backend (1.25 hours)
+
+## Sunday June 23th
+### 2 hours
+- Code Review of 8 pull requests (2 hours)
+
+# Current Tasks
+- #1 Deleting Course Feature, both frontend and backend 
+- #2 Editing Course Feature, both frontend and backend
+- #3 Assigning TA to Course Feature, both frontend and backend
+- #4 Implementing a feature which allows instructors to create assignments for a course
+- #5 Implementing a feature which allows instructors to upload rubrics and answer keys of an assignment
+- #6 Implement various backend testings
+
+# Progress Update (since June 12)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Completed  |
+| Task #4 | Weill be implemented next cycle |
+| Task #5 | Will be implemented next cycle |
+| Task #6 | Postponed to cycle 10 |
+
+# Cycle Goal Review
+During this cycle, I focused on implementing three features related to course management. All features integrate both the front end and the back end. Testing will be implemented next week.
+
+# Next Cycle 
+- #1 Implementing a feature which allows instructors to create assignments for a course
+- #2 Implementing a feature which allows instructors to upload rubrics and answer keys of an assignment
+- #3 Implement various backend testings
+
 # Timesheet (June 19 - June 22 Morning) - 10 hours
 
 ## Saturday June 22th (Until 7 AM)

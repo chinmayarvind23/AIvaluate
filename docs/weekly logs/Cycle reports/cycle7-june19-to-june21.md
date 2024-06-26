@@ -28,6 +28,9 @@
   * #14: Admin view of students (frontend): Chinmay
   * #15: Admin view of students (backend): Chinmay
   * #16: Implementing fixes for PR reviews on frontend and backend for admin view of students: Chinmay
+  * #17: Design all submissions page - Prof/TA view (Frontend): Omar
+  * #18: Design view all rubrics  page - Prof view (Frontend): Omar
+  * #19: Design create an account - Prof/TA view (Frontend): Omar
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
@@ -89,24 +92,21 @@
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> All submissions page Frontend
         </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Omar
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> View all rubrics Frontend
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Omar
+        </td>
+    </tr>
+  <tr>
+        <td> create an account Frontend
+        </td>
+        <td> Omar
         </td>
     </tr>
   <tr>
@@ -141,10 +141,10 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> 
         </td>
         <!-- Completed by? -->
-        <td> --
+        <td> 
         </td>
     </tr>
     <tr>

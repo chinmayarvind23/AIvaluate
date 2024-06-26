@@ -15,8 +15,6 @@
 - Course management (edit, delete, restore)
 - Security and privacy (anonymization of student data for storage and transfer) by using passport.js
 
-
-
 ### Which tasks are going to be targeted from the next cycle with time estimates and owners (ie planning and who is going to own/work on each task)
 - Backend SQL implementations for frontend: Jerry + Colton
 - Email API for forgot password: Chinmay
@@ -28,15 +26,15 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="821" alt="Screenshot 2024-06-07 at 6 05 45 AM" src="">
+    <img width="1020" alt="Screenshot 2024-06-12 at 6 49 50 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/f90cb7d1-edab-4d42-8c60-a6320b445904">
 
 ### Times for team/individual
 
-- Chinmay: hours
+- Chinmay: 11 hours
 - Colton: 18 hours
-- Jerry: hours
+- Jerry: 10.5 hours
 - Omar: hours
-- Aayush: hours
+- Aayush: 12 hours
 
 
 - ### Table view of completed tasks on project board (by which username)
@@ -50,6 +48,12 @@
 - Built forgot password page: Colton
 - Built Account page: Colton
 - Built join course page: Colton
+- Issue creation for backend: Chinmay
+- Built student view for submission: Chinmay
+- Built admin/prof login page: Chinmay
+- Backend containerization + DB integration: Chinmay
+- Verifying AI model (LLama3) for usage based on performance: Chinmay
+- Docker testing with all 3 containers for frontend, backend, DB: Chinmay & Jerry
   
 
 - ### Table view of in progress tasks on project board (by which username)
@@ -57,9 +61,7 @@
 - Set up reverse proxy with server and frontend container: Colton
 - Design change forgettign password page (page that user is sent to from email redirect): Colton
 
-
 - ### Test report/testing status
 - Testing was writting to test the AI API Docker image but was unsuccessful (not much time was put into this and will work hard on this next cycle)
 - No other testing has been written yet.
-
-
+- More testing, and automated testing to be added with DroneCI in the following cycle.

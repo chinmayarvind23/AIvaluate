@@ -302,6 +302,8 @@ router.put('/students/:id/courses', async (req, res) => {
     } catch (error) {
         console.error('Error processing request:', error);
         res.status(500).json({ error: 'Server error' });
+    }
+
 router.post('/stu/forgotpassword', async (req, res) => {
     const { email } = req.body;
     const { default: cryptoRandomString } = await import('crypto-random-string');
@@ -382,7 +384,6 @@ router.post('/stu/reset/:token', async (req, res) => {
     } catch (error) {
         console.error('Error during password reset:', error);
         res.status(500).json({ message: 'Server error' });
-    }
-})};
-
-module.exports = router;});
+    }});
+});
+module.exports = router;

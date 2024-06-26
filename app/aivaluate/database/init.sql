@@ -38,8 +38,10 @@ CREATE TABLE IF NOT EXISTS "Teaches"(
     "instructorId" INT NOT NULL,
     "courseId" INT NOT NULL,
     PRIMARY KEY ("instructorId", "courseId"),
-    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId"),
+    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId")
+    ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "EnrolledIn"(

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); 
 
+// Create a course
 router.post('/courses', async (req, res) => {
     const { courseName, courseCode, maxStudents } = req.body;
 
@@ -48,6 +49,7 @@ router.get('/courses/:id', async (req, res) => {
     }
 });
 
+// Delete a course
 router.delete('/courses/:id', async (req, res) => {
     const courseId = req.params.id;
 
@@ -62,6 +64,28 @@ router.delete('/courses/:id', async (req, res) => {
     } catch (error) {
         console.error('Error deleting course:', error);
         res.status(500).send({ message: 'Error deleting course' });
+    }
+});
+
+// Update a course
+router.put('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
+    const { courseName, courseCode, maxStudents } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE "Course" SET "courseName" = $1, "courseCode" = $2, "maxStudents" = $3 WHERE "courseId" = $4',
+            [courseName, courseCode, maxStudents, courseId]
+        );
+
+        if (result.rowCount > 0) {
+            res.status(200).send({ message: 'Course updated successfully' });
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error updating course:', error);
+        res.status(500).send({ message: 'Error updating course' });
     }
 });
 

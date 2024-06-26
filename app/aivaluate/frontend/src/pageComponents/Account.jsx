@@ -134,7 +134,7 @@ const Account = () => {
                 <div>
                     {isEditing ? (
                         <>
-                            <div className="input-container">
+                            <div className="password-container">
                                 <input
                                     type="password"
                                     className="primary-colorbg detail-value"
@@ -143,7 +143,7 @@ const Account = () => {
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
                             </div>
-                            <div className="input-container">
+                            <div className="password-container">
                                 <input
                                     type="password"
                                     className="primary-colorbg detail-value"

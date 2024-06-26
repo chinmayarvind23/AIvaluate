@@ -8,6 +8,7 @@ import CourseHome from './pageComponents/CourseHome';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
+import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
 import GradingAssignments from './pageComponents/GradingAssignments';
@@ -50,8 +51,8 @@ const App = () => {
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/stu/grades" element={<StudentGrades />} />
+          <Route path="/eval/grades" element={<EvaluatorGrades />} />
           <Route path="/eval/gradingassignments" element={<GradingAssignments />} />
-          <Route path="eval/dashboard" element={<DashboardEval />} />
         </Routes>
       </div>
     </Router>

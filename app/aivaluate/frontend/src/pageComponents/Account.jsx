@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Account.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../styles.css';
+// import '../styles.css';
 import axios from 'axios';
 
 const Account = () => {

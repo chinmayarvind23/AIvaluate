@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../styles.css';
+// import '../styles.css';
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');

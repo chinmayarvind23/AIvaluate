@@ -153,85 +153,85 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 
 -- Insert dummy data for testing
 
+-- Insert dummy data into Course table
+INSERT INTO "Course" ("courseName", "courseCode", "maxStudents", "courseDescription")
+VALUES ('Introduction to Programming', 'CS101', 50, 'An introductory course on programming'),
+('Calculus I', 'MATH101', 60, 'A course on basic calculus'),
+('Physics I', 'PHYS101', 70, 'An introductory course on physics')
+ON CONFLICT DO NOTHING;
+
+-- Insert dummy data into Assignment table
+INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES (1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
+(2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
+(3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
+ON CONFLICT DO NOTHING;
+
 -- Insert dummy data into Student table
 INSERT INTO "Student" ("firstName", "lastName", "email", "password")
 VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
-    ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-    ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3')
-    ON CONFLICT DO NOTHING;
+       ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
+       ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table
-INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA")
-VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
-    (2, 'Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
-    (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
-    (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true)
-    ON CONFLICT DO NOTHING;
-
--- Insert dummy data into Course table
-INSERT INTO "Course" ("courseName", "courseCode", "courseDescription")
-VALUES ('Introduction to Programming', 'CS101', 'An introductory course on programming'),
-    ('Calculus I', 'MATH101', 'A course on basic calculus'),
-    ('Physics I', 'PHYS101', 'An introductory course on physics')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "Instructor" ("firstName", "lastName", "email", "password", "department", "isTA")
+VALUES ('Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
+       ('Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
+       ('Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
+       ('Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true)
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table
 INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
 VALUES (1, 1, 90),
-    (2, 1, 85),
-    (3, 2, 92)
-    ON CONFLICT DO NOTHING;
+       (2, 1, 85),
+       (3, 2, 92)
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into SystemAdministrator table
-INSERT INTO "SystemAdministrator" ("adminId", "firstName", "lastName", "email", "password")
-VALUES (1, 'Admin', 'User', 'admin@example.com', 'adminpassword')
-    ON CONFLICT DO NOTHING;
-
--- Insert dummy data into Assignment table
-INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
-VALUES (1, 1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
-    (2, 2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
-    (3, 3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "SystemAdministrator" ("firstName", "lastName", "email", "password")
+VALUES ('Admin', 'User', 'admin@example.com', 'adminpassword')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table
 INSERT INTO "CourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead")
-VALUES (1, 2, 1, 'Reminder: Assignment 1 ''is'' due tomorrow', false),
-    (2, 1, 2, 'New lecture notes uploaded "for Calculus I', true),
-    (3, 1, 3, 'Physics lab scheduled happening next week', false)
-    ON CONFLICT DO NOTHING;
+VALUES (1, 2, 1, 'Reminder: Assignment 1 is due tomorrow', false),
+       (2, 1, 2, 'New lecture notes uploaded for Calculus I', true),
+       (3, 1, 3, 'Physics lab scheduled for next week', false)
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentSubmission table
-INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-VALUES (1, 1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
-    (2, 2, 1, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
-    (3, 3, 2, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false)
-    ON CONFLICT DO NOTHING;
+INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+VALUES (1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
+       (2, 2, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
+       (3, 3, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false)
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentGrade table
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
 VALUES (1, 1, 100, 95, 0, true),
-    (2, 1, 100, 90, 0, true),
-    (3, 2, 100, 0, 0, false)
-    ON CONFLICT DO NOTHING;
+       (2, 1, 100, 90, 0, true),
+       (3, 2, 100, 0, 0, false)
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into StudentFeedback table
-INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-VALUES (1, 1, 1, 1, 'Great job!', 'Good effort, but could be improved'),
-    (2, 2, 1, 1, 'Well done!', 'Excellent work'),
-    (3, 3, 2, 2, 'Needs improvement', 'Good attempt')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+VALUES (1, 1, 1, 'Great job!', 'Good effort, but could be improved'),
+       (2, 2, 1, 'Well done!', 'Excellent work'),
+       (3, 3, 2, 'Needs improvement', 'Good attempt')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into StudentFeedbackReport table
-INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-VALUES (1, 'Reported issue regarding assignment grading', false, 1, 1, 1, 'N/A', 'N/A'),
-    (2, 'Reported missing lecture materials', true, 2, 1, 1, 'N/A', 'N/A'),
-    (3, 'Reported incorrect answer keys', false, 3, 2, 2, 'N/A', 'N/A')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+VALUES ('Reported issue regarding assignment grading', false, 1, 1, 1, 'N/A', 'N/A'),
+       ('Reported missing lecture materials', true, 2, 1, 1, 'N/A', 'N/A'),
+       ('Reported incorrect answer keys', false, 3, 2, 2, 'N/A', 'N/A')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("assignmentRubricId", "assignmentId", "courseId", "criteria")
-VALUES (1, 1, 1, 'Correctness, Efficiency, Documentation'),
-    (2, 2, 2, 'Problem Solving, Mathematical Reasoning'),
-    (3, 3, 3, 'Experimental Design, Analysis')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "criteria")
+VALUES (1, 1, 'Correctness, Efficiency, Documentation'),
+       (2, 2, 'Problem Solving, Mathematical Reasoning'),
+       (3, 3, 'Experimental Design, Analysis')
+ON CONFLICT DO NOTHING;

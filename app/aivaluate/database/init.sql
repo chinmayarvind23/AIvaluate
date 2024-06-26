@@ -146,8 +146,9 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
 VALUES (1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
        (2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
-       (3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton\'s laws of motion')
+       (3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
 ON CONFLICT DO NOTHING;
+
 
 -- Insert dummy data into Student table
 INSERT INTO "Student" ("firstName", "lastName", "email", "password")

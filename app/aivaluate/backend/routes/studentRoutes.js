@@ -1,12 +1,35 @@
-// Last Edited: June 17, 2024
-// Contributor: Jerry Fan
-// Purpose: Backend Logic for student account information update
-// Used by the Account.jsx in frontend
-
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp-relay.brevo.com',
+    port: 587,
+    auth: {
+        user: process.env.SENDINBLUE_USER,
+        pass: process.env.SENDINBLUE_PASS,
+    },
+    });
+
+    async function sendMail(to, subject, text) {
+    const mailOptions = {
+        from: `AIvaluate <${process.env.SENDINBLUE_FROM}>`,
+        to,
+        subject,
+        text,
+    };
+
+    try {
+        const result = await transporter.sendMail(mailOptions);
+        return result;
+    } catch (error) {
+        console.error('Error sending email:', error.message);
+        throw new Error('Error sending email');
+    }
+}
 
 router.get('/users/me', (req, res) => {
     if (req.isAuthenticated()) {
@@ -220,4 +243,147 @@ router.put('/student/:studentId/password', async (req, res) => {
     }
 });
 
+// Fetch all students
+router.get('/students', (req, res) => {
+    pool.query('SELECT * FROM "Student"', (err, results) => {
+        if (err) {
+            console.error('Error fetching students:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.json(results.rows);
+    });
+});
+
+// Delete a student
+router.delete('/students/:id', (req, res) => {
+    const studentId = req.params.id;
+    pool.query('DELETE FROM "Student" WHERE "studentId" = $1', [studentId], (err, results) => {
+        if (err) {
+            console.error('Error deleting student:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(204).send();
+    });
+});
+
+// Get student details
+router.get('/students/:id', (req, res) => {
+    const studentId = req.params.id;
+    pool.query('SELECT * FROM "Student" WHERE "studentId" = $1', [studentId], (err, results) => {
+        if (err) {
+            console.error('Error fetching student:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (results.rows.length > 0) {
+            res.json(results.rows[0]);
+        } else {
+            res.status(404).json({ error: 'Student not found' });
+        }
+    });
+});
+
+// Update student courses
+router.put('/students/:id/courses', async (req, res) => {
+    const studentId = req.params.id;
+    const { courses } = req.body;
+
+    try {
+        pool.query(
+            'UPDATE "Student" SET courses = $1 WHERE "studentId" = $2 RETURNING *',
+            [JSON.stringify(courses), studentId],
+            (err, results) => {
+                if (err) {
+                    console.error('Error updating student courses:', err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+                res.json(results.rows[0]);
+            }
+        );
+    } catch (error) {
+        console.error('Error processing request:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+
+router.post('/stu/forgotpassword', async (req, res) => {
+    const { email } = req.body;
+    const { default: cryptoRandomString } = await import('crypto-random-string');
+  
+    try {
+      const result = await pool.query('SELECT * FROM "Student" WHERE email = $1', [email]);
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'No account with that email found' });
+      }
+  
+      const student = result.rows[0];
+      const token = cryptoRandomString({ length: 20, type: 'url-safe' });
+      const tokenExpiration = new Date(Date.now() + 3600000); // 1 hour
+  
+      await pool.query('UPDATE "Student" SET "resetPasswordToken" = $1, "resetPasswordExpires" = $2 WHERE "studentId" = $3', [token, tokenExpiration, student.studentId]);
+  
+      const mailOptions = {
+        to: student.email,
+        subject: 'AIvaluate Password Reset',
+        text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+               Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n
+               http://localhost:5173/resetpassword/${token}\n\n
+               If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+      };
+  
+      await sendMail(mailOptions.to, mailOptions.subject, mailOptions.text);
+      res.status(200).json({ message: 'Recovery email sent' });
+    } catch (error) {
+      console.error('Error during forgot password process:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+});
+
+router.post('/stu/reset/:token', async (req, res) => {
+    const { password, confirmPassword } = req.body;
+  
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+    }
+  
+    if (password.length < 6 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+      return res.status(400).json({ message: 'Password must be longer than 6 characters and include a combination of letters and numbers' });
+    }
+  
+    try {
+      const result = await pool.query('SELECT * FROM "Student" WHERE "resetPasswordToken" = $1 AND "resetPasswordExpires" > NOW()', [req.params.token]);
+      if (result.rows.length === 0) {
+        return res.status(400).json({ message: 'Password reset token is invalid or has expired' });
+      }
+  
+      const student = result.rows[0];
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      await pool.query('UPDATE "Student" SET "password" = $1, "resetPasswordToken" = $2, "resetPasswordExpires" = $3 WHERE "studentId" = $4', [hashedPassword, null, null, student.studentId]);
+  
+      res.status(200).json({ message: 'Password has been reset successfully' });
+    } catch (error) {
+      console.error('Error during password reset:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Route to handle the new password submission
+router.post('/stu/reset/:token', async (req, res) => {
+    const { password } = req.body;
+    try {
+        const result = await pool.query('SELECT * FROM "Student" WHERE "resetPasswordToken" = $1 AND "resetPasswordExpires" > NOW()', [req.params.token]);
+        if (result.rows.length === 0) {
+            return res.status(400).json({ message: 'Password reset token is invalid or has expired' });
+        }
+
+        const student = result.rows[0];
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await pool.query('UPDATE "Student" SET "password" = $1, "resetPasswordToken" = $2, "resetPasswordExpires" = $3 WHERE "studentId" = $4', [hashedPassword, null, null, student.studentId]);
+
+        res.status(200).json({ message: 'Password has been reset successfully' });
+    } catch (error) {
+        console.error('Error during password reset:', error);
+        res.status(500).json({ message: 'Server error' });
+    }});
+});
 module.exports = router;

@@ -40,8 +40,10 @@ CREATE TABLE IF NOT EXISTS "Teaches"(
     "instructorId" INT NOT NULL,
     "courseId" INT NOT NULL,
     PRIMARY KEY ("instructorId", "courseId"),
-    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId"),
+    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId")
+    ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "EnrolledIn"(
@@ -50,7 +52,7 @@ CREATE TABLE IF NOT EXISTS "EnrolledIn"(
     "studentGrade" FLOAT,
     PRIMARY KEY ("studentId", "courseId"),
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
@@ -68,7 +70,8 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentKey" VARCHAR(500),
     "maxObtainableGrade" FLOAT,
     "assignmentDescription" VARCHAR(1000),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") 
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "CourseNotification"(
@@ -78,7 +81,7 @@ CREATE TABLE IF NOT EXISTS "CourseNotification"(
     "courseId" INT,
     "notificationMessage" VARCHAR(1000),
     "isRead" BOOLEAN DEFAULT false,
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
@@ -91,9 +94,9 @@ CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
     "isSubmitted" BOOLEAN,
     "updatedAt" DATE,
     "isGraded" BOOLEAN DEFAULT false,
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
@@ -104,8 +107,8 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
     "AIassignedGrade" FLOAT,
     "InstructorAssignedFinalGrade" FLOAT,
     "isGraded" BOOLEAN DEFAULT false,
-    FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId")
+    FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedback"(
@@ -115,9 +118,9 @@ CREATE TABLE IF NOT EXISTS "StudentFeedback"(
     "courseId" INT NOT NULL,
     "AIFeedbackText" VARCHAR(1000),
     "InstructorFeedbackText" VARCHAR(1000),
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
@@ -132,6 +135,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
@@ -141,6 +145,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "criteria" VARCHAR(1000), /* Rubric upload as a file */
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
+    ON DELETE CASCADE
 );
 
 -- Insert dummy data for testing

@@ -23,6 +23,7 @@ import Signup from './pageComponents/Signup';
 import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import CourseHome from './pageComponents/CourseHome';
 import AdminHome from './pageComponents/AdminHome';
 import CreateAssignment from './pageComponents/CreateAssignment';
 
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/createcourse" element={<CreateCourse />} />
           <Route path="/studentviewsubmissions" element={<StudentViewSubmissions />} />
           <Route path="/admin-proflogin" element={<AdminProfLogin />} />
+          <Route path="/coursehome/:courseId" element={<CourseHome />} />
           <Route path="/resetpassword/:token" element={<ResetPassword />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/adminhome" element={<AdminHome />} />

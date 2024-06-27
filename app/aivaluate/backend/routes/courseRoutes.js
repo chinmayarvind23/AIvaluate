@@ -65,13 +65,12 @@ router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
     const studentId = req.user.userId; // Access the studentId from the session
 
     pool.query(
-        `SELECT "courseId", "courseCode", "courseName", "maxStudents"
+        `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName", "Course"."maxStudents" 
          FROM "Course"
-         WHERE "courseId" NOT IN (
-             SELECT "courseId"
-             FROM "EnrolledIn"
-             WHERE "studentId" = $1
-         )`,
+         LEFT JOIN "EnrolledIn" 
+         ON "Course"."courseId" = "EnrolledIn"."courseId" 
+         AND "EnrolledIn"."studentId" = $1
+         WHERE "EnrolledIn"."studentId" IS NULL`,
         [studentId],
         (err, results) => {
             if (err) {

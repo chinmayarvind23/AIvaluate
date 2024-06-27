@@ -10,8 +10,7 @@ const PrivateRouteEval = ({ element: Component }) => {
             .then(response => {
                 if (response.status === 200) {
                     setIsAuthenticated(true);
-                }
-                else {
+                } else {
                     setIsAuthenticated(false);
                 }
             })

@@ -13,6 +13,7 @@ const evalRoutes = require('./routes/evalRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
+
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -40,7 +41,6 @@ app.use(session({
 }));
 
 
-
 const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true
@@ -63,17 +63,16 @@ app.post("/eval-api/login", passport.authenticate("local", {
     failureFlash: true
 }));
 
-app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
+// app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
+//     res.json({ user: req.user });
+// });
+
+app.get("/eval-api/dashboard", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
     res.json({ user: req.user });
 });
-
-app.get('/eval-api/dashboard', (req, res) => {
-    if (req.isAuthenticated()) {
-        return res.status(200).json({ user: req.user });
-    }
-    res.status(401).json({ message: 'Unauthorized' });
-});
-
 
 app.get('/eval-api/logout', (req, res, next) => {
     console.log('Attempting to logout...');

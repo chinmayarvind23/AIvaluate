@@ -23,6 +23,7 @@ import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
 import Rubrics from './pageComponents/Rubrics';
+import SelectedAssignment from './pageComponents/SelectedAssignment';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
 import StudentGrades from './pageComponents/StudentGrades';
@@ -67,6 +68,7 @@ const App = () => {
           <Route path="/eval/rubrics" element={<PrivateRouteEval element={Rubrics} />} />
           <Route path="/eval/students" element={<PrivateRouteEval element={Students} />} />
           <Route path="/eval/grades" element={<PrivateRouteEval element={EvaluatorGrades} />} />
+          <Route path="/eval/selected/assignment" element={<PrivateRouteEval element={SelectedAssignment} />} />
         </Routes>
       </div>
     </Router>

@@ -17,7 +17,7 @@ const CourseHome = () => {
     const [isTaModalOpen, setIsTaModalOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/courses/${courseId}`)
+        axios.get(`http://localhost:5173/eval-api/courses/${courseId}`)
             .then(response => {
                 setCourse(response.data);
             })
@@ -44,7 +44,7 @@ const CourseHome = () => {
     };
 
     const saveCourseEdits = (editedCourse) => {
-        axios.put(`http://localhost:4000/courses/${courseId}`, editedCourse)
+        axios.put(`http://localhost:5173/eval-api/courses/${courseId}`, editedCourse)
             .then(response => {
                 console.log('Course updated:', response.data);
                 setCourse(response.data); // Update the course details displayed      
@@ -79,7 +79,7 @@ const CourseHome = () => {
         if (!confirmDelete) {
             return;
         }
-        axios.delete(`http://localhost:4000/courses/${courseId}`)
+        axios.delete(`http://localhost:5173/eval-api/courses/${courseId}`)
             .then(response => {
                 console.log(response.data);
                 window.confirm('Course deleted successfully');

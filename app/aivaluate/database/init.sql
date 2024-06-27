@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
     "adminId" SERIAL NOT NULL PRIMARY KEY,
     "firstName" VARCHAR(100),
     "lastName" VARCHAR(100),
-    "email" VARCHAR(200),
+    "email" VARCHAR(200) UNIQUE NOT NULL,
     "password" VARCHAR(300)
 );
 
@@ -167,29 +167,52 @@ ON CONFLICT DO NOTHING;
 -- Insert dummy data into Student table
 INSERT INTO "Student" ("firstName", "lastName", "email", "password")
 VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
-       ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-       ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3')
-ON CONFLICT DO NOTHING;
+    ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
+    ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
+    ('Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    ('Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
+    ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table
-INSERT INTO "Instructor" ("firstName", "lastName", "email", "password", "department", "isTA")
-VALUES ('Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
-       ('Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
-       ('Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
-       ('Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true)
-ON CONFLICT DO NOTHING;
+INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA")
+VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
+    (2, 'Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
+    (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
+    (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
+    (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false),
+    (6, 'TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
+    ON CONFLICT DO NOTHING;
+
+-- Insert dummy data into Course table
+INSERT INTO "Course" ("courseName", "courseCode", "courseDescription")
+VALUES ('Introduction to Programming', 'CS101', 'An introductory course on programming'),
+    ('Calculus I', 'MATH101', 'A course on basic calculus'),
+    ('Physics I', 'PHYS101', 'An introductory course on physics')
+    ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table
 INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
 VALUES (1, 1, 90),
-       (2, 1, 85),
-       (3, 2, 92)
-ON CONFLICT DO NOTHING;
+    (2, 1, 85),
+    (3, 2, 92),
+    (5, 2, 88)
+    ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into SystemAdministrator table
 INSERT INTO "SystemAdministrator" ("firstName", "lastName", "email", "password")
-VALUES ('Admin', 'User', 'admin@example.com', 'adminpassword')
+VALUES ('Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
 ON CONFLICT DO NOTHING;
+
+
+-- Insert dummy data into Assignment table
+INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES (1, 1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
+    (2, 2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
+    (3, 3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
+    ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table
 INSERT INTO "CourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead")

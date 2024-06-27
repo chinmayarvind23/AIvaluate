@@ -12,7 +12,7 @@ const AdminHome = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await fetch('http://localhost:4000/students');
+                const response = await fetch('http://localhost:5173/admin-api/students');
                 const data = await response.json();
                 setStudents(data);
             } catch (error) {
@@ -25,7 +25,7 @@ const AdminHome = () => {
 
     const handleDeleteStudent = async (studentId) => {
         try {
-            await fetch(`http://localhost:4000/students/${studentId}`, { method: 'DELETE' });
+            await fetch(`http://localhost:5173/admin-api/students/${studentId}`, { method: 'DELETE' });
             setStudents(students.filter(student => student.studentId !== studentId));
             setSelectedStudent(null);
         } catch (error) {
@@ -43,7 +43,7 @@ const AdminHome = () => {
             setSelectedStudent({ ...selectedStudent, courses: updatedCourses });
 
             try {
-                await fetch(`http://localhost:4000/students/${selectedStudent.studentId}/courses`, {
+                await fetch(`http://localhost:5173/admin-api/students/${selectedStudent.studentId}/courses`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

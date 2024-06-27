@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); 
 
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/eval-api/dashboard');
+    }
+    next();
+}
+
 // Create a course
 router.post('/courses', async (req, res) => {
     const { courseName, courseCode, maxStudents } = req.body;
@@ -29,6 +36,27 @@ router.get('/courses', async (req, res) => {
         console.error('Error fetching courses:', error);
         res.status(500).send({ message: 'Error fetching courses' });
     }
+});
+
+router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
+    const instructorId = req.user.instructorId; // Access the studentId from the session
+    console.log('instructor ID:', instructorId); // Log student ID to verify
+
+    pool.query(
+        `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName" 
+         FROM "Teaches" 
+         JOIN "Course" ON "Teaches"."courseId" = "Course"."courseId" 
+         WHERE "Teaches"."instructorId" = $1`,
+        [instructorId],
+        (err, results) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            console.log('Courses:', results.rows); // Log query results to verify
+            res.json(results.rows);
+        }
+    );
 });
 
 // Get a single course by ID

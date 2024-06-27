@@ -165,15 +165,15 @@ VALUES (1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the f
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Student table
-INSERT INTO "Student" ("firstName", "lastName", "email", "password")
-VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
-    ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-    ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
-    ('Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
+INSERT INTO "Student" ("studentId","firstName", "lastName", "email", "password")
+VALUES ('1', 'John', 'Doe', 'john.doe@example.com', 'password1'),
+    (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password2'),
+    (3, 'Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
+    (4, 'Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    (5, 'Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    (6, 'Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    (7, 'Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+    (8, 'Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table
@@ -187,10 +187,12 @@ VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Course table
-INSERT INTO "Course" ("courseName", "courseCode", "courseDescription")
-VALUES ('Introduction to Programming', 'CS101', 'An introductory course on programming'),
-    ('Calculus I', 'MATH101', 'A course on basic calculus'),
-    ('Physics I', 'PHYS101', 'An introductory course on physics')
+INSERT INTO "Course" ("courseId", "courseName", "courseCode", "courseDescription")
+VALUES (1, 'Introduction to Programming', 'CS101', 'An introductory course on programming'),
+    (2, 'Advanced CSS', 'COSC 455', 'A course on advanced CSS techniques'),
+    (3, 'Intro to Web Developement', 'COSC 360', 'An introductory course on web development'),
+    (4, 'Itermidiate JavaScript', 'COSC 388', 'A course on JavaScript programming'),
+    (5, 'Software Engineering Capstone', 'COSC 499', 'Final project for software engineering students')
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table
@@ -198,7 +200,21 @@ INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
 VALUES (1, 1, 90),
     (2, 1, 85),
     (3, 2, 92),
-    (5, 2, 88)
+    (5, 5, 88),
+    (5, 2, 90),
+    (5, 4, 83),
+    (6, 5, 88),
+    (6, 2, 90),
+    (7, 4, 83),
+    (7, 5, 88),
+    (4, 5, 90),
+    (4, 4, 83)
+    ON CONFLICT DO NOTHING;
+
+INSERT INTO "Teaches" ("instructorId", "courseId")
+VALUES (5, 5),
+    (5, 1),
+    (5, 4)
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into SystemAdministrator table

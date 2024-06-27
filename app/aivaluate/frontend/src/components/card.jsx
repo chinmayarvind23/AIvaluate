@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 
-const Card = ({courseId, courseCode, courseName, maxStudents, user="stu"}) => {
+const Card = ({courseId, courseCode, courseName, user="stu"}) => {
   // console.log("Card props:", { courseId, courseCode, courseName, maxStudents, user });
   const navigate = useNavigate();
 

@@ -60,6 +60,48 @@ router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
     );
 });
 
+//Return all the courses that the current student is not registered in
+router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
+    const studentId = req.user.userId; // Access the studentId from the session
+
+    pool.query(
+        `SELECT "courseId", "courseCode", "courseName", "maxStudents"
+         FROM "Course"
+         WHERE "courseId" NOT IN (
+             SELECT "courseId"
+             FROM "EnrolledIn"
+             WHERE "studentId" = $1
+         )`,
+        [studentId],
+        (err, results) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            res.json(results.rows);
+        }
+    );
+});
+
+//Add a student to a course
+router.post('/enroll-course', checkAuthenticated, (req, res) => {
+    const studentId = req.user.userId; // Access the studentId from the session
+    const { courseId } = req.body; // The courseId will be sent in the request body
+
+    pool.query(
+        `INSERT INTO "EnrolledIn" ("studentId", "courseId") VALUES ($1, $2)`,
+        [studentId, courseId],
+        (err, results) => {
+            if (err) {
+                console.error('Error enrolling student:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            res.status(200).json({ message: 'Successfully enrolled in the course' });
+        }
+    );
+});
+
+
 // Get a single course by ID
 router.get('/courses/:id', async (req, res) => {
     const courseId = req.params.id;

@@ -57,8 +57,8 @@ const Rubrics = () => {
 
   return (
   <div>
-    <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' tab='submissions' />
-    <SideMenuBar tab="submissions" />
+    <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
+    <SideMenuBar tab="rubrics" />
     <div className="accented-outside rborder">
         <div className="portal-all">
             <div className="portal-container">

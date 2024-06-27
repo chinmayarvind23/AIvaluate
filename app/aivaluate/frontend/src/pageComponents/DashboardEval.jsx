@@ -30,7 +30,7 @@ const DashboardEval = () => {
         <h1>Your courses...</h1>
         
       </div>
-      <AIvaluateNavBarEval navBarText='Hello Colton' tab="home" />
+      <AIvaluateNavBarEval navBarText='Hello <enter name>' tab="home" />
       <CourseCards page="prof/dashboard"/>
     </div>
   );

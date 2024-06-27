@@ -6,7 +6,7 @@ import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
 import AdminLogin from './pageComponents/AdminLogin';
-import AssignmentFeedback from './pageComponents/AssignmentFeedback';
+import AssignmentOverview from './pageComponents/AssignmentOverview';
 import CourseHome from './pageComponents/CourseHome';
 import CreateAssignment from './pageComponents/CreateAssignment';
 import CreateCourse from './pageComponents/CreateCourse';
@@ -25,8 +25,10 @@ import People from './pageComponents/People';
 import Rubrics from './pageComponents/Rubrics';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
+import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
+import Students from './pageComponents/Students';
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
         <Routes>
           {/* No session validation routes required */}
           <Route path="/" element={<Login />} /> {/* Default route */}
+          <Route path="/login" element={<Login />} />
           <Route path="/stu/login" element={<Login />} />
           <Route path="/stu/signup" element={<Signup />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
@@ -43,12 +46,12 @@ const App = () => {
           <Route path="/admin/signup" element={<SignupAdmin />} />
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
-          <Route path="/stu/assignment-feedback" element={<PrivateRouteStu element={AssignmentFeedback} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}
+          <Route path="/stu/assignment" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}
           <Route path="/stu/account" element={<PrivateRouteStu element={Account} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
           <Route path="/stu/people" element={<PrivateRouteStu element={People} />} />
-          <Route path="/stu/create-course" element={<PrivateRouteStu element={CreateCourse} />} />
+          <Route path="/stu/grades" element={<PrivateRouteStu element={StudentGrades} />} />
           <Route path="/stu/submissions" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
@@ -62,8 +65,8 @@ const App = () => {
           <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} />
           <Route path="/eval/create-assignment" element={<PrivateRouteEval element={CreateAssignment} />} />
           <Route path="/eval/rubrics" element={<PrivateRouteEval element={Rubrics} />} />
+          <Route path="/eval/students" element={<PrivateRouteEval element={Students} />} />
           <Route path="/eval/grades" element={<PrivateRouteEval element={EvaluatorGrades} />} />
-          <Route path="/eval/gradingassignments" element={<PrivateRouteEval element={GradingAssignments} />} />
         </Routes>
       </div>
     </Router>

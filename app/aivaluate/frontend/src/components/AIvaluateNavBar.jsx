@@ -47,16 +47,16 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
                     &#9776;
                 </button>
                 <div className={`dropdown ${menuOpen ? 'show secondary-colorbg' : 'primary-colorbg'}`}>
-                <a href="dashboard" style={boostFromTop} className={`${tab === 'home' ? 'primary-color-text' : 'third-color-text'}`}>
+                <a href="/stu/dashboard" style={boostFromTop} className={`${tab === 'home' ? 'primary-color-text' : 'third-color-text'}`}>
                   Home
                 </a>
-                <a href="account" className={`${tab === 'account' ? 'primary-color-text' : 'third-color-text'}`}>
+                <a href="/stu/account" className={`${tab === 'account' ? 'primary-color-text' : 'third-color-text'}`}>
                   Account
                 </a>
-                <a href="joincourse" className={`${tab === 'join-course' ? 'primary-color-text' : 'third-color-text'}`}>
+                <a href="/stu/join-course" className={`${tab === 'join-course' ? 'primary-color-text' : 'third-color-text'}`}>
                   Join a Course
                 </a>
-                <a href="help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
+                <a href="/stu/help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
                   Get Help...
                 </a>
                 <button onClick={handleLogout} className="logout">Logout</button>

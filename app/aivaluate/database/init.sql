@@ -151,11 +151,13 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 -- Insert dummy data for testing
 
 -- Insert dummy data into Course table
-INSERT INTO "Course" ("courseName", "courseCode", "maxStudents", "courseDescription")
-VALUES ('Introduction to Programming', 'CS101', 50, 'An introductory course on programming'),
-('Calculus I', 'MATH101', 60, 'A course on basic calculus'),
-('Physics I', 'PHYS101', 70, 'An introductory course on physics')
-ON CONFLICT DO NOTHING;
+INSERT INTO "Course" ("courseId", "courseName", "courseCode", "courseDescription")
+VALUES (1, 'Introduction to Programming', 'CS101', 'An introductory course on programming'),
+    (2, 'Advanced CSS', 'COSC 455', 'A course on advanced CSS techniques'),
+    (3, 'Intro to Web Developement', 'COSC 360', 'An introductory course on web development'),
+    (4, 'Itermidiate JavaScript', 'COSC 388', 'A course on JavaScript programming'),
+    (5, 'Software Engineering Capstone', 'COSC 499', 'Final project for software engineering students')
+    ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Assignment table
 INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
@@ -184,15 +186,6 @@ VALUES (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer
     (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
     (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false),
     (6, 'TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
-    ON CONFLICT DO NOTHING;
-
--- Insert dummy data into Course table
-INSERT INTO "Course" ("courseId", "courseName", "courseCode", "courseDescription")
-VALUES (1, 'Introduction to Programming', 'CS101', 'An introductory course on programming'),
-    (2, 'Advanced CSS', 'COSC 455', 'A course on advanced CSS techniques'),
-    (3, 'Intro to Web Developement', 'COSC 360', 'An introductory course on web development'),
-    (4, 'Itermidiate JavaScript', 'COSC 388', 'A course on JavaScript programming'),
-    (5, 'Software Engineering Capstone', 'COSC 499', 'Final project for software engineering students')
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table

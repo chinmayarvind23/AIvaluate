@@ -62,7 +62,7 @@ const CreateAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText="Create Assignment"/>
+            <AIvaluateNavBarEval navBarText="Course number - Course name"/>
             <SideMenuBarEval tab="assignments" />
             <div className="create-assignment-page">
                 <div className="create-assignment-container fourth-colorbg">

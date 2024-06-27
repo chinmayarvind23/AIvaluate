@@ -14,13 +14,30 @@ const CourseCards = ({ navBarText, page }) => {
     if (page === "JoinCourse") {
         
         const [searchTerm, setSearchTerm] = useState('');
-
+        useEffect(() => {
+            const fetchCourses = async () => {
+                try {
+                    const response = await axios.get('http://localhost:5173/stu-api/not-enrolled-courses', { withCredentials: true });
+                    console.log('Fetched Courses:', response.data); // Log fetched courses to verify
+                    setCourses(response.data);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching enrolled courses:', error);
+                    setLoading(false);
+                }
+            };
+    
+            fetchCourses();
+        }, []);
+    
+        if (loading) {
+            return <div>Loading...</div>;
+        }
         // Filter courses based on search term
         const filteredCourses = courses.filter(course =>
             course.courseCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
             course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.courseId.toString().includes(searchTerm) ||
-            course.maxStudents.toString().includes(searchTerm)
+            course.courseId.toString().includes(searchTerm)
         );
 
         const handleSearchChange = (e) => {
@@ -50,7 +67,7 @@ const CourseCards = ({ navBarText, page }) => {
                             courseName={course.courseName} 
                             courseId={course.courseId}
                             courseMaxStudents={course.maxStudents}
-                            user="stu"
+                            user="joinCourse"
                         />
                     ))}
                 </div>

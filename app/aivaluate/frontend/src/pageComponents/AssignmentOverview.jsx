@@ -35,13 +35,13 @@ const AssignmentOverview = () => {
   }, [searchTerm]);
 
   const handleNavigate = () => {
-    navigate('/assignmentfeedback');
+    navigate('/stu/assignment-feedback');
   };
 
   return (
     <div>
-      <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
-      <SideMenuBar tab='assignments' />
+      <AIvaluateNavBar navBarText='Course number - Course Name' />
+      <SideMenuBar tab="assignments" />
       <div className="assignment-search-container">
       <div className="search-container">
             <div className="search-box">

@@ -119,69 +119,6 @@
         <td> Chinmay
         </td>
     </tr>
-    <tr>
-        <td> 
-        </td>
-        <!-- Completed by? -->
-        <td> 
-        </td>
-    </tr>
-    <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
 </table>
 
 ### Which tasks are going to be targeted from the next cycle 

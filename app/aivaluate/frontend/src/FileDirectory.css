@@ -99,6 +99,11 @@
     text-align: left;
   }
 
+  .file-item:hover {
+    text-decoration: underline;
+    transform: scale(1.01);
+  }
+
   .file-name{
     width: stretch;
     overflow: none;

@@ -63,16 +63,16 @@ app.post("/eval-api/login", passport.authenticate("local", {
     failureFlash: true
 }));
 
-// app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
-//     res.json({ user: req.user });
-// });
-
-app.get("/eval-api/dashboard", (req, res) => {
-    if (!req.isAuthenticated()) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
+app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
 });
+
+// app.get("/eval-api/dashboard", (req, res) => {
+//     if (!req.isAuthenticated()) {
+//         return res.status(401).json({ message: 'Unauthorized' });
+//     }
+//     res.json({ user: req.user });
+// });
 
 app.get('/eval-api/logout', (req, res, next) => {
     console.log('Attempting to logout...');

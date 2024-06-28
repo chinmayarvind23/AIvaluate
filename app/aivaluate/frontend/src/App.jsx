@@ -30,6 +30,8 @@ import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
+import AssignmentProf from './pageComponents/AssignmentProf';
+import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
 
 const App = () => {
   return (
@@ -69,6 +71,9 @@ const App = () => {
           <Route path="/eval/students" element={<PrivateRouteEval element={Students} />} />
           <Route path="/eval/grades" element={<PrivateRouteEval element={EvaluatorGrades} />} />
           <Route path="/eval/selected/assignment" element={<PrivateRouteEval element={SelectedAssignment} />} />
+          <Route path="/eval/assignments" element={<PrivateRouteEval element={AssignmentProf} />} />
+          <Route path="/eval/browse/assignment" element={<PrivateRouteEval element={BrowseAllAssignmentsEval} />} />
+          
         </Routes>
       </div>
     </Router>

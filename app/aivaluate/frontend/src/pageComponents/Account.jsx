@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import '../Account.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import '../styles.css';
-import axios from 'axios';
 
 const Account = () => {
     const [firstName, setFirstName] = useState("");
@@ -23,18 +23,18 @@ const Account = () => {
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
-                const { data: { studentId } } = await axios.get('http://localhost:4000/student/me', {
+                const { data: { studentId } } = await axios.get('http://localhost:5173/stu-api/student/me', {
                     withCredentials: true
                 });
                 setAccountId(studentId);
 
-                const firstNameResponse = await axios.get(`http://localhost:4000/student/${studentId}/firstName`);
+                const firstNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/firstName`);
                 setFirstName(firstNameResponse.data.firstName);
 
-                const lastNameResponse = await axios.get(`http://localhost:4000/student/${studentId}/lastName`);
+                const lastNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/lastName`);
                 setLastName(lastNameResponse.data.lastName);
 
-                const emailResponse = await axios.get(`http://localhost:4000/student/${studentId}/email`);
+                const emailResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/email`);
                 setEmail(emailResponse.data.email);
 
                 // Password is not fetched for security reasons
@@ -63,7 +63,7 @@ const Account = () => {
 
         try {
             // Verify the current password
-            const response = await axios.post(`http://localhost:4000/student/${accountId}/verifyPassword`, {
+            const response = await axios.post(`http://localhost:5173/stu-api/student/${accountId}/verifyPassword`, {
                 currentPassword
             }, {
                 withCredentials: true
@@ -95,7 +95,7 @@ const Account = () => {
             }
 
             // Update the password
-            await axios.put(`http://localhost:4000/student/${accountId}/password`, {
+            await axios.put(`http://localhost:5173/stu-api/student/${accountId}/password`, {
                 password: newPassword
             }, {
                 withCredentials: true
@@ -134,7 +134,7 @@ const Account = () => {
                 <div>
                     {isEditing ? (
                         <>
-                            <div className="input-container">
+                            <div className="password-container">
                                 <input
                                     type="password"
                                     className="primary-colorbg detail-value"
@@ -143,7 +143,7 @@ const Account = () => {
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
                             </div>
-                            <div className="input-container">
+                            <div className="password-container">
                                 <input
                                     type="password"
                                     className="primary-colorbg detail-value"

@@ -17,12 +17,6 @@
     align-items: center;
 }
 
-.accented-outside{
-  /* background: var(--primary-color);
-  margin-left: 350px;
-  margin-right:20px; */
-}
-
 .portal-all{
     justify-content: center;
     align-items: center;
@@ -103,6 +97,11 @@
     border-radius: 5px;
     font-size: 2rem;
     text-align: left;
+  }
+
+  .file-item:hover {
+    text-decoration: underline;
+    transform: scale(1.01);
   }
 
   .file-name{

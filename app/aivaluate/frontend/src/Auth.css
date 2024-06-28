@@ -103,4 +103,12 @@
     flex: column;
     margin-right: 50px;
   }
+
+  .center-text-admin{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    font-size:13px;
+  }
   

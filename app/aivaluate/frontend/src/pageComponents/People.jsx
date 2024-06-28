@@ -1,39 +1,108 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../People.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import React, { useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+import '../FileDirectory.css';
+import '../GeneralStyling.css';
+import AIvaluateNavBar from "../components/AIvaluateNavBar";
 import SideMenuBar from '../components/SideMenuBar';
 
+
 const People = () => {
-  const navigate = useNavigate();
 
-  const [menuOpen, setMenuOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredFiles, setFilteredFiles] = useState([]);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-    console.log(`menu open - ${!menuOpen}`); // Logging state change
-  };
+    const files = [
+        'Colton Palfrey',
+        'Chinmay Arvind',
+        'Jerry Fan',
+        'Omar Hemed',
+        'Kenny Nguyen',
+        'Aayush Chaudhary',
+        'Rahul Kulkarni',
+        'Sahil Patel',
+        'Oakley Boren',
+        'Karan Manchanda',
+        'Yash Shah',
+        'Wesley Chan',
+        'Paul Tollo',
+    ];
 
-  return (
-    <div>
-      <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
-      <SideMenuBar tab='people' />
-      <div className="people-container">
-        <main className="people-content">
-          <header className="content-header">
-          </header>
-          <section className="people-list">
-            <div className="person">Colton Palfrey</div>
-            <div className="person">Jerry Fan</div>
-            <div className="person">Omar Hemed</div>
-            <div className="person">Chinmay Arvind</div>
-            <div className="person">Aayush Chauhary</div>
-            <div className="person">Mike Doodle</div>
-          </section>
-        </main>
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        const filtered = files.filter(file =>
+            file.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredFiles(filtered);
+        setCurrentPage(1); // Reset to first page on new search
+    }, [searchTerm]);
+
+    // Calculates the current items to display
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
+
+    // This calculates the total number of pages based of the max number of items per page
+    const totalPages = Math.ceil(files.length / itemsPerPage);
+
+    const handleNextPage = () => {
+    if (currentPage < totalPages) {
+        setCurrentPage(prevPage => prevPage + 1);
+    }
+    };
+
+    const handlePrevPage = () => {
+    if (currentPage > 1) {
+        setCurrentPage(prevPage => prevPage - 1);
+    }
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+        setCurrentPage(1); // Reset to first page on new search
+    };
+
+    return (
+        <div>
+            <AIvaluateNavBar navBarText="Course number - Course name"/>
+            <SideMenuBar tab="people" />
+            <div className="accented-outside rborder">
+                <div className="portal-all">
+                    <div className="portal-container">
+                        <div className="topBar">
+                            <h1>People</h1>
+                            <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search..." 
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                <div className="file-item" key={index}>
+                                    <div className="file-name">{file}</div>
+                                    <div className="file-icon"></div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    );
 };
 
 export default People;

@@ -6,7 +6,12 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-      - "5173:5173"
+      - "5173:80"
+    depends_on:
+      - backend
+      - backend-admin
+    networks:
+      - aivaluate-net
 
   db:
     image: postgres
@@ -21,14 +26,16 @@ services:
       - "5432:5432"
     volumes:
       - ./aivaluate/database:/docker-entrypoint-initdb.d
-
-# A database manager can be accessed at http://localhost:8080/
+    networks:
+      - aivaluate-net
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - aivaluate-net
 
   backend:
     build:
@@ -41,6 +48,36 @@ services:
       - db
     env_file:
       - ./aivaluate/backend/.env
+    networks:
+      - aivaluate-net
+
+  backend-admin:
+    build:
+      context: ./aivaluate/backend-admin
+      dockerfile: Dockerfile
+    container_name: backend-admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - ./aivaluate/backend-admin/.env
+    networks:
+      - aivaluate-net
+
+  backend-eval:
+    build:
+      context: ./aivaluate/backend-eval
+      dockerfile: Dockerfile
+    container_name: backend-eval
+    ports:
+      - "6000:6000"
+    depends_on:
+      - db
+    env_file:
+      - ./aivaluate/backend-eval/.env
+    networks:
+      - aivaluate-net
 
   drone-server:
     image: drone/drone:latest
@@ -56,4 +93,9 @@ services:
       DRONE_RPC_SECRET: ci-cd-setup-team-8
       DRONE_SERVER_HOST: droneci.ok.ubc.ca
       DRONE_SERVER_PROTO: https
+    networks:
+      - aivaluate-net
 
+networks:
+  aivaluate-net:
+    driver: bridge

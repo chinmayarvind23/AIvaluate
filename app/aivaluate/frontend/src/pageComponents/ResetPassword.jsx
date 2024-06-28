@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -20,10 +20,10 @@ const ResetPassword = () => {
       return;
     }
     try {
-      const response = await axios.post(`http://localhost:4000/stu/reset/${token}`, { password, confirmPassword });
+      const response = await axios.post(`http://localhost:5173/stu-api/stu/reset/${token}`, { password, confirmPassword });
       setMessage(response.data.message);
       if (response.data.message === 'Password has been reset successfully') {
-        navigate('/login');
+        navigate('/stu/login');
       }
     } catch (error) {
       setMessage('Error resetting password');

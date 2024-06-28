@@ -51,20 +51,30 @@ function initialize(passport) {
   // to the session as req.session.passport.user = {}. Here for instance, it would be (as we provide
   //   the user id as the key) req.session.passport.user = {id: 'xyz'}
 
-  passport.serializeUser((user, done) => done(null, user.studentId));
+  passport.serializeUser((user, done) => {
+    const sessionData = {
+      userId: user.studentId,
+      userType: "stu"
+    };
+    done(null, sessionData);
+  });
 
   // In deserializeUser that key is matched with the in memory array / database or any data resource.
   // The fetched object is attached to the request object as req.user
 
-  passport.deserializeUser((id, done) => {
-    pool.query(`SELECT * FROM "Student" WHERE "studentId" = $1`, [id], (err, results) => {
-      if (err) {
-        return done(err);
-      }
-      console.log(`ID is ${results.rows[0].studentId}`);
-      return done(null, results.rows[0]);
-    });
+
+passport.deserializeUser((sessionData, done) => {
+  pool.query(`SELECT * FROM "Student" WHERE "studentId" = $1`, [sessionData.userId], (err, results) => {
+    if (err) {
+      return done(err);
+    }
+    const user = results.rows[0];
+    user.userType = sessionData.userType; // Add userType to the user object
+    console.log(`ID is ${user.studentId}`);
+    console.log(`User type is ${user.userType}`);
+    return done(null, user);
   });
+});
 }
 
 module.exports = initialize;

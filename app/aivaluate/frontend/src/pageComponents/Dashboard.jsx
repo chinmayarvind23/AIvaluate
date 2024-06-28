@@ -28,9 +28,8 @@ const Dashboard = () => {
         <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>
         <h1>Your courses...</h1>
-        
       </div>
-      <AIvaluateNavBar navBarText='Hello Colton' tab="home" />
+      <AIvaluateNavBar navBarText='Hello <enter name>' tab="home" />
       <CourseCards page="stu/dashboard"/>
     </div>
   );

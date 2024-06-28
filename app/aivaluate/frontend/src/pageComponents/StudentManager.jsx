@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarAdmin from "../components/AIvaluateNavBarAdmin";
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
 
@@ -65,8 +65,8 @@ const EvaluatorManager = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText="Admin Home Portal"/>
-            <SideMenuBarAdmin tab="evalManager" />
+            <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
+            <SideMenuBarAdmin tab="studentManager" />
             <div className="accented-outside rborder">
                 <div className="portal-all">
                     <div className="portal-container">

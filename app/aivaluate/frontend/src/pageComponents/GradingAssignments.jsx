@@ -2,7 +2,7 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../GradingAssignments.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const GradingAssignments = () => {
@@ -34,7 +34,7 @@ const GradingAssignments = () => {
 
   return (
     <div>
-      <AIvaluateNavBar navBarText='Assignment 1' tab="assignments" />
+      <AIvaluateNavBarEval navBarText='Course number - Course Name' tab="assignments" />
       <div className="grading-container">
         <SideMenuBarEval tab="assignments" />
         <div className="content ">

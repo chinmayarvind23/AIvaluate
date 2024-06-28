@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-// import '../StudentViewSubmissions.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
@@ -66,7 +65,7 @@ const StudentViewSubmissions = () => {
 
   return (
   <div>
-    <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' tab='submissions' />
+    <AIvaluateNavBar navBarText='Course number - Course name' tab='submissions' />
     <SideMenuBar tab="submissions" />
     <div className="accented-outside rborder">
         <div className="portal-all">

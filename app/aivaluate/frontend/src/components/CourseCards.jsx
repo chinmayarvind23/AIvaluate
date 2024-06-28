@@ -4,44 +4,46 @@ import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import '../CourseCards.css';
 import '../SearchBar.css';
 import Card from './card';
-const CourseCards = ({ navBarText, page}) => {
 
-    
+const CourseCards = ({ navBarText, page }) => {
     const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/courses');
-                setCourses(response.data);
-            } catch (error) {
-                console.error('Error fetching courses:', error);
-            }
-        };
-
-        fetchCourses();
-    }, []);
-/* 
-- Card has 3 different variables that can be passed in: courseCode, courseName, and user
-- courseCode and courseName are required, while user is optional
-- user is set to "stu" by default, but can be changed to "prof" which changing the course image.
-- Adding a car component with the courseCode="Create Course" and courseName="Click to create a new course" 
-  will create a card that will allow the user to create a new course.
- */
     
 
     if (page === "JoinCourse") {
+        
         const [searchTerm, setSearchTerm] = useState('');
-
+        useEffect(() => {
+            const fetchCourses = async () => {
+                try {
+                    const response = await axios.get('http://localhost:5173/stu-api/not-enrolled-courses', { withCredentials: true });
+                    console.log('Fetched Courses:', response.data); // Log fetched courses to verify
+                    setCourses(response.data);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching enrolled courses:', error);
+                    setLoading(false);
+                }
+            };
+    
+            fetchCourses();
+        }, []);
+    
+        if (loading) {
+            return <div>Loading...</div>;
+        }
         // Filter courses based on search term
         const filteredCourses = courses.filter(course =>
             course.courseCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
+            course.courseName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            course.courseId.toString().includes(searchTerm)
         );
 
         const handleSearchChange = (e) => {
             setSearchTerm(e.target.value);
         };
+
         return (
             <div>
                 <div className="center-search">
@@ -63,35 +65,34 @@ const CourseCards = ({ navBarText, page}) => {
                             key={course.courseId} 
                             courseCode={course.courseCode} 
                             courseName={course.courseName} 
-                            user="stu"
+                            courseId={course.courseId}
+                            courseMaxStudents={course.maxStudents}
+                            user="joinCourse"
                         />
                     ))}
                 </div>
             </div>
         );
-        // return(
-        //     <div>
-        //         <div className="center-search">
-        //             <div className="search-container">
-        //                 <div className="search-box">
-        //                     <FaSearch className="search-icon" />
-        //                     <input
-        //                     type="text"
-        //                     placeholder="Search a course"
-        //                     value={searchTerm}
-        //                     onChange={handleSearchChange}
-        //                 />
-        //                 </div>
-        //             </div>
-        //         </div>
-        //         <div className="dashboard">
-        //             <Card courseCode="COSC 499" courseName="Software Engineering Capstone" user="stu"/>
-        //             <Card courseCode="COSC 360" courseName="Intro to Web Development" user="stu"/>
-        //             <Card courseCode="COSC 395" courseName="Intro to Frontend Development" user="stu"/>
-        //         </div>
-        //     </div>
-        // );
-    }else if (page === "stu/dashboard"){
+    } else if (page === "stu/dashboard") {
+        useEffect(() => {
+            const fetchCourses = async () => {
+                try {
+                    const response = await axios.get('http://localhost:5173/stu-api/enrolled-courses', { withCredentials: true });
+                    console.log('Fetched Courses:', response.data); // Log fetched courses to verify
+                    setCourses(response.data);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching enrolled courses:', error);
+                    setLoading(false);
+                }
+            };
+    
+            fetchCourses();
+        }, []);
+    
+        if (loading) {
+            return <div>Loading...</div>;
+        }
         return (
             <div className="dashboard">
                 {courses.map(course => (
@@ -99,20 +100,32 @@ const CourseCards = ({ navBarText, page}) => {
                         key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
+                        courseId={course.courseId}
                         user="stu"
                     />
                 ))}
             </div>
         );
-
-        // return(
-        //     <div className="dashboard">
-        //         <Card courseCode="COSC 499" courseName="Software Engineering Capstone" user="stu"/>
-        //         <Card courseCode="COSC 360" courseName="Intro to Web Development" user="stu"/>
-        //         <Card courseCode="COSC 395" courseName="Intro to Frontend Development" user="stu"/>
-        //     </div>
-        // );
-    }else{
+    } else if (page === "prof/dashboard") {
+        useEffect(() => {
+            const fetchCourses = async () => {
+                try {
+                    const response = await axios.get('http://localhost:5173/eval-api/enrolled-courses', { withCredentials: true });
+                    console.log('Fetched Courses:', response.data); // Log fetched courses to verify
+                    setCourses(response.data);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching enrolled courses:', error);
+                    setLoading(false);
+                }
+            };
+    
+            fetchCourses();
+        }, []);
+    
+        if (loading) {
+            return <div>Loading...</div>;
+        }
         return (
             <div className="dashboard">
                 {courses.map(course => (
@@ -120,22 +133,14 @@ const CourseCards = ({ navBarText, page}) => {
                         key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
+                        courseId={course.courseId}
                         user="prof" 
                     />
                 ))}
+                <Card courseCode ="Create Course" CourseName="Click to create a new course" />
             </div>
         );
-
-        // return(
-        //     <div className="dashboard">
-        //         <Card courseCode="COSC 499" courseName="Software Engineering Capstone" user="prof"/>
-        //         <Card courseCode="COSC 360" courseName="Intro to Web Development" user="prof"/>
-        //         <Card courseCode="COSC 395" courseName="Intro to Frontend Development" user="prof"/>
-        //         <Card couseCode="Create Course" courseName="Click to create a new course"/>
-        //     </div>
-        // );
     }
-    
 };
 
 export default CourseCards;

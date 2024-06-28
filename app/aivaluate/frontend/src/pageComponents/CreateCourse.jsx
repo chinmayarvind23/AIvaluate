@@ -20,10 +20,10 @@ const CreateCourse = () => {
   useEffect(() => {
     const fetchInstructorsAndTAs = async () => {
       try {
-        const instructorResponse = await axios.get('http://localhost:4000/instructors');
+        const instructorResponse = await axios.get('http://localhost:5173/eval-api/instructors');
         setInstructors(instructorResponse.data);
 
-        const taResponse = await axios.get('http://localhost:4000/tas');
+        const taResponse = await axios.get('http://localhost:5173/eval-api/tas');
         setTAs(taResponse.data);
       } catch (error) {
         console.error('Error fetching instructors and TAs:', error);
@@ -48,7 +48,7 @@ const CreateCourse = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/courses', {
+      const response = await axios.post('http://localhost:5173/eval-api/courses', {
         courseName,
         courseCode,
         maxStudents,
@@ -58,7 +58,7 @@ const CreateCourse = () => {
 
       // Add instructor to the Teaches table
       if (instructorId) {
-        await axios.post('http://localhost:4000/teaches', {
+        await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId
         });
@@ -66,7 +66,7 @@ const CreateCourse = () => {
 
       // Add TA to the Teaches table if selected
       if (taId) {
-        await axios.post('http://localhost:4000/teaches', {
+        await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId: taId
         });

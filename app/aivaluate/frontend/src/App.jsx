@@ -32,9 +32,9 @@ import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 
 import DesignRubric from './pageComponents/DesignRubric';
 
-import Students from './pageComponents/Students';
 import AssignmentProf from './pageComponents/AssignmentProf';
 import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
+import Students from './pageComponents/Students';
 
 
 const App = () => {
@@ -51,7 +51,6 @@ const App = () => {
           <Route path ="/People" element={<People />} />
           <Route path = "/createcourse" element={<CreateCourse />} />
           <Route path = "/studentviewsubmissions" element={<StudentViewSubmissions />} />
-          <Route path="/admin-proflogin" element={<AdminProfLogin />} />
           <Route path="/CourseHome" element={<CourseHome />} />
           <Route path="eval/dashboard" element={<DashboardEval />} />
           <Route path="/designrubric" element={<DesignRubric />} />

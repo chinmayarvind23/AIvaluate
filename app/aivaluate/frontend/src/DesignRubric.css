@@ -1,9 +1,5 @@
-* 
 
-.app {
-    display: flex;
-    height: 10000vh;
-}
+
 
 
 .due-date {
@@ -11,7 +7,7 @@
     font-weight: bold;
 }
 
-.con {
+.conn {
     margin-top: 0px;
     background-color: var(--secondary-color);
     margin-left: 35%;

@@ -4,7 +4,7 @@ import '../styles.css'; // Adjust the path if needed
 import SideMenuBar from '../components/SideMenuBar';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 
-const AssignmentsPage = () => {
+const DDesignRubric  = () => {
     return (
         <div>
             <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' />
@@ -14,15 +14,15 @@ const AssignmentsPage = () => {
                     <div className="assignment-details">
                     <div className="headerr">
                     
-                        <div className="con"><button className="back-button">&#x2190;</button>
+                        <div className="conn"><button className="back-button1">&#x2190;</button>
                         <h2> Build a Personal Portfolio Page</h2>
                         
                          
-                            <div className="objective">
+                            <div className="objective1">
                                 <h3>Objective:</h3>
                                 <p>Create a personal portfolio webpage using HTML and CSS. The webpage should include sections for an introduction, skills, projects, and contact information.</p>
                             </div>
-                            <div className="requirements">
+                            <div className="requirements1">
                                 <h3>Requirements:</h3>
                                 <ol>
                                     <li>
@@ -62,4 +62,4 @@ const AssignmentsPage = () => {
     );
 }
 
-export default AssignmentsPage;
+export default DDesignRubric;

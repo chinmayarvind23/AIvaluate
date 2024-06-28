@@ -8,13 +8,9 @@ const EvalLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const divStyle = {
-    border: '1px solid black',
-    borderRadius: '25px'
-  };
 
   const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const re = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   };
 
@@ -38,14 +34,13 @@ const EvalLogin = () => {
       const response = await axios.post('http://localhost:5173/eval-api/login', {
         email,
         password
-      }, { withCredentials: true }); // Ensure cookies are sent/received
+      }, { withCredentials: true });
       console.log('Login successful:', response.data);
       navigate('/eval/dashboard');
-    }catch (error) {
+    } catch (error) {
       console.error('There was an error logging in:', error);
       setError('Invalid email or password. Please try again.');
     }
-
   };
 
   return (

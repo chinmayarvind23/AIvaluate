@@ -65,7 +65,7 @@ const StudentViewSubmissions = () => {
 
   return (
   <div>
-    <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' tab='submissions' />
+    <AIvaluateNavBar navBarText='Course number - Course name' tab='submissions' />
     <SideMenuBar tab="submissions" />
     <div className="accented-outside rborder">
         <div className="portal-all">

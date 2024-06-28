@@ -1,14 +1,13 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import SideMenuBar from '../components/SideMenuBar';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 
-const Rubrics = () => {
+const SelectedAssignment = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -16,15 +15,20 @@ const Rubrics = () => {
   const [filteredFiles, setFilteredFiles] = useState([]);
 
   const files = [
-    'Build a Personal Portfolio Page',
-    'Design a Homepage',
-    'Design Account Page',
-    'Design a Login Page',
-  ];
+    { stu_number: '35559748', assignment: 'Lab 1', graded: true },
+    { stu_number: '26450923', assignment: 'Lab 1', graded: true  },
+    { stu_number: '87621931', assignment: 'Lab 1', graded: true  },
+    { stu_number: '38289312', assignment: 'Lab 1', graded: false  },
+    { stu_number: '89273919', assignment: 'Lab 1', graded: true  },
+    { stu_number: '32187638', assignment: 'Lab 1', graded: false  },
+    { stu_number: '12339781', assignment: 'Lab 1', graded: false  },
+    { stu_number: '87621931', assignment: 'Lab 2', graded: false  },
+    ]
 
     useEffect(() => {
         const filtered = files.filter(file =>
-            file.toLowerCase().includes(searchTerm.toLowerCase())
+        file.assignment.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        file.stu_number.includes(searchTerm)
         );
         setFilteredFiles(filtered);
         setCurrentPage(1); // Reset to first page on new search
@@ -58,29 +62,30 @@ const Rubrics = () => {
   return (
   <div>
     <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
-    <SideMenuBar tab="rubrics" />
+    <SideMenuBarEval tab="submissions" />
     <div className="accented-outside rborder">
         <div className="portal-all">
             <div className="portal-container">
                 <div className="topBar">
-                    <h1>Your Rubrics</h1>
-                    <div className="search-container">
-                        <div className="search-box">
-                            <FaSearch className="search-icon" />
-                            <input 
-                                type="text" 
-                                placeholder="Search..." 
-                                value={searchTerm}
-                                onChange={handleSearchChange}
-                            />
-                        </div>
-                    </div>
+                <button className="back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                    <h1>Lab 1 - Submissions</h1>
+                    {/* <div className="search-box">
+                        <FaSearch className="search-icon" />
+                        <input 
+                            type="text" 
+                            placeholder="Search..." 
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                    </div> */}
+                    <div className="right"><button className="addEvalButton secondary-button">Hide Grades</button><button className="addEvalButton secondary-button">Publish Grades</button></div>
                 </div>
                 <div className="filetab">
                     {currentFiles.map((file, index) => (
                         <div className="file-item" key={index}>
-                            <div className="folder-icon"><CircumIcon name="file_on"/></div>
-                            <div className="file-name">{file}</div>
+                            <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                            <div className="file-name">{file.stu_number} - {file.assignment} Submission</div>
+                            {file.graded && <div className="file-status">*Marked as graded</div>}
                         </div>
                     ))}
                 </div>
@@ -98,4 +103,4 @@ const Rubrics = () => {
   );
 };
 
-export default Rubrics;
+export default SelectedAssignment;

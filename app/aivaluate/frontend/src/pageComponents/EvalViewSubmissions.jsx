@@ -62,7 +62,7 @@ const EvalViewSubmissions = () => {
 
   return (
   <div>
-    <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' tab='submissions' />
+    <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
     <SideMenuBarEval tab="submissions" />
     <div className="accented-outside rborder">
         <div className="portal-all">

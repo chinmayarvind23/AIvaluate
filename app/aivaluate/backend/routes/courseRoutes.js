@@ -2,92 +2,162 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig'); 
 
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/stu-api/login');
+}
+
 // Create a course
-// router.post('/courses', async (req, res) => {
-//     const { courseName, courseCode, maxStudents } = req.body;
+router.post('/courses', async (req, res) => {
+    const { courseName, courseCode, maxStudents } = req.body;
 
-//     console.log(req.body);
+    console.log(req.body);
 
-//     try {
-//         const result = await pool.query(
-//             'INSERT INTO "Course" ("courseName", "courseCode", "maxStudents") VALUES ($1, $2, $3) RETURNING "courseId"',
-//             [courseName, courseCode, maxStudents]
-//         );
-//         res.status(201).send({ courseId: result.rows[0].courseId, message: 'Course created successfully' });
-//     } catch (error) {
-//         console.error('Error creating course:', error);
-//         res.status(500).send({ message: 'Error creating course' });
-//     }
-// });
+    try {
+        const result = await pool.query(
+            'INSERT INTO "Course" ("courseName", "courseCode", "maxStudents") VALUES ($1, $2, $3) RETURNING "courseId"',
+            [courseName, courseCode, maxStudents]
+        );
+        res.status(201).send({ courseId: result.rows[0].courseId, message: 'Course created successfully' });
+    } catch (error) {
+        console.error('Error creating course:', error);
+        res.status(500).send({ message: 'Error creating course' });
+    }
+});
 
-// // Get all courses
-// router.get('/courses', async (req, res) => {
-//     try {
-//         const courses = await pool.query('SELECT * FROM "Course"');
-//         res.status(200).send(courses.rows);
-//     } catch (error) {
-//         console.error('Error fetching courses:', error);
-//         res.status(500).send({ message: 'Error fetching courses' });
-//     }
-// });
+// Get all courses
+router.get('/courses', async (req, res) => {
+    try {
+        const courses = await pool.query('SELECT * FROM "Course"');
+        res.status(200).send(courses.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send({ message: 'Error fetching courses' });
+    }
+});
+
+// Get all courses with certain studentID
+router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
+    const studentId = req.user.studentId; // Access the studentId from the session
+    console.log('Student ID:', studentId); // Log student ID to verify
+
+    pool.query(
+        `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName"
+         FROM "EnrolledIn" 
+         JOIN "Course" ON "EnrolledIn"."courseId" = "Course"."courseId" 
+         WHERE "EnrolledIn"."studentId" = $1`,
+        [studentId],
+        (err, results) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            console.log('Courses:', results.rows); // Log query results to verify
+            res.json(results.rows);
+        }
+    );
+});
+
+//Return all the courses that the current student is not registered in
+router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
+    const studentId = req.user.userId; // Access the studentId from the session
+
+    pool.query(
+        `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName", "Course"."maxStudents" 
+         FROM "Course"
+         LEFT JOIN "EnrolledIn" 
+         ON "Course"."courseId" = "EnrolledIn"."courseId" 
+         AND "EnrolledIn"."studentId" = $1
+         WHERE "EnrolledIn"."studentId" IS NULL`,
+        [studentId],
+        (err, results) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            res.json(results.rows);
+        }
+    );
+});
+
+//Add a student to a course
+router.post('/enroll-course', checkAuthenticated, (req, res) => {
+    const studentId = req.user.userId; // Access the studentId from the session
+    const { courseId } = req.body; // The courseId will be sent in the request body
+
+    pool.query(
+        `INSERT INTO "EnrolledIn" ("studentId", "courseId") VALUES ($1, $2)`,
+        [studentId, courseId],
+        (err, results) => {
+            if (err) {
+                console.error('Error enrolling student:', err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            res.status(200).json({ message: 'Successfully enrolled in the course' });
+        }
+    );
+});
+
 
 // Get a single course by ID
-// router.get('/courses/:id', async (req, res) => {
-//     const courseId = req.params.id;
+router.get('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
 
-//     try {
-//         const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
+    try {
+        const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
 
-//         if (course.rowCount > 0) {
-//             res.status(200).send(course.rows[0]);
-//         } else {
-//             res.status(404).send({ message: 'Course not found' });
-//         }
-//     } catch (error) {
-//         console.error('Error fetching course:', error);
-//         res.status(500).send({ message: 'Error fetching course' });
-//     }
-// });
+        if (course.rowCount > 0) {
+            res.status(200).send(course.rows[0]);
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching course:', error);
+        res.status(500).send({ message: 'Error fetching course' });
+    }
+});
 
-// // Delete a course
-// router.delete('/courses/:id', async (req, res) => {
-//     const courseId = req.params.id;
+// Delete a course
+router.delete('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
 
-//     try {
-//         const result = await pool.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId]);
+    try {
+        const result = await pool.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId]);
 
-//         if (result.rowCount > 0) {
-//             res.status(200).send({ message: 'Course deleted successfully' });
-//         } else {
-//             res.status(404).send({ message: 'Course not found' });
-//         }
-//     } catch (error) {
-//         console.error('Error deleting course:', error);
-//         res.status(500).send({ message: 'Error deleting course' });
-//     }
-// });
+        if (result.rowCount > 0) {
+            res.status(200).send({ message: 'Course deleted successfully' });
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting course:', error);
+        res.status(500).send({ message: 'Error deleting course' });
+    }
+});
 
-// // Update a course
-// router.put('/courses/:id', async (req, res) => {
-//     const courseId = req.params.id;
-//     const { courseName, courseCode, maxStudents } = req.body;
+// Update a course
+router.put('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
+    const { courseName, courseCode, maxStudents } = req.body;
 
-//     try {
-//         const result = await pool.query(
-//             'UPDATE "Course" SET "courseName" = $1, "courseCode" = $2, "maxStudents" = $3 WHERE "courseId" = $4',
-//             [courseName, courseCode, maxStudents, courseId]
-//         );
+    try {
+        const result = await pool.query(
+            'UPDATE "Course" SET "courseName" = $1, "courseCode" = $2, "maxStudents" = $3 WHERE "courseId" = $4',
+            [courseName, courseCode, maxStudents, courseId]
+        );
 
-//         if (result.rowCount > 0) {
-//             res.status(200).send({ message: 'Course updated successfully' });
-//         } else {
-//             res.status(404).send({ message: 'Course not found' });
-//         }
-//     } catch (error) {
-//         console.error('Error updating course:', error);
-//         res.status(500).send({ message: 'Error updating course' });
-//     }
-// });
+        if (result.rowCount > 0) {
+            res.status(200).send({ message: 'Course updated successfully' });
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error updating course:', error);
+        res.status(500).send({ message: 'Error updating course' });
+    }
+});
 
 // Fetch all TAs for a course
 router.get('/courses/:id/tas', async (req, res) => {

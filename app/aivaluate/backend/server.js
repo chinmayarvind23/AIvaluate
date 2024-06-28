@@ -39,8 +39,6 @@ app.use(session({
     }
 }));
 
-// Middleware to parse JSON
-app.use(express.json());
 
 
 // Test route

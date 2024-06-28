@@ -34,7 +34,7 @@ const GradingAssignments = () => {
 
   return (
     <div>
-      <AIvaluateNavBarEval navBarText='Assignment 1' tab="assignments" />
+      <AIvaluateNavBarEval navBarText='Course number - Course Name' tab="assignments" />
       <div className="grading-container">
         <SideMenuBarEval tab="assignments" />
         <div className="content ">

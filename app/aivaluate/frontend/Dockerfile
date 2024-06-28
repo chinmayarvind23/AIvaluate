@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npm install axios
+
 RUN npm run build
 
 RUN ls -la /app/dist

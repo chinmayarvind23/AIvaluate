@@ -18,7 +18,7 @@ const StudentGrades = () => {
     const totalGrade = 69.2;
     return (
         <div>
-            <AIvaluateNavBar navBarText='Student Grades' tab="home" />
+            <AIvaluateNavBar navBarText='Course number - Course Name' tab="home" />
             <SideMenuBar tab="grades"/>
             <div className="grades-section ">
                 <h1 className="secondary-color-text">Grades for {studentName}</h1>

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from "../components/AIvaluateNavBar";
-import SideMenuBar from '../components/SideMenuBar';
+import AIvaluateNavBarEval from "../components/AIvaluateNavBarEval";
+import SideMenuBarEval from '../components/SideMenuBarEval';
 
 
-const People = () => {
+const Students = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -64,13 +64,13 @@ const People = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText="Course number - Course name"/>
-            <SideMenuBar tab="people" />
+            <AIvaluateNavBarEval navBarText="Course number - Course name"/>
+            <SideMenuBarEval tab="students" />
             <div className="accented-outside rborder">
                 <div className="portal-all">
                     <div className="portal-container">
                         <div className="topBar">
-                            <h1>People</h1>
+                            <h1>Students</h1>
                             <div className="search-container">
                                 <div className="search-box">
                                     <FaSearch className="search-icon" />
@@ -105,4 +105,4 @@ const People = () => {
     );
 };
 
-export default People;
+export default Students;

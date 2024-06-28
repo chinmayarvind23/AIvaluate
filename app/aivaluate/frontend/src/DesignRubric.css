@@ -1,61 +1,82 @@
 
-
-
-
 .due-date {
     color: red;
     font-weight: bold;
-}
-
-.conn {
-    margin-top: 0px;
-    background-color: var(--secondary-color);
-    margin-left: 35%;
-    width: 80%;
-    margin-right: 10%;
-    margin-top: 5%;
-    color: var(--third-color);
-    padding: 20px 10px;
-    border-radius: 5px;
-    width: 100%;
-    height: 100p%;
-    margin-left: -1%;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-}
-
-.back-button {
-    background-color: var(--primary-color); /* Button background color */
-    color: var(--secondary-color); /* Arrow color */
-    border: none; /* Remove default border */
-    border-radius: 50%; /* Make the button circular */
-    width: 50px; /* Width of the button */
-    height: 50px; /* Height of the button */
-    display: flex; /* Use flexbox for centering the arrow */
-    align-items: center; /* Center the arrow vertically */
-    justify-content: center; /* Center the arrow horizontally */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    font-weight: bold; /* Make the text bold */
-    font-size: 30px; /* Font size for the arrow */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
-}
-
-.objective, .requirements {
-    top: -85%;
-    position: relative;
-}
-
-.requirements h4, .objective h3 {
+    font-size: 1.2em;
     margin-bottom: 10px;
 }
 
-.requirements ul, .requirements ol {
-    list-style-type: disc;
-    padding-left: 20px;
+.conn {
+    background-color: var(--secondary-color);
+    margin: 20px;
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-.requirements li ul {
+.back-button1 {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.objective1 {
+    margin-bottom: 20px;
+}
+
+.objective1 h3, .requirements1 h3 {
+    margin-bottom: 10px;
+}
+
+.requirements1 ul, .requirements1 ol {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+.requirements1 li ul {
     list-style-type: circle;
+}
+
+.requirements1 li {
+    list-style-type: circle;
+    margin-bottom: 5px;
+}
+
+.requirements1 hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.editable {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }

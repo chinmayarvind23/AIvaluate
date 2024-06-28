@@ -1,0 +1,30 @@
+/* General side menu styles */
+
+
+
+/* Specific styles for DesignRubric side menu */
+.designrubric-side-menu {
+    padding: 20px;
+    position: absolute;
+    top: 20px;
+    left: 35px;
+    padding-top: 150px;
+    padding-left: 30px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    padding: 10px 50px 20px;
+    font-size: 30px;
+    min-height: 750px;
+    background-color: var(--secondary-color);
+}
+
+.designrubric-side-menu a {
+    padding-top: 30px;
+    color: var(--third-color);
+    font-weight: bold;
+    text-decoration: none; /* Ensure links are styled correctly */
+}
+
+

@@ -7,11 +7,14 @@ import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
+import AssignmentProf from './pageComponents/AssignmentProf';
+import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
 import CourseHome from './pageComponents/CourseHome';
 import CreateAssignment from './pageComponents/CreateAssignment';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
+import EditRubric from './pageComponents/EditRubric';
 import EvalLogin from './pageComponents/EvalLogin';
 import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
 import EvaluatorGrades from './pageComponents/EvaluatorGrades';
@@ -30,8 +33,6 @@ import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
-import AssignmentProf from './pageComponents/AssignmentProf';
-import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
 
 const App = () => {
   return (
@@ -47,6 +48,9 @@ const App = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/eval/login" element={<EvalLogin />} />
           <Route path="/admin/signup" element={<SignupAdmin />} />
+
+          <Route path="/eval/rubric/rubricId" element={<EditRubric />} />
+
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
           <Route path="/stu/assignment" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}

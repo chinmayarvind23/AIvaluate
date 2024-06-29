@@ -1,5 +1,51 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 26 - June 28) - 10.5 hours
+
+## Friday June 28th
+### 3 hours
+- Code Review of two pull requests (0.5 hour)
+- Fixing the bug that prevents the user from logging into the evaluator dashboard (2.5 hours)
+
+## Thursday June 27th
+### 2 hours
+- Team meeting, deciding on task priorities and expectations, dividing tasks among team members
+- Manual test of the app on its current state, figuring out what features need revision/not working properly after the backend container separation
+
+## Wednesday June 26th
+### 5.5 hours
+- Team meeting, code review, merging outstanding pull requests
+- Solving merging conflicts and fix bugs
+- Learn from other's code
+
+# Current Tasks
+- #1 Fixing bug - Evaluator log-in not working properly
+- #2 Fix client-side validation for changing passwords on the student portal; add a changing password page and feature to the evaluator and admin portal;
+- #3 Add assignment fetching feature for students and evaluators
+- #4 Fix the navigation bar across all portals and make the displayed info dynamic
+- #5 Implementing a feature which allows instructors to create assignments for a course
+- #6 Implementing a feature which allows instructors to upload rubrics and answer keys of an assignment
+- #7 Implement various backend testings
+- #8 Fix other known bugs that prevent existing features from running.
+
+# Progress Update (since June 26)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | In-progress  |
+| Task #3 | In-progress  |
+| Task #4 | In-progress |
+| Task #5 | Chinmay has started working on this issue |
+| Task #6 | In-progress |
+| Task #7 | In-progress |
+| Task #8 | Ongoing process |
+
+# Cycle Goal Review
+During this cycle, most of the time was spent merging existing pull requests and deciding on what to do next as a team. Because we split the backend into three containers this cycle, some existing features had issues after the split. I managed to fix one of the most urgent problems: the evaluator log-in. There are other known issues; I will fix them and list them on the Kanban board as we progress.
+
+# Next Cycle 
+The progress update section actually contains all the tasks I want to finish at the end of the next cycle: fixing known bugs, implementing backend testing for existing features, and ensuring the website's good flow.
+
 # Timesheet (June 22 - June 26 Morning) - 10.75 hours
 
 ## Wednesday June 26th (Until 7 AM)

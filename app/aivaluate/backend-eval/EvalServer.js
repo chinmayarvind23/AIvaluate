@@ -20,11 +20,6 @@ initializePassport(passport);
 
 const PORT = process.env.PORT || 6000;
 
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
-
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -52,10 +47,32 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/eval-api', checkNotAuthenticated, evalRoutes);
-app.use('/eval-api', checkNotAuthenticated, courseRoutes);
-app.use('/eval-api', checkNotAuthenticated, assignmentRoutes);
-app.use('/eval-api', checkNotAuthenticated, instructorRoutes);
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next(); // User is authenticated, continue to the next middleware
+    }
+    // Redirect to login page only if not already on the login page
+    if (req.originalUrl !== '/eval-api/login') {
+        return res.redirect('/eval-api/login');
+    }
+    next(); // Continue to the next middleware if already on the login page
+}
+
+// Instructor dashboard route
+app.get('/eval-api/dashboard', checkAuthenticated, (req, res) => {
+    res.send('Evaluator Dashboard');
+    // res.json({ user: req.user });
+});
+
+// app.use('/eval-api', checkNotAuthenticated, evalRoutes);
+// app.use('/eval-api', checkNotAuthenticated, courseRoutes);
+// app.use('/eval-api', checkNotAuthenticated, assignmentRoutes);
+// app.use('/eval-api', checkNotAuthenticated, instructorRoutes);
+
+// app.use('/eval-api', evalRoutes);
+app.use('/eval-api', courseRoutes);
+app.use('/eval-api', assignmentRoutes);
+app.use('/eval-api', instructorRoutes);
 
 app.post("/eval-api/login", passport.authenticate("local", {
     successRedirect: "/eval-api/dashboard",
@@ -63,9 +80,9 @@ app.post("/eval-api/login", passport.authenticate("local", {
     failureFlash: true
 }));
 
-app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
-    res.json({ user: req.user });
-});
+// app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
+//     res.json({ user: req.user });
+// });
 
 // app.get("/eval-api/dashboard", (req, res) => {
 //     if (!req.isAuthenticated()) {
@@ -93,20 +110,6 @@ app.get('/eval-api/logout', (req, res, next) => {
         });
     });
 });
-
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/eval-api/dashboard');
-    }
-    next();
-}
-
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/eval-api/login");
-}
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

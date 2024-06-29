@@ -3,18 +3,16 @@ const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Mocking the database pool
 const pool = {
   query: jest.fn()
 };
 
-// Mocking the authentication middleware
+// Mocking the authentication 
 const checkAuthenticated = (req, res, next) => {
   req.user = { studentId: 'student123' }; // Mocked user
   next();
 };
 
-// Create the express app and apply middlewares
 const app = express();
 app.use(bodyParser.json());
 

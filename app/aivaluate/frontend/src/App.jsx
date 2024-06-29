@@ -33,6 +33,7 @@ import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
+import SubmitAssignment from './pageComponents/SubmitAssignment';
 
 const App = () => {
   return (
@@ -50,7 +51,7 @@ const App = () => {
           <Route path="/admin/signup" element={<SignupAdmin />} />
 
           <Route path="/eval/rubric/rubricId" element={<EditRubric />} />
-
+          <Route path="/stu/submit/assignementId" element={<SubmitAssignment />} />
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
           <Route path="/stu/assignment" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}

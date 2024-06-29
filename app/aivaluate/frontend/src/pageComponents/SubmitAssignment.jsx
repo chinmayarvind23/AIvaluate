@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
-import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
-import SideMenuBarEval from '../components/SideMenuBarEval';
+import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import SideMenuBar from '../components/SideMenuBar';
 
 const SubmitAssignment = () => {
     const navigate = useNavigate();
@@ -44,8 +44,8 @@ Requirements:
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText="Course number - Course Name" />
-            <SideMenuBarEval tab="assignments"/>
+            <AIvaluateNavBar navBarText="Course number - Course Name" />
+            <SideMenuBar tab="assignments"/>
             <div className="assignment-container rborder secondary-colorbg">
                 <div className="top-bar">
                     <button className="back-button" onClick={() => navigate(-1)}>

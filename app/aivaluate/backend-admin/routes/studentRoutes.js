@@ -12,48 +12,87 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/stu-api/login');
 }
 
-// Endpoint to fetch student details
+
+//Selects all information about a student and their enrolled courses
 router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
     const { studentId } = req.params;
 
     try {
-        // Query to get student details
-        const studentDetailsQuery = `
-            SELECT s."firstName", s."lastName", s."studentId", s."email", s."password",
-                   array_agg(c."courseCode") FILTER (WHERE c."courseCode" IS NOT NULL) AS "courses"
+        const studentQuery = `
+            SELECT s."studentId", s."firstName", s."lastName", s."email", s."password"
             FROM "Student" s
-            LEFT JOIN "EnrolledIn" e ON s."studentId" = e."studentId"
-            LEFT JOIN "Course" c ON e."courseId" = c."courseId"
             WHERE s."studentId" = $1
-            GROUP BY s."firstName", s."lastName", s."studentId", s."email", s."password"
         `;
-        const studentDetailsResult = await pool.query(studentDetailsQuery, [studentId]);
-        const studentDetails = studentDetailsResult.rows[0];
+        const studentResult = await pool.query(studentQuery, [studentId]);
+        const student = studentResult.rows[0];
 
-        // Send the student details as response
-        res.json(studentDetails);
+        const courseQuery = `
+            SELECT c."courseCode", c."courseId"
+            FROM "Course" c
+            JOIN "EnrolledIn" e ON c."courseId" = e."courseId"
+            WHERE e."studentId" = $1
+        `;
+        const courseResult = await pool.query(courseQuery, [studentId]);
+        const courses = courseResult.rows;
+
+        res.json({
+            ...student,
+            courses
+        });
     } catch (err) {
         console.error('Error fetching student details:', err);
         res.status(500).json({ error: 'Database error' });
     }
 });
 
-// Endpoint to drop a course
-router.post('/drop-course', checkAuthenticated, async (req, res) => {
-    const { studentId, courseId } = req.body;
+//Drops a student from a course
+router.delete('/student/:studentId/drop/:courseCode', checkAuthenticated, async (req, res) => {
+    const { studentId, courseCode } = req.params;
 
     try {
-        // Query to delete course enrollment
-        const dropCourseQuery = `
+        const dropQuery = `
             DELETE FROM "EnrolledIn"
-            WHERE "studentId" = $1 AND "courseId" = $2
+            WHERE "studentId" = $1 AND "courseId" = (
+                SELECT "courseId" FROM "Course" WHERE "courseCode" = $2
+            )
         `;
-        await pool.query(dropCourseQuery, [studentId, courseId]);
-
-        // Send success response
+        await pool.query(dropQuery, [studentId, courseCode]);
         res.status(200).json({ message: 'Course dropped successfully' });
     } catch (err) {
         console.error('Error dropping course:', err);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+// Deletes a student from the database
+router.delete('/student/:studentId', checkAuthenticated, async (req, res) => {
+    const { studentId } = req.params;
+
+    try {
+        const deleteQuery = `
+            DELETE FROM "Student"
+            WHERE "studentId" = $1
+        `;
+        await pool.query(deleteQuery, [studentId]);
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (err) {
+        console.error('Error deleting user:', err);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+// Endpoint to fetch all students
+router.get('/students', checkAuthenticated, async (req, res) => {
+    try {
+        const query = `
+            SELECT "studentId", "firstName", "lastName"
+            FROM "Student"
+        `;
+        const result = await pool.query(query);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error fetching students:', err);
         res.status(500).json({ error: 'Database error' });
     }
 });

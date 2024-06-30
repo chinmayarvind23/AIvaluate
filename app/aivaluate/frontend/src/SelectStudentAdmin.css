@@ -6,13 +6,37 @@
     margin-left: 450px;
 }
 
-.back-button {
-    border-radius: 50px;
-    background-color: #ffffff;
+.back-to-last-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    /* cursor: pointer; */
-    margin-top: 130px;
-    margin-left: 350px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.back-to-last-page:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.back-icon-arrow {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.go-back-text {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .icon-size {
@@ -48,6 +72,12 @@
     margin-bottom: 10px;
 }
 
+.password span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .courses ul {
     list-style-type: none;
     padding: 0;
@@ -61,7 +91,7 @@
 }
 
 .drop-button {
-    background-color: #3204fd;
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -70,7 +100,8 @@
 }
 
 .drop-button:hover {
-    background-color: #2203bb;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
 }
 
 .delete-button {

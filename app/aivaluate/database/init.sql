@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS "EnrolledIn"(
     "courseId" INT NOT NULL,
     "studentGrade" FLOAT,
     PRIMARY KEY ("studentId", "courseId"),
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
@@ -132,8 +132,8 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
     "courseId" INT NOT NULL,
     "AIFeedbackText" VARCHAR(1000),
     "InstructorFeedbackText" VARCHAR(1000),
-    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId"),
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
+    FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
     ON DELETE CASCADE
 );
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentId" INT NOT NULL,
     "courseId" INT NOT NULL,
     "criteria" VARCHAR(1000), /* Rubric upload as a file */
-    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId"),
+    FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
     ON DELETE CASCADE
 );
@@ -201,7 +201,10 @@ VALUES (1, 1, 90),
     (7, 4, 83),
     (7, 5, 88),
     (4, 5, 90),
-    (4, 4, 83)
+    (4, 4, 83),
+    (1, 5, 60),
+    (2, 5, 78),
+    (3, 5, 81)
     ON CONFLICT DO NOTHING;
 
 INSERT INTO "Teaches" ("instructorId", "courseId")

@@ -1,0 +1,89 @@
+.select-student-admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    margin-left: 450px;
+}
+
+.back-button {
+    border-radius: 50px;
+    background-color: #ffffff;
+    border: none;
+    /* cursor: pointer; */
+    margin-top: 130px;
+    margin-left: 350px;
+}
+
+.icon-size {
+    font-size: 24px;
+    color: #000;
+}
+
+.user-info {
+    background-color: #3c3c3c;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.user-name {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.major {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.email, .password, .courses {
+    background-color: #767676;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.courses ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.courses li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.drop-button {
+    background-color: #3204fd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.drop-button:hover {
+    background-color: #2203bb;
+}
+
+.delete-button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+.delete-button:hover {
+    background-color: #cc0000;
+}

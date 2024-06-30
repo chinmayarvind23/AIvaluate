@@ -5,6 +5,13 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/stu-api/login');
+  }
+
 // Fetch all students
 router.get('/students', (req, res) => {
     pool.query('SELECT * FROM "Student"', (err, results) => {
@@ -66,5 +73,9 @@ router.put('/students/:id/courses', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+
+
+
+
 
 module.exports = router;

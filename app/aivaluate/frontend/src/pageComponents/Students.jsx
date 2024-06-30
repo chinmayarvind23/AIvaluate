@@ -18,7 +18,7 @@ const Students = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await fetch(`http://localhost:5173/stu-api/students/show/${courseId}`, {
+                const response = await fetch(`http://localhost:5173/eval-api/students/show/${courseId}`, { 
                     credentials: 'include'
                 });
 

@@ -9,7 +9,7 @@ function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/stu-api/login');
+    res.redirect('/eval-api/login');
 }
 
 router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
@@ -31,7 +31,7 @@ router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
         res.json(result.rows);
     } catch (err) {
         console.error('Error fetching students:', err);
-        res.status(500).json({ error: 'Database error' });
+        res.status(500).json({ error: 'Database error' }); 
     }
 });
 

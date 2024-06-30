@@ -12,7 +12,7 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
     if (courseCode === 'Create Course') {
       navigate('/eval/createcourse');
     } else if (user === 'prof'){
-      navigate(`/eval/CourseHome/${courseId}`);
+      navigate(`/eval/grades/${courseId}`);
     } else if (user === 'stu'){
       navigate(`/stu/grades/${courseId}`)
     } else if (user === 'joinCourse'){

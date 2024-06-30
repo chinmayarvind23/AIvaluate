@@ -5,6 +5,13 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/stu-api/login');
+  }
+
 const transporter = nodemailer.createTransport({
     host: 'smtp-relay.brevo.com',
     port: 587,
@@ -385,4 +392,26 @@ router.post('/stu/reset/:token', async (req, res) => {
         console.error('Error during password reset:', error);
         res.status(500).json({ message: 'Server error' });
     }});
+
+    // Displaying people students page - Omar 
+
+    router.get('/students/display/:courseId', checkAuthenticated, async (req, res) => {
+        const { courseId } = req.params;
+    
+        try {
+            const query = `
+                SELECT s."firstName", s."lastName"
+                FROM "Student" s
+                JOIN "EnrolledIn" e ON s."studentId" = e."studentId"
+                WHERE e."courseId" = $1
+            `;
+            const result = await pool.query(query, [courseId]);
+    
+            res.json(result.rows);
+        } catch (err) {
+            console.error('Error fetching students:', err);
+            res.status(500).json({ error: 'Database error' });
+        }
+    });
+
 module.exports = router;

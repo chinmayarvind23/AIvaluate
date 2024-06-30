@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from "../components/AIvaluateNavBarEval";
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
-
 const Students = () => {
-
+    const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [error, setError] = useState(null);
 
-    const files = [
-        'Colton Palfrey',
-        'Chinmay Arvind',
-        'Jerry Fan',
-        'Omar Hemed',
-        'Kenny Nguyen',
-        'Aayush Chaudhary',
-        'Rahul Kulkarni',
-        'Sahil Patel',
-        'Oakley Boren',
-        'Karan Manchanda',
-        'Yash Shah',
-        'Wesley Chan',
-        'Paul Tollo',
-    ];
+    useEffect(() => {
+        const fetchStudents = async () => {
+            try {
+                const response = await fetch(`http://localhost:5173/stu-api/students/show/${courseId}`, {
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const studentNames = data.map(student => `${student.firstName} ${student.lastName}`);
+                setFiles(studentNames);
+                setFilteredFiles(studentNames);
+            } catch (error) {
+                console.error('Error fetching students:', error);
+                setError('An error occurred while fetching students.');
+            }
+        };
+
+        fetchStudents();
+    }, [courseId]);
 
     useEffect(() => {
         const filtered = files.filter(file =>
@@ -35,32 +45,33 @@ const Students = () => {
         );
         setFilteredFiles(filtered);
         setCurrentPage(1); // Reset to first page on new search
-    }, [searchTerm]);
+    }, [searchTerm, files]);
 
-    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // This calculates the total number of pages based of the max number of items per page
-    const totalPages = Math.ceil(files.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
-    if (currentPage < totalPages) {
-        setCurrentPage(prevPage => prevPage + 1);
-    }
+        if (currentPage < totalPages) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
     };
 
     const handlePrevPage = () => {
-    if (currentPage > 1) {
-        setCurrentPage(prevPage => prevPage - 1);
-    }
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
     };
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
         setCurrentPage(1); // Reset to first page on new search
     };
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <div>

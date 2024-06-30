@@ -7,6 +7,8 @@ import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
+import AssignmentProf from './pageComponents/AssignmentProf';
+import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
 import CourseHome from './pageComponents/CourseHome';
 import CreateAssignment from './pageComponents/CreateAssignment';
 import CreateCourse from './pageComponents/CreateCourse';
@@ -30,8 +32,6 @@ import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
-import AssignmentProf from './pageComponents/AssignmentProf';
-import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
 
 const App = () => {
   return (
@@ -53,7 +53,7 @@ const App = () => {
           <Route path="/stu/account" element={<PrivateRouteStu element={Account} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
-          <Route path="/stu/people" element={<PrivateRouteStu element={People} />} />
+          <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />
           <Route path="/stu/grades" element={<PrivateRouteStu element={StudentGrades} />} />
           <Route path="/stu/submissions" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
           {/* Session validation routes for admin */}

@@ -48,8 +48,8 @@ Requirements:
             <SideMenuBar tab="assignments"/>
             <div className="assignment-container rborder secondary-colorbg">
                 <div className="top-bar">
-                    <button className="back-button" onClick={() => navigate(-1)}>
-                        <CircumIcon name="circle_chev_left" className="icon-size" />
+                    <button className="back-button-sub" onClick={() => navigate(-1)}>
+                        <CircumIcon name="circle_chev_left" className="icon-size-sub" />
                     </button>
                     <div className="header-content">
                         <h1 className="assignment-title primary-color-text">{assignmentTitle}</h1>

@@ -232,10 +232,16 @@ ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentSubmission table
 INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-VALUES (1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
-       (2, 2, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
-       (3, 3, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false)
-ON CONFLICT DO NOTHING;
+VALUES 
+    (1, 5, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
+    (2, 5, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
+    (3, 5, 1, '2022-01-16', 'submission3.zip', true, '2022-01-16', true),
+    (4, 5, 1, '2022-01-17', 'submission4.zip', true, '2022-01-17', false),
+    (5, 5, 1, '2022-01-18', 'submission5.zip', true, '2022-01-18', true),
+    (6, 5, 1, '2022-01-19', 'submission6.zip', true, '2022-01-19', false),
+    (7, 5, 1, '2022-01-20', 'submission7.zip', true, '2022-01-20', false),
+    (3, 5, 2, '2022-01-21', 'submission8.zip', true, '2022-01-21', false);
+
 
 -- Insert dummy data into AssignmentGrade table
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")

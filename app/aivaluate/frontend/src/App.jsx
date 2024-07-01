@@ -68,7 +68,7 @@ const App = () => {
           {/* Session validation routes for evaluators */}
           <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />
           <Route path="/eval/dashboard" element={<PrivateRouteEval element={DashboardEval} />} />
-          <Route path="/eval/submissions" element={<PrivateRouteEval element={EvalViewSubmissions} />} />
+          <Route path="/eval/submissions/:courseId" element={<PrivateRouteEval element={EvalViewSubmissions} />} />
           <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} />
           <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} />
           <Route path="/eval/create-assignment" element={<PrivateRouteEval element={CreateAssignment} />} />

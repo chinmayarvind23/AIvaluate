@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import '../CourseHome.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
@@ -11,7 +11,7 @@ import CourseEditModal from './CourseEditModal';
 const CourseHome = () => {
     const { courseId } = useParams();
     const navigate = useNavigate();
-    const [course, setCourse] = useState([]);
+    const [course, setCourse] = useState({});
     const [menuOpen, setMenuOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isTaModalOpen, setIsTaModalOpen] = useState(false);
@@ -23,7 +23,7 @@ const CourseHome = () => {
             })
             .catch(error => {
                 console.error('Failed to fetch course details', error);
-                navigate('/dashboard'); // redirect if the course is not found or error occurs
+                navigate('/eval/dashboard'); // redirect if the course is not found or error occurs
             });
     }, [courseId, navigate]);
 
@@ -83,7 +83,7 @@ const CourseHome = () => {
             .then(response => {
                 console.log(response.data);
                 window.confirm('Course deleted successfully');
-                navigate('/dashboard');
+                navigate('/eval/dashboard');
             })
             .catch(error => {
                 console.error('Failed to delete course', error);
@@ -103,6 +103,8 @@ const CourseHome = () => {
                 <br />
                 <button className="course-ta-button" onClick={handleTaModal}>Assign TA</button>
                 <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
+                <br />
+                <Link to={`/eval/submissions/${courseId}`} className="view-submissions-link">View Submissions</Link>
             </div>
         </div>
     );

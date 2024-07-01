@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 const PrivateRouteAdmin = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const params = useParams();
 
     useEffect(() => {
         axios.get('http://localhost:5173/admin-api/dashboard', { withCredentials: true })
@@ -21,7 +22,7 @@ const PrivateRouteAdmin = ({ element: Component }) => {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? <Component /> : <Navigate to="/admin/login" />;
+    return isAuthenticated ? <Component {...params}/> : <Navigate to="/admin/login" />;
 };
 
 export default PrivateRouteAdmin;

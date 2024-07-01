@@ -62,6 +62,11 @@ const App = () => {
           <Route path="/stu/account" element={<PrivateRouteStu element={Account} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
+
+          <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />    {/*   Omar    */}
+
+          <Route path="/stu/grades" element={<PrivateRouteStu element={StudentGrades} />} />
+          <Route path="/stu/submissions" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
           <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />
           <Route path="/stu/grades/:courseId" element={<PrivateRouteStu element={StudentGrades} />} />
           <Route path="/stu/submissions/:courseId" element={<PrivateRouteStu element={StudentViewSubmissions} />} />

@@ -51,7 +51,7 @@ const Account = () => {
     };
 
     const handlePasswordSaveClick = async () => {
-        setSuccessMessage("Password updated successfully!"); // Set default success message
+        setSuccessMessage(""); // Set default success message
         setErrorMessage(""); // Set default error message
 
         // Check if all fields are filled in
@@ -60,7 +60,7 @@ const Account = () => {
             setSuccessMessage(""); // Clear any existing success messages
             return;
         }
-
+        
         try {
             // Verify the current password
             const response = await axios.post(`http://localhost:5173/stu-api/student/${accountId}/verifyPassword`, {
@@ -81,7 +81,15 @@ const Account = () => {
                 setSuccessMessage(""); 
                 return;
             }
+            
+            // Check if new password contains at least one letter and one number
 
+            if (!/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+                setErrorMessage("New password must contain at least one letter and one number.");
+                setSuccessMessage(""); // Clear any existing success messages
+                return;
+            }
+            
             if (newPassword === currentPassword) {
                 setErrorMessage("New password must be different from the current password.");
                 setSuccessMessage(""); // Clear any existing success messages
@@ -93,7 +101,7 @@ const Account = () => {
                 setSuccessMessage(""); // Clear any existing success messages
                 return;
             }
-
+            
             // Update the password
             await axios.put(`http://localhost:5173/stu-api/student/${accountId}/password`, {
                 password: newPassword
@@ -109,7 +117,7 @@ const Account = () => {
 
         } catch (error) {
             console.error('There was an error updating the password:', error);
-            setErrorMessage("The current password is incorrect.");
+            setErrorMessage("There was an error updating the password. Please try again.");
             setSuccessMessage("");
         }
     };
@@ -134,28 +142,28 @@ const Account = () => {
                 <div>
                     {isEditing ? (
                         <>
-                            <div className="password-container">
+                            <div>
                                 <input
                                     type="password"
-                                    className="primary-colorbg detail-value"
+                                    className="primary-colorbg password-input"
                                     placeholder="Current Password"
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
                             </div>
-                            <div className="password-container">
+                            <div className="password-edit-container-hidden">
                                 <input
                                     type="password"
-                                    className="primary-colorbg detail-value"
+                                    className="primary-colorbg password-input"
                                     placeholder="New Password"
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                 />
                             </div>
-                            <div className="password-edit-container">
+                            <div className="password-edit-container-hidden">
                                 <input
                                     type="password"
-                                    className="primary-colorbg detail-value"
+                                    className="primary-colorbg password-input"
                                     placeholder="Confirm New Password"
                                     value={confirmNewPassword}
                                     onChange={(e) => setConfirmNewPassword(e.target.value)}
@@ -166,7 +174,7 @@ const Account = () => {
                         </>
                     ) : (
                         <div className="password-edit-container">
-                            <div className="primary-colorbg detail-value">**********</div>
+                            <div className="primary-colorbg password-input">**********</div>
                             <button className="primary-button edit-button" onClick={handlePasswordEditClick}>Edit</button>
                         </div>
                     )}

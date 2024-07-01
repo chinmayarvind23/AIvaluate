@@ -20,6 +20,11 @@ import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
 import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
+import ForgotPasswordEval from './pageComponents/ForgotPasswordEval';
+import ForgotPasswordAdmin from './pageComponents/ForgotPasswordAdmin';
+import ResetPasswordAdmin from './pageComponents/ResetPasswordAdmin';
+import ResetPasswordEval from './pageComponents/ResetPasswordEval';
+import ResetPassword from './pageComponents/ResetPassword';
 import GradingAssignments from './pageComponents/GradingAssignments';
 import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
@@ -47,9 +52,15 @@ const App = () => {
           <Route path="/stu/login" element={<Login />} />
           <Route path="/stu/signup" element={<Signup />} />
           <Route path ="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
+          <Route path="/admin/forgotpassword" element={<ForgotPasswordAdmin />} />
+          <Route path="/admin/resetpassword/:token" element={<ResetPasswordAdmin />} />
+          <Route path="/eval/forgotpassword" element={<ForgotPasswordEval />} />
+          <Route path="/eval/resetpassword/:token" element={<ResetPasswordEval />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/eval/login" element={<EvalLogin />} />
           <Route path="/admin/signup" element={<SignupAdmin />} />
+          
 
 
           <Route path="/eval/rubric/rubricId" element={<EditRubric />} />

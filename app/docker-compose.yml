@@ -10,6 +10,7 @@ services:
     depends_on:
       - backend
       - backend-admin
+      - backend-eval
     networks:
       - aivaluate-net
 
@@ -26,6 +27,22 @@ services:
       - "5432:5432"
     volumes:
       - ./aivaluate/database:/docker-entrypoint-initdb.d
+    networks:
+      - aivaluate-net
+
+  test_db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    container_name: test_database
+    environment:
+      POSTGRES_DB: AIvaluatetestdb
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "5433:5432" 
+    volumes:
+      - ./aivaluate/test-database:/docker-entrypoint-initdb.d
     networks:
       - aivaluate-net
 

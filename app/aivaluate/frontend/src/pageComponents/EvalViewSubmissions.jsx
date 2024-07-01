@@ -82,7 +82,7 @@ const EvalViewSubmissions = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1);
+        setCurrentPage(1); // Reset to first page on new search
     };
 
     return (

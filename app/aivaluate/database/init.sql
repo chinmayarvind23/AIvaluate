@@ -185,20 +185,7 @@ ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table
 INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
-VALUES (1, 1, 90),
-       (2, 1, 85),
-       (3, 2, 92),
-       (5, 5, 88),
-       (5, 2, 90),
-       (5, 4, 83),
-       (6, 5, 88),
-       (6, 2, 90),
-       (7, 4, 83),
-       (7, 5, 88),
-       (4, 5, 90),
-       (4, 4, 83)
-ON CONFLICT DO NOTHING;
-    (2, 1, 85),
+VALUES (2, 1, 85),
     (3, 2, 92),
     (5, 5, 88),
     (5, 2, 90),
@@ -213,6 +200,7 @@ ON CONFLICT DO NOTHING;
     (2, 5, 78),
     (3, 5, 81)
     ON CONFLICT DO NOTHING;
+    
 INSERT INTO "Teaches" ("instructorId", "courseId")
 VALUES (5, 5),
        (5, 1),

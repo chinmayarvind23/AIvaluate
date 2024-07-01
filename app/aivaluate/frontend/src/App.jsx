@@ -26,6 +26,7 @@ import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
 import Rubrics from './pageComponents/Rubrics';
+import SelectStudentAdmin from './pageComponents/SelectStudentAdmin';
 import SelectedAssignment from './pageComponents/SelectedAssignment';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
@@ -50,6 +51,11 @@ const App = () => {
           <Route path="/eval/login" element={<EvalLogin />} />
           <Route path="/admin/signup" element={<SignupAdmin />} />
 
+
+          <Route path="/eval/rubric/rubricId" element={<EditRubric />} />
+          <Route path="/stu/submit/assignementId" element={<SubmitAssignment />} />
+
+          
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
           <Route path="/stu/assignment/:courseId" element={<PrivateRouteStu element={AssignmentOverview} />} />
@@ -63,7 +69,8 @@ const App = () => {
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
-          
+          <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} />
+          {/* <Route path="/admin/student/studentId" element={<SelectStudentAdmin />} /> */}
           {/* Session validation routes for evaluators */}
           <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />
           <Route path="/eval/dashboard" element={<PrivateRouteEval element={DashboardEval} />} />

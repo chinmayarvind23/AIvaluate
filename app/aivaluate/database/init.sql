@@ -176,6 +176,7 @@ VALUES
     (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
     (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false),
     (6, 'TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
+ON CONFLICT DO NOTHING;
 
 INSERT INTO "Course" ("courseId", "courseName", "courseCode", "courseDescription")
 VALUES (1, 'Introduction to Programming', 'CS101', 'An introductory course on programming'),

@@ -26,4 +26,3 @@ const PrivateRouteStudent = ({ element: Component }) => {
 };
 
 export default PrivateRouteStudent;
-export default PrivateRouteStudent;

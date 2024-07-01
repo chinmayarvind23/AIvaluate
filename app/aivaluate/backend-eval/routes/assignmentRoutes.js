@@ -147,4 +147,20 @@ router.post('/submissions/:submissionId/grade', async (req, res) => {
     }
 });
 
+// Fetch rubrics for a specific instructor
+router.get('/instructors/:instructorId/rubrics', async (req, res) => {
+    const { instructorId } = req.params;
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM "AssignmentRubric" WHERE "instructorId" = $1',
+            [instructorId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubrics:', error);
+        res.status(500).json({ message: 'Error fetching rubrics' });
+    }
+});
+
 module.exports = router;

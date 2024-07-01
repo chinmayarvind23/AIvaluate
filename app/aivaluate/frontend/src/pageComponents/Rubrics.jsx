@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -10,16 +10,29 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const Rubrics = () => {
     const navigate = useNavigate();
+    const { instructorId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [rubrics, setRubrics] = useState([]);
-
-    // Replace with actual instructorId
-    const instructorId = 5; 
+    const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
     useEffect(() => {
+        const fetchCourseDetails = async () => {
+            try {
+                const response = await fetch(`/eval-api/instructors/${instructorId}/courses`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setCourseDetails(data[0]); // Assuming instructor has only one course
+                } else {
+                    console.error('Error fetching course details:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching course details:', error);
+            }
+        };
+
         const fetchRubrics = async () => {
             try {
                 const response = await fetch(`/eval-api/instructors/${instructorId}/rubrics`);
@@ -35,6 +48,7 @@ const Rubrics = () => {
             }
         };
 
+        fetchCourseDetails();
         fetchRubrics();
     }, [instructorId]);
 
@@ -73,7 +87,10 @@ const Rubrics = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText='Course number - Course Name' tab='rubrics' />
+            <AIvaluateNavBar 
+                navBarText={`${courseDetails.courseCode} - ${courseDetails.courseName}`} 
+                tab='rubrics' 
+            />
             <SideMenuBarEval tab="rubrics" />
             <div className="accented-outside rborder">
                 <div className="portal-all">

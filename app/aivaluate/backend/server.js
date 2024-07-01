@@ -12,6 +12,7 @@ const courseRoutes = require('./routes/courseRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
+const gradeRoutes = require('./routes/gradeRoutes');
 
 const initializePassport = require("./passportConfig");
 
@@ -67,6 +68,7 @@ app.use('/stu-api', courseRoutes);
 app.use('/stu-api', studentRoutes);
 app.use('/stu-api', instructorRoutes);
 app.use('/stu-api', assignmentRoutes);
+app.use('/stu-api', gradeRoutes);
 
 app.post("/stu-api/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;

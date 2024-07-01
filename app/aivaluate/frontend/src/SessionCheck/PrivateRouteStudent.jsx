@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 
-const PrivateRoute = ({ element: Component }) => {
+const PrivateRouteStudent = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const params = useParams();
 
     useEffect(() => {
         axios.get('http://localhost:5173/stu-api/dashboard', { withCredentials: true })
@@ -21,7 +22,8 @@ const PrivateRoute = ({ element: Component }) => {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? <Component /> : <Navigate to="/stu/login" />;
+    return isAuthenticated ? <Component {...params}/> : <Navigate to="/stu/login" />;
 };
 
-export default PrivateRoute;
+export default PrivateRouteStudent;
+export default PrivateRouteStudent;

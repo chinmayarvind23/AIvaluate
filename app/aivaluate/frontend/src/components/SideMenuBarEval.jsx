@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom'; // to prevent page reload
 import '../GeneralStyling.css';
 import '../SideMenu.css';
+import { Link } from 'react-router-dom'; // to prevent page reload
 
  const SideMenuBarEval = ({tab}) => {
     const { courseId } = useParams();

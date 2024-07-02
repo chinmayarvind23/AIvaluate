@@ -3,11 +3,14 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
  import '../AssignmentProf.css';
  import '../FileDirectory.css';
  import '../GeneralStyling.css';
- import AIvaluateNavBar from '../components/AIvaluateNavBar';
+ import AIvaluateNavBarEval from '../components/AIvaluateNavBar';
  import SideMenuBarEval from '../components/SideMenuBarEval';
 
 
  const AssignmentProf = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
 
      const [currentPage, setCurrentPage] = useState(1);
      const itemsPerPage = 6;
@@ -55,7 +58,7 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 
      return (
          <div>
-             <AIvaluateNavBar navBarText="Admin Home Portal"/>
+             <AIvaluateNavBarEval navBarText={navBarText} />
              <SideMenuBarEval tab="assignments" />
              <div className="accented-outside rborder">
                  <div className="portal-all">

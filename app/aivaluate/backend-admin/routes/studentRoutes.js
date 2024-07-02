@@ -22,7 +22,10 @@ router.get('/students', (req, res) => {
         res.json(results.rows);
     });
 });
+<<<<<<< student-view-submissions-backend
 
+=======
+>>>>>>> development
 
 //Selects all information about a student and their enrolled courses
 router.get('/student/:studentId', checkAuthenticated, async (req, res) => {

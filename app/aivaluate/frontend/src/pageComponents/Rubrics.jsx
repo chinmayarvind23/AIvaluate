@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from "../components/SideMenuBarEval";
 
 const Rubrics = () => {
+  const courseCode = sessionStorage.getItem('courseCode');
+  const courseName = sessionStorage.getItem('courseName');
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -55,9 +57,11 @@ const Rubrics = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
+    const navBarText = `${courseCode} - ${courseName}`;
+
   return (
   <div>
-    <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
+    <AIvaluateNavBarEval navBarText={navBarText} />
     <SideMenuBarEval tab="rubrics" />
     <div className="accented-outside rborder">
         <div className="portal-all">

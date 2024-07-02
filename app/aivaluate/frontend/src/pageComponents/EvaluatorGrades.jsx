@@ -4,10 +4,12 @@ import '../GeneralStyling.css';
 import '../Grades.css';
 import '../HelpPage.css';
 import '../SearchBar.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval  from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvaluatorGrades = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
 
     const grades = [
         {
@@ -58,9 +60,12 @@ const EvaluatorGrades = () => {
     let sumOfTotalGrades = grades.reduce((sum, grade) => sum + grade.totalGrade, 0);
 
     let average = ((sumOfAvgGrades / sumOfTotalGrades) * 100).toFixed(1);
+
+    const navBarText = `${courseCode} - ${courseName}`;
+    
     return (
         <div>
-            <AIvaluateNavBar navBarText='Student Grades' tab="home" />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="grades"/>
             <div className="grades-section">
             <div className="title"><h1>Class Grade Summary</h1></div>

@@ -5,7 +5,7 @@ import '../Grades.css';
 import '../HelpPage.css';
 import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import SideMenuBar from '../components/SideMenuBar';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvaluatorGrades = () => {
 
@@ -61,7 +61,7 @@ const EvaluatorGrades = () => {
     return (
         <div>
             <AIvaluateNavBar navBarText='Student Grades' tab="home" />
-            <SideMenuBar tab="grades"/>
+            <SideMenuBarEval tab="grades"/>
             <div className="grades-section">
             <div className="title"><h1>Class Grade Summary</h1></div>
                 <div className="top-bar">

@@ -14,6 +14,11 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
       navigate('/eval/createcourse');
     } else if (user === 'prof'){
       navigate(`/eval/grades/${courseId}`);
+      sessionStorage.clear('courseId');
+      sessionStorage.clear('courseCode');
+      sessionStorage.setItem('courseCode', courseCode);
+      sessionStorage.setItem('courseName', courseName);
+      navigate(`/eval/grades/${courseId}`);
     } else if (user === 'stu'){
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');

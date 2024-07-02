@@ -5,10 +5,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvalViewSubmissions = () => {
+
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    <AIvaluateNavBarEval navBarText={navBarText} />
     const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
@@ -81,13 +85,11 @@ const EvalViewSubmissions = () => {
         setSearchTerm(e.target.value);
         setCurrentPage(1);
     };
+    const navBarText = `${courseCode} - ${courseName}`;
 
     return (
         <div>
-            <AIvaluateNavBar 
-                navBarText={`${courseDetails.courseCode} - ${courseDetails.courseName}`} 
-                tab='submissions' 
-            />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="submissions" />
             <div className="accented-outside rborder">
                 <div className="portal-all">

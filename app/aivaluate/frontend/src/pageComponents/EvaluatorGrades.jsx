@@ -122,6 +122,10 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvaluatorGrades = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
+
     const { courseId } = useParams();
     const [grades, setGrades] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -161,7 +165,7 @@ const EvaluatorGrades = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText='Student Grades' tab="home" />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="grades"/>
             <div className="grades-section">
                 <div className="title"><h1>Class Grade Summary</h1></div>

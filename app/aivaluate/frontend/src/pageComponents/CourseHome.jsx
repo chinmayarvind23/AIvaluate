@@ -23,7 +23,7 @@ const CourseHome = () => {
             })
             .catch(error => {
                 console.error('Failed to fetch course details', error);
-                navigate('/dashboard'); // redirect if the course is not found or error occurs
+                navigate('eval/dashboard'); // redirect if the course is not found or error occurs
             });
     }, [courseId, navigate]);
 
@@ -83,7 +83,7 @@ const CourseHome = () => {
             .then(response => {
                 console.log(response.data);
                 window.confirm('Course deleted successfully');
-                navigate('/dashboard');
+                navigate('eval/dashboard');
             })
             .catch(error => {
                 console.error('Failed to delete course', error);

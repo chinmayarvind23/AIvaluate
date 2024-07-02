@@ -1,0 +1,120 @@
+.select-student-admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    margin-left: 450px;
+}
+
+.back-to-last-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+.back-to-last-page:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.back-icon-arrow {
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.go-back-text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.icon-size {
+    font-size: 24px;
+    color: #000;
+}
+
+.user-info {
+    background-color: #3c3c3c;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.user-name {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.major {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.email, .password, .courses {
+    background-color: #767676;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.password span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.courses ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.courses li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.drop-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.drop-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.delete-button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+.delete-button:hover {
+    background-color: #cc0000;
+}

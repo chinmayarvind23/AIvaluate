@@ -100,7 +100,6 @@ router.post('/enroll-course', checkAuthenticated, (req, res) => {
     );
 });
 
-
 // Get a single course by ID
 router.get('/courses/:id', async (req, res) => {
     const courseId = req.params.id;
@@ -156,6 +155,33 @@ router.put('/courses/:id', async (req, res) => {
     } catch (error) {
         console.error('Error updating course:', error);
         res.status(500).send({ message: 'Error updating course' });
+    }
+});
+
+// Fetch all submissions for a course
+router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+    const studentId = req.user.studentId; // Ensure the user is authenticated
+
+    try {
+        const result = await pool.query(
+            `SELECT 
+                "AssignmentSubmission"."assignmentSubmissionId",
+                "AssignmentSubmission"."studentId",
+                "Student"."firstName",
+                "Student"."lastName",
+                "Assignment"."assignmentKey",
+                "AssignmentSubmission"."isGraded"
+            FROM "AssignmentSubmission"
+            JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
+            JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
+            WHERE "AssignmentSubmission"."courseId" = $1 AND "AssignmentSubmission"."studentId" = $2`,
+            [courseId, studentId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching submissions:', error);
+        res.status(500).json({ message: 'Error fetching submissions' });
     }
 });
 
@@ -231,4 +257,3 @@ router.get('/courses/:courseId', async (req, res) => {
 });
 
 module.exports = router;
-

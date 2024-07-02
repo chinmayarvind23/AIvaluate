@@ -27,7 +27,7 @@ router.post('/courses', async (req, res) => {
     }
 });
 
-// // Get all courses
+// Get all courses
 router.get('/courses', async (req, res) => {
     try {
         const courses = await pool.query('SELECT * FROM "Course"');
@@ -39,8 +39,8 @@ router.get('/courses', async (req, res) => {
 });
 
 router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
-    const instructorId = req.user.instructorId; // Access the studentId from the session
-    console.log('instructor ID:', instructorId); // Log student ID to verify
+    const instructorId = req.user.instructorId; // Access the instructorId from the session
+    console.log('instructor ID:', instructorId); // Log instructor ID to verify
 
     pool.query(
         `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName" 
@@ -76,8 +76,7 @@ router.get('/courses/:id', async (req, res) => {
         res.status(500).send({ message: 'Error fetching course' });
     }
 });
-
-// // Delete a course
+// Delete a course
 router.delete('/courses/:id', async (req, res) => {
     const courseId = req.params.id;
 
@@ -95,7 +94,7 @@ router.delete('/courses/:id', async (req, res) => {
     }
 });
 
-// // Update a course
+// Update a course
 router.put('/courses/:id', async (req, res) => {
     const courseId = req.params.id;
     const { courseName, courseCode, maxStudents } = req.body;
@@ -117,6 +116,7 @@ router.put('/courses/:id', async (req, res) => {
     }
 });
 
+
 // Get a single course by ID
 router.get('/courses/:courseId', async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
@@ -136,8 +136,9 @@ router.get('/courses/:courseId', async (req, res) => {
 });
 
 // Fetch all submissions for a course
-router.get('/courses/:courseId/submissions', async (req, res) => {
+router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
+    const studentId = req.user.studentId;
 
     try {
         const result = await pool.query(
@@ -151,8 +152,8 @@ router.get('/courses/:courseId/submissions', async (req, res) => {
             FROM "AssignmentSubmission"
             JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
             JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
-            WHERE "AssignmentSubmission"."courseId" = $1`,
-            [courseId]
+            WHERE "AssignmentSubmission"."courseId" = $1 AND "AssignmentSubmission"."studentId" = $2`,
+            [courseId, studentId]
         );
         res.status(200).json(result.rows);
     } catch (error) {
@@ -179,6 +180,5 @@ router.get('/instructors/:instructorId/courses', async (req, res) => {
         res.status(500).json({ message: 'Error fetching courses' });
     }
 });
-
 
 module.exports = router;

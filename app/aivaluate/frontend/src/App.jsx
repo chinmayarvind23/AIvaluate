@@ -4,7 +4,8 @@ import './App.css';
 import PrivateRouteAdmin from './SessionCheck/PrivateRouteAdmin';
 import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
-import Account from './pageComponents/Account';
+import StudentAccount from './pageComponents/StudentAccount';
+import EvalAccount from './pageComponents/EvalAccount';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import AssignmentProf from './pageComponents/AssignmentProf';
@@ -55,7 +56,7 @@ const App = () => {
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
           <Route path="/stu/assignment" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}
-          <Route path="/stu/account" element={<PrivateRouteStu element={Account} />} />
+          <Route path="/stu/account" element={<PrivateRouteStu element={StudentAccount} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
           <Route path="/stu/people" element={<PrivateRouteStu element={People} />} />
@@ -72,13 +73,14 @@ const App = () => {
           <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} />
           <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} />
           <Route path="/eval/create-assignment" element={<PrivateRouteEval element={CreateAssignment} />} />
+          <Route path="/eval/account" element={<PrivateRouteEval element={EvalAccount} />} />
           <Route path="/eval/rubrics" element={<PrivateRouteEval element={Rubrics} />} />
           <Route path="/eval/students" element={<PrivateRouteEval element={Students} />} />
           <Route path="/eval/grades" element={<PrivateRouteEval element={EvaluatorGrades} />} />
           <Route path="/eval/selected/assignment" element={<PrivateRouteEval element={SelectedAssignment} />} />
           <Route path="/eval/assignments" element={<PrivateRouteEval element={AssignmentProf} />} />
           <Route path="/eval/browse/assignment" element={<PrivateRouteEval element={BrowseAllAssignmentsEval} />} />
-          
+      
         </Routes>
       </div>
     </Router>

@@ -208,5 +208,42 @@ router.get('/courses/:id/instructor', async (req, res) => {
     }
 });
 
+
+// Fetch course name for a given course ID
+router.get('/courses/:id/name', async (req, res) => {
+    const courseId = req.params.id;
+
+    try {
+        const course = await pool.query('SELECT "courseName" FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        if (course.rowCount > 0) {
+            res.status(200).send(course.rows[0]);
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching course name:', error);
+        res.status(500).send({ message: 'Error fetching course name' });
+    }
+});
+
+// Fetch course code for a given course ID
+router.get('/courses/:id/code', async (req, res) => {
+    const courseId = req.params.id;
+
+    try {
+        const course = await pool.query('SELECT "courseCode" FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        if (course.rowCount > 0) {
+            res.status(200).send(course.rows[0]);
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching course code:', error);
+        res.status(500).send({ message: 'Error fetching course code' });
+    }
+});
+
 module.exports = router;
 

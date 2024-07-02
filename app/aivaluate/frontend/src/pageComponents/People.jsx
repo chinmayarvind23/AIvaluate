@@ -7,7 +7,8 @@ import SideMenuBar from '../components/SideMenuBar';
 
 
 const People = () => {
-
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -62,9 +63,11 @@ const People = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
+    const navBarText = `${courseCode} - ${courseName}`;
+
     return (
         <div>
-            <AIvaluateNavBar navBarText="Course number - Course name"/>
+            <AIvaluateNavBar navBarText={navBarText}/>
             <SideMenuBar tab="people" />
             <div className="accented-outside rborder">
                 <div className="portal-all">

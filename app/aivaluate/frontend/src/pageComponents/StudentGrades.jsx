@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../GeneralStyling.css';
 import '../Grades.css';
 import '../HelpPage.css';
@@ -6,6 +7,8 @@ import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
 const StudentGrades = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
 
     const grades = [
         { name: 'IP and Licensing', due: 'May 19 by 11:59p.m.', submitted: true, score: 10, total: 10 },
@@ -16,9 +19,11 @@ const StudentGrades = () => {
     ];
     const studentName = 'Colton';
     const totalGrade = 69.2;
+    const navBarText = `${courseCode} - ${courseName}`;
+
     return (
         <div>
-            <AIvaluateNavBar navBarText='Course number - Course Name' tab="home" />
+            <AIvaluateNavBar navBarText={navBarText} />
             <SideMenuBar tab="grades"/>
             <div className="grades-section ">
                 <h1 className="secondary-color-text">Grades for {studentName}</h1>

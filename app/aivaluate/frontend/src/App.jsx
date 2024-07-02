@@ -35,6 +35,7 @@ import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
+import CreateAccPT from './pageComponents/CreateAccPT';
 
 const App = () => {
   return (
@@ -73,6 +74,7 @@ const App = () => {
           <Route path="/stu/submit/assignementId" element={<PrivateRouteStu element={SubmitAssignment} />} /> 
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
+          <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} />
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
           <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} />
           {/* <Route path="/admin/student/studentId" element={<SelectStudentAdmin />} /> */}

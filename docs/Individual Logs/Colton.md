@@ -510,12 +510,12 @@ Although I did have some difficulties with session storage I am very happy with 
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/)
+![alt text](./clockify-images/colton-clockify_C9.png)
 
 ### Current Tasks
-  * #1: Testing for assignment submission page
-  * #2: Testing for Session storage
-  * #3: 
+  * #1: Edit Rubric page Frontend 
+  * #2: Assignment Submission page frontend
+  * #3: Merge all PR's and fixes conflicts
 
 ### Progress Update (since June 26th 2024) 
 <table>
@@ -526,38 +526,51 @@ Clockify report
         </td>
     </tr>
     <tr>
-        <td> Testing for assignment submission page
+        <td> Edit Rubric page Frontend 
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
     <tr>
-        <td> Testing for Session storage
+        <td> Assignment Submission page frontend
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Merge all PR's and fixes conflicts
+        </td>
+        <!-- Status -->
+        <td> Complete
         </td>
     </tr>
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-
+In this cycle our biggest problem was merging all of the PR's. We let all of our team PR's sit for way too long and this caused way too many issues. Going forward we have decided to not let any PR's sit for more then 24 hours. My other problem was not being able to get started on the backend tasks that I wanted to do because I had to pick up on tasks from 2 cycles ago that were not finished by who they were assigned to.
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Backend for student manager from Admin with tests.
+- Backend for admin to select a student and drop them from a course, delete that student from the database, or just see all of their account information with tests.
+- Backend for a student to view of all their grades in a course as well as their total grade with tests.
+- Backend for teachers to see all of their grade averages with tests.
+- Backend to connect all tabs under a single course.
 
 -----------------------------------------------------------------------------------
 ## Cycle 10: Friday June 28th - Wednesday July 3rd
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/)
+![alt text](./clockify-images/colton-clockify_C10.png)
 
 ### Current Tasks
-  * #1: Testing for notification system
-  * #2: Backend for assignment averages for the prof
-  * #3: Testing for assignemnt averages for the prof
-  * #4: Help other with testing
+  * #1: Backend for student manager from Admin with tests.
+  * #2: Backend for admin to select a student and drop them from a course, delete that student from the database, or just see all of their account information with tests.
+  * #3: Backend for a student to view of all their grades in a course as well as their total grade with tests.
+  * #4: Backend for teachers to see all of their grade averages with tests.
+  * #5: Backend to connect all tabs under a single course.
 
 ### Progress Update (since June 28th 2024) 
 <table>
@@ -568,36 +581,45 @@ Clockify report
         </td>
     </tr>
     <tr>
-        <td>Testing for notification system
+        <td>Backend for student manager from Admin with tests.
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
     <tr>
-        <td>Backend for assignment averages for the prof
+        <td>Backend for admin to select a student and drop them from a course, delete that student from the database, or just see all of their account information with tests.
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
     <tr>
-        <td>Testing for assignemnt averages for the prof
+        <td>Backend for a student to view of all their grades in a course as well as their total grade with tests.
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
         </td>
     </tr>
   <tr>
-        <td>Help other with testing
+        <td>Backend for teachers to see all of their grade averages with tests.
         </td>
         <!-- Status -->
-        <td> --
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td>Backend to connect all tabs under a single course.
+        </td>
+        <!-- Status -->
+        <td> Complete
         </td>
     </tr>
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-
+This cycle went really well for me. The backend was much better then I expected and we had lots of team communication which I believe helped a lot with all of us staying on the same track. One thing I found myself struggling with was writing tests, it took me awhile to figure everything out as all my tests were failing at first.
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- File submission storage and management
+- Add testing to ALL backend features that don't have it already.

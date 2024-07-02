@@ -6,6 +6,7 @@ import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import StudentAccount from './pageComponents/StudentAccount';
 import EvalAccount from './pageComponents/EvalAccount';
+import AdminAccount from './pageComponents/AdminAccount';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import AssignmentProf from './pageComponents/AssignmentProf';
@@ -65,6 +66,7 @@ const App = () => {
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
+          <Route path="/admin/account" element={<PrivateRouteAdmin element={AdminAccount} />} />
           
           {/* Session validation routes for evaluators */}
           <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />

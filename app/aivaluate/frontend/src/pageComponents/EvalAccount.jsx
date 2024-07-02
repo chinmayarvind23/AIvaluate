@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../Account.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import '../styles.css';
 
-const Account = () => {
+const EvalAccount = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,29 +21,29 @@ const Account = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        const fetchStudentData = async () => {
+        const fetchInstructorData = async () => {
             try {
-                const { data: { studentId } } = await axios.get('http://localhost:5173/stu-api/student/me', {
+                const { data: { instructorId } } = await axios.get('http://localhost:5173/eval-api/instructor/me', {
                     withCredentials: true
                 });
-                setAccountId(studentId);
+                setAccountId(instructorId);
 
-                const firstNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/firstName`);
+                const firstNameResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/firstName`);
                 setFirstName(firstNameResponse.data.firstName);
 
-                const lastNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/lastName`);
+                const lastNameResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/lastName`);
                 setLastName(lastNameResponse.data.lastName);
 
-                const emailResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/email`);
+                const emailResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/email`);
                 setEmail(emailResponse.data.email);
 
                 // Password is not fetched for security reasons
             } catch (error) {
-                console.error('There was an error fetching the student data:', error);
+                console.error('There was an error fetching the instructor data:', error);
             }
         };
 
-        fetchStudentData();
+        fetchInstructorData();
     }, []);
 
     const handlePasswordEditClick = () => {
@@ -63,7 +63,7 @@ const Account = () => {
         
         try {
             // Verify the current password
-            const response = await axios.post(`http://localhost:5173/stu-api/student/${accountId}/verifyPassword`, {
+            const response = await axios.post(`http://localhost:5173/eval-api/instructor/${accountId}/verifyPassword`, {
                 currentPassword
             }, {
                 withCredentials: true
@@ -103,7 +103,7 @@ const Account = () => {
             }
             
             // Update the password
-            await axios.put(`http://localhost:5173/stu-api/student/${accountId}/password`, {
+            await axios.put(`http://localhost:5173/eval-api/instructor/${accountId}/password`, {
                 password: newPassword
             }, {
                 withCredentials: true
@@ -124,7 +124,7 @@ const Account = () => {
 
     return (
         <div className="background-colour">
-            <AIvaluateNavBar navBarText='Your Account' tab='account' />
+            <AIvaluateNavBarEval navBarText='Your Account' tab='account' />
             <div className="fourth-colorbg account-details">
                 <div className="detail-label">First Name</div>
                 <div className="detail-row">
@@ -189,4 +189,4 @@ const Account = () => {
     );
 };
 
-export default Account;
+export default EvalAccount;

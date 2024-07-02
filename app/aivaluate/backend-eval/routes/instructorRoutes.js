@@ -244,4 +244,50 @@ router.get('/courses', async (req, res) => {
     }
 });
 
+// Get all instructors
+router.get('/instructors', async (req, res) => {
+    try {
+        const courses = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = FALSE');
+        res.status(200).send(courses.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send({ message: 'Error fetching courses' });
+    }
+});
+
+// Get all TAs
+router.get('/tas', async (req, res) => {   
+    try {
+        const tas = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = TRUE');
+        res.status(200).send(tas.rows);
+    } catch (error) {
+        console.error('Error fetching TAs:', error);
+        res.status(500).send({ message: 'Error fetching TAs' });
+    }
+});
+
+// Fetch all TAs for a course
+router.get('/courses/:id/tas', async (req, res) => {
+    const courseId = req.params.id;
+
+    try {
+        const tas = await pool.query(`
+            SELECT I."instructorId", I."firstName", I."lastName", I."email"
+            FROM "Instructor" I
+            JOIN "Teaches" T ON I."instructorId" = T."instructorId"
+            WHERE T."courseId" = $1 AND I."isTA" = TRUE
+        `, [courseId]);
+
+        if (tas.rowCount > 0) {
+            res.status(200).send(tas.rows);
+        } else {
+            // Sending an empty array with a 200 status code instead of treating it as an error
+            res.status(200).send([]);
+        }
+    } catch (error) {
+        console.error('Error fetching TAs:', error);
+        res.status(500).send({ message: 'Error fetching TAs' });
+    }
+});
+
 module.exports = router;

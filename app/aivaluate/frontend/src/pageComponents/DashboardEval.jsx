@@ -5,10 +5,12 @@ import '../Dashboard.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import CourseCards from '../components/CourseCards';
+import axios from 'axios';
 
 const DashboardEval = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  
   var notification = false;
   var notificationText = "YOU HAVE NO NEW NOTIFICATIONS...";
 

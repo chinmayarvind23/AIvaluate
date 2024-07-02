@@ -14,14 +14,18 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
     } else if (user === 'prof'){
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');
+      sessionStorage.clear('courseName');
       sessionStorage.setItem('courseCode', courseCode);
       sessionStorage.setItem('courseName', courseName);
+      sessionStorage.setItem('courseId', courseId);
       navigate(`/eval/CourseHome/${courseId}`);
     } else if (user === 'stu'){
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');
+      sessionStorage.clear('courseName');
       sessionStorage.setItem('courseCode', courseCode);
       sessionStorage.setItem('courseName', courseName);
+      sessionStorage.setItem('courseId', courseId);
       navigate('/stu/submissions')
     } else if (user === 'joinCourse'){
       const confirmed = window.confirm(`Are you sure you want to enroll in the course: ${courseName} (${courseCode})?`);

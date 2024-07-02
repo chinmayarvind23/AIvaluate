@@ -3,10 +3,12 @@ import '../GeneralStyling.css';
 import '../SideMenu.css';
 
  const SideMenuBarEval = ({tab}) => {
+    const courseId = sessionStorage.getItem('courseId');
+
 
  return (
          <div className="fourth-colorbg side-menu rborder">
-             <a href="/eval/coursehome/:courseId" className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Management</a>
+             <a href={`/eval/coursehome/${courseId}`} className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Management</a>
              <a href="/eval/grades" className={`${tab === "grades" ? 'primary-color-text' : 'third-color-text'}`}>Student Grades</a>
              <a href="/eval/grading" className={`${tab === "assignments" ? 'primary-color-text' : 'third-color-text'}`}>Assignments</a>
              <a href="/eval/students" className={`${tab === "students" ? 'primary-color-text' : 'third-color-text'}`}>Students</a>

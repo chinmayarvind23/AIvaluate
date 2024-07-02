@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 
-const Card = ({courseId, courseCode, courseName, user="stu"}) => {
+const Card = ({courseIdNavBar, courseCode, courseName, user="stu"}) => {
   // console.log("Card props:", { courseId, courseCode, courseName, maxStudents, user });
   const navigate = useNavigate();
   const [enrolled, SetEnrolled] = useState(false);
@@ -14,16 +14,20 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
       navigate('/eval/createcourse');
     } else if (user === 'prof'){
       navigate(`/eval/grades/${courseId}`);
-      sessionStorage.clear('courseId');
+      sessionStorage.clear('courseIdNavBar');
       sessionStorage.clear('courseCode');
+      sessionStorage.clear('courseName');
       sessionStorage.setItem('courseCode', courseCode);
       sessionStorage.setItem('courseName', courseName);
+      sessionStorage.setItem('courseIdNavBar', courseIdNavBar);
       navigate(`/eval/grades/${courseId}`);
     } else if (user === 'stu'){
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');
+      sessionStorage.clear('courseName');
       sessionStorage.setItem('courseCode', courseCode);
       sessionStorage.setItem('courseName', courseName);
+      sessionStorage.setItem('courseIdNavBar', courseIdNavBar);
       navigate(`/stu/grades/${courseId}`)
     } else if (user === 'joinCourse'){
       const confirmed = window.confirm(`Are you sure you want to enroll in the course: ${courseName} (${courseCode})?`);

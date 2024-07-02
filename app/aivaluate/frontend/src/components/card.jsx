@@ -15,6 +15,10 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
     } else if (user === 'prof'){
       navigate(`/eval/grades/${courseId}`);
     } else if (user === 'stu'){
+      sessionStorage.clear('courseId');
+      sessionStorage.clear('courseCode');
+      sessionStorage.setItem('courseCode', courseCode);
+      sessionStorage.setItem('courseName', courseName);
       navigate(`/stu/grades/${courseId}`)
     } else if (user === 'joinCourse'){
       const confirmed = window.confirm(`Are you sure you want to enroll in the course: ${courseName} (${courseCode})?`);

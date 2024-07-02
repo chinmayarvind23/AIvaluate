@@ -8,6 +8,10 @@ import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
 const StudentGrades = () => {
+  const courseCode = sessionStorage.getItem('courseCode');
+  const courseName = sessionStorage.getItem('courseName');
+  const navBarText = `${courseCode} - ${courseName}`;
+
   const { courseId } = useParams();
   const [studentName, setStudentName] = useState('');
   const [totalGrade, setTotalGrade] = useState(0);
@@ -42,7 +46,7 @@ const StudentGrades = () => {
 
   return (
     <div>
-      <AIvaluateNavBar navBarText='Course number - Course Name' tab="home" />
+      <AIvaluateNavBar navBarText={navBarText} />
       <SideMenuBar tab="grades"/>
       <div className="grades-section">
         <h1 className="secondary-color-text">Grades for {studentName}</h1>

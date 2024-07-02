@@ -22,11 +22,6 @@ router.get('/students', (req, res) => {
         res.json(results.rows);
     });
 });
-        return next();
-    }
-    res.redirect('/stu-api/login');
-}
-
 
 //Selects all information about a student and their enrolled courses
 router.get('/student/:studentId', checkAuthenticated, async (req, res) => {

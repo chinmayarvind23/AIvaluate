@@ -101,7 +101,7 @@ const CourseCards = ({ navBarText, page }) => {
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
                         courseId={course.courseId}
-                        user="stu"
+                        user = "stu"
                     />
                 ))}
             </div>
@@ -110,7 +110,7 @@ const CourseCards = ({ navBarText, page }) => {
         useEffect(() => {
             const fetchCourses = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5173/eval-api/enrolled-courses', { withCredentials: true });
+                    const response = await axios.get('http://localhost:5173/eval-api/courses', { withCredentials: true });
                     console.log('Fetched Courses:', response.data); // Log fetched courses to verify
                     setCourses(response.data);
                     setLoading(false);

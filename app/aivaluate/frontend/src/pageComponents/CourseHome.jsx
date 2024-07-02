@@ -83,7 +83,7 @@ const CourseHome = () => {
             .then(response => {
                 console.log(response.data);
                 window.confirm('Course deleted successfully');
-                navigate('eval/dashboard');
+                navigate('/eval/dashboard');
             })
             .catch(error => {
                 console.error('Failed to delete course', error);

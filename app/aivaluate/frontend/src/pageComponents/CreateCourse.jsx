@@ -73,7 +73,7 @@ const CreateCourse = () => {
       }
 
       console.log('Course created successfully:', response.data);
-      navigate('/dashboard'); // Redirect to dashboard after successful creation
+      navigate('/eval/dashboard'); // Redirect to dashboard after successful creation
     } catch (error) {
       console.error('There was an error creating the course:', error);
     }

@@ -6,7 +6,7 @@ import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import SideMenuBar from '../components/SideMenuBar';
+import SideMenuBarEval from "../components/SideMenuBarEval";
 
 const Rubrics = () => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const Rubrics = () => {
   return (
   <div>
     <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
-    <SideMenuBar tab="rubrics" />
+    <SideMenuBarEval tab="rubrics" />
     <div className="accented-outside rborder">
         <div className="portal-all">
             <div className="portal-container">

@@ -10,7 +10,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvalViewSubmissions = () => {
     const navigate = useNavigate();
-    const { courseId } = useParams(); // Get courseId from URL parameters
+    const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -57,15 +57,12 @@ const EvalViewSubmissions = () => {
             file.studentId.toString().includes(searchTerm)
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }, [searchTerm, files]);
 
-    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // This calculates the total number of pages based on the max number of items per page
     const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -82,7 +79,7 @@ const EvalViewSubmissions = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     };
 
     return (

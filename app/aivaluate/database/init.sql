@@ -24,7 +24,9 @@ CREATE TABLE IF NOT EXISTS "Instructor"(
     "email" VARCHAR(200),
     "password" VARCHAR(300),
     "department" VARCHAR(100), 
-    "isTA" BOOLEAN DEFAULT FALSE
+    "isTA" BOOLEAN DEFAULT FALSE,
+    "resetPasswordToken" VARCHAR(300),
+    "resetPasswordExpires" TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS "Course" (
@@ -60,7 +62,9 @@ CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
     "firstName" VARCHAR(100),
     "lastName" VARCHAR(100),
     "email" VARCHAR(200) UNIQUE NOT NULL,
-    "password" VARCHAR(300)
+    "password" VARCHAR(300),
+    "resetPasswordToken" VARCHAR(300),
+    "resetPasswordExpires" TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS "Assignment"(

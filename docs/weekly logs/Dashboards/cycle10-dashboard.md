@@ -171,9 +171,4 @@
 
 ### Project Progress
 - Frontend: 95% complete
-- Backend: 50% complete
-
-
-### Project Progress
-- Frontend: 95% complete
 - Backend: 70% complete

@@ -62,7 +62,7 @@ router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
 
 //Return all the courses that the current student is not registered in
 router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
-    const studentId = req.user.userId; // Access the studentId from the session
+    const studentId = req.user.studentId; // Access the studentId from the session
 
     pool.query(
         `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName", "Course"."maxStudents" 
@@ -84,8 +84,9 @@ router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
 
 //Add a student to a course
 router.post('/enroll-course', checkAuthenticated, (req, res) => {
-    const studentId = req.user.userId; // Access the studentId from the session
-    const { courseId } = req.body; // The courseId will be sent in the request body
+    const studentId = req.user.studentId; // Access the studentId from the session
+    // const { courseId } = req.body;
+    const courseId = req.body.courseId;
 
     pool.query(
         `INSERT INTO "EnrolledIn" ("studentId", "courseId") VALUES ($1, $2)`,

@@ -113,9 +113,78 @@
 - Completed the Design assignment frontend page 
 - Completed the Assignment submission frontend page 
 
+# Timesheet (June 19 - June 21) - 10  hours
+
+## Wednesday June 19th
+### 2 hours
+- Worked on database connectivity testing 
+  
+
+## Thursday June 20th
+### 4 hours
+- Design selected rubric page - prof view only (frontend)
+- Worked on  database connectivity testing 
+  
+
+## Friday June 21st
+### 4 hours
+- Design specific assignment submission page - prof/TA view (Frontend)
+- View individual assignment rubric/description page - prof/TA (Frontend)
+  
+
+
+# Timesheet (June 21 - June 26) - 10 hours
+
+## Friday June 21st
+### 4 hours
+- Worked on the bugs for database connectivity testing
+- Started the Write testing for user authentication
+
+## Monday June 24th
+### 3 hours
+- testing for user authentication
+  
+
+## Tuesday June 25th
+### 3 hours
+- database connectivity testing
+- testing for user authentication
+
+
+# Timesheet (June 26 - June 28) - 8.5 hours
+
+## Wednesday, June 26th
+### 5 hours
+- Team meeting
+- code review
+  
+  
+## Thursday, June 27th
+### 2 hours
+- Fixing errors in the Design specific assignment submission page - prof/TA view (Frontend)
+- Fixing errors in View individual assignment rubric/description page - prof/TA (Frontend)
+
+## Friday, June 28th
+### 1.5 hours
+- Fixing errors in Design specific assignment submission page - prof/TA view (Frontend)
+- Fixing errors in View individual assignment rubric/description page - prof/TA (Frontend)
 
 
 
+# Timesheet (June 28 - July 2) - 8.5 hours
+
+
+## Sunday, June 30th
+### 2.5 hour
+- Admin Help page (Frontend)
+- Evaluator Help Page (Frontend)
+## Monday, July 1st
+### 2 hours
+- Publish Assignment /rubric page for prof 
+
+## Tuesday, July 2nd
+### 3 hour
+- Completed Publish Assignment /rubric page for prof 
 
 
 

@@ -1,0 +1,115 @@
+/* GeneralStyling.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
+.user-info {
+    background-color: #666;
+    padding: 35px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 360px;
+    width: 900px;
+}
+
+.user-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-details h2 {
+    margin: 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.course-section {
+    background-color: #666;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 360px;
+    margin-right: 360px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-icon {
+    margin-right: 10px;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+}
+
+.course-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #888;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.remove-button {
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.checkbox-label {
+    display: flex;
+    color: white;
+    margin-top: 5px;
+    margin-right: 70px;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}

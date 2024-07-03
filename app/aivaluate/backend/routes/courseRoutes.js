@@ -62,7 +62,7 @@ router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
 
 //Return all the courses that the current student is not registered in
 router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
-    const studentId = req.user.userId; // Access the studentId from the session
+    const studentId = req.user.studentId; // Access the studentId from the session
 
     pool.query(
         `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName", "Course"."maxStudents" 
@@ -84,8 +84,9 @@ router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
 
 //Add a student to a course
 router.post('/enroll-course', checkAuthenticated, (req, res) => {
-    const studentId = req.user.userId; // Access the studentId from the session
-    const { courseId } = req.body; // The courseId will be sent in the request body
+    const studentId = req.user.studentId; // Access the studentId from the session
+    // const { courseId } = req.body;
+    const courseId = req.body.courseId;
 
     pool.query(
         `INSERT INTO "EnrolledIn" ("studentId", "courseId") VALUES ($1, $2)`,
@@ -205,6 +206,28 @@ router.get('/courses/:id/instructor', async (req, res) => {
     } catch (error) {
         console.error('Error fetching Instructor:', error);
         res.status(500).send({ message: 'Error fetching Instructor' });
+    }
+});
+
+// Fetch course details by courseId
+router.get('/courses/:courseId', async (req, res) => {
+    const { courseId } = req.params;
+
+    try {
+        const query = `
+            SELECT "courseCode", "courseName"
+            FROM "Course"
+            WHERE "courseId" = $1
+        `;
+        const result = await pool.query(query, [courseId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching course details:', error);
+        res.status(500).json({ message: 'Error fetching course details' });
     }
 });
 

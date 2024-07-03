@@ -117,5 +117,68 @@ router.put('/courses/:id', async (req, res) => {
     }
 });
 
+// Get a single course by ID
+router.get('/courses/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        if (course.rowCount > 0) {
+            res.status(200).send(course.rows[0]);
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching course:', error);
+        res.status(500).send({ message: 'Error fetching course' });
+    }
+});
+
+// Fetch all submissions for a course
+router.get('/courses/:courseId/submissions', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const result = await pool.query(
+            `SELECT 
+                "AssignmentSubmission"."assignmentSubmissionId",
+                "AssignmentSubmission"."studentId",
+                "Student"."firstName",
+                "Student"."lastName",
+                "Assignment"."assignmentKey",
+                "AssignmentSubmission"."isGraded"
+            FROM "AssignmentSubmission"
+            JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
+            JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
+            WHERE "AssignmentSubmission"."courseId" = $1`,
+            [courseId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching submissions:', error);
+        res.status(500).json({ message: 'Error fetching submissions' });
+    }
+});
+
+// Fetch course details for an instructor
+router.get('/instructors/:instructorId/courses', async (req, res) => {
+    const instructorId = parseInt(req.params.instructorId, 10);
+
+    try {
+        const result = await pool.query(
+            `SELECT "Course"."courseId", "Course"."courseName", "Course"."courseCode"
+             FROM "Teaches"
+             JOIN "Course" ON "Teaches"."courseId" = "Course"."courseId"
+             WHERE "Teaches"."instructorId" = $1`,
+            [instructorId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ message: 'Error fetching courses' });
+    }
+});
+
 
 module.exports = router;

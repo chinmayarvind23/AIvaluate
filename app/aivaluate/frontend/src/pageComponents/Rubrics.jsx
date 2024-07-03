@@ -10,7 +10,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const Rubrics = () => {
     const navigate = useNavigate();
-    const { instructorId } = useParams();
+    const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -21,10 +21,10 @@ const Rubrics = () => {
     useEffect(() => {
         const fetchCourseDetails = async () => {
             try {
-                const response = await fetch(`/eval-api/instructors/${instructorId}/courses`);
+                const response = await fetch(`/eval-api/courses/${courseId}`);
                 if (response.ok) {
                     const data = await response.json();
-                    setCourseDetails(data[0]); // Assuming instructor has only one course
+                    setCourseDetails(data);
                 } else {
                     console.error('Error fetching course details:', response.statusText);
                 }
@@ -35,7 +35,7 @@ const Rubrics = () => {
 
         const fetchRubrics = async () => {
             try {
-                const response = await fetch(`/eval-api/instructors/${instructorId}/rubrics`);
+                const response = await fetch(`/eval-api/rubrics/${courseId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setRubrics(data);
@@ -50,22 +50,19 @@ const Rubrics = () => {
 
         fetchCourseDetails();
         fetchRubrics();
-    }, [instructorId]);
+    }, [courseId]);
 
     useEffect(() => {
         const filtered = rubrics.filter(file =>
             file.criteria.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }, [searchTerm, rubrics]);
 
-    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // This calculates the total number of pages based on the max number of items per page
     const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -82,7 +79,7 @@ const Rubrics = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     };
 
     return (

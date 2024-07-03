@@ -161,4 +161,24 @@ router.get('/courses/:courseId/submissions', async (req, res) => {
     }
 });
 
+// Fetch course details for an instructor
+router.get('/instructors/:instructorId/courses', async (req, res) => {
+    const instructorId = parseInt(req.params.instructorId, 10);
+
+    try {
+        const result = await pool.query(
+            `SELECT "Course"."courseId", "Course"."courseName", "Course"."courseCode"
+             FROM "Teaches"
+             JOIN "Course" ON "Teaches"."courseId" = "Course"."courseId"
+             WHERE "Teaches"."instructorId" = $1`,
+            [instructorId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ message: 'Error fetching courses' });
+    }
+});
+
+
 module.exports = router;

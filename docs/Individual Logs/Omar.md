@@ -167,7 +167,79 @@ Progress Update:
 In this cycle I have spent a whole load reviewing my teammate's PRs and started working on the backend and connecting the API's
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
-Next cycle will be focused on finalizing my work and what I have done and testing everything
+Next 
+
+
+
+
+
+## Cycle 9 : Friday, June 26 - Wednesday, June 28
+Timesheet
+<img width="825" alt="Cycle 9" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/d3c45a10-b57d-4969-b859-54fdce195b8c">
+
+
+
+
+
+### Current Tasks
+
+- #1: Reviewing PRs
+- #2:Display all people in a course (Backend) # 229
+- #3:Display all evals from database in eval manager(Backend) # 231
+
+Progress Update: 
+### Progress Update (since June 21)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Issue #1  |Completed  |
+| Task #2 / Issue #231 | Completed |
+| Task #5 / Issue #229 | Completed |
+| Task #3 / Issue #89 | Not-Completed |
+| Task #4 / Issue #93 | Not-Completed |
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle was in real depth for backend and it was a little bit challenging since i haven't worked with the backend in a while but I managed to understand it so I can move forward confidentially! Also, merging PR's and testing them took a while since we let them sit for a while without reviewing them.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Review PR's and merge them
+- Display student backend for eval 
+- Display all evals from the database in eval manager
+- Create acc prof ta admin portal
+- Frontend for Evaluator Manager
+
+
+
+## Cycle 10 : Friday, June 28th - Wednesday, July 3rd
+Timesheet
+
+<img width="617" alt="cycle 10" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/e7b86e9a-c037-45e7-a662-e4132c3852e0">
+
+
+
+
+### Current Tasks
+
+- Review PR's and merge them
+- Display student backend for eval 
+- Display all evals from the database in eval manager
+- Create acc prof ta admin portal
+- Frontend for Evaluator Manager
+
+Progress Update: 
+### Progress Update (since June 21)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Review PR's and merge them  |Completed  |
+| Task #2 / Display student backend for eval  | Completed |
+| Task #5 / Display all evals from the database in eval manager | Completed |
+| Task #3 / Create acc prof ta admin portal | Completed |
+| Task #4 / Frontend for Evaluator Manager | Completed |
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle was pretty good, I managed to understand backend and how exactly to make it run and connect with the frontend pages. My team was doing really well and had everything done in time which helped a lot!
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- I will focus on testing and 2 issues that I haven't finished since the frontend for them was not done. 
 
 
 

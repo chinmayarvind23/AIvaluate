@@ -10,7 +10,7 @@ import SideMenuBar from '../components/SideMenuBar';
 
 const StudentViewSubmissions = () => {
     const navigate = useNavigate();
-    const { studentId, courseId } = useParams();
+    const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -35,7 +35,7 @@ const StudentViewSubmissions = () => {
     
         const fetchSubmissions = async () => {
             try {
-                const response = await fetch(`/stu-api/stu/submissions/${courseId}/${studentId}`);
+                const response = await fetch(`/stu-api/courses/${courseId}/submissions`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -48,7 +48,7 @@ const StudentViewSubmissions = () => {
     
         fetchCourseDetails();
         fetchSubmissions();
-    }, [studentId, courseId]);
+    }, [courseId]);
 
     useEffect(() => {
         const filtered = files.filter(file =>

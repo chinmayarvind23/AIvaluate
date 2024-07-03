@@ -152,6 +152,8 @@ router.put('/admin/:adminId/password', async (req, res) => {
     } catch (error) {
         console.error('Error updating admin password:', error);
         res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 router.post('/forgotpassword', async (req, res) => {
   const { email } = req.body;

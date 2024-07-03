@@ -214,6 +214,7 @@ router.put('/instructor/:instructorId/password', async (req, res) => {
         console.error('Error updating instructor password:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+});
 
 // Create a course
 router.post('/courses', async (req, res) => {

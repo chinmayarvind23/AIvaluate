@@ -11,10 +11,10 @@ router.post('/assignments', async (req, res) => {
             'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription") VALUES ($1, $2, $3, $4, $5) RETURNING "assignmentId"',
             [courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription]
         );
-        res.status(201).send({ assignmentId: result.rows[0].assignmentId, message: 'Assignment created successfully' });
+        res.status(201).json({ assignmentId: result.rows[0].assignmentId, message: 'Assignment created successfully' });
     } catch (error) {
         console.error('Error creating assignment:', error);
-        res.status(500).send({ message: 'Error creating assignment' });
+        res.status(500).json({ message: 'Error creating assignment' });
     }
 });
 
@@ -22,10 +22,10 @@ router.post('/assignments', async (req, res) => {
 router.get('/assignments', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM "Assignment"');
-        res.status(200).send(result.rows);
+        res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error fetching assignments:', error);
-        res.status(500).send({ message: 'Error fetching assignments' });
+        res.status(500).json({ message: 'Error fetching assignments' });
     }
 });
 
@@ -33,10 +33,10 @@ router.get('/assignments', async (req, res) => {
 router.get('/rubrics', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM "AssignmentRubric"');
-        res.status(200).send(result.rows);
+        res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error fetching rubrics:', error);
-        res.status(500).send({ message: 'Error fetching rubrics' });
+        res.status(500).json({ message: 'Error fetching rubrics' });
     }
 });
 
@@ -49,10 +49,10 @@ router.post('/rubrics', async (req, res) => {
             'INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "criteria") VALUES ($1, $2, $3) RETURNING *',
             [assignmentId, courseId, criteria]
         );
-        res.status(201).send(result.rows[0]);
+        res.status(201).json(result.rows[0]);
     } catch (error) {
         console.error('Error adding rubric:', error);
-        res.status(500).send({ message: 'Error adding rubric' });
+        res.status(500).json({ message: 'Error adding rubric' });
     }
 });
 
@@ -66,10 +66,10 @@ router.post('/assignments/:assignmentId/solutions', async (req, res) => {
             'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
             [solutionFile, assignmentId]
         );
-        res.status(200).send({ message: 'Solution added successfully' });
+        res.status(200).json({ message: 'Solution added successfully' });
     } catch (error) {
         console.error('Error adding solution:', error);
-        res.status(500).send({ message: 'Error adding solution' });
+        res.status(500).json({ message: 'Error adding solution' });
     }
 });
 
@@ -80,12 +80,12 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
     try {
         const result = await pool.query('SELECT "solutionFile" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
         if (result.rows.length === 0) {
-            return res.status(404).send({ message: 'Solution not found' });
+            return res.status(404).json({ message: 'Solution not found' });
         }
-        res.status(200).send(result.rows[0]);
+        res.status(200).json(result.rows[0]);
     } catch (error) {
         console.error('Error fetching solution:', error);
-        res.status(500).send({ message: 'Error fetching solution' });
+        res.status(500).json({ message: 'Error fetching solution' });
     }
 });
 
@@ -100,12 +100,12 @@ router.put('/assignments/:assignmentId/solutions', async (req, res) => {
             [solutionFile, assignmentId]
         );
         if (result.rows.length === 0) {
-            return res.status(404).send({ message: 'Solution not found' });
+            return res.status(404).json({ message: 'Solution not found' });
         }
-        res.status(200).send(result.rows[0]);
+        res.status(200).json(result.rows[0]);
     } catch (error) {
         console.error('Error updating solution:', error);
-        res.status(500).send({ message: 'Error updating solution' });
+        res.status(500).json({ message: 'Error updating solution' });
     }
 });
 
@@ -119,12 +119,31 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
             [assignmentId]
         );
         if (result.rows.length === 0) {
-            return res.status(404).send({ message: 'Solution not found' });
+            return res.status(404).json({ message: 'Solution not found' });
         }
-        res.status(204).send();
+        res.status(204).json({ message: 'Solution deleted successfully' });
     } catch (error) {
         console.error('Error deleting solution:', error);
-        res.status(500).send({ message: 'Error deleting solution' });
+        res.status(500).json({ message: 'Error deleting solution' });
+    }
+});
+
+// Mark a submission as graded
+router.post('/submissions/:submissionId/grade', async (req, res) => {
+    const { submissionId } = req.params;
+
+    try {
+        const result = await pool.query(
+            'UPDATE "AssignmentSubmission" SET "isGraded" = true WHERE "assignmentSubmissionId" = $1 RETURNING *',
+            [submissionId]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Submission not found' });
+        }
+        res.status(200).json({ message: 'Submission marked as graded', submission: result.rows[0] });
+    } catch (error) {
+        console.error('Error marking submission as graded:', error);
+        res.status(500).json({ message: 'Error marking submission as graded' });
     }
 });
 

@@ -7,11 +7,21 @@ require('dotenv').config();
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return next();
+      return next();
     }
     res.redirect('/stu-api/login');
-}
+  }
 
+// Fetch all students
+router.get('/students', (req, res) => {
+    pool.query('SELECT * FROM "Student"', (err, results) => {
+        if (err) {
+            console.error('Error fetching students:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.json(results.rows);
+    });
+});
 
 //Selects all information about a student and their enrolled courses
 router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
@@ -96,5 +106,9 @@ router.get('/students', checkAuthenticated, async (req, res) => {
         res.status(500).json({ error: 'Database error' });
     }
 });
+
+
+
+
 
 module.exports = router;

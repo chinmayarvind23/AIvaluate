@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test jest",
+    "test:win": "set NODE_ENV=test && jest"
   },
   "keywords": [],
   "author": "",
@@ -18,8 +19,13 @@
     "express": "^4.19.2",
     "express-flash": "^0.0.2",
     "express-session": "^1.18.0",
+    "nodemailer": "^6.9.14",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

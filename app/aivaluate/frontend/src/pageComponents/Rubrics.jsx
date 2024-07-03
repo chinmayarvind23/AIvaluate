@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const Rubrics = () => {
@@ -87,7 +87,7 @@ const Rubrics = () => {
 
     return (
         <div>
-            <AIvaluateNavBar 
+            <AIvaluateNavBarEval 
                 navBarText={`${courseDetails.courseCode} - ${courseDetails.courseName}`} 
                 tab='rubrics' 
             />

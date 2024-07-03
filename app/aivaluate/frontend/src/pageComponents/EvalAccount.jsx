@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../Account.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import '../styles.css';
 
-const Account = () => {
+const EvalAccount = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,29 +21,29 @@ const Account = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        const fetchStudentData = async () => {
+        const fetchInstructorData = async () => {
             try {
-                const { data: { studentId } } = await axios.get('http://localhost:5173/stu-api/student/me', {
+                const { data: { instructorId } } = await axios.get('http://localhost:5173/eval-api/instructor/me', {
                     withCredentials: true
                 });
-                setAccountId(studentId);
+                setAccountId(instructorId);
 
-                const firstNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/firstName`);
+                const firstNameResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/firstName`);
                 setFirstName(firstNameResponse.data.firstName);
 
-                const lastNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/lastName`);
+                const lastNameResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/lastName`);
                 setLastName(lastNameResponse.data.lastName);
 
-                const emailResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/email`);
+                const emailResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/email`);
                 setEmail(emailResponse.data.email);
 
                 // Password is not fetched for security reasons
             } catch (error) {
-                console.error('There was an error fetching the student data:', error);
+                console.error('There was an error fetching the instructor data:', error);
             }
         };
 
-        fetchStudentData();
+        fetchInstructorData();
     }, []);
 
     const handlePasswordEditClick = () => {
@@ -51,7 +51,7 @@ const Account = () => {
     };
 
     const handlePasswordSaveClick = async () => {
-        setSuccessMessage("Password updated successfully!"); // Set default success message
+        setSuccessMessage(""); // Set default success message
         setErrorMessage(""); // Set default error message
 
         // Check if all fields are filled in
@@ -60,10 +60,10 @@ const Account = () => {
             setSuccessMessage(""); // Clear any existing success messages
             return;
         }
-
+        
         try {
             // Verify the current password
-            const response = await axios.post(`http://localhost:5173/stu-api/student/${accountId}/verifyPassword`, {
+            const response = await axios.post(`http://localhost:5173/eval-api/instructor/${accountId}/verifyPassword`, {
                 currentPassword
             }, {
                 withCredentials: true
@@ -81,7 +81,15 @@ const Account = () => {
                 setSuccessMessage(""); 
                 return;
             }
+            
+            // Check if new password contains at least one letter and one number
 
+            if (!/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+                setErrorMessage("New password must contain at least one letter and one number.");
+                setSuccessMessage(""); // Clear any existing success messages
+                return;
+            }
+            
             if (newPassword === currentPassword) {
                 setErrorMessage("New password must be different from the current password.");
                 setSuccessMessage(""); // Clear any existing success messages
@@ -93,9 +101,9 @@ const Account = () => {
                 setSuccessMessage(""); // Clear any existing success messages
                 return;
             }
-
+            
             // Update the password
-            await axios.put(`http://localhost:5173/stu-api/student/${accountId}/password`, {
+            await axios.put(`http://localhost:5173/eval-api/instructor/${accountId}/password`, {
                 password: newPassword
             }, {
                 withCredentials: true
@@ -109,14 +117,14 @@ const Account = () => {
 
         } catch (error) {
             console.error('There was an error updating the password:', error);
-            setErrorMessage("The current password is incorrect.");
+            setErrorMessage("There was an error updating the password. Please try again.");
             setSuccessMessage("");
         }
     };
 
     return (
         <div className="background-colour">
-            <AIvaluateNavBar navBarText='Your Account' tab='account' />
+            <AIvaluateNavBarEval navBarText='Your Account' tab='account' />
             <div className="fourth-colorbg account-details">
                 <div className="detail-label">First Name</div>
                 <div className="detail-row">
@@ -134,28 +142,28 @@ const Account = () => {
                 <div>
                     {isEditing ? (
                         <>
-                            <div className="password-container">
+                            <div>
                                 <input
                                     type="password"
-                                    className="primary-colorbg detail-value"
+                                    className="primary-colorbg password-input"
                                     placeholder="Current Password"
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
                             </div>
-                            <div className="password-container">
+                            <div className="password-edit-container-hidden">
                                 <input
                                     type="password"
-                                    className="primary-colorbg detail-value"
+                                    className="primary-colorbg password-input"
                                     placeholder="New Password"
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                 />
                             </div>
-                            <div className="password-edit-container">
+                            <div className="password-edit-container-hidden">
                                 <input
                                     type="password"
-                                    className="primary-colorbg detail-value"
+                                    className="primary-colorbg password-input"
                                     placeholder="Confirm New Password"
                                     value={confirmNewPassword}
                                     onChange={(e) => setConfirmNewPassword(e.target.value)}
@@ -166,7 +174,7 @@ const Account = () => {
                         </>
                     ) : (
                         <div className="password-edit-container">
-                            <div className="primary-colorbg detail-value">**********</div>
+                            <div className="primary-colorbg password-input">**********</div>
                             <button className="primary-button edit-button" onClick={handlePasswordEditClick}>Edit</button>
                         </div>
                     )}
@@ -181,4 +189,4 @@ const Account = () => {
     );
 };
 
-export default Account;
+export default EvalAccount;

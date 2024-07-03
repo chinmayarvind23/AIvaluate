@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const PrivateRouteEval = ({ element: Component }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
-    const params = useParams();
 
     useEffect(() => {
         axios.get('http://localhost:5173/eval-api/dashboard', { withCredentials: true })
@@ -22,7 +21,7 @@ const PrivateRouteEval = ({ element: Component }) => {
         return <div>Loading...</div>;
     }
 
-    return isAuthenticated ? <Component {...params}/> : <Navigate to="/eval/login" />;
+    return isAuthenticated ? <Component /> : <Navigate to="/eval/login" />;
 };
 
 export default PrivateRouteEval;

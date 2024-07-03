@@ -5,31 +5,34 @@ import PrivateRouteAdmin from './SessionCheck/PrivateRouteAdmin';
 import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
 import Account from './pageComponents/Account';
+import AdminHelpPage from './pageComponents/AdminHelpPage';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import AssignmentProf from './pageComponents/AssignmentProf';
 import BrowseAllAssignmentsEval from './pageComponents/BrowseAllAssignmentsEval';
 import CourseHome from './pageComponents/CourseHome';
+import CreateAccPT from './pageComponents/CreateAccPT';
 import CreateAssignment from './pageComponents/CreateAssignment';
 import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
 import EditRubric from './pageComponents/EditRubric';
+import EvalhelpPage from './pageComponents/EvalHelpPage';
 import EvalLogin from './pageComponents/EvalLogin';
 import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
 import EvaluatorGrades from './pageComponents/EvaluatorGrades';
 import EvaluatorManager from './pageComponents/EvaluatorManager';
 import ForgotPassword from './pageComponents/ForgotPassword';
-import ForgotPasswordEval from './pageComponents/ForgotPasswordEval';
 import ForgotPasswordAdmin from './pageComponents/ForgotPasswordAdmin';
-import ResetPasswordAdmin from './pageComponents/ResetPasswordAdmin';
-import ResetPasswordEval from './pageComponents/ResetPasswordEval';
-import ResetPassword from './pageComponents/ResetPassword';
+import ForgotPasswordEval from './pageComponents/ForgotPasswordEval';
 import GradingAssignments from './pageComponents/GradingAssignments';
 import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
+import ResetPassword from './pageComponents/ResetPassword';
+import ResetPasswordAdmin from './pageComponents/ResetPasswordAdmin';
+import ResetPasswordEval from './pageComponents/ResetPasswordEval';
 import Rubrics from './pageComponents/Rubrics';
 import SelectStudentAdmin from './pageComponents/SelectStudentAdmin';
 import SelectedAssignment from './pageComponents/SelectedAssignment';
@@ -43,6 +46,7 @@ import SubmitAssignment from './pageComponents/SubmitAssignment';
 import EvalhelpPage from './pageComponents/EvalHelpPage';
 import AdminHelpPage from './pageComponents/AdminHelpPage';
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
+
 
 
 const App = () => {
@@ -81,11 +85,12 @@ const App = () => {
           <Route path="/stu/grades" element={<PrivateRouteStu element={StudentGrades} />} />
           <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />
           <Route path="/stu/grades/:courseId" element={<PrivateRouteStu element={StudentGrades} />} />
-          <Route path="/stu/submissions/:studentId/:courseId" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
+          <Route path="/stu/submissions/:courseId" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
           <Route path="/stu/submit/assignementId" element={<PrivateRouteStu element={SubmitAssignment} />} /> 
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
           <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} />
+          <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} />
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
           <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} />
           <Route path="/admin/help" element={<PrivateRouteAdmin element={AdminHelpPage} />} />

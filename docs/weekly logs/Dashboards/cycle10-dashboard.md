@@ -170,5 +170,5 @@
 - Set up backend to block T.A. from having as much access as a prof on the website.
 
 ### Project Progress
-- Frontend: 95% complete
+- Frontend: 97% complete
 - Backend: 70% complete

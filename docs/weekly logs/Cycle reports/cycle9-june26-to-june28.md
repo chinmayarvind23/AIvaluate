@@ -54,7 +54,7 @@
 
 ### Times for team
 
-<img width="1920" alt="Screenshot 2024-07-03 at 12 13 12 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/28806f0c-bcdf-4234-80aa-2d7dba5a0b7b">
+<img width="1013" alt="Screenshot 2024-07-03 at 12 19 09 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/dba1ede8-00b4-44e2-82b4-e1cea3172b56">
 
 - ### Table view of completed tasks on project board (by which username)
 

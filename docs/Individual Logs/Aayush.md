@@ -171,23 +171,19 @@
 
 
 
-# Timesheet (June 28 - July 2) - 9 hours
+# Timesheet (June 28 - July 2) - 8.5 hours
 
-## Saturday, June 29th
-### 3 hours
-- Admin Help page (Frontend)
-- Evaluator Help Page (Frontend)
 
 ## Sunday, June 30th
-### 1 hour
-- Publish Assignment /rubric page for prof 
-
+### 2.5 hour
+- Admin Help page (Frontend)
+- Evaluator Help Page (Frontend)
 ## Monday, July 1st
-### 3 hours
+### 2 hours
 - Publish Assignment /rubric page for prof 
 
 ## Tuesday, July 2nd
-### 2 hour
+### 3 hour
 - Completed Publish Assignment /rubric page for prof 
 
 

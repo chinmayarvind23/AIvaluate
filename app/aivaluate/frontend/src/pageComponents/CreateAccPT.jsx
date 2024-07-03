@@ -43,19 +43,25 @@ const CreateAccPT = () => {
             <div className="form-group">
               <div className="box">
                 <label>
-                  Firstname:
+                  First Name:
                   <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} />
                 </label>
                 <label>
-                  Lastname:
+                  Last Name:
                   <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
                 </label>
               </div>
               <div className="box">
+                <h2>Is this a T.A.?</h2>
                 <label className="checkbox-label">
-                  <input type="checkbox" checked={isTeachingAssistant} onChange={handleCheckboxChange} />
-                  Teaching Assistant
+                  <div>
+                  <input type="checkbox" className="checkbox-input" checked={isTeachingAssistant} onChange={handleCheckboxChange} />
+                  </div>
+                  <div>
+                  <span className="checkbox-text">Teaching Assistant</span>
+                  </div>
                 </label>
+
               </div>
             </div>
             <div className="form-group">

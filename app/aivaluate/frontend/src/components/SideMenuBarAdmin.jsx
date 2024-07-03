@@ -3,7 +3,7 @@ import '../GeneralStyling.css';
 import '../SideMenu.css';
 import '../styles.css';
 
-const SideMenuBarAdmin = ({tab}) => {
+const SideMenuBar = ({tab}) => {
   
     return (
         <div className="fourth-colorbg side-menu rborder">
@@ -12,4 +12,4 @@ const SideMenuBarAdmin = ({tab}) => {
         </div>
     )
 }
-export default SideMenuBarAdmin;
+export default SideMenuBar;

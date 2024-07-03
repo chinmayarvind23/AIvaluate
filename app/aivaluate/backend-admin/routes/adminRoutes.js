@@ -1,13 +1,33 @@
 const express = require('express');
 const router = express.Router();
+const { pool } = require('../dbConfig'); 
 
-// Define your admin-specific routes here
+// Middleware to check if authenticated
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/admin-api/login');
+}
 
-// Example: Admin Dashboard
-router.get('/admin-api/dashboard', (req, res) => {
-    res.send('Admin Dashboard');
+// Route to get all evaluators
+router.get('/evaluators', checkAuthenticated, async (req, res) => {
+    try {
+        const query = `
+            SELECT "firstName", "lastName", "isTA"
+            FROM "Instructor"
+        `;
+        const result = await pool.query(query);
+        const evaluators = result.rows.map(row => ({
+            name: `${row.firstName} ${row.lastName}`,
+            TA: row.isTA
+        }));
+        res.json(evaluators);
+    } catch (err) {
+        console.error('Error fetching evaluators:', err);
+        res.status(500).json({ error: 'Database error' });
+    }
 });
 
-// Add more routes as needed
-
+// Export the router
 module.exports = router;

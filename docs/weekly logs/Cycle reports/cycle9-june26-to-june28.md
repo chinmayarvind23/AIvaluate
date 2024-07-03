@@ -50,11 +50,11 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="1020" alt="" src="">
+    <img width="1013" alt="Screenshot 2024-07-03 at 12 19 09 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/dba1ede8-00b4-44e2-82b4-e1cea3172b56">
 
 ### Times for team
 
-![Cycle report clockify](../clockify reports/june26-june28.png)
+<img width="1920" alt="Screenshot 2024-07-03 at 12 30 59 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/d65ae888-e78c-4256-85f0-7afbfab948ed">
 
 - ### Table view of completed tasks on project board (by which username)
 
@@ -87,17 +87,17 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Merge all PR's and fixes conflicts
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Backend fixing
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
     <tr>
@@ -155,10 +155,10 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> CI-CD fixing
         </td>
         <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>

@@ -35,7 +35,8 @@
 - Grades backend and add dummy data for this into the database (Should calculate averages from database data before displaying grades to user) - Colton
 - Backend for displaying all of a profs rubrics and add dummy data for this into the database - Chinmay
 - Backend for displaying all submissions of all assignments and add dummy data for this into the database - Chinmay
-- Forgot password backend - Chinmay
+- Forgot password backend + frontend - Chinmay
+- Reset password backend + frontend - Chinmay
 - Add name on nav bar when the eval is logged in - Jerry
 - Edit rubric frontend  - Colton
 - Assignment submission page - Colton
@@ -55,11 +56,12 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-    <img width="1020" alt="" src="">
+    <img width="1010" alt="Screenshot 2024-07-03 at 1 02 43 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/170a8fff-78b1-4983-9e4f-e71ae48ec086">
+
 
 ### Times for team
 
-![Cycle report clockify](../clockify reports/June28-july3.png)
+<img width="1920" alt="Screenshot 2024-07-03 at 1 02 58 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/c284ab07-7d86-4a31-b1cf-f64e1b5da5c3">
 
 - ### Table view of completed tasks on project board (by which username)
 
@@ -101,38 +103,33 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Backend for displaying all of a profs rubrics
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Backend for displaying all submissions of all assignments
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Forgot password backend + frontend
         </td>
-        <!-- Completed by? -->
-        <td> --
-        </td>
-    </tr>
-  <tr>
-        <td> --
-        </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Reset passowrd backend + frontend
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
+        </td>
+    </tr>
+  <tr>
+        <td> Student submissions backend
+        </td>
+        <td> Chinmay
         </td>
     </tr>
   <tr>
@@ -162,10 +159,9 @@
         </td>
     </tr>
 <tr>
-        <td> --
+        <td> CI-CD fix
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>

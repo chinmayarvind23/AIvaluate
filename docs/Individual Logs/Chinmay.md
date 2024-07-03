@@ -480,3 +480,69 @@ I am working on fixing Tasks 1 and 6, but I completed tasks 2-5 completed as pla
 - Goal 3: Any PR reviews feedback implementation
 - Goal 4: Docker containers submitted to app server and hosting
 - Goal 5: Notifications system creation
+
+## June 26th - June 28th
+
+## Timesheet
+
+Clockify report: Total hours - 10 hours
+<img width="1920" alt="Screenshot 2024-07-02 at 7 58 23 PM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/54439f6e-dd80-4f13-8de6-58fce8791d51">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** Testing and merging issues (6 hours) (XL Task)
+- **#2:** Backend routing fixes + CI-CD fix (4 hours) (XL Task)
+
+## Progress Update (since 6/26/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Backend fixed, but the netcat issues need to be fixed on the CI-CD pipeline|
+
+## Cycle Goal Review
+
+I am working on fixing Task 2, and I completed task 1 as planned, and I need to find time to fix the CI-CD pipeline uninterrupted by other issues.
+
+## Next Cycle Goals
+
+- Goal 1: Backend for displaying all of a profs rubrics
+- Goal 2: Backend for displaying all submissions of all assignments
+- Goal 3: Forgot password backend + frontend
+- Goal 4: Reset passowrd backend + frontend
+- Goal 5: Student submissions backend
+
+## June 28th - July 3rd
+
+## Timesheet
+
+Clockify report: Total hours - 19 hours
+<img width="1920" alt="Screenshot 2024-07-03 at 1 28 25 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/42caba16-456c-4399-99af-24ba3a8e3888">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** Backend for displaying all of a profs rubrics, Issue #243 (4 hours) (Large Task)
+- **#2:** Backend for displaying all submissions of all assignments, Issue #240 (5 hours) (Large Task)
+- **#3:** Forgot password backend + frontend, Issue #249 (4 hours) (Large Task)
+- **#4:** Reset passowrd backend + frontend, Issue #250 (2 hours) (Medium Task)
+- **#5:** Student submissions backend, Issue #247 (4 hours) (Large Task)
+
+## Progress Update (since 6/28/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Completed |
+| Task 3       | Completed |
+| Task 4       | Completed |
+| Task 5       | Completed |
+| Task 6       | Completed |
+
+## Cycle Goal Review
+
+Completed all my tasks, will set up some time to look at why the CI-CD pipeline isn't getting fixed yet.
+
+## Next Cycle Goals
+
+- Goal 1: Notifications system/AI grading
+- Goal 2: Node volume file storage

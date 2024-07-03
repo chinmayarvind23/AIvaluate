@@ -1,5 +1,54 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 29 - July 3 Morning) - 18 hours
+
+## Wednesday July 3rd
+### 3 hours
+- Solving merge conflicts (PR#257 and PR#258); The fixed version of 258 basically does not work at all. So I had to revert it to its original state.
+
+## Tuesday July 2nd
+### 9.5 hours
+- Adding Account pages to the evaluator and administrator portals; Implement changing password features to admin and evaluator views. (1 hour)
+- Make the student portal navigation bar and evaluator portal navigation bar display dynamic course info and user name. (3 hours)
+- Code Review (10 pull requests) (2.5 hours)
+- Allow student view to fetch assignments from the database (3 hours)
+- Fixing Bugs
+
+## Monday July 1st
+### 3 hours
+- Adding Account pages to the evaluator and administrator portals; Implement changing password features to admin and evaluator views. (3 hours)
+- Fixing Bugs
+
+## Sunday June 30th
+### 2.5 hours
+- Add front-end password validations to the student view account page.
+  
+# Current Tasks
+- #1 Fix client-side validation for changing passwords on the student portal; add a changing password page and feature to the evaluator and admin portal; (issue #225)
+- #2 Add assignment fetching feature for students and evaluators (#259 and #268)
+- #3 Fix the navigation bar across all portals and make the displayed info dynamic (issue #256)
+- #4 Implementing a feature which allows instructors to upload rubrics and answer keys of an assignment (issue #90)
+- #5 Implement various backend testings 
+- #6 Fix other known bugs that prevent existing features from running. (one major issue was #246 on the Kanban board. There are other smaller bugs which I did not create issues of)
+
+# Progress Update (since June 26)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Partially completed (student view completed)  |
+| Task #3 | Completed  |
+| Task #4 | Pending |
+| Task #5 | In-Progress |
+| Task #6 | Ongoing process |
+
+# Cycle Goal Review
+During this cycle, I spent most of my time implementing new features - tasks #1-3; The remainder of my time was spent on fixing bugs and solving merge conflicts. At this point there are still unsolved merge conflicts; I can foresee that it will occupy a large chunk of my time during the next cycle.
+
+# Next Cycle 
+The focus of the next cycle is to implement as many tests as possible, both unit tests and manual tests to ensure all existing features work flawlessly.
+If time permits, the new features I'm going to work on next are to implement assignment fetching logic for evaluators, and create rubric features for evaluators.
+
+
 # Timesheet (June 26 - June 28) - 10.5 hours
 
 ## Friday June 28th

@@ -101,17 +101,17 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Merge all PR's and fixes conflicts
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <!-- Status -->
+        <td> Jerry
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Fix the bug which prevents user from logging into evaluator dashboard
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <!-- Status -->
+        <td> Jerry
         </td>
     </tr>
   <tr>

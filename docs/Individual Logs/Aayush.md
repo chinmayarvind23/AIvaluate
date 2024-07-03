@@ -151,9 +151,44 @@
 - testing for user authentication
 
 
+# Timesheet (June 26 - June 28) - 8.5 hours
 
+## Wednesday, June 26th
+### 5 hours
+- Team meeting
+- code review
   
+  
+## Thursday, June 27th
+### 2 hours
+- Fixing errors in the Design specific assignment submission page - prof/TA view (Frontend)
+- Fixing errors in View individual assignment rubric/description page - prof/TA (Frontend)
 
+## Friday, June 28th
+### 1.5 hours
+- Fixing errors in Design specific assignment submission page - prof/TA view (Frontend)
+- Fixing errors in View individual assignment rubric/description page - prof/TA (Frontend)
+
+
+
+# Timesheet (June 28 - July 2) - 9 hours
+
+## Saturday, June 29th
+### 3 hours
+- Admin Help page (Frontend)
+- Evaluator Help Page (Frontend)
+
+## Sunday, June 30th
+### 1 hour
+- Publish Assignment /rubric page for prof 
+
+## Monday, July 1st
+### 3 hours
+- Publish Assignment /rubric page for prof 
+
+## Tuesday, July 2nd
+### 2 hour
+- Completed Publish Assignment /rubric page for prof 
 
 
 

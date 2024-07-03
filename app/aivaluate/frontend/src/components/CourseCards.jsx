@@ -62,10 +62,11 @@ const CourseCards = ({ navBarText, page }) => {
                 <div className="dashboard">
                     {filteredCourses.map(course => (
                         <Card 
-                            // key={course.courseId} 
+                            key={course.courseId} 
                             courseCode={course.courseCode} 
                             courseName={course.courseName} 
                             courseId={course.courseId}
+                            courseMaxStudents={course.maxStudents}
                             user="joinCourse"
                         />
                     ))}
@@ -96,7 +97,7 @@ const CourseCards = ({ navBarText, page }) => {
             <div className="dashboard">
                 {courses.map(course => (
                     <Card 
-                        // key={course.courseId} 
+                        key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
                         courseId={course.courseId}
@@ -129,7 +130,7 @@ const CourseCards = ({ navBarText, page }) => {
             <div className="dashboard">
                 {courses.map(course => (
                     <Card 
-                        // key={course.courseId} 
+                        key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
                         courseId={course.courseId}

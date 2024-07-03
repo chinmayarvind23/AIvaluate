@@ -1,40 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
-import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from "../components/AIvaluateNavBar";
 import SideMenuBar from '../components/SideMenuBar';
 
+
 const People = () => {
-  
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const { courseId } = useParams();
-
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
-    const [files, setFiles] = useState([]);
 
-    useEffect(() => {
-        const fetchStudents = async () => {
-            try {
-                const response = await fetch(`http://localhost:5173/stu-api/students/display/${courseId}`, {
-                    credentials: 'include'
-                });
-                const data = await response.json();
-                const studentNames = data.map(student => `${student.firstName} ${student.lastName}`);
-                setFiles(studentNames);
-                setFilteredFiles(studentNames);
-            } catch (error) {
-                console.error('Error fetching students:', error);
-            }
-        };
-
-        fetchStudents();
-    }, [courseId]);
+    const files = [
+        'Colton Palfrey',
+        'Chinmay Arvind',
+        'Jerry Fan',
+        'Omar Hemed',
+        'Kenny Nguyen',
+        'Aayush Chaudhary',
+        'Rahul Kulkarni',
+        'Sahil Patel',
+        'Oakley Boren',
+        'Karan Manchanda',
+        'Yash Shah',
+        'Wesley Chan',
+        'Paul Tollo',
+    ];
 
     useEffect(() => {
         const filtered = files.filter(file =>
@@ -42,23 +36,26 @@ const People = () => {
         );
         setFilteredFiles(filtered);
         setCurrentPage(1); // Reset to first page on new search
-    }, [searchTerm, files]);
+    }, [searchTerm]);
 
+    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
+
+    // This calculates the total number of pages based of the max number of items per page
+    const totalPages = Math.ceil(files.length / itemsPerPage);
 
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(prevPage => prevPage + 1);
-        }
+    if (currentPage < totalPages) {
+        setCurrentPage(prevPage => prevPage + 1);
+    }
     };
 
     const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(prevPage => prevPage - 1);
-        }
+    if (currentPage > 1) {
+        setCurrentPage(prevPage => prevPage - 1);
+    }
     };
 
     const handleSearchChange = (e) => {

@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -16,74 +16,45 @@ const Rubrics = () => {
   const itemsPerPage = 6;
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredFiles, setFilteredFiles] = useState([]);
-  
-  const { courseId } = useParams();
-  const [rubrics, setRubrics] = useState([]);
-  const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
-
-    useEffect(() => {
-        const fetchCourseDetails = async () => {
-            try {
-                const response = await fetch(`/eval-api/courses/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setCourseDetails(data);
-                } else {
-                    console.error('Error fetching course details:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching course details:', error);
-            }
-        };
-
-        const fetchRubrics = async () => {
-            try {
-                const response = await fetch(`/eval-api/rubrics/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setRubrics(data);
-                    setFilteredFiles(data);
-                } else {
-                    console.error('Error fetching rubrics:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching rubrics:', error);
-            }
-        };
-
-        fetchCourseDetails();
-        fetchRubrics();
-    }, [courseId]);
+  const files = [
+    'Build a Personal Portfolio Page',
+    'Design a Homepage',
+    'Design Account Page',
+    'Design a Login Page',
+  ];
 
     useEffect(() => {
-        const filtered = rubrics.filter(file =>
-            file.criteria.toLowerCase().includes(searchTerm.toLowerCase())
+        const filtered = files.filter(file =>
+            file.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1);
-    }, [searchTerm, rubrics]);
+        setCurrentPage(1); // Reset to first page on new search
+    }, [searchTerm]);
 
+    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
+
+    // This calculates the total number of pages based of the max number of items per page
+    const totalPages = Math.ceil(files.length / itemsPerPage);
 
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(prevPage => prevPage + 1);
-        }
+    if (currentPage < totalPages) {
+        setCurrentPage(prevPage => prevPage + 1);
+    }
     };
 
     const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(prevPage => prevPage - 1);
-        }
+    if (currentPage > 1) {
+        setCurrentPage(prevPage => prevPage - 1);
+    }
     };
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1);
+        setCurrentPage(1); // Reset to first page on new search
     };
 
     const navBarText = `${courseCode} - ${courseName}`;
@@ -106,30 +77,29 @@ const Rubrics = () => {
                                 value={searchTerm}
                                 onChange={handleSearchChange}
                             />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
-                                    <div className="folder-icon"><CircumIcon name="file_on"/></div>
-                                    <div className="file-name">{file.criteria}</div>
-                                </div>
-                            ))}
-
                         </div>
                     </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                </div>
+                <div className="filetab">
+                    {currentFiles.map((file, index) => (
+                        <div className="file-item" key={index}>
+                            <div className="folder-icon"><CircumIcon name="file_on"/></div>
+                            <div className="file-name">{file}</div>
                         </div>
-                    </div>
-                </div> 
+                    ))}
+                </div>
             </div>
-        </div>
-    );
+            <div className="pagination-controls">
+                <span>Page {currentPage} of {totalPages}</span>
+                <div className="pagination-buttons">
+                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+  </div>
+  );
 };
 
 export default Rubrics;

@@ -62,7 +62,7 @@ router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
 
 //Return all the courses that the current student is not registered in
 router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
-    const studentId = req.user.studentId; // Access the studentId from the session
+    const studentId = req.user.userId; // Access the studentId from the session
 
     pool.query(
         `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName", "Course"."maxStudents" 
@@ -84,9 +84,8 @@ router.get('/not-enrolled-courses', checkAuthenticated, (req, res) => {
 
 //Add a student to a course
 router.post('/enroll-course', checkAuthenticated, (req, res) => {
-    const studentId = req.user.studentId; // Access the studentId from the session
-    // const { courseId } = req.body;
-    const courseId = req.body.courseId;
+    const studentId = req.user.userId; // Access the studentId from the session
+    const { courseId } = req.body; // The courseId will be sent in the request body
 
     pool.query(
         `INSERT INTO "EnrolledIn" ("studentId", "courseId") VALUES ($1, $2)`,
@@ -100,6 +99,7 @@ router.post('/enroll-course', checkAuthenticated, (req, res) => {
         }
     );
 });
+
 
 // Get a single course by ID
 router.get('/courses/:id', async (req, res) => {
@@ -159,33 +159,6 @@ router.put('/courses/:id', async (req, res) => {
     }
 });
 
-// Fetch all submissions for a course
-router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
-    const courseId = parseInt(req.params.courseId, 10);
-    const studentId = req.user.studentId; // Ensure the user is authenticated
-
-    try {
-        const result = await pool.query(
-            `SELECT 
-                "AssignmentSubmission"."assignmentSubmissionId",
-                "AssignmentSubmission"."studentId",
-                "Student"."firstName",
-                "Student"."lastName",
-                "Assignment"."assignmentKey",
-                "AssignmentSubmission"."isGraded"
-            FROM "AssignmentSubmission"
-            JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
-            JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
-            WHERE "AssignmentSubmission"."courseId" = $1 AND "AssignmentSubmission"."studentId" = $2`,
-            [courseId, studentId]
-        );
-        res.status(200).json(result.rows);
-    } catch (error) {
-        console.error('Error fetching submissions:', error);
-        res.status(500).json({ message: 'Error fetching submissions' });
-    }
-});
-
 // Fetch all TAs for a course
 router.get('/courses/:id/tas', async (req, res) => {
     const courseId = req.params.id;
@@ -235,6 +208,7 @@ router.get('/courses/:id/instructor', async (req, res) => {
     }
 });
 
+
 // Fetch course name for a given course ID
 router.get('/courses/:id/name', async (req, res) => {
     const courseId = req.params.id;
@@ -273,26 +247,3 @@ router.get('/courses/:id/code', async (req, res) => {
 
 module.exports = router;
 
-// Fetch course details by courseId
-router.get('/courses/:courseId', async (req, res) => {
-    const { courseId } = req.params;
-
-    try {
-        const query = `
-            SELECT "courseCode", "courseName"
-            FROM "Course"
-            WHERE "courseId" = $1
-        `;
-        const result = await pool.query(query, [courseId]);
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'Course not found' });
-        }
-        res.status(200).json(result.rows[0]);
-    } catch (error) {
-        console.error('Error fetching course details:', error);
-        res.status(500).json({ message: 'Error fetching course details' });
-    }
-});
-
-module.exports = router;

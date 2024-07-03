@@ -1,13 +1,12 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 
 const Card = ({courseId, courseCode, courseName, user="stu"}) => {
   // console.log("Card props:", { courseId, courseCode, courseName, maxStudents, user });
   const navigate = useNavigate();
-  const [enrolled, SetEnrolled] = useState(false);
 
   const handleClick = async () => {
     if (courseCode === 'Create Course') {
@@ -19,8 +18,7 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
       sessionStorage.setItem('courseCode', courseCode);
       sessionStorage.setItem('courseName', courseName);
       sessionStorage.setItem('courseId', courseId);
-//    navigate(`/eval/CourseHome/${courseId}`); 
-      navigate(`/eval/grades/${courseId}`);
+      navigate(`/eval/CourseHome/${courseId}`);
     } else if (user === 'stu'){
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');
@@ -28,8 +26,7 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
       sessionStorage.setItem('courseCode', courseCode);
       sessionStorage.setItem('courseName', courseName);
       sessionStorage.setItem('courseId', courseId);
-//    navigate('/stu/submissions')
-      navigate(`/stu/grades/${courseId}`)
+      navigate('/stu/submissions')
     } else if (user === 'joinCourse'){
       const confirmed = window.confirm(`Are you sure you want to enroll in the course: ${courseName} (${courseCode})?`);
       if (confirmed) {
@@ -37,7 +34,6 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
           const response = await axios.post('http://localhost:5173/stu-api/enroll-course', { courseId }, { withCredentials: true });
           if (response.status === 200) {
             alert('Successfully enrolled in the course!');
-            SetEnrolled(true);
           }
         } catch (error) {
           console.error('Error enrolling in course:', error);
@@ -50,19 +46,15 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
   return (
     <div className={courseCode === 'Create Course' ? "add-course-card course-card" : "course-card"}  onClick={handleClick}>
         {(courseCode === 'Create Course' || user === 'joinCourse') ? (
-          <img src="../../public/create-course2.svg" alt="Default Course Image" />
+        <img src="../../public/create-course2.svg" alt="Default Course Image" />
+      ) : (
+        user === 'stu' ? (
+          <img src="../../public/student-course-image.svg" alt="Student Course Image" />
         ) : (
-          user === 'stu' ? (
-            <img src="../../public/student-course-image.svg" alt="Student Course Image" />
-          ) : (
-            <img src="../../public/prof-course-image.svg" alt="Professor Course Image" />
-          )
-        )}
-        {enrolled && (
-          <div className="check-overlay">
-            <CircumIcon name="circle_check" className="check-icon" />
-          </div>
-        )}
+          <img src="../../public/prof-course-image.svg" alt="Professor Course Image" />
+        )
+
+      )}
         {/* <h2>COSC 499</h2> */}
         <h2>{courseCode}</h2>
         {/* <p>Software Engineering Capstone</p> */}

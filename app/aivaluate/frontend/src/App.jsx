@@ -43,11 +43,7 @@ import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
-import EvalhelpPage from './pageComponents/EvalHelpPage';
-import AdminHelpPage from './pageComponents/AdminHelpPage';
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
-
-
 
 const App = () => {
   return (

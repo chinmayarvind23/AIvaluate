@@ -44,11 +44,11 @@ const CreateAccPT = () => {
               <div className="box">
                 <label>
                   First Name:
-                  <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} />
+                  <input className="create-acc-input" type="text" name="firstname" value={formData.firstname} onChange={handleChange} />
                 </label>
                 <label>
                   Last Name:
-                  <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
+                  <input className="create-acc-input" type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
                 </label>
               </div>
               <div className="box">
@@ -68,15 +68,15 @@ const CreateAccPT = () => {
               <div className="box">
                 <label>
                   Email:
-                  <input type="email" name="email" value={formData.email} onChange={handleChange} />
+                  <input className="create-acc-input" type="email" name="email" value={formData.email} onChange={handleChange} />
                 </label>
                 <label>
                   Password:
-                  <input type="password" name="password" value={formData.password} onChange={handleChange} />
+                  <input className="create-acc-input" type="password" name="password" value={formData.password} onChange={handleChange} />
                 </label>
                 <label>
                   Department:
-                  <input type="text" name="department" value={formData.department} onChange={handleChange} />
+                  <input className="create-acc-input" type="text" name="department" value={formData.department} onChange={handleChange} />
                 </label>
               </div>
             </div>

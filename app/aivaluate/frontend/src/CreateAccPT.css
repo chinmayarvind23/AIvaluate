@@ -66,9 +66,7 @@
   margin-bottom: 10px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.create-acc-input {
   padding: 10px;
   margin-top: 5px;
   width: 1000px;
@@ -85,7 +83,7 @@ input[type="password"] {
 
 
 
-input[type="checkbox"] {
+.checkbox-input {
   margin-right: 10px;
   display: flex;
   align-items: center;

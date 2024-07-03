@@ -42,7 +42,8 @@ import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
 import EvalhelpPage from './pageComponents/EvalHelpPage';
 import AdminHelpPage from './pageComponents/AdminHelpPage';
-
+import ProfIndividualRubric from './pageComponents/ProfIndividualRubric';
+import PublishAssignment from './pageComponents/PublishAssignment';
 
 const App = () => {
   return (
@@ -104,6 +105,8 @@ const App = () => {
           <Route path="/eval/browse/assignment" element={<PrivateRouteEval element={BrowseAllAssignmentsEval} />} />
           <Route path="/eval/help" element={<PrivateRouteEval element={EvalhelpPage} />} />
           <Route path="/eval/rubrics/:courseId" element={<PrivateRouteEval element={EditRubric} />} />
+          <Route path="/id" element={<PrivateRouteEval element={ProfIndividualRubric} />} />
+          <Route path="/published-rubric" element={<PrivateRouteEval element={PublishAssignment} />} />
 
           
         </Routes>

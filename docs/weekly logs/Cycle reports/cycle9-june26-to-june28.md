@@ -54,7 +54,7 @@
 
 ### Times for team
 
-![Cycle report clockify](../clockify reports/june26-june28.png)
+<img width="1920" alt="Screenshot 2024-07-03 at 12 13 12 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/28806f0c-bcdf-4234-80aa-2d7dba5a0b7b">
 
 - ### Table view of completed tasks on project board (by which username)
 
@@ -87,17 +87,17 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> Merge all PR's and fixes conflicts
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
   <tr>
-        <td> --
+        <td> Backend fixing
         </td>
-        <!-- Completed by? -->
-        <td> --
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
     <tr>
@@ -155,10 +155,10 @@
         </td>
     </tr>
     <tr>
-        <td> --
+        <td> CI-CD fixing
         </td>
         <!-- Completed by? -->
-        <td> --
+        <td> Chinmay
         </td>
     </tr>
     <tr>

@@ -62,10 +62,11 @@ const CourseCards = ({ navBarText, page }) => {
                 <div className="dashboard">
                     {filteredCourses.map(course => (
                         <Card 
-                            // key={course.courseId} 
+                            key={course.courseId} 
                             courseCode={course.courseCode} 
                             courseName={course.courseName} 
                             courseId={course.courseId}
+                            courseMaxStudents={course.maxStudents}
                             user="joinCourse"
                         />
                     ))}
@@ -96,11 +97,11 @@ const CourseCards = ({ navBarText, page }) => {
             <div className="dashboard">
                 {courses.map(course => (
                     <Card 
-                        // key={course.courseId} 
+                        key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
                         courseId={course.courseId}
-                        user="stu"
+                        user = "stu"
                     />
                 ))}
             </div>
@@ -109,7 +110,7 @@ const CourseCards = ({ navBarText, page }) => {
         useEffect(() => {
             const fetchCourses = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5173/eval-api/enrolled-courses', { withCredentials: true });
+                    const response = await axios.get('http://localhost:5173/eval-api/courses', { withCredentials: true });
                     console.log('Fetched Courses:', response.data); // Log fetched courses to verify
                     setCourses(response.data);
                     setLoading(false);
@@ -129,7 +130,7 @@ const CourseCards = ({ navBarText, page }) => {
             <div className="dashboard">
                 {courses.map(course => (
                     <Card 
-                        // key={course.courseId} 
+                        key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
                         courseId={course.courseId}

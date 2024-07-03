@@ -6,6 +6,9 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const GradingAssignments = () => {
+  const courseCode = sessionStorage.getItem('courseCode');
+  const courseName = sessionStorage.getItem('courseName');
+  
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -32,9 +35,11 @@ const GradingAssignments = () => {
     setFinalScore(e.target.value);
   };
 
+  const navBarText = `${courseCode} - ${courseName}`;
+
   return (
     <div>
-      <AIvaluateNavBarEval navBarText='Course number - Course Name' tab="assignments" />
+      <AIvaluateNavBarEval navBarText={navBarText} />
       <div className="grading-container">
         <SideMenuBarEval tab="assignments" />
         <div className="content ">

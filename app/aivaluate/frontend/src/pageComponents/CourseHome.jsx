@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../CourseHome.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
@@ -9,9 +9,11 @@ import AssignTaModal from './AssignTaModal';
 import CourseEditModal from './CourseEditModal';
 
 const CourseHome = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
     const { courseId } = useParams();
     const navigate = useNavigate();
-    const [course, setCourse] = useState({});
+    const [course, setCourse] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isTaModalOpen, setIsTaModalOpen] = useState(false);
@@ -23,7 +25,7 @@ const CourseHome = () => {
             })
             .catch(error => {
                 console.error('Failed to fetch course details', error);
-                navigate('/eval/dashboard'); // redirect if the course is not found or error occurs
+                navigate('eval/dashboard'); // redirect if the course is not found or error occurs
             });
     }, [courseId, navigate]);
 
@@ -90,10 +92,11 @@ const CourseHome = () => {
                 // Handle failure properly
             });
     }
+    const navBarText = `${courseCode} - ${courseName}`;
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={course?.courseName} />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab='management' />
             <div style={{marginTop: '120px'}}>
                 <button className="course-delete-button" onClick={handleDeleteCourse}>Delete Course</button>
@@ -103,8 +106,6 @@ const CourseHome = () => {
                 <br />
                 <button className="course-ta-button" onClick={handleTaModal}>Assign TA</button>
                 <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
-                <br />
-                <Link to={`/eval/submissions/${courseId}`} className="view-submissions-link">View Submissions</Link>
             </div>
         </div>
     );

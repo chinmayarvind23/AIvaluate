@@ -5,13 +5,6 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.redirect('/stu-api/login');
-  }
-
 // Fetch all students
 router.get('/students', (req, res) => {
     pool.query('SELECT * FROM "Student"', (err, results) => {
@@ -23,92 +16,55 @@ router.get('/students', (req, res) => {
     });
 });
 
-//Selects all information about a student and their enrolled courses
-router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
-    const { studentId } = req.params;
-
-    try {
-        const studentQuery = `
-            SELECT s."studentId", s."firstName", s."lastName", s."email", s."password"
-            FROM "Student" s
-            WHERE s."studentId" = $1
-        `;
-        const studentResult = await pool.query(studentQuery, [studentId]);
-        const student = studentResult.rows[0];
-
-        const courseQuery = `
-            SELECT c."courseCode", c."courseId"
-            FROM "Course" c
-            JOIN "EnrolledIn" e ON c."courseId" = e."courseId"
-            WHERE e."studentId" = $1
-        `;
-        const courseResult = await pool.query(courseQuery, [studentId]);
-        const courses = courseResult.rows;
-
-        res.json({
-            ...student,
-            courses
-        });
-    } catch (err) {
-        console.error('Error fetching student details:', err);
-        res.status(500).json({ error: 'Database error' });
-    }
+// Delete a student
+router.delete('/students/:id', (req, res) => {
+    const studentId = req.params.id;
+    pool.query('DELETE FROM "Student" WHERE "studentId" = $1', [studentId], (err, results) => {
+        if (err) {
+            console.error('Error deleting student:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(204).send();
+    });
 });
 
-//Drops a student from a course
-router.delete('/student/:studentId/drop/:courseCode', checkAuthenticated, async (req, res) => {
-    const { studentId, courseCode } = req.params;
-
-    try {
-        const dropQuery = `
-            DELETE FROM "EnrolledIn"
-            WHERE "studentId" = $1 AND "courseId" = (
-                SELECT "courseId" FROM "Course" WHERE "courseCode" = $2
-            )
-        `;
-        await pool.query(dropQuery, [studentId, courseCode]);
-        res.status(200).json({ message: 'Course dropped successfully' });
-    } catch (err) {
-        console.error('Error dropping course:', err);
-        res.status(500).json({ error: 'Database error' });
-    }
+// Get student details
+router.get('/students/:id', (req, res) => {
+    const studentId = req.params.id;
+    pool.query('SELECT * FROM "Student" WHERE "studentId" = $1', [studentId], (err, results) => {
+        if (err) {
+            console.error('Error fetching student:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (results.rows.length > 0) {
+            res.json(results.rows[0]);
+        } else {
+            res.status(404).json({ error: 'Student not found' });
+        }
+    });
 });
 
-// Deletes a student from the database
-router.delete('/student/:studentId', checkAuthenticated, async (req, res) => {
-    const { studentId } = req.params;
+// Update student courses
+router.put('/students/:id/courses', async (req, res) => {
+    const studentId = req.params.id;
+    const { courses } = req.body;
 
     try {
-        const deleteQuery = `
-            DELETE FROM "Student"
-            WHERE "studentId" = $1
-        `;
-        await pool.query(deleteQuery, [studentId]);
-        res.status(200).json({ message: 'User deleted successfully' });
-    } catch (err) {
-        console.error('Error deleting user:', err);
-        res.status(500).json({ error: 'Database error' });
+        pool.query(
+            'UPDATE "Student" SET courses = $1 WHERE "studentId" = $2 RETURNING *',
+            [JSON.stringify(courses), studentId],
+            (err, results) => {
+                if (err) {
+                    console.error('Error updating student courses:', err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+                res.json(results.rows[0]);
+            }
+        );
+    } catch (error) {
+        console.error('Error processing request:', error);
+        res.status(500).json({ error: 'Server error' });
     }
 });
-
-// Endpoint to fetch all students
-router.get('/students', checkAuthenticated, async (req, res) => {
-    try {
-        const query = `
-            SELECT "studentId", "firstName", "lastName"
-            FROM "Student"
-        `;
-        const result = await pool.query(query);
-
-        res.json(result.rows);
-    } catch (err) {
-        console.error('Error fetching students:', err);
-        res.status(500).json({ error: 'Database error' });
-    }
-});
-
-
-
-
 
 module.exports = router;

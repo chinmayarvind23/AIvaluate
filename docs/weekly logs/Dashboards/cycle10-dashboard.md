@@ -67,6 +67,10 @@
         </td>
     </tr>
   <tr>
+        <td>Reset password backend 
+            </td>
+        </tr>
+      <tr>
         <td> Change the course name in the nav bar to be dynamic admin
         </td>
     </tr>

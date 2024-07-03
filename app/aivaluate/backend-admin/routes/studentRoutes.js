@@ -23,7 +23,6 @@ router.get('/students', (req, res) => {
     });
 });
 
-
 //Selects all information about a student and their enrolled courses
 router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
     const { studentId } = req.params;

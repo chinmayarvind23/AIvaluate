@@ -110,7 +110,7 @@ const EvalViewSubmissions = () => {
                             {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index}>
                                     <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">{file.firstName} {file.lastName} - {file.assignmentKey} Submission</div>
+                                    <div className="file-name">{file.studentId} - {file.assignmentKey} Submission</div>
                                     {file.isGraded && <div className="file-status">Marked as graded</div>}
                                 </div>
                             ))}

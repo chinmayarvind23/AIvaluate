@@ -5,6 +5,14 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+// Middleware to check if authenticated
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/admin-api/login');
+}
+
 const transporter = nodemailer.createTransport({
   host: 'smtp-relay.brevo.com',
   port: 587,
@@ -95,6 +103,27 @@ router.post('/reset/:token', async (req, res) => {
     console.error('Error during password reset:', error);
     res.status(500).json({ message: 'Server error' });
   }
+});
+
+
+
+// Route to get all evaluators
+router.get('/evaluators', checkAuthenticated, async (req, res) => {
+    try {
+        const query = `
+            SELECT "firstName", "lastName", "isTA"
+            FROM "Instructor"
+        `;
+        const result = await pool.query(query);
+        const evaluators = result.rows.map(row => ({
+            name: `${row.firstName} ${row.lastName}`,
+            TA: row.isTA
+        }));
+        res.json(evaluators);
+    } catch (err) {
+        console.error('Error fetching evaluators:', err);
+        res.status(500).json({ error: 'Database error' });
+    }
 });
 
 module.exports = router;

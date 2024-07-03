@@ -200,18 +200,20 @@ ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table
 INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
-VALUES (1, 1, 90),
-       (2, 1, 85),
-       (3, 2, 92),
-       (5, 5, 88),
-       (5, 2, 90),
-       (5, 4, 83),
-       (6, 5, 88),
-       (6, 2, 90),
-       (7, 4, 83),
-       (7, 5, 88),
-       (4, 5, 90),
-       (4, 4, 83)
+VALUES (2, 1, 85),
+    (3, 2, 92),
+    (5, 5, 88),
+    (5, 2, 90),
+    (5, 4, 83),
+    (6, 5, 88),
+    (6, 2, 90),
+    (7, 4, 83),
+    (7, 5, 88),
+    (4, 5, 90),
+    (4, 4, 83),
+    (1, 5, 60),
+    (2, 5, 78),
+    (3, 5, 81)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO "Teaches" ("instructorId", "courseId")
@@ -286,6 +288,7 @@ VALUES (1, 1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
        (29, 8, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
        (30, 8, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false)
 ON CONFLICT DO NOTHING;
+
 
 -- Insert dummy data into AssignmentGrade table
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")

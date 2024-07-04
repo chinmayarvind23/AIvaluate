@@ -65,7 +65,6 @@ CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
 
 CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentId" SERIAL NOT NULL PRIMARY KEY,
-    "assignmentName" VARCHAR(100),
     "courseId" INT,
     "dueDate" DATE,
     "assignmentKey" VARCHAR(500),
@@ -160,6 +159,13 @@ VALUES ('Introduction to Programming', 'CS101', 'An introductory course on progr
     ('Software Engineering Capstone', 'COSC 499', 'Final project for software engineering students')
     ON CONFLICT DO NOTHING;
 
+-- Insert dummy data into Assignment table
+INSERT INTO "Assignment" ("dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES ('2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
+('2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
+('2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
+ON CONFLICT DO NOTHING;
+
 -- Insert dummy data into Student table
 INSERT INTO "Student" ("firstName", "lastName", "email", "password")
 VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
@@ -211,11 +217,10 @@ ON CONFLICT DO NOTHING;
 
 
 -- Insert dummy data into Assignment table
-INSERT INTO "Assignment" ("courseId", "assignmentName", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
-VALUES (1, 'Assignment 1', '2022-01-15', 'assignment1-key', 100, 'Write a program to calculate the factorial of a number'),
-    (2, 'Lab 1', '2024-01-15', 'lab-key', 40, 'Write a program to calculate the factorial of a number'),
-    (2, 'Assignment 2', '2022-02-10', 'assignment2-key', 100, 'Solve the following calculus problems'),
-    (3, 'Assignment 3', '2022-03-05', 'assignment3-key', 100, 'Perform experiments to verify Newton''s laws of motion')
+INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES (1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
+    (2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
+    (3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion')
     ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table

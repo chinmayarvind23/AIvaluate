@@ -13,8 +13,6 @@ const assignments = [
 ];
 
 const AssignmentOverview = () => {
-  const courseCode = sessionStorage.getItem('courseCode');
-  const courseName = sessionStorage.getItem('courseName');
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredAssignments, setFilteredAssignments] = useState(assignments);
@@ -40,11 +38,9 @@ const AssignmentOverview = () => {
     navigate('/stu/assignment-feedback');
   };
 
-  const navBarText = `${courseCode} - ${courseName}`;
-
   return (
     <div>
-      <AIvaluateNavBar navBarText={navBarText} />
+      <AIvaluateNavBar navBarText='Course number - Course Name' />
       <SideMenuBar tab="assignments" />
       <div className="assignment-search-container">
       <div className="search-container">

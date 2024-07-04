@@ -6,24 +6,29 @@ import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
-
 const EvaluatorManager = () => {
-
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
+    const [files, setFiles] = useState([]);
 
-    const files = [
-        { name: 'Scott Fazackerley', TA: false },
-        { name: 'Ramon Lawrence', TA: false },
-        { name: 'Yong Goa', TA: false },
-        { name: 'Mohammed Khajezade', TA: true },
-        { name: 'Kevin Wang', TA: true },
-        { name: 'Ifeoma Adaji', TA: false },
-        { name: 'Jeff Bulmer', TA: false },
-        { name: 'Jonh Kingston', TA: true },
-    ];
+    useEffect(() => {
+        const fetchEvaluators = async () => {
+            try {
+                const response = await fetch('http://localhost:5173/admin-api/evaluators', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                setFiles(data);
+                setFilteredFiles(data);
+            } catch (error) {
+                console.error('Error fetching evaluators:', error);
+            }
+        };
+
+        fetchEvaluators();
+    }, []);
 
     useEffect(() => {
         const filtered = files.filter(file =>
@@ -31,26 +36,26 @@ const EvaluatorManager = () => {
         );
         setFilteredFiles(filtered);
         setCurrentPage(1); // Reset to first page on new search
-    }, [searchTerm]);
+    }, [searchTerm, files]);
 
     // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
 
-    // This calculates the total number of pages based of the max number of items per page
-    const totalPages = Math.ceil(files.length / itemsPerPage);
+    // This calculates the total number of pages based on the max number of items per page
+    const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
-    if (currentPage < totalPages) {
-        setCurrentPage(prevPage => prevPage + 1);
-    }
+        if (currentPage < totalPages) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
     };
 
     const handlePrevPage = () => {
-    if (currentPage > 1) {
-        setCurrentPage(prevPage => prevPage - 1);
-    }
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
     };
 
     const handleSearchChange = (e) => {

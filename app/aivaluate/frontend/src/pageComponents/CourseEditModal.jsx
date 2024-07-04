@@ -26,8 +26,6 @@ const EditCourseModal = ({ isOpen, onClose, course, onSave }) => {
             <form onSubmit={(e) => {
                 e.preventDefault();
                 onSave(editedCourse);
-                sessionStorage.setItem('courseName', editedCourse.courseName);
-                sessionStorage.setItem('courseCode', editedCourse.courseCode);
 
                 // Reload the page to reflect the updated course details
                 window.location.reload();

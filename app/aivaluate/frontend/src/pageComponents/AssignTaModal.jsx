@@ -55,7 +55,7 @@ const AssignTaModal = ({ isOpen, onClose, courseId }) => {
         // Add new TAs
         selectedTAs.forEach((instructorId) => {
             if (!currentTAs.has(instructorId)) {
-                axios.post(`http://localhost:5173/eval-api/teaches`, { courseId, instructorId })
+                axios.post(`http://localhost:4000/teaches`, { courseId, instructorId })
                     .then(response => {
                         console.log('TA added:', response.data);
                     })
@@ -68,7 +68,7 @@ const AssignTaModal = ({ isOpen, onClose, courseId }) => {
         // Remove deselected TAs
         currentTAs.forEach((instructorId) => {
             if (!selectedTAs.has(instructorId)) {
-                axios.delete(`http://localhost:5173/eval-api/teaches/${courseId}/${instructorId}`)
+                axios.delete(`http://localhost:4000/teaches/${courseId}/${instructorId}`)
                     .then(response => {
                         console.log('TA removed:', response.data);
                     })

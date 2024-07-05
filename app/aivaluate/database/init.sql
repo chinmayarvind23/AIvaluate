@@ -156,15 +156,26 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 
 -- Insert dummy data for testing
 -- Insert dummy data into Student table
-INSERT INTO "Student" ("studentId", "firstName", "lastName", "email", "password")
-VALUES (1, 'John', 'Doe', 'john.doe@example.com', 'password1'),
-       (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-       (3, 'Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
-       (4, 'Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (5, 'Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (6, 'Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (7, 'Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (8, 'Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
+-- INSERT INTO "Student" ("studentId", "firstName", "lastName", "email", "password")
+-- VALUES (1, 'John', 'Doe', 'john.doe@example.com', 'password1'),
+--        (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password2'),
+--        (3, 'Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
+--        (4, 'Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+--        (5, 'Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+--        (6, 'Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+--        (7, 'Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+--        (8, 'Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
+-- ON CONFLICT DO NOTHING;
+
+INSERT INTO "Student" ("firstName", "lastName", "email", "password")
+VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
+       ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
+       ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
+       ('Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       ('Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       ('Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       ('Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       ('Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table

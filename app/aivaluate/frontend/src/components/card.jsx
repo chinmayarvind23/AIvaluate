@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 
-const Card = ({courseIdNavBar, courseCode, courseName, user="stu"}) => {
+const Card = ({courseId, courseCode, courseName, user="stu"}) => {
   // console.log("Card props:", { courseId, courseCode, courseName, maxStudents, user });
   const navigate = useNavigate();
   const [enrolled, SetEnrolled] = useState(false);

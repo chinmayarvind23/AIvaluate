@@ -4,8 +4,8 @@ import '../GeneralStyling.css';
 import '../SideMenu.css';
 
  const SideMenuBarEval = ({tab}) => {
-    const { navBarcourseId } = useParams();
-    const courseId = sessionStorage.getItem('courseId');
+    const { courseId } = useParams();
+    const courseIdNavBar = sessionStorage.getItem('courseId');
 
 
  return (

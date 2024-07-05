@@ -107,7 +107,6 @@ const CourseHome = () => {
                 <button className="course-ta-button" onClick={handleTaModal}>Assign TA</button>
                 <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
                 <br />
-                <Link to={`/eval/submissions/${courseId}`} className="view-submissions-link">View Submissions</Link>
             </div>
         </div>
     );

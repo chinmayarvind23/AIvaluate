@@ -63,16 +63,20 @@ const AssignmentOverview = () => {
     fetchAssignments();
   }, [courseId]);
 
-  // useEffect(() => {
-  //   const results = assignments.filter(assignment =>
-  //     assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  //   setFilteredAssignments(results);
-  // }, [searchTerm, assignments]);
-
-  const handleNavigate = () => {
-    navigate('/stu/assignment-feedback');
-  };
+  useEffect(() => {
+    try {
+      if (searchTerm) {
+        const results = assignments.filter(assignment =>
+          assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredAssignments(results);
+      } else {
+        setFilteredAssignments(assignments);
+      }
+    } catch (error) {
+      console.error('An error occurred while filtering assignments:', error);
+    }
+  }, [searchTerm, assignments]);
 
   const navBarText = `${courseCode} - ${courseName}`;
 

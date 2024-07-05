@@ -47,7 +47,10 @@ const AIvaluateNavBarAdmin = ({navBarText , tab}) => {
                     &#9776;
                 </button>
                 <div className={`dropdown ${menuOpen ? 'show secondary-colorbg' : 'primary-colorbg'}`}>
-                <a href="/admin/account" style={boostFromTop} className={`${tab === 'account' ? 'primary-color-text' : 'third-color-text'}`}>
+                <a href="/admin/evaluatormanager" style={boostFromTop} className={`${tab === 'home' ? 'primary-color-text' : 'third-color-text'}`}>
+                  Home
+                </a>
+                <a href="/admin/account" className={`${tab === 'account' ? 'primary-color-text' : 'third-color-text'}`}>
                   Account
                 </a>
                 <a href="/admin/help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>

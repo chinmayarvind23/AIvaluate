@@ -623,3 +623,51 @@ This cycle went really well for me. The backend was much better then I expected 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - File submission storage and management
 - Add testing to ALL backend features that don't have it already.
+
+-----------------------------------------------------------------------------------
+
+## Cycle 11: Wednesday July 3rd - Friday July 5th
+
+### Current Tasks
+  * #1: MVP presentation
+  * #2: Backend testing
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Backend testing admin
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Backend testing evaluator
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+    <tr>
+        <td> Backend testing student
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I didn't have very much ime to get thigns done which caused some issues. I continue to have ltos of issues with testing and will spend this weekend wathcing for videos on jest to figure out what I am doing wrong.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- File storage and managerment
+- Fix back buttons and make them unified
+-----------------------------------------------------------------------------------

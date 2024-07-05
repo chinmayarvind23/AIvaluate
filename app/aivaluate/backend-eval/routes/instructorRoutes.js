@@ -200,6 +200,21 @@ router.post('/instructor/:instructorId/verifyPassword', async (req, res) => {
   }
 });
 
+// Route to set instructor password by instructorId
+router.put('/instructor/:instructorId/password', async (req, res) => {
+  const instructorId = parseInt(req.params.instructorId);
+  const { password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+      await pool.query('UPDATE "Instructor" SET "password" = $1 WHERE "instructorId" = $2', [hashedPassword, instructorId]);
+      res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+      console.error('Error updating instructor password:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // Create a course
 router.post('/courses', async (req, res) => {
     const { courseName, courseCode, maxStudents } = req.body;

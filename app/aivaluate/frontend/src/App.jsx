@@ -47,7 +47,6 @@ import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
 import ProfIndividualRubric from './pageComponents/ProfIndividualRubric';
 import PublishAssignment from './pageComponents/PublishAssignment';
-import EvalManagerInfo from './pageComponents/EvalManagerInfo';
 
 const App = () => {
   return (

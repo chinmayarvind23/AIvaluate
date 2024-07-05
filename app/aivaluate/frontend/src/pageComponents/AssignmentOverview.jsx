@@ -63,12 +63,12 @@ const AssignmentOverview = () => {
     fetchAssignments();
   }, [courseId]);
 
-  useEffect(() => {
-    const results = assignments.filter(assignment =>
-      assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredAssignments(results);
-  }, [searchTerm, assignments]);
+  // useEffect(() => {
+  //   const results = assignments.filter(assignment =>
+  //     assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  //   setFilteredAssignments(results);
+  // }, [searchTerm, assignments]);
 
   const handleNavigate = () => {
     navigate('/stu/assignment-feedback');

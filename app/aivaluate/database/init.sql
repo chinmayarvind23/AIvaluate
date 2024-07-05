@@ -155,26 +155,17 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
 );
 
 -- Insert dummy data for testing
--- Insert dummy data into Course table
-INSERT INTO "Course" ("courseName", "courseCode", "courseDescription")
-VALUES ('Introduction to Programming', 'CS101', 'An introductory course on programming'),
-    ('Advanced CSS', 'COSC 455', 'A course on advanced CSS techniques'),
-    ('Intro to Web Development', 'COSC 360', 'An introductory course on web development'),
-    ('Intermediate JavaScript', 'COSC 388', 'A course on JavaScript programming'),
-    ('Software Engineering Capstone', 'COSC 499', 'Final project for software engineering students')
-    ON CONFLICT DO NOTHING;
-
 -- Insert dummy data into Student table
-INSERT INTO "Student" ("firstName", "lastName", "email", "password")
-VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
-    ('Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-    ('Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
-    ('Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-    ('Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
-    ON CONFLICT DO NOTHING;
+INSERT INTO "Student" ("studentId", "firstName", "lastName", "email", "password")
+VALUES (1, 'John', 'Doe', 'john.doe@example.com', 'password1'),
+       (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password2'),
+       (3, 'Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
+       (4, 'Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       (5, 'Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       (6, 'Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       (7, 'Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
+       (8, 'Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table
 INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA")
@@ -194,18 +185,6 @@ VALUES (1, 'Introduction to Programming', 'CS101', 'An introductory course on pr
     (4, 'Itermidiate JavaScript', 'COSC 388', 'A course on JavaScript programming'),
     (5, 'Software Engineering Capstone', 'COSC 499', 'Final project for software engineering students')
     ON CONFLICT DO NOTHING;
-
--- Insert dummy data into Student table
-INSERT INTO "Student" ("studentId", "firstName", "lastName", "email", "password")
-VALUES (1, 'John', 'Doe', 'john.doe@example.com', 'password1'),
-       (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password2'),
-       (3, 'Mike', 'Johnson', 'mike.johnson@example.com', 'password3'),
-       (4, 'Omar', 'Hemed', 'omar@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (5, 'Colton', 'Palfrey', 'colton@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (6, 'Jerry', 'Fan', 'jerry@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (7, 'Chinmay', 'Arvind', 'chinmay@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.'),
-       (8, 'Aayush', 'Chaudhary', 'aayush@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
-ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into EnrolledIn table
 INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
@@ -237,30 +216,23 @@ VALUES
     ('Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
 ON CONFLICT DO NOTHING;
 
--- Insert dummy data into Assignment table
-INSERT INTO "Assignment" ("courseId", "assignmentName", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
-VALUES (1, 'Assignment 1', '2022-01-15', 'assignment1-key', 100, 'Write a program to calculate the factorial of a number'),
-    (2, 'Lab 1', '2024-01-15', 'lab-key', 40, 'Write a program to calculate the factorial of a number'),
-    (2, 'Assignment 2', '2022-02-10', 'assignment2-key', 100, 'Solve the following calculus problems'),
-    (3, 'Assignment 3', '2022-03-05', 'assignment3-key', 100, 'Perform experiments to verify Newton''s laws of motion')
-    ON CONFLICT DO NOTHING;
-
---     INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
--- VALUES (1, 3, '2024-06-30', 'Assignment 1', 10, 'Design a login page with html and css'),
---        (2, 3, '2024-07-05', 'Assignment 2', 25, 'Design an account page with html and css'),
---        (3, 3, '2024-07-15', 'Assignment 3', 12, 'Design a home page with html and css'),
---        (4, 4, '2024-06-12', 'Lab 1', 12, 'Create a login page with JavaScript validation'),
---        (5, 4, '2024-07-11', 'Lab 2', 12, 'Create a sign up page with JavaScript validation'),
---        (6, 4, '2024-07-15', 'Lab 3', 12, 'Create a dashboard page with JavaScript variables and functions'),
---        (7, 2, '2024-06-25', 'Assignment 1', 20, 'Design a interactive page with html and css'),
---        (8, 2, '2024-07-01', 'Lab 1', 35, 'Design a menu that pops down from the nav bar when the html loads'),
---        (9, 2, '2024-07-06', 'Assignment 2', 65, 'Make a moving background with html and css'),
---        (10, 5, '2024-06-05', 'Assignment 1', 100, 'Create design plan document with html'),
---        (11, 5, '2024-06-15', 'Assignment 2', 88, 'Create project plan document with html'),
---        (12, 5, '2024-07-09', 'Assignment 3', 50, 'Design you sign in page with html, css, and javascript'),
---        (13, 1, '2024-06-28', 'Assignment 1', 5, 'Create a html page that says hello world in a heading tag'),
---        (14, 1, '2024-07-03', 'Assignment 2', 10, 'Create a html page that has a list of your favorite things in a list tag'),
---        (15, 1, '2024-07-09', 'Lab 1', 10, 'Create a html page that has a table of your favorite things in a table tag')
+INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES (1, 3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css'),
+       (2, 3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css'),
+       (3, 3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css'),
+       (4, 4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation'),
+       (5, 4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation'),
+       (6, 4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions'),
+       (7, 2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css'),
+       (8, 2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads'),
+       (9, 2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css'),
+       (10, 5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html'),
+       (11, 5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html'),
+       (12, 5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript'),
+       (13, 1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag'),
+       (14, 1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag'),
+       (15, 1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table
 INSERT INTO "CourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead")

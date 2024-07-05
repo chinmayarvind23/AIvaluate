@@ -9,10 +9,8 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvalViewSubmissions = () => {
-
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    <AIvaluateNavBarEval navBarText={navBarText} />
     const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,6 +26,7 @@ const EvalViewSubmissions = () => {
                 const response = await fetch(`/eval-api/courses/${courseId}`);
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Course Details:", data);  // Debugging
                     setCourseDetails(data);
                 } else {
                     console.error('Error fetching course details:', response.statusText);
@@ -42,6 +41,7 @@ const EvalViewSubmissions = () => {
                 const response = await fetch(`/eval-api/courses/${courseId}/submissions`);
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Submissions:", data);  // Debugging
                     setFiles(data);
                 } else {
                     console.error('Error fetching submissions:', response.statusText);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../AdminHelpPage.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import '../GeneralStyling.css';
 
 
@@ -12,7 +12,7 @@ const AdminHelpPage = () => {
 
   return (
     <>
-    <AIvaluateNavBar navBarText='Help Page'  />
+    <AIvaluateNavBarAdmin navBarText='Help Page'  />
       <div className='secondary-colorbg help-section'>
           <section>
             <div className="help-content">

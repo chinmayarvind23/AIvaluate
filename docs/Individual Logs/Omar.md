@@ -245,3 +245,33 @@ This cycle was pretty good, I managed to understand backend and how exactly to m
 
 
 
+
+
+
+## Cycle 11 : Friday, June 3rd - Wednesday, July 35th
+Timesheet
+<img width="958" alt="Cycle 11" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/649da372-4644-4f47-9ad6-c63667fa5883">
+
+
+
+
+
+### Current Tasks
+
+- Testing
+- MVP
+
+Progress Update: 
+### Progress Update (since June 21)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Backend testing for eval  |Completed  |
+| Task #2 / MVP | Completed |
+
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I focused on testing for the backend-eval but it was super tricky and we had alot of issues with the development branch that we had to work on.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- I will focus on testing and fixing some of the issues we got from the client
+

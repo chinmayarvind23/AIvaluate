@@ -9,6 +9,10 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const Rubrics = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
+
     const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
@@ -84,10 +88,7 @@ const Rubrics = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval 
-                navBarText={`${courseDetails.courseCode} - ${courseDetails.courseName}`} 
-                tab='rubrics' 
-            />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="rubrics" />
             <div className="accented-outside rborder">
                 <div className="portal-all">

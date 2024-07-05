@@ -7,6 +7,10 @@ import AIvaluateNavBarEval from "../components/AIvaluateNavBarEval";
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const Students = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
+
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -75,7 +79,7 @@ const Students = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText="Course number - Course name"/>
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="students" />
             <div className="accented-outside rborder">
                 <div className="portal-all">

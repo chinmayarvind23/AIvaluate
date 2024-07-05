@@ -9,6 +9,8 @@ import AssignTaModal from './AssignTaModal';
 import CourseEditModal from './CourseEditModal';
 
 const CourseHome = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
     const { courseId } = useParams();
     const navigate = useNavigate();
     const [course, setCourse] = useState({});
@@ -90,10 +92,11 @@ const CourseHome = () => {
                 // Handle failure properly
             });
     }
+    const navBarText = `${courseCode} - ${courseName}`;
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={course?.courseName} />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab='management' />
             <div style={{marginTop: '120px'}}>
                 <button className="course-delete-button" onClick={handleDeleteCourse}>Delete Course</button>
@@ -104,7 +107,6 @@ const CourseHome = () => {
                 <button className="course-ta-button" onClick={handleTaModal}>Assign TA</button>
                 <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
                 <br />
-                <Link to={`/eval/submissions/${courseId}`} className="view-submissions-link">View Submissions</Link>
             </div>
         </div>
     );

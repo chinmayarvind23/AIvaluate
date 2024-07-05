@@ -5,6 +5,9 @@ import '../SideMenu.css';
 
  const SideMenuBarEval = ({tab}) => {
     const { courseId } = useParams();
+    const courseIdNavBar = sessionStorage.getItem('courseId');
+
+
  return (
          <div className="fourth-colorbg side-menu rborder">
             <Link to={`/eval/coursehome/${courseId}`} className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Management</Link>

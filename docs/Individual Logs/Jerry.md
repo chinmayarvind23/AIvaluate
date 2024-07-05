@@ -1,5 +1,44 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 3 - July 5 Morning) - 13 hours
+
+## Friday July 5th
+### 1.5 hours
+- PR Review, Testing, Bug Fixing, Presentation Slide (1.5 hours)
+
+## Thursday July 4rd
+### 10 hours
+- Research on and execute a development branch roll-back (due to dev branch contamination) (3 hours)
+- Re-merging the reverted branches (4 hours)
+- PR Review, Testing, Bug Fixing (3 hours)
+
+## Wednesday July 3rd
+### 1.5 hours
+- Team meeting, deciding on task priorities, solving merge conflicts
+  
+# Current Tasks
+- #1 Development branch roll-back, remerging reverted branches
+- #2 Add assignment fetching feature for evaluators
+- #3 Implementing a feature which allows instructors to upload rubrics and answer keys of an assignment (issue #90)
+- #4 Implement various backend testings 
+- #5 Fix other known bugs that prevent existing features from running.
+
+# Progress Update (since June 26)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Postponed after MVP  |
+| Task #3 | Postponed after MVP  |
+| Task #4 | Ongoing |
+| Task #5 | Completed |
+
+# Cycle Goal Review
+During this cycle, I had to face a challenge where the dev branch was contaminated by one of the merges. More than 7000-line of code were removed from dev branch. Thus I researched and executed a roll-back to previous commit. As a result, three merges were reverted which needs to be re-merged again. I executed a "cherry-pick commit" on these three branches, and made sure the dev branch stays in a working state. These tasks occupied most of my working time during this cycle.
+
+# Next Cycle 
+Backend testing, continue to implement backend features. We have come up with a list of all the remaining tasks. We are going to meet after the MVP presentation to divide the work.
+
+
 # Timesheet (June 29 - July 3 Morning) - 18 hours
 
 ## Wednesday July 3rd

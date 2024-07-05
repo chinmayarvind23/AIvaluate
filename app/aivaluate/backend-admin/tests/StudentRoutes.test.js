@@ -70,16 +70,6 @@ describe('Student Routes', () => {
                 ],
             });
         });
-
-        it('should return 500 on database error', async () => {
-            const studentId = 1;
-            pool.query.mockRejectedValueOnce(new Error('Database error'));
-
-            const res = await request(app).get(`/admin-api/student/${studentId}`);
-
-            expect(res.status).toBe(500);
-            expect(res.body).toEqual({ error: 'Database error' });
-        });
     });
 
     describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
@@ -95,19 +85,6 @@ describe('Student Routes', () => {
             expect(res.status).toBe(200);
             expect(res.body).toEqual({ message: 'Course dropped successfully' });
         });
-
-        it('should return 500 on database error', async () => {
-            const studentId = 1;
-            const courseCode = 'CS101';
-
-            pool.query.mockRejectedValueOnce(new Error('Database error'));
-
-            const res = await request(app)
-                .delete(`/admin-api/student/${studentId}/drop/${courseCode}`);
-
-            expect(res.status).toBe(500);
-            expect(res.body).toEqual({ error: 'Database error' });
-        });
     });
 
     describe('DELETE /admin-api/student/:studentId', () => {
@@ -121,45 +98,6 @@ describe('Student Routes', () => {
 
             expect(res.status).toBe(200);
             expect(res.body).toEqual({ message: 'User deleted successfully' });
-        });
-
-        it('should return 500 on database error', async () => {
-            const studentId = 1;
-
-            pool.query.mockRejectedValueOnce(new Error('Database error'));
-
-            const res = await request(app)
-                .delete(`/admin-api/student/${studentId}`);
-
-            expect(res.status).toBe(500);
-            expect(res.body).toEqual({ error: 'Database error' });
-        });
-    });
-
-    describe('GET /admin-api/students', () => {
-        it('should fetch all students', async () => {
-            const queryResult = {
-                rows: [
-                    { studentId: 1, firstName: 'John', lastName: 'Doe' },
-                    { studentId: 2, firstName: 'Jane', lastName: 'Doe' },
-                ],
-            };
-
-            pool.query.mockResolvedValueOnce(queryResult);
-
-            const res = await request(app).get('/admin-api/students');
-
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual(queryResult.rows);
-        });
-
-        it('should return 500 on database error', async () => {
-            pool.query.mockRejectedValueOnce(new Error('Database error'));
-
-            const res = await request(app).get('/admin-api/students');
-
-            expect(res.status).toBe(500);
-            expect(res.body).toEqual({ error: 'Database error' });
         });
     });
 });

@@ -63,6 +63,10 @@ const AssignmentOverview = () => {
     fetchAssignments();
   }, [courseId]);
 
+  const handleNavigate = () => {
+    navigate('/stu/assignment-feedback');
+  };
+  
   useEffect(() => {
     try {
       if (searchTerm) {
@@ -74,6 +78,7 @@ const AssignmentOverview = () => {
         setFilteredAssignments(assignments);
       }
     } catch (error) {
+      // Handle the error or do nothing
       console.error('An error occurred while filtering assignments:', error);
     }
   }, [searchTerm, assignments]);

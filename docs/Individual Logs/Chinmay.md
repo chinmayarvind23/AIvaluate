@@ -546,3 +546,31 @@ Completed all my tasks, will set up some time to look at why the CI-CD pipeline 
 
 - Goal 1: Notifications system/AI grading
 - Goal 2: Node volume file storage
+
+## July 3rd - July 5th
+
+## Timesheet
+
+Clockify report: Total hours - 19 hours
+<img width="1920" alt="Screenshot 2024-07-05 at 7 53 55 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/b647942f-0f48-42cd-9176-ad878dfe9813">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** MVP presentation (3 hours) (XL Task)
+- **#2:** Backend and PRs reviwes (7 hours) (XL Task)
+
+## Progress Update (since 6/28/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Completed |
+
+## Cycle Goal Review
+
+Completed all my tasks, ran into multiple issues fixing dev, but it all finally works now.
+
+## Next Cycle Goals
+
+- Goal 1: Notifications system/AI grading
+- Goal 2: Node volume file storage

@@ -25,6 +25,8 @@
 - worked on the Relationship Entity Diagram
 
 
+
+
 ## Wednesday June 4
 ### 4  hours
 -completed the data flow diagrams and supporting documents
@@ -171,7 +173,7 @@
 
 
 
-# Timesheet (June 28 - July 2) - 8.5 hours
+# Timesheet (June 28 - July 3) - 8.5 hours
 
 
 ## Sunday, June 30th
@@ -189,7 +191,28 @@
 
 
 
+# Timesheet (July 3 - July 5) - 6 hours
+
+## Wednesday, July 3rd
+### 3 hours
+- Team meeting
+- code review
   
+
+## Thursday, July 4th
+### 2 hours
+- finalizing code for MVP
+
+## Friday, July 5th
+### 2 hours
+- Making the presentation for MVP
+
+
+
+
+
+
+
   
   
   

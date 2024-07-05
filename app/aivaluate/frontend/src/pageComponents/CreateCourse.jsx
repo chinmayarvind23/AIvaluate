@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import '../styles.css';
 
 const CreateCourse = () => {
@@ -81,7 +81,7 @@ const CreateCourse = () => {
 
   return (
     <>
-      <AIvaluateNavBar navBarText='Create a Course' />
+      <AIvaluateNavBarEval navBarText='Create a Course' />
       <div className='secondary-colorbg form-container'>
         <section>
           <div className="form-content">

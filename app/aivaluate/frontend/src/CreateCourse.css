@@ -29,7 +29,7 @@
   width: 80%;
 }
 
-input, .drop-down-menu {
+/* input, .drop-down-menu {
   width: 100%;
   max-width: 500px;
   padding: 10px;
@@ -40,11 +40,34 @@ input, .drop-down-menu {
   box-sizing: border-box; 
 }
 
+
 input:disabled {
   background-color: #d2c7f4;
   color: #eee;
   font-weight: bold;
   text-align: center;
+} */
+
+.drop-down-menu {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  border: 3px solid var(--primary-color);
+  border-radius: 60px;
+  font-size: 1rem;
+  color: var(--primary-color);
+  box-sizing: border-box;
+}
+.create-course-input{
+  width: 100%;
+  max-width: 500px;
+  padding: 10px;
+  border: 3px solid var(--primary-color);
+  border-radius: 60px;
+  font-size: 1rem;
+  color: var(--primary-color);
+  box-sizing: border-box; 
+  margin-top: 10px;
 }
 
 h3 {

@@ -88,7 +88,7 @@ const CreateCourse = () => {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <h3>Course Name</h3>
-                <input 
+                <input className='create-course-input'
                   type="text" 
                   name="courseName"
                   value={courseName}
@@ -97,7 +97,7 @@ const CreateCourse = () => {
               </div>
               <div className="form-group">
                 <h3>Course Number</h3>
-                <input 
+                <input className='create-course-input'
                   type="text" 
                   name="courseCode"
                   value={courseCode}
@@ -106,7 +106,7 @@ const CreateCourse = () => {
               </div>
               <div className="form-group">
                 <h3>Maximum Number of Students</h3>
-                <input 
+                <input className='create-course-input'
                   type="text" 
                   name="maxStudents"
                   value={maxStudents}

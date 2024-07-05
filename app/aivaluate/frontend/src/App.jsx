@@ -73,7 +73,7 @@ const App = () => {
           
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
-          <Route path="/stu/assignment/:courseId " element={<PrivateRouteStu element={AssignmentOverview} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}
+          <Route path="/stu/assignment/:courseId" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/* this was called AssignmentOverview but I changed the name cause that made no sense */}
           <Route path="/stu/account" element={<PrivateRouteStu element={StudentAccount} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />

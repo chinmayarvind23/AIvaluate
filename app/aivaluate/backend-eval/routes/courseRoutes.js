@@ -39,8 +39,8 @@ router.get('/courses', async (req, res) => {
 });
 
 router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
-    const instructorId = req.user.instructorId; // Access the studentId from the session
-    console.log('instructor ID:', instructorId); // Log student ID to verify
+    const instructorId = req.user.instructorId; // Access the instructorId from the session
+    console.log('instructor ID:', instructorId); // Log instructor ID to verify
 
     pool.query(
         `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName" 
@@ -76,8 +76,7 @@ router.get('/courses/:id', async (req, res) => {
         res.status(500).send({ message: 'Error fetching course' });
     }
 });
-
-// // Delete a course
+// Delete a course
 router.delete('/courses/:id', async (req, res) => {
     const courseId = req.params.id;
 
@@ -95,7 +94,7 @@ router.delete('/courses/:id', async (req, res) => {
     }
 });
 
-// // Update a course
+// Update a course
 router.put('/courses/:id', async (req, res) => {
     const courseId = req.params.id;
     const { courseName, courseCode, maxStudents } = req.body;
@@ -135,5 +134,69 @@ router.post('/courses', async (req, res) => {
     }
 });
 
+
+// Get a single course by ID
+router.get('/courses/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        if (course.rowCount > 0) {
+            res.status(200).send(course.rows[0]);
+        } else {
+            res.status(404).send({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching course:', error);
+        res.status(500).send({ message: 'Error fetching course' });
+    }
+});
+
+// Fetch all submissions for a course
+router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const result = await pool.query(
+            `SELECT 
+                "AssignmentSubmission"."assignmentSubmissionId",
+                "AssignmentSubmission"."studentId",
+                "Student"."firstName",
+                "Student"."lastName",
+                "Assignment"."assignmentKey",
+                "AssignmentSubmission"."isGraded"
+            FROM "AssignmentSubmission"
+            JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
+            JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
+            WHERE "AssignmentSubmission"."courseId" = $1`,
+            [courseId]
+        );
+        console.log("Submissions Query Result:", result.rows);  // Debugging
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching submissions:', error);
+        res.status(500).json({ message: 'Error fetching submissions' });
+    }
+});
+
+// Fetch course details for an instructor
+router.get('/instructors/:instructorId/courses', async (req, res) => {
+    const instructorId = parseInt(req.params.instructorId, 10);
+
+    try {
+        const result = await pool.query(
+            `SELECT "Course"."courseId", "Course"."courseName", "Course"."courseCode"
+             FROM "Teaches"
+             JOIN "Course" ON "Teaches"."courseId" = "Course"."courseId"
+             WHERE "Teaches"."instructorId" = $1`,
+            [instructorId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ message: 'Error fetching courses' });
+    }
+});
 
 module.exports = router;

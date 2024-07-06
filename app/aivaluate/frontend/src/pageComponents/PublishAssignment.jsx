@@ -1,8 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../PublishAssignment.css';
 import '../GeneralStyling.css';
+import '../PublishAssignment.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -44,7 +44,7 @@ const PublishAssignment = () => {
             <SideMenuBarEval tab="rubrics"/>
             <div className="rubric-container rborder secondary-colorbg">
                 <div className="line-up-title">
-                    <button className="back-button" onClick={() => navigate(-1)}>
+                    <button className="back-button-thing" onClick={() => navigate(-1)}>
                         <CircumIcon name="circle_chev_left" className="icon-size" />
                     </button>
                     <input 

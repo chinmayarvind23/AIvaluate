@@ -64,14 +64,16 @@ Requirements:
             <div className="main-margin">
                 <div className="assignment-container secondary-colorbg">
                     <div className="top-bar">
-                        <div className="button-box-div">
-                            <button className="main-back-button" onClick={() => navigate(-1)}>
-                                <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
-                            </button>
+                        <div className="drop-top">
+                            <div className="button-box-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}>
+                                    <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
+                                </button>
+                            </div>
+                            <div className="header-content">
+                                <h1 className="assignment-title primary-color-text">{assignmentTitle}</h1>
+                            </div>
                         </div>
-                        <div className="header-content">
-                            <h1 className="assignment-title primary-color-text">{assignmentTitle}</h1>
-                        </div> 
                     </div>
                     <div className="scrollable-div">
                         <div className="due-date-div">

@@ -64,8 +64,9 @@ const AssignmentOverview = () => {
     fetchAssignments();
   }, [courseId]);
 
-  const handleNavigate = () => {
-    navigate('/stu/assignment-feedback');
+  const handleNavigate = (assignmentId) => {
+    navigate(`/stu/submit/${assignmentId}`);
+
   };
   
   useEffect(() => {
@@ -124,12 +125,12 @@ const AssignmentOverview = () => {
                     {filteredAssignments.map((assignment, index) => (
                       <tr key={index}>
                         <td>
-                          <button className="icon-button" onClick={handleNavigate}>
+                          <button className="icon-button" onClick={() => handleNavigate(assignment.assignmentId)}>
                             <FaFile className="file-icon" />
                           </button>
                         </td>
                         <td>
-                          <button className="link-button" onClick={handleNavigate}>
+                          <button className="link-button" onClick={() => handleNavigate(assignment.assignmentId)}>
                             {assignment.assignmentName}
                           </button>
                         </td>

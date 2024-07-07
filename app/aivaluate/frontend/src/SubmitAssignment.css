@@ -134,3 +134,8 @@
     margin-top: 20px;
 }
 
+.drop-top{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+}

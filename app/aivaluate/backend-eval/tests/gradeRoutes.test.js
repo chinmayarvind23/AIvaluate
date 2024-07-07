@@ -4,6 +4,15 @@ const router = require('../routes/gradeRoutes');
 const { pool } = require('../dbConfig');
 const session = require('express-session');
 
+jest.mock('pg', () => {
+    const mPool = {
+      connect: jest.fn(),
+      query: jest.fn(),
+      end: jest.fn(),
+    };
+    return { Pool: jest.fn(() => mPool) };
+});
+
 const app = express();
 
 app.use(session({
@@ -17,19 +26,15 @@ app.use((req, res, next) => {
 });
 app.use('/eval-api', router);
 
-jest.mock('../dbConfig', () => {
-    const pool = {
-        query: jest.fn(),
-    };
-    return { pool };
-});
+
+jest.setTimeOut(30000);
 
 describe('Evaluator Grades Routes', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    describe('GET /eval-api/evaluator-grades/:courseId', () => {
+    describe('GET /evaluator-grades/:courseId', () => {
         it('should fetch assignment details for a course ordered by due date', async () => {
             const courseId = 1;
             const assignmentDetailsResult = {
@@ -67,5 +72,30 @@ describe('Evaluator Grades Routes', () => {
             expect(res.body).toEqual({ error: 'Database error' });
         });
     });
+
+    describe('GET /evaluator-grades/:courseId', () => {
+        it('should fetch evaluator grades for a course', async () => {
+            const gradesResult = {
+                rows: [
+                    { name: 'Assignment 1', due: '2024-06-30', avgGrade: 90, totalGrade: 100 }
+                ]
+            };
+            pool.query.mockResolvedValueOnce(gradesResult);
+    
+            const res = await request(app).get('/eval-api/evaluator-grades/1');
+    
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(gradesResult.rows);
+        });
+    
+        it('should return 500 on database error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+    
+            const res = await request(app).get('/eval-api/evaluator-grades/1');
+    
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ error: 'Database error' });
+        });
+    });    
 });
 

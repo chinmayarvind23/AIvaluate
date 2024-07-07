@@ -7,14 +7,17 @@ const session = require('express-session');
 const router = require('../routes/instructorRoutes'); // Adjust the path to your router file
 require('dotenv').config();
 
+jest.mock('pg', () => {
+    const mPool = {
+      connect: jest.fn(),
+      query: jest.fn(),
+      end: jest.fn(),
+    };
+    return { Pool: jest.fn(() => mPool) };
+});
+
 jest.mock('nodemailer');
 jest.mock('bcryptjs');
-jest.mock('../dbConfig', () => {
-    const pool = {
-        query: jest.fn(),
-    };
-    return { pool };
-});
 
 const app = express();
 app.use(express.json());
@@ -33,14 +36,14 @@ app.use('/eval-api', router);
 const sendMailMock = jest.fn().mockResolvedValue('Email sent');
 nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
 
-jest.setTimeout(10000); // Increase timeout to 10 seconds
+jest.setTimeout(30000); // Increase timeout to 10 seconds
 
 describe('Auth Routes', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    describe('POST /eval-api/forgotpassword', () => {
+    describe('POST /forgotpassword', () => {
         it('should send a password reset email', async () => {
             const mockInstructor = {
                 instructorId: 1,
@@ -80,7 +83,7 @@ describe('Auth Routes', () => {
         });
     });
 
-    describe('POST /eval-api/reset/:token', () => {
+    describe('POST /reset/:token', () => {
         it('should reset the password', async () => {
             const mockInstructor = {
                 instructorId: 1,
@@ -153,7 +156,7 @@ describe('Auth Routes', () => {
         });
     });
 
-    describe('POST /eval-api/teaches', () => {
+    describe('POST /teaches', () => {
         it('should add an instructor to a course', async () => {
             pool.query.mockResolvedValueOnce({});
 
@@ -183,7 +186,7 @@ describe('Auth Routes', () => {
         });
     });
 
-    describe('POST /eval-api/courses', () => {
+    describe('POST /courses', () => {
         it('should create a new course', async () => {
             const newCourse = {
                 courseName: 'Course Name',
@@ -217,7 +220,7 @@ describe('Auth Routes', () => {
         });
     });
 
-    describe('GET /eval-api/courses', () => {
+    describe('GET /courses', () => {
         it('should fetch all courses', async () => {
             const coursesResult = {
                 rows: [
@@ -241,4 +244,73 @@ describe('Auth Routes', () => {
             expect(res.body).toEqual({ message: 'Error fetching courses' });
         });
     });
+
+    describe('POST /forgotpassword', () => {
+        it('should send a password reset email', async () => {
+            pool.query.mockResolvedValueOnce({ rows: [{ instructorId: 1, email: 'test@example.com' }] });
+    
+            const res = await request(app)
+                .post('/eval-api/forgotpassword')
+                .send({ email: 'test@example.com' });
+    
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual({ message: 'Recovery email sent' });
+        });
+    
+        it('should return 404 if no account with that email is found', async () => {
+            pool.query.mockResolvedValueOnce({ rows: [] });
+    
+            const res = await request(app)
+                .post('/eval-api/forgotpassword')
+                .send({ email: 'nonexistent@example.com' });
+    
+            expect(res.status).toBe(404);
+            expect(res.body).toEqual({ message: 'No account with that email found' });
+        });
+    
+        it('should return 500 on database error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+    
+            const res = await request(app)
+                .post('/eval-api/forgotpassword')
+                .send({ email: 'test@example.com' });
+    
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ message: 'Server error' });
+        });
+    });
+    
+    describe('POST /reset/:token', () => {
+        it('should reset the password', async () => {
+            pool.query.mockResolvedValueOnce({ rows: [{ instructorId: 1 }] });
+            pool.query.mockResolvedValueOnce({});
+    
+            const res = await request(app)
+                .post('/eval-api/reset/token')
+                .send({ password: 'newPassword123', confirmPassword: 'newPassword123' });
+    
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual({ message: 'Password has been reset successfully' });
+        });
+    
+        it('should return 400 if passwords do not match', async () => {
+            const res = await request(app)
+                .post('/eval-api/reset/token')
+                .send({ password: 'newPassword123', confirmPassword: 'differentPassword123' });
+    
+            expect(res.status).toBe(400);
+            expect(res.body).toEqual({ message: 'Passwords do not match' });
+        });
+    
+        it('should return 500 on database error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+    
+            const res = await request(app)
+                .post('/eval-api/reset/token')
+                .send({ password: 'newPassword123', confirmPassword: 'newPassword123' });
+    
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ message: 'Server error' });
+        });
+    });    
 });

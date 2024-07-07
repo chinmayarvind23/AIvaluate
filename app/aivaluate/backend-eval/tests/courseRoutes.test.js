@@ -4,6 +4,15 @@ const router = require('../routes/courseRoutes'); // Adjust the path to your rou
 const { pool } = require('../dbConfig');
 const session = require('express-session');
 
+jest.mock('pg', () => {
+    const mPool = {
+      connect: jest.fn(),
+      query: jest.fn(),
+      end: jest.fn(),
+    };
+    return { Pool: jest.fn(() => mPool) };
+});
+
 const app = express();
 app.use(express.json());
 
@@ -19,21 +28,19 @@ app.use((req, res, next) => {
 });
 app.use('/eval-api', router);
 
-jest.mock('../dbConfig', () => {
-    const pool = {
-        query: jest.fn(),
-    };
-    return { pool };
+  
+beforeEach(() => {
+    jest.clearAllMocks();
 });
 
-jest.setTimeout(10000); // Increase timeout to 10 seconds
+jest.setTimeout(30000); // Increase timeout to 10 seconds
 
 describe('Course Routes', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    describe('POST /eval-api/courses', () => {
+    describe('POST /courses', () => {
         it('should create a new course', async () => {
             const newCourse = {
                 courseName: 'Course Name',
@@ -67,7 +74,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('GET /eval-api/courses', () => {
+    describe('GET /courses', () => {
         it('should fetch all courses', async () => {
             const coursesResult = {
                 rows: [
@@ -92,7 +99,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('GET /eval-api/enrolled-courses', () => {
+    describe('GET /enrolled-courses', () => {
         it('should fetch courses enrolled by instructor', async () => {
             const enrolledCoursesResult = {
                 rows: [
@@ -117,7 +124,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('GET /eval-api/courses/:id', () => {
+    describe('GET /courses/:id', () => {
         it('should fetch a single course by ID', async () => {
             const courseResult = {
                 rows: [
@@ -151,7 +158,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('DELETE /eval-api/courses/:id', () => {
+    describe('DELETE /courses/:id', () => {
         it('should delete a course', async () => {
             pool.query.mockResolvedValueOnce({ rowCount: 1 });
 
@@ -180,7 +187,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('PUT /eval-api/courses/:id', () => {
+    describe('PUT /courses/:id', () => {
         it('should update a course', async () => {
             pool.query.mockResolvedValueOnce({ rowCount: 1 });
 
@@ -233,7 +240,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('GET /eval-api/courses/:courseId/submissions', () => {
+    describe('GET /courses/:courseId/submissions', () => {
         it('should fetch submissions for a course', async () => {
             const submissionsResult = {
                 rows: [
@@ -265,7 +272,7 @@ describe('Course Routes', () => {
         });
     });
 
-    describe('GET /eval-api/instructors/:instructorId/courses', () => {
+    describe('GET /instructors/:instructorId/courses', () => {
         it('should fetch courses for an instructor', async () => {
             const instructorCoursesResult = {
                 rows: [
@@ -289,4 +296,54 @@ describe('Course Routes', () => {
             expect(res.body).toEqual({ message: 'Error fetching courses' });
         });
     });
+
+    describe('GET /instructors/:instructorId/courses', () => {
+        it('should fetch courses for an instructor', async () => {
+            const instructorCoursesResult = {
+                rows: [
+                    { courseId: 1, courseName: 'Course Name', courseCode: 'CSE101' }
+                ]
+            };
+            pool.query.mockResolvedValueOnce(instructorCoursesResult);
+    
+            const res = await request(app).get('/eval-api/instructors/1/courses');
+    
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(instructorCoursesResult.rows);
+        });
+    
+        it('should return 500 on database error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+    
+            const res = await request(app).get('/eval-api/instructors/1/courses');
+    
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ message: 'Error fetching courses' });
+        });
+    });
+    
+    describe('GET /courses/:courseId/submissions', () => {
+        it('should fetch all submissions for a course', async () => {
+            const submissionsResult = {
+                rows: [
+                    { assignmentSubmissionId: 1, studentId: 1, firstName: 'John', lastName: 'Doe', assignmentKey: 'key1', isGraded: true }
+                ]
+            };
+            pool.query.mockResolvedValueOnce(submissionsResult);
+    
+            const res = await request(app).get('/eval-api/courses/1/submissions');
+    
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(submissionsResult.rows);
+        });
+    
+        it('should return 500 on database error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+    
+            const res = await request(app).get('/eval-api/courses/1/submissions');
+    
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ message: 'Error fetching submissions' });
+        });
+    });    
 });

@@ -41,7 +41,7 @@ router.post('/forgotpassword', async (req, res) => {
     }
 
     const instructor = result.rows[0];
-    const { default: cryptoRandomString } = await import('crypto-random-string');
+    const cryptoRandomString = require('crypto-random-string');
     const token = cryptoRandomString({ length: 20, type: 'url-safe' });
     const tokenExpiration = new Date(Date.now() + 3600000); // 1 hour
 

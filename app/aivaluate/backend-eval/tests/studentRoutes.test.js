@@ -4,11 +4,13 @@ const session = require('express-session');
 const { pool } = require('../dbConfig');
 const router = require('../routes/studentRoutes'); // Adjust the path to your router file
 
-jest.mock('../dbConfig', () => {
-    const pool = {
-        query: jest.fn(),
+jest.mock('pg', () => {
+    const mPool = {
+      connect: jest.fn(),
+      query: jest.fn(),
+      end: jest.fn(),
     };
-    return { pool };
+    return { Pool: jest.fn(() => mPool) };
 });
 
 const app = express();
@@ -30,7 +32,7 @@ describe('Student Routes', () => {
         jest.clearAllMocks();
     });
 
-    describe('GET /eval-api/students/show/:courseId', () => {
+    describe('GET /students/show/:courseId', () => {
         it('should fetch students enrolled in a course', async () => {
             const courseId = 1;
             const mockStudents = [
@@ -56,4 +58,31 @@ describe('Student Routes', () => {
             expect(res.body).toEqual({ error: 'Database error' });
         });
     });
+    
+    describe('GET /students/show/:courseId', () => {
+        it('should fetch students enrolled in a course', async () => {
+            const studentsResult = {
+                rows: [
+                    { firstName: 'John', lastName: 'Doe' },
+                    { firstName: 'Jane', lastName: 'Smith' }
+                ]
+            };
+            pool.query.mockResolvedValueOnce(studentsResult);
+    
+            const res = await request(app).get('/eval-api/students/show/1');
+    
+            expect(res.status).toBe(200);
+            expect(res.body).toEqual(studentsResult.rows);
+        });
+    
+        it('should return 500 on database error', async () => {
+            pool.query.mockRejectedValueOnce(new Error('Database error'));
+    
+            const res = await request(app).get('/eval-api/students/show/1');
+    
+            expect(res.status).toBe(500);
+            expect(res.body).toEqual({ error: 'Database error' });
+        });
+    });
+    
 });

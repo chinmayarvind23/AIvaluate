@@ -30,7 +30,7 @@ router.get('/assignments', async (req, res) => {
 });
 
 // Fetch rubrics
-router.get('/rubrics', async (req, res) => {
+router.get('rubrics', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM "AssignmentRubric"');
         res.status(200).json(result.rows);
@@ -42,12 +42,12 @@ router.get('/rubrics', async (req, res) => {
 
 // Add a rubric
 router.post('/rubrics', async (req, res) => {
-    const { assignmentId, courseId, criteria } = req.body;
+    const { assignmentId, courseId, instructorId, criteria } = req.body;
 
     try {
         const result = await pool.query(
-            'INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "criteria") VALUES ($1, $2, $3) RETURNING *',
-            [assignmentId, courseId, criteria]
+            'INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "instructorId", "criteria") VALUES ($1, $2, $3, $4) RETURNING *',
+            [assignmentId, courseId, instructorId, criteria]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -129,9 +129,8 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
 });
 
 // Mark a submission as graded
-router.post('/submissions/:submissionId/grade', async (req, res) => {
+router.post('submissions/:submissionId/grade', async (req, res) => {
     const { submissionId } = req.params;
-
     try {
         const result = await pool.query(
             'UPDATE "AssignmentSubmission" SET "isGraded" = true WHERE "assignmentSubmissionId" = $1 RETURNING *',

@@ -79,7 +79,10 @@ Requirements:
                         <div className="due-date-div">
                             <div className="due-date"><h3>Due: {dueDate}</h3></div>
                             <div className="empty"> </div>
-                            <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
+                            <div className="score">
+                                <h3>Score: {studentScore}/{totalScore}</h3>
+                            </div>
+                            {/* <button className="submit-button rborder" onClick={handleSubmit}>Submit</button> */}
                         </div>
                         
                         <div className="file-upload">
@@ -93,21 +96,20 @@ Requirements:
                                 onChange={handleFileChange} 
                             />
                         </div>
-                        <h2>Assignment Details</h2>
+                        <div className="submit-right">
+                            <h2 className="assignment-text">Assignment Details</h2>
+                            <div className="empty"> </div>
+                            <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
+                        </div>
                         <div className="assignment-details">
                             <pre className="details-content">{assignmentDetails}</pre>
                         </div>
-                        
-                        <h3>*Not yet submitted</h3>
                         <h2>Feedback</h2>
                         <div className="feedback-container">
                             {Feedback ? (
                                 <div className="feedback">
                                         <div className="score-class">
                                             <div className="empty"> </div>
-                                            <div className="score">
-                                                <h3>Score: {studentScore}/{totalScore}</h3>
-                                            </div>
                                         </div>
                                     <div className="both-feedback">
                                         <h3>AI Feedback</h3>

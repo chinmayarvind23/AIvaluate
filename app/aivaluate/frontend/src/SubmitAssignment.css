@@ -38,7 +38,7 @@
 .due-date {
     color: red;
     margin: 0;
-    margin-left: 20px;
+    /* margin-left: 10px; */
     width: 340px;
 }
 
@@ -60,6 +60,11 @@
 
 .assignment-details {
     margin: 20px 0;
+    
+}
+
+.assignment-text{
+    width: 400px;
 }
 
 .details-content {
@@ -106,7 +111,7 @@
 
 .score{
     display:flex;
-    width: 140px;
+    width: 180px;
     padding: 10px;
     padding-top:0px;
     padding-bottom: 20px;
@@ -115,7 +120,7 @@
     border-radius: 50px;
     color: var(--secondary-color);
     background-color: var(--primary-color);
-    margin-top: -70px;
+    /* margin-top: -70px; */
     height: 20px;
 }
 
@@ -138,4 +143,11 @@
     margin-top: 10px;
     margin-bottom: 20px;
     display: flex;
+}
+
+.submit-right{
+    display: flex;
+    align-items: center;
+    margin-top: -20px;
+    margin-bottom: -10px;
 }

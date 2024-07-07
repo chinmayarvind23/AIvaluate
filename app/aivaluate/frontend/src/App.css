@@ -1,7 +1,15 @@
+/* @import 'github-markdown-css/github-markdown.css'; */
+
 html, body, #root {
   height: 100%;
   width: 100%;
   font-family: Arial, sans-serif;
+  /* overflow: hidden;  */
+  margin-bottom: 0px;
+}
+
+body{
+  /* overflow: hidden; */
 }
 
 .App {
@@ -28,3 +36,4 @@ header {
 .highlight {
   color: #8c5ff4;
 }
+

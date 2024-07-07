@@ -1,6 +1,6 @@
 .grades-section {
     margin-right: 20px;
-    margin-left: 350px;
+    /* margin-left: 350px; */
 }
 
 .grades-table {
@@ -46,7 +46,6 @@
     width:stretch;
 
 }
-
 
 .class-avg{
     display:flex;

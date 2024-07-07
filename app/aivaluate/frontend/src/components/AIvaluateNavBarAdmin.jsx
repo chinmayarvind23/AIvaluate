@@ -54,7 +54,7 @@ const AIvaluateNavBarAdmin = ({navBarText , tab}) => {
                   Account
                 </a>
                 <a href="/admin/help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
-                  Get Help...
+                  Get Help
                 </a>
                 <button onClick={handleLogout} className="logout">Logout</button>
                 </div>

@@ -11,6 +11,8 @@
     align-items: center;
     border-radius: 50px;
     background-color: white;
+    color: var(--primary-color);
+    border: var(--primary-color) 2px solid;
     padding: 10px 20px;
     width: 50%;
   }

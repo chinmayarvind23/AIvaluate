@@ -1,5 +1,5 @@
 
-.header {
+/* .header {
     position: relative;
     display: flex;
     align-items: center;
@@ -15,9 +15,9 @@
     height: 90px;
     border-radius: 50%;
     margin-right: 20px;
-  }
+  } */
   
-  .header h1 {
+  /* .header h1 {
     margin: 0;
     font-size: 44px;
   }
@@ -45,10 +45,10 @@
     transition: transform 0.5s ease-in-out;
     border: 4px dashed var(--third-color);
     opacity: 0.7;
-  }
+  } */
 
 
-  .add-course-card img {
+  /* .add-course-card img {
     width: 100%;
     border-bottom: 1px solid #ddd;
     margin-bottom: 5px;
@@ -73,9 +73,9 @@
     justify-content: center;
     align-items: center;
     margin-top: -10px;
-}
+} */
 
-  .course-card:hover{
+  /* .course-card:hover{
     transform: scale(1.1);
     box-shadow: 0px 0px 12px 10px rgba(245, 241, 241, 0.136);
     text-decoration: underline;
@@ -99,8 +99,8 @@
     margin-bottom: 5px;
     padding:0px;
     border-radius: 60px 60px 0px 0px;
-  }
-  
+  } */
+/*   
   .menu {
     position: absolute;
     top: 20px;
@@ -122,10 +122,10 @@
     position: relative;
     right: -5px;
     top: -5px;
-  }
+  } */
   
 
-  .menu button.active {
+  /* .menu button.active {
     background: var(--primary-color);
     color: var(--secondary-color);
   }
@@ -140,9 +140,9 @@
     overflow: hidden;
     width: 400px;
     z-index: 1;
-  }
+  } */
   
-  .menu .dropdown a {
+  /* .menu .dropdown a {
     display: block;
     padding: 10px 50px 20px;
     text-decoration: none;
@@ -155,17 +155,17 @@
     margin-right: 10px;
     font-size: 40px;
     text-decoration: none;
-  }
-
+  } */
+/* 
   .menu .dropdown a:hover {
     background: #eee;
   }
   
   .menu .dropdown.show {
     display: block;
-  }
+  } */
   
-  .side-menu {
+  /* .side-menu {
     padding: 20px;
     position:absolute;
     top:20px;
@@ -179,13 +179,13 @@
     padding: 10px 50px 20px;
     font-size: 30px;
     padding-top: 150px;
-  }
+  } */
 
-  .side-menu a{
+  /* .side-menu a{
     padding-top: 50px;
     color: var(--third-color);
     font-size: bold;
-  }
+  } */
 
   /* .message-container {
     padding: 20px;
@@ -201,7 +201,7 @@
     font-size: 12px;
   } */
 
-  @keyframes growDown {
+  /* @keyframes growDown {
     0% {
       height: 0;
       opacity: 0;
@@ -214,9 +214,9 @@
       height: 90px;
       opacity: 1;
     }
-  }
+  } */
   
-  .message-container {
+  /* .message-container {
     padding: 20px;
     border-radius: 60px;
     position: absolute;
@@ -231,15 +231,15 @@
     animation: growDown 1s ease-out 1s forwards;
     opacity: 0;
     animation-fill-mode: forwards;
-  }
+  } */
   
-  .notification-container {
+  /* .notification-container {
     display: flex;
     margin-top: 1px;
     float: right;
     font-weight: bold;
-  }
+  } */
 
-  .notificationBubble{
+  /* .notificationBubble{
     color: rgb(255, 183, 0);
-  }
+  } */

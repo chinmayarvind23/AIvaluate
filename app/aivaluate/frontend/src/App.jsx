@@ -4,10 +4,8 @@ import './App.css';
 import PrivateRouteAdmin from './SessionCheck/PrivateRouteAdmin';
 import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
-import StudentAccount from './pageComponents/StudentAccount';
-import EvalAccount from './pageComponents/EvalAccount';
-import AdminHelpPage from './pageComponents/AdminHelpPage';
 import AdminAccount from './pageComponents/AdminAccount';
+import AdminHelpPage from './pageComponents/AdminHelpPage';
 import AdminLogin from './pageComponents/AdminLogin';
 import AssignmentOverview from './pageComponents/AssignmentOverview';
 import AssignmentProf from './pageComponents/AssignmentProf';
@@ -19,6 +17,7 @@ import CreateCourse from './pageComponents/CreateCourse';
 import Dashboard from './pageComponents/Dashboard';
 import DashboardEval from './pageComponents/DashboardEval';
 import EditRubric from './pageComponents/EditRubric';
+import EvalAccount from './pageComponents/EvalAccount';
 import EvalhelpPage from './pageComponents/EvalHelpPage';
 import EvalLogin from './pageComponents/EvalLogin';
 import EvalViewSubmissions from './pageComponents/EvalViewSubmissions';
@@ -40,6 +39,7 @@ import SelectStudentAdmin from './pageComponents/SelectStudentAdmin';
 import SelectedAssignment from './pageComponents/SelectedAssignment';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
+import StudentAccount from './pageComponents/StudentAccount';
 import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
@@ -50,7 +50,7 @@ import ProfIndividualRubric from './pageComponents/ProfIndividualRubric';
 import PublishAssignment from './pageComponents/PublishAssignment';
 
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
-
+import TestForComponents from './pageComponents/testForComponents';
 
 const App = () => {
   return (
@@ -71,7 +71,7 @@ const App = () => {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/eval/login" element={<EvalLogin />} />
           <Route path="/admin/signup" element={<SignupAdmin />} />
-          
+          <Route path="/test" element={<TestForComponents />} />
 
 
           <Route path="/eval/rubric/rubricId" element={<EditRubric />} />
@@ -84,12 +84,10 @@ const App = () => {
           <Route path="/stu/account" element={<PrivateRouteStu element={StudentAccount} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
-          <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />    {/*   Omar    */}
-          <Route path="/stu/grades" element={<PrivateRouteStu element={StudentGrades} />} />
           <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />
-          <Route path="/stu/grades/:courseId" element={<PrivateRouteStu element={StudentGrades} />} />
+          <Route path="/stu/grades/:courseId" element={<PrivateRouteStu element={StudentGrades} />} /> {/*done*/}
           <Route path="/stu/submissions/:courseId" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
-          <Route path="/stu/submit/assignementId" element={<PrivateRouteStu element={SubmitAssignment} />} /> 
+          <Route path="/stu/submit/assignementId" element={<PrivateRouteStu element={SubmitAssignment} />} /> {/*done*/}
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
           <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} />

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 import SideMenuBar from '../components/SideMenuBar';
 
 const SubmitAssignment = () => {
@@ -41,38 +42,88 @@ Requirements:
         // Logic for submitting the assignment
         console.log('File submitted:', file);
     };
+    const Feedback = true;
+    const totalScore = 34;
+    const studentScore = 32;
+    const markdownText = `
+        # Hello, World!
+
+        This is a paragraph in **Markdown**.
+
+        - Item 1
+        - Item 2
+        - Item 3
+
+        [Link to Google](https://www.google.com)
+        `;
 
     return (
         <div>
             <AIvaluateNavBar navBarText="Course number - Course Name" />
             <SideMenuBar tab="assignments"/>
-            <div className="assignment-container rborder secondary-colorbg">
-                <div className="top-bar">
-                    <button className="back-button-sub" onClick={() => navigate(-1)}>
-                        <CircumIcon name="circle_chev_left" className="icon-size-sub" />
-                    </button>
-                    <div className="header-content">
-                        <h1 className="assignment-title primary-color-text">{assignmentTitle}</h1>
+            <div className="main-margin">
+                <div className="assignment-container secondary-colorbg">
+                    <div className="top-bar">
+                        <div className="button-box-div">
+                            <button className="main-back-button" onClick={() => navigate(-1)}>
+                                <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
+                            </button>
+                        </div>
+                        <div className="header-content">
+                            <h1 className="assignment-title primary-color-text">{assignmentTitle}</h1>
+                        </div> 
                     </div>
-                    
+                    <div className="scrollable-div">
+                        <div className="due-date-div">
+                            <div className="due-date"><h3>Due: {dueDate}</h3></div>
+                            <div className="empty"> </div>
+                            <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
+                        </div>
+                        
+                        <div className="file-upload">
+                            <label htmlFor="file-upload" className="file-upload-label">
+                                Drag files here or Click to browse files
+                            </label>
+                            <input 
+                                type="file" 
+                                id="file-upload" 
+                                className="file-upload-input" 
+                                onChange={handleFileChange} 
+                            />
+                        </div>
+                        <h2>Assignment Details</h2>
+                        <div className="assignment-details">
+                            <pre className="details-content">{assignmentDetails}</pre>
+                        </div>
+                        
+                        <h3>*Not yet submitted</h3>
+                        <h2>Feedback</h2>
+                        <div className="feedback-container">
+                            {Feedback ? (
+                                <div className="feedback">
+                                        <div className="score-class">
+                                            <div className="empty"> </div>
+                                            <div className="score">
+                                                <h3>Score: {studentScore}/{totalScore}</h3>
+                                            </div>
+                                        </div>
+                                    <div className="both-feedback">
+                                        <h3>AI Feedback</h3>
+                                        <div className="feeback-text">
+                                            <MarkdownRenderer markdownText={markdownText} />
+                                        </div>
+                                        <h3>Evaluator Feedback</h3>
+                                        <div className="feeback-text">
+                                            <MarkdownRenderer markdownText={markdownText} />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <h3>No feedback available yet...</h3>
+                            )}
+                        </div>
+                    </div>
                 </div>
-                <h3 className="due-date">Due: {dueDate}</h3>
-                <div className="file-upload">
-                    <label htmlFor="file-upload" className="file-upload-label">
-                        Drag files here or Click to browse files
-                    </label>
-                    <input 
-                        type="file" 
-                        id="file-upload" 
-                        className="file-upload-input" 
-                        onChange={handleFileChange} 
-                    />
-                </div>
-                <div className="assignment-details">
-                    <pre className="details-content">{assignmentDetails}</pre>
-                </div>
-                <button className="submit-button secondary-button rborder" onClick={handleSubmit}>Submit</button>
-                <h3>*Not yet submitted</h3>
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBarEval from "../components/AIvaluateNavBarEval";
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -82,9 +83,9 @@ const Students = () => {
             <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="students" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>Students</h1>
                             <div className="search-container">
                                 <div className="search-box">

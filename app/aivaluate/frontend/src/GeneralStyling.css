@@ -137,10 +137,10 @@ body {
 
 .top-bar{
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     align-items: center;
     margin-top:-20px;
-    padding: 20px;
+    padding-left: 20px;
     border-bottom: 2px solid var(--primary-color);
     color: var(--primary-color);
 }
@@ -154,4 +154,8 @@ body {
     /* border-radius: 10px; */
     /* border: red 2px solid;  */
     /* padding-bottom: 200px; */
+}
+
+.empty{
+    width: stretch;
 }

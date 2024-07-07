@@ -1,5 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React from 'react';
+import { Link } from 'react-router-dom'; // to prevent page reload
 import '../GeneralStyling.css';
 import '../SideMenu.css';
 

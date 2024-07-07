@@ -119,12 +119,6 @@
     height: 20px;
 }
 
-.empty{
-    /* display:flex; */
-    width: stretch;
-    /* border: red 2px solid; */
-}
-
 .score-class{
     display:flex;
 }

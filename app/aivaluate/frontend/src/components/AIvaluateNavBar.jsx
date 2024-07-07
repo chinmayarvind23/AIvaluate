@@ -54,7 +54,7 @@ const AIvaluateNavBar = ({navBarText , tab}) => {
                   Account
                 </a>
                 <a href="/stu/join-course" className={`${tab === 'join-course' ? 'primary-color-text' : 'third-color-text'}`}>
-                  Join a Course
+                  Join Course
                 </a>
                 <a href="/stu/help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
                   Get Help

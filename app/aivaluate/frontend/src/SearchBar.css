@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     height:40px;
+    /* width: 200px; */
   }
   
   .search-box {
@@ -16,6 +17,7 @@
     margin-left: 20px;
     margin-right: 20px;
     height: stretch;
+    width: 200px;
   }
   
   .search-box input {

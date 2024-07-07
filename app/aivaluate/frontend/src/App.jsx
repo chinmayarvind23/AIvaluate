@@ -59,19 +59,19 @@ const App = () => {
         <Routes>
           {/* No session validation routes required */}
           <Route path="/" element={<Login />} /> {/* Default route */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/stu/login" element={<Login />} />
-          <Route path="/stu/signup" element={<Signup />} />
-          <Route path ="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/resetpassword/:token" element={<ResetPassword />} />
-          <Route path="/admin/forgotpassword" element={<ForgotPasswordAdmin />} />
-          <Route path="/admin/resetpassword/:token" element={<ResetPasswordAdmin />} />
-          <Route path="/eval/forgotpassword" element={<ForgotPasswordEval />} />
-          <Route path="/eval/resetpassword/:token" element={<ResetPasswordEval />} />
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/eval/login" element={<EvalLogin />} />
-          <Route path="/admin/signup" element={<SignupAdmin />} />
-          <Route path="/test" element={<TestForComponents />} />
+          <Route path="/login" element={<Login />} /> {/* Done*/}
+          <Route path="/stu/login" element={<Login />} /> {/* Done*/}
+          <Route path="/stu/signup" element={<Signup />} /> {/* Done*/}
+          <Route path ="/forgotpassword" element={<ForgotPassword />} /> {/* Done*/}
+          <Route path="/resetpassword/:token" element={<ResetPassword />} /> {/* Done*/}
+          <Route path="/admin/forgotpassword" element={<ForgotPasswordAdmin />} /> {/* Done*/}
+          <Route path="/admin/resetpassword/:token" element={<ResetPasswordAdmin />} /> {/* Done*/}
+          <Route path="/eval/forgotpassword" element={<ForgotPasswordEval />} /> {/* Done*/}
+          <Route path="/eval/resetpassword/:token" element={<ResetPasswordEval />} /> {/* Done*/}
+          <Route path="/admin/login" element={<AdminLogin />} /> {/* Done*/}
+          <Route path="/eval/login" element={<EvalLogin />} /> {/* Done*/}
+          <Route path="/admin/signup" element={<SignupAdmin />} /> {/* Done*/}
+          <Route path="/test" element={<TestForComponents />} /> {/* Done*/}
 
 
           <Route path="/eval/rubric/rubricId" element={<EditRubric />} />
@@ -79,20 +79,20 @@ const App = () => {
 
           
           {/* Session validation routes for student */}
-          <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} />
+          <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} /> {/* Done*/}
           <Route path="/stu/assignment/:courseId" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/*done*/}
           <Route path="/stu/account" element={<PrivateRouteStu element={StudentAccount} />} />
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} />
-          <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} />
-          <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} />
+          <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} /> {/* Done*/}
+          <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} /> {/* Done*/}
           <Route path="/stu/grades/:courseId" element={<PrivateRouteStu element={StudentGrades} />} /> {/*done*/}
           <Route path="/stu/submissions/:courseId" element={<PrivateRouteStu element={StudentViewSubmissions} />} />
           <Route path="/stu/submit/assignementId" element={<PrivateRouteStu element={SubmitAssignment} />} /> {/*done*/}
           {/* Session validation routes for admin */}
-          <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} />
+          <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} /> {/* Done*/}
           <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} />
           <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} />
-          <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} />
+          <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} /> {/* Done*/}
           <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} />
           <Route path="/admin/help" element={<PrivateRouteAdmin element={AdminHelpPage} />} />
           <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} />
@@ -106,9 +106,9 @@ const App = () => {
           <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} />
           <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} />
           <Route path="/eval/create-assignment" element={<PrivateRouteEval element={CreateAssignment} />} />
-          <Route path="/eval/rubrics/:courseId" element={<PrivateRouteEval element={Rubrics} />} />
-          <Route path="/eval/students/:courseId" element={<PrivateRouteEval element={Students} />} />
-          <Route path="/eval/grades/:courseId" element={<PrivateRouteEval element={EvaluatorGrades} />} />
+          <Route path="/eval/rubrics/:courseId" element={<PrivateRouteEval element={Rubrics} />} /> {/* Done*/}
+          <Route path="/eval/students/:courseId" element={<PrivateRouteEval element={Students} />} /> {/* not displayiong properly*/}
+          <Route path="/eval/grades/:courseId" element={<PrivateRouteEval element={EvaluatorGrades} />} /> {/* Done*/}
           <Route path="/eval/account" element={<PrivateRouteEval element={EvalAccount} />} />
           <Route path="/eval/selected/assignment" element={<PrivateRouteEval element={SelectedAssignment} />} />
           <Route path="/eval/assignments/:courseId" element={<PrivateRouteEval element={AssignmentProf} />} />

@@ -105,8 +105,8 @@ body {
     margin-top:-40px;
     background-color: var(--secondary-color);
     padding-top: 20px;
-    height:100%;
-    /* border: red 2px solid; */
+    height:100vh;
+    max-height: 730px;
   }
 
   .main-back-button {
@@ -121,6 +121,7 @@ body {
     color: var(--secondary-color);
     cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    
 }
 
 .main-back-button:hover {
@@ -145,11 +146,12 @@ body {
 }
 
 .scrollable-div {
-    /* border: red 2px solid; */
     overflow-y: auto;
     max-height: 600px;
     /* margin-bottom:400px;  */
     padding: 10px;
     background: var(--secondary-color);
-    border-radius: 10px;
+    /* border-radius: 10px; */
+    /* border: red 2px solid;  */
+    /* padding-bottom: 200px; */
 }

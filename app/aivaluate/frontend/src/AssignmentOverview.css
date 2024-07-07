@@ -1,11 +1,7 @@
 .assignment-table-content {
   flex-grow: 1;
   height: 100%;
-  /* margin-top: 50px; */
-  /* margin-right: 50px; */
-  /* margin-left: 400px; */
-  /* border: 10px solid transparent; */
-  /* border-radius: 50px;  */
+  margin-right: 50px;
   padding: 20px;
   font-size: 1.5em;
 }
@@ -30,19 +26,14 @@
   margin: 20px 0;
 }
 
-/* .assignment-table th, 
+.assignment-table th, 
 .assignment-table td {
   padding: 0px;
   text-align: left;
-} */
+}
 
 .assignment-table .file-icon {
   margin-right: 10px;
-}
-
-.assignment-search-container {
-  /* margin-top:40px; */
-  /* margin-left:400px; */
 }
 
 .icon-button, .link-button {
@@ -55,6 +46,11 @@
   padding: 0; 
   margin: 0; 
   display: inline;
+}
+
+.link-button {
+  text-decoration: underline;
+  color: var(--primary-color);
 }
 
 .icon-button .file-icon {

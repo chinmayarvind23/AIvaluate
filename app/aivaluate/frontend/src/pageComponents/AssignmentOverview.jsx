@@ -91,7 +91,6 @@ const AssignmentOverview = () => {
       <AIvaluateNavBar navBarText={navBarText} />
       <SideMenuBar tab="assignments" />
       <div className="main-margin">
-        {/* <div className="assignment-search-container"> */}
           <div className="top-bar">
             <h1>Assignments</h1>
             <div className="search-container">
@@ -106,8 +105,7 @@ const AssignmentOverview = () => {
               </div>
             </div>
           </div>
-        {/* </div> */}
-        <div className="table-container">
+        <div className="scrollable-div">
           <main className="assignment-table-content">
             <section className="table-section">
               {error ? (

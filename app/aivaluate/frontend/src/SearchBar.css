@@ -2,8 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    height:40px;
   }
   
   .search-box {
@@ -13,8 +12,10 @@
     background-color: white;
     color: var(--primary-color);
     border: var(--primary-color) 2px solid;
-    padding: 10px 20px;
-    width: 50%;
+    padding: 10px 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: stretch;
   }
   
   .search-box input {
@@ -23,6 +24,7 @@
     padding: 10px;
     font-size: 18px;
     width: 100%;
+    height: stretch;
   }
   
   .search-box input::placeholder {

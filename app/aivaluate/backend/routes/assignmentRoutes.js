@@ -305,13 +305,18 @@ const storage = multer.diskStorage({
         return cb(new Error('Student ID not found in session'), false);
       }
   
-      const dir = `./assignmentSubmissions/${courseId}/${assignmentId}/${studentId}`;
-      console.log(`Destination directory: ${dir}`);
+      const dir = path.resolve(__dirname, `../assignmentSubmissions/${courseId}/${assignmentId}/${studentId}`);
+        console.log(`Destination directory: ${dir}`);
 
-      // Create the directory if it doesn't exist
-      fs.mkdirSync(dir, { recursive: true });
+        // Create the directory if it doesn't exist
+        fs.mkdir(dir, { recursive: true }, (err) => {
+            if (err) {
+                console.error('Error creating directory:', err);
+                return cb(err);
+            }
+            cb(null, dir);
+        })
   
-      cb(null, dir);
     },
     filename: (req, file, cb) => {
         console.log(`Filename: ${file.originalname}`);

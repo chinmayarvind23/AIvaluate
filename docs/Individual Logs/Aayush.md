@@ -11,7 +11,7 @@
 - Worked on the database design  
 - Started Working on the data flow diagram
 - 
-# Cycle Summary (May 31 - June 4) - 9 hours
+# Cycle Summary (May 31 - June 4) - 7 hours
 
 ### Timesheet
 Clockify report
@@ -46,13 +46,14 @@ Clockify report
     </tr>
 </table>
 
-### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-I completed all the planned tasks, including data flow diagrams, Relationship Entity Diagram, and file structure setup. The process went smoothly, and all supporting documents were completed on time.
+### Cycle Goal Review 
+I completed all the planned tasks, including data flow diagrams, Relationship Entity Diagrams, and file structure setup. The process went smoothly, and all supporting documents were completed on time.
 
-### Next Cycle Goals (What are you going to accomplish during the next cycle)
-  * Goal 1: Refine the data flow diagrams based on feedback
-  * Goal 2: Develop initial database schema
-  * Goal 3: Create a prototype for the user interface
+### Next Cycle Goals 
+  * Goal 1: Reviewing the project design documents
+  * Goal 2: Working on  front-end Login/logout design page
+  * Goal 3: Learning react 
+ 
 
 
 # Cycle Summary (June 5 - June 7) - 8.5 hours

@@ -157,25 +157,25 @@ I made significant progress on multiple fronts. The design video presentation,fr
 Clockify report
 
 ### Current Tasks 
-  * #1: Completed the design Assignment frontend page (localhost:5173/designAssignment)
+  * #1: design Assignment frontend page 
   * #2: Worked on creating course creation function backend logic
   * #3: Team meeting and planning
   * #4: Worked on the backend of the search course
   * #5: Helped in login and signup Backend
   * #6: Finalizing everything for the Friday's presentation
 
-### Progress Update (since 6/12/2024)
+### Progress Update (since 6/13/2024)
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong></td>
         <td><strong>STATUS</strong></td>
     </tr>
     <tr>
-        <td>Completed the design Assignment frontend page </td>
+        <td> design Assignment frontend page </td>
         <td>Complete</td>
     </tr>
     <tr>
-        <td>Worked on creating course creation function backend logic</td>
+        <td> creating course creation function backend logic</td>
         <td>Complete</td>
     </tr>
     <tr>

@@ -108,9 +108,8 @@ Clockify report
   * #1: Working on front-end Login/logout design page
   * #2: Worked on the design video presentation
   * #3: Helped solve merge conflicts to merge the branch with the dockerized backend
-  * #4: Learning and Understanding React
-  * #5: Code review and merged the Frontend login pages to the development branch
-  * #7: Worked on frontend design Assignment frontend page
+  * #4: Code review and merged the Frontend login pages to the development branch
+  * #5: Worked on frontend design Assignment frontend page
 
 ### Progress Update (since 6/7/2024)
 <table>
@@ -130,10 +129,7 @@ Clockify report
         <td>Helped solve merge conflicts to merge the branch with the dockerized backend</td>
         <td>Complete</td>
     </tr>
-    <tr>
-        <td>Learning and understanding React</td>
-        <td>In Progress</td>
-    </tr>
+   
     <tr>
         <td>Code review and merged the Frontend login pages to the development branch</td>
         <td>Complete</td>

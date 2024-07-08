@@ -150,40 +150,38 @@ I made significant progress on multiple fronts. The design video presentation,fr
 
 
 
-
 # Timesheet (June 12 - June 14) - 14 hours
 
 ### Timesheet
 Clockify report
 
 ### Current Tasks 
-  * #1: design Assignment frontend page 
+  * #1: Design Assignment frontend page
   * #2: Worked on creating course creation function backend logic
   * #3: Worked on the backend of the search course
-  * #4: Helped in login and signup Backend
+  * #4: Helped in login and signup backend
   * #5: Finalizing everything for the Friday's presentation
 
-### Progress Update (since 6/13/2024)
+### Progress Update (since 6/12/2024)
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong></td>
         <td><strong>STATUS</strong></td>
     </tr>
     <tr>
-        <td> design Assignment frontend page </td>
+        <td>Design Assignment frontend page</td>
         <td>Complete</td>
     </tr>
     <tr>
-        <td> creating course creation function backend logic</td>
+        <td>Creating course creation function backend logic</td>
         <td>Complete</td>
     </tr>
-    
     <tr>
         <td>Worked on the backend of the search course</td>
         <td>Complete</td>
     </tr>
     <tr>
-        <td>Helped in login and signup Backend</td>
+        <td>Helped in login and signup backend</td>
         <td>Complete</td>
     </tr>
     <tr>
@@ -195,7 +193,6 @@ Clockify report
         <td>In Progress</td>
     </tr>
 </table>
-
 
 # Timesheet (June 14 - June 19) - 15 hours
 

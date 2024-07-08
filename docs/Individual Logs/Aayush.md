@@ -11,7 +11,7 @@
 - Worked on the database design  
 - Started Working on the data flow diagram
 - 
-# Cycle Summary (May 31 - June 4) - 7 hours
+# Cycle Summary (May 31 - June 4) - 9 hours
 
 ### Timesheet
 Clockify report

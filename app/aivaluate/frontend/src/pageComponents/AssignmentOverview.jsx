@@ -65,7 +65,7 @@ const AssignmentOverview = () => {
   }, [courseId]);
 
   const handleNavigate = (assignmentId) => {
-    navigate(`/stu/submit/${assignmentId}`);
+    navigate(`/stu/submit/${courseId}/${assignmentId}`);
 
   };
   

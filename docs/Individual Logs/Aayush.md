@@ -194,6 +194,12 @@ Clockify report
     </tr>
 </table>
 
+### Next Cycle Goals 
+  * Goal 1: Complete the finalizing of the presentation
+  * Goal 2: Start the integration of the front-end with the back-end
+  * Goal 3: Enhance the course creation functionality
+  * Goal 4: Improve the search course backend logic
+
 # Timesheet (June 14 - June 19) - 15 hours
 
 ## Friday June 14th

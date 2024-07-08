@@ -1,10 +1,10 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
- import React, { useEffect, useState } from 'react';
- import '../AssignmentProf.css';
- import '../FileDirectory.css';
- import '../GeneralStyling.css';
- import AIvaluateNavBarEval from '../components/AIvaluateNavBar';
- import SideMenuBarEval from '../components/SideMenuBarEval';
+import React, { useEffect, useState } from 'react';
+import '../AssignmentProf.css';
+import '../FileDirectory.css';
+import '../GeneralStyling.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBar';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 
 
  const AssignmentProf = () => {
@@ -61,20 +61,22 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
              <AIvaluateNavBarEval navBarText={navBarText} />
              <SideMenuBarEval tab="assignments" />
              <div className="accented-outside rborder">
-                 <div className="portal-all">
+                 <div className="main-margin">
                      <div className="portal-container">
-                         <div className="topBarButton">
+                         <div className="top-bar">
+                            <h1>Assignments</h1>
+                            <div className="empty"> </div>
                              <div className="left-button">
-                                 <button className="assignButton secondary-button">
+                                 <button className="assignButton">
                                  <CircumIcon name="circle_plus"/> 
-                                 Create New Assignment...
+                                 Create New Assignment
                                  </button>
                              </div>
-                             <div className="blank-space"> </div>
+                             
                              <div className="right-button">
-                                 <button className="assignButton secondary-button">
+                                 <button className="assignButton">
                                      <div className="file-icon"><CircumIcon name="folder_on" /></div>
-                                     Browse My Assignments...
+                                     Browse My Assignments
                                  </button>
                              </div>
                          </div>

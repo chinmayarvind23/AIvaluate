@@ -1,136 +1,106 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import '../AssignmentProf.css';
+import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import '../SubmitAssignment.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import MarkdownRenderer from '../components/MarkdownRenderer';
-import SideMenuBar from '../components/SideMenuBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBar';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 
-const SubmitAssignment = () => {
-    const navigate = useNavigate();
-    const [file, setFile] = useState(null);
-    const [assignmentTitle, setAssignmentTitle] = useState("Lab 3 - Build a Personal Portfolio Page");
-    const [dueDate, setDueDate] = useState("May 30 11:59 p.m.");
-    const [assignmentDetails, setAssignmentDetails] = useState(
-        `Objective:
-Create a personal portfolio webpage using HTML and CSS. The webpage should include sections for an introduction, skills, projects, and contact information.
 
-Requirements:
-1. HTML Structure:
-    - Use semantic HTML elements (e.g., <header>, <section>, <footer>).
-    - Include a navigation bar with links to different sections of the page.
-    - Create sections for Introduction, Skills, Projects, and Contact Information.
+ const AssignmentProf = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
 
-2. CSS Styling:
-    - Use an external CSS file to style the webpage.
-    - Apply styles to ensure a visually appealing and responsive design.
-    - Use CSS Flexbox or Grid for layout.
-    - Include styles for fonts, colors, and spacing.
+     const [currentPage, setCurrentPage] = useState(1);
+     const itemsPerPage = 6;
+     const [searchTerm, setSearchTerm] = useState('');
+     const [filteredFiles, setFilteredFiles] = useState([]);
 
-3. Content:
-    - Introduction Section: Brief introduction about yourself with a heading and a paragraph.
-    - Skills Section: List of your skills in a visually appealing format (e.g., skill bars, icons).
-    - Projects Section: Showcase at least two projects with project titles, descriptions, and links (if available).`
-    );
+     const files = [
+         { name: 'Lab 1', published: true },
+         { name: 'Lab 2', published: true },
+         { name: 'Lab 3', published: false },
+         { name: 'Assignment 1', published: false },
+         { name: 'Assignment 2', published: false },
+         { name: 'Assigment 3', published: false },
+         { name: 'Lab 4', published: false },
+         { name: 'Lab 5', published: false },
+     ];
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+     useEffect(() => {
+         const filtered = files.filter(file =>
+             file.name.toLowerCase().includes(searchTerm.toLowerCase())
+         );
+         setFilteredFiles(filtered);
+         setCurrentPage(1); // Reset to first page on new search
+     }, [searchTerm]);
 
-    const handleSubmit = () => {
-        // Logic for submitting the assignment
-        console.log('File submitted:', file);
-    };
-    const Feedback = true;
-    const totalScore = 34;
-    const studentScore = 32;
-    const markdownText = `
-        # Hello, World!
+     // Calculates the current items to display
+     const indexOfLastItem = currentPage * itemsPerPage;
+     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
 
-        This is a paragraph in **Markdown**.
+     // This calculates the total number of pages based of the max number of items per page
+     const totalPages = Math.ceil(files.length / itemsPerPage);
 
-        - Item 1
-        - Item 2
-        - Item 3
+     const handleNextPage = () => {
+     if (currentPage < totalPages) {
+         setCurrentPage(prevPage => prevPage + 1);
+     }
+     };
 
-        [Link to Google](https://www.google.com)
-        `;
+     const handlePrevPage = () => {
+     if (currentPage > 1) {
+         setCurrentPage(prevPage => prevPage - 1);
+     }
+     };
 
-    return (
-        <div>
-            <AIvaluateNavBar navBarText="Course number - Course Name" />
-            <SideMenuBar tab="assignments"/>
-            <div className="main-margin">
-                <div className="assignment-container secondary-colorbg">
-                    <div className="top-bar">
-                        <div className="drop-top">
-                            <div className="button-box-div">
-                                <button className="main-back-button" onClick={() => navigate(-1)}>
-                                    <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
-                                </button>
-                            </div>
-                            <div className="header-content">
-                                <h1 className="assignment-title primary-color-text">{assignmentTitle}</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="scrollable-div">
-                        <div className="due-date-div">
-                            <div className="due-date"><h3>Due: {dueDate}</h3></div>
+     return (
+         <div>
+             <AIvaluateNavBarEval navBarText={navBarText} />
+             <SideMenuBarEval tab="assignments" />
+             <div className="accented-outside rborder">
+                 <div className="main-margin">
+                     <div className="portal-container">
+                         <div className="top-bar">
+                            <h1>Assignments</h1>
                             <div className="empty"> </div>
-                            <div className="score">
-                                <h3>Score: {studentScore}/{totalScore}</h3>
-                            </div>
-                            {/* <button className="submit-button rborder" onClick={handleSubmit}>Submit</button> */}
-                        </div>
-                        
-                        <div className="file-upload">
-                            <label htmlFor="file-upload" className="file-upload-label">
-                                Drag files here or Click to browse files
-                            </label>
-                            <input 
-                                type="file" 
-                                id="file-upload" 
-                                className="file-upload-input" 
-                                onChange={handleFileChange} 
-                            />
-                        </div>
-                        <div className="submit-right">
-                            <h2 className="assignment-text">Assignment Details</h2>
-                            <div className="empty"> </div>
-                            <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
-                        </div>
-                        <div className="assignment-details">
-                            <pre className="details-content">{assignmentDetails}</pre>
-                        </div>
-                        <h2>Feedback</h2>
-                        <div className="feedback-container">
-                            {Feedback ? (
-                                <div className="feedback">
-                                        <div className="score-class">
-                                            <div className="empty"> </div>
-                                        </div>
-                                    <div className="both-feedback">
-                                        <h3>AI Feedback</h3>
-                                        <div className="feeback-text">
-                                            <MarkdownRenderer markdownText={markdownText} />
-                                        </div>
-                                        <h3>Evaluator Feedback</h3>
-                                        <div className="feeback-text">
-                                            <MarkdownRenderer markdownText={markdownText} />
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                <h3>No feedback available yet...</h3>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
+                             <div className="left-button">
+                                 <button className="assignButton">
+                                 <CircumIcon name="circle_plus"/> 
+                                 Create New Assignment
+                                 </button>
+                             </div>
+                             
+                             <div className="right-button">
+                                 <button className="assignButton">
+                                     <div className="file-icon"><CircumIcon name="folder_on" /></div>
+                                     Browse My Assignments
+                                 </button>
+                             </div>
+                         </div>
+                         <div className="filetab">
+                             {currentFiles.map((file, index) => (
+                                 <div className="file-item" key={index}>
+                                     <div className="file-name">{file.name}</div>
+                                     <div className="file-status">{file.published ? 'Published' : 'Unpublished'}</div>
+                                     <div className="file-icon"><CircumIcon name="circle_more"/></div>
+                                 </div>
+                             ))}
+                         </div>
+                     </div>
+                     <div className="pagination-controls">
+                         <span>Page {currentPage} of {totalPages}</span>
+                         <div className="pagination-buttons">
+                             <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                             <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                         </div>
+                     </div>
+                 </div> 
+             </div>
+         </div>
+     );
+ };
 
-export default SubmitAssignment;
+ export default AssignmentProf;

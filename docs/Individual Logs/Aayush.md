@@ -120,7 +120,7 @@ Clockify report
     </tr>
     <tr>
         <td>Working on front-end Login/logout design page</td>
-        <td>In Progress</td>
+        <td>Complete</td>
     </tr>
     <tr>
         <td>Worked on the design video presentation</td>
@@ -138,10 +138,7 @@ Clockify report
         <td>Code review and merged the Frontend login pages to the development branch</td>
         <td>Complete</td>
     </tr>
-    <tr>
-        <td>Team meeting and planning</td>
-        <td>Complete</td>
-    </tr>
+    
     <tr>
         <td>Worked on frontend design Assignment frontend page</td>
         <td>In Progress</td>
@@ -149,7 +146,7 @@ Clockify report
 </table>
 
 ### Cycle Goal Review 
-I made significant progress on multiple fronts. The design video presentation and solving merge conflicts were completed successfully. Learning React and working on the frontend login/logout design page are ongoing. The code review and merge of the frontend login pages to the development branch were completed. The team meeting and planning were productive.
+I made significant progress on multiple fronts. The design video presentation,frontend login/logout design page and solving merge conflicts were completed successfully. The code review and merge of the frontend login pages to the development branch were completed. The team meeting and planning were productive.
 
 ### Next Cycle Goals 
   * Goal 1: Continue working on the front-end Login/logout design page

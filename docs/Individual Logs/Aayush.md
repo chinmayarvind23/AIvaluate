@@ -98,6 +98,8 @@ I reviewed the project design documents as planned. I started working on the fro
   * Goal 2: Further learning and implementing React
   * Goal 3: Worked on the design video presentation
   * Goal 4: Worked on trying to help solve merge conflicts to merge the branch with the dockerized backend
+
+    
 # Timesheet (June 7 - June 11) - 9.5 hours
 
 ### Timesheet
@@ -195,41 +197,66 @@ Clockify report
 </table>
 
 ### Next Cycle Goals 
-  * Goal 1: Complete the finalizing of the presentation
-  * Goal 2: Start the integration of the front-end with the back-end
-  * Goal 3: Enhance the course creation functionality
+  * Goal 1: Database connectivity Testing
+  * Goal 2: Assignment submission frontend page
+  * Goal 3: Design assignment frontend page 
   * Goal 4: Improve the search course backend logic
 
 # Timesheet (June 14 - June 19) - 15 hours
 
-## Friday June 14th
-###  2 hours
-- Team meeting  
-- Assigning the issues
+### Timesheet
+Clockify report
 
+### Current Tasks 
+  * #1: Database connectivity testing
+  * #2: Assignment submission frontend page
+  * #3: Design assignment frontend page
+  * #4: Assignment submission frontend page
 
-## Tuesday June 18th
-### 11 hours
-- Completed the database testing 
-- Worked on Assignment submission frontend page
-- Team meeting and planning
+### Progress Update (since 6/14/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Database Connectivity testing</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Assignment submission frontend page</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td> Design assignment frontend page</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td> Assignment submission frontend page</td>
+        <td>Complete</td>
+    </tr>
+</table>
 
-## Wednesday June 19th
-### 2 hours
-- Completed the Design assignment frontend page 
-- Completed the Assignment submission frontend page 
+### Cycle Goal Review 
+I completed the database testing, the Design assignment frontend page, and the Assignment submission frontend page.
+
+### Next Cycle Goals 
+  * Goal 1: Refine the database based on testing results
+  * Goal 2: Implement additional features for the Assignment submission frontend page
+  * Goal 3: Start working on user authentication improvements
+  * Goal 4: Plan and begin integration of frontend with backend services
 
 # Timesheet (June 19 - June 21) - 10  hours
 
 ## Wednesday June 19th
 ### 2 hours
-- Worked on database connectivity testing 
+-  database connectivity testing 
   
 
 ## Thursday June 20th
 ### 4 hours
 - Design selected rubric page - prof view only (frontend)
-- Worked on  database connectivity testing 
+- W  database connectivity testing 
   
 
 ## Friday June 21st

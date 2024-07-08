@@ -98,7 +98,6 @@ I reviewed the project design documents as planned. I started working on the fro
   * Goal 2: Further learning and implementing React
   * Goal 3: Worked on the design video presentation
   * Goal 4: Worked on trying to help solve merge conflicts to merge the branch with the dockerized backend
-    
 # Timesheet (June 7 - June 11) - 9.5 hours
 
 ### Timesheet
@@ -111,7 +110,7 @@ Clockify report
   * #4: Code review and merged the Frontend login pages to the development branch
   * #5: Worked on frontend design Assignment frontend page
 
-### Progress Update (since 6/7/2024)
+### Progress Update (since 6/10/2024)
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong></td>
@@ -129,17 +128,16 @@ Clockify report
         <td>Helped solve merge conflicts to merge the branch with the dockerized backend</td>
         <td>Complete</td>
     </tr>
-   
     <tr>
         <td>Code review and merged the Frontend login pages to the development branch</td>
         <td>Complete</td>
     </tr>
-    
     <tr>
         <td>Worked on frontend design Assignment frontend page</td>
         <td>In Progress</td>
     </tr>
 </table>
+
 
 ### Cycle Goal Review 
 I made significant progress on multiple fronts. The design video presentation,frontend login/logout design page and solving merge conflicts were completed successfully. The code review and merge of the frontend login pages to the development branch were completed. The team meeting and planning were productive.

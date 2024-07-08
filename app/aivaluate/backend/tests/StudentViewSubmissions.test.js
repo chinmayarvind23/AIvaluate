@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import StudentViewSubmissions from '../path/to/StudentViewSubmissions';
+import StudentViewSubmissions from '../components/StudentViewSubmissions'; // Correct the path here
 import '@testing-library/jest-dom/extend-expect';
 import fetchMock from 'jest-fetch-mock';
 

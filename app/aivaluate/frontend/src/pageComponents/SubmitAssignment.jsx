@@ -136,12 +136,10 @@
 //     );
 // };
 
-// export default SubmitAssignment;
-
-import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -152,7 +150,6 @@ const SubmitAssignment = () => {
     const navigate = useNavigate();
     const { courseId, assignmentId } = useParams();
     const [file, setFile] = useState(null);
-    const [assignmentTitle, setAssignmentTitle] = useState('');
     const [isGraded, setIsGraded] = useState(false);
     const [assignmentDetails, setAssignmentDetails] = useState({
         assignmentName: '',
@@ -177,7 +174,6 @@ const SubmitAssignment = () => {
                 const data = await response.json();
                 if (response.ok) {
                     setAssignmentDetails(data);
-                    setAssignmentTitle(`${data.assignmentName} - ${data.rubricName}`);
                     setIsGraded(data.InstructorAssignedFinalGrade !== "--");
                 } else {
                     console.error('Error fetching assignment details:', data.message);
@@ -199,14 +195,23 @@ const SubmitAssignment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!file) {
+            alert('Please select a file to upload.');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('file', file);
 
         try {
-            await axios.post(`http://localhost:5173/stu-api/upload/${courseId}/${assignmentId}`, formData);
+            await axios.post(`/stu-api/upload/${courseId}/${assignmentId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             alert('File uploaded successfully');
         } catch (err) {
-            console.error(err);
+            console.error('File upload failed:', err);
             alert('File upload failed');
         }
     };
@@ -215,12 +220,12 @@ const SubmitAssignment = () => {
         return <div>Loading...</div>;
     }
 
-    const navBarText = `Jerry please help`;
+    const navBarText = `${assignmentDetails.assignmentName} - ${assignmentDetails.rubricName}`;
 
     return (
         <div>
             <AIvaluateNavBar navBarText={navBarText} />
-            <SideMenuBar tab="assignments"/>
+            <SideMenuBar tab="assignments" />
             <div className="main-margin">
                 <div className="assignment-container secondary-colorbg">
                     <div className="top-bar">
@@ -259,7 +264,7 @@ const SubmitAssignment = () => {
                             <div className="submit-right">
                                 <h2 className="assignment-text">Assignment Details</h2>
                                 <div className="empty"> </div>
-                                <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
+                                <button className="submit-button rborder" type="submit">Submit</button>
                             </div>
                         </form>
                         <div className="assignment-details">
@@ -269,17 +274,17 @@ const SubmitAssignment = () => {
                         <div className="feedback-container">
                             {isGraded ? (
                                 <div className="feedback">
-                                        <div className="score-class">
-                                            <div className="empty"> </div>
-                                        </div>
+                                    <div className="score-class">
+                                        <div className="empty"> </div>
+                                    </div>
                                     <div className="both-feedback">
                                         <h3>AI Feedback</h3>
                                         <div className="feeback-text">
-                                            <MarkdownRenderer markdownText={markdownText} />
+                                            <MarkdownRenderer markdownText={assignmentDetails.aiFeedback || ''} />
                                         </div>
                                         <h3>Evaluator Feedback</h3>
                                         <div className="feeback-text">
-                                            <MarkdownRenderer markdownText={markdownText} />
+                                            <MarkdownRenderer markdownText={assignmentDetails.evaluatorFeedback || ''} />
                                         </div>
                                     </div>
                                 </div>
@@ -295,4 +300,3 @@ const SubmitAssignment = () => {
 };
 
 export default SubmitAssignment;
-

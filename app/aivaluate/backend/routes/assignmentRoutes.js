@@ -294,18 +294,18 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     }
 });
 
-
 // Configure multer for file storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      const { courseId, assignmentId } = req.params;
-      const studentId = req.user.studentId;
-  
-      if (!studentId) {
-        return cb(new Error('Student ID not found in session'), false);
-      }
-  
-      const dir = path.resolve(__dirname, `../assignmentSubmissions/${courseId}/${assignmentId}/${studentId}`);
+        const { courseId, assignmentId } = req.params;
+        const studentId = req.session.studentId; // Ensure studentId is set in the session
+
+        if (!studentId) {
+            console.error('Student ID not found in session');
+            return cb(new Error('Student ID not found in session'), false);
+        }
+
+        const dir = path.resolve(__dirname, `../assignmentSubmissions/${courseId}/${assignmentId}/${studentId}`);
         console.log(`Destination directory: ${dir}`);
 
         // Create the directory if it doesn't exist
@@ -315,26 +315,94 @@ const storage = multer.diskStorage({
                 return cb(err);
             }
             cb(null, dir);
-        })
-  
+        });
     },
     filename: (req, file, cb) => {
         console.log(`Filename: ${file.originalname}`);
-      cb(null, file.originalname);
+        cb(null, file.originalname);
     },
-  });
-  
-  const upload = multer({ storage: storage });
-  
-  router.post('/upload/:courseId/:assignmentId', upload.single('file'), (req, res) => {
+});
+
+const upload = multer({ storage: storage });
+
+router.post('/upload/:courseId/:assignmentId', upload.single('file'), async (req, res) => {
     if (req.file) {
-        console.log('File uploaded successfully:', req.file);
-        res.send('File uploaded successfully');
+        const { courseId, assignmentId } = req.params;
+        const studentId = req.session.studentId;
+        const filePath = req.file.path;
+
+        try {
+            await pool.query(
+                `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "isSubmitted", "submittedAt") VALUES ($1, $2, $3, $4, true, NOW())
+                 ON CONFLICT ("studentId", "courseId", "assignmentId") 
+                 DO UPDATE SET "submissionFile" = $4, "isSubmitted" = true, "submittedAt" = NOW()`,
+                [studentId, courseId, assignmentId, filePath]
+            );
+            res.status(200).send('File uploaded and path saved successfully');
+        } catch (error) {
+            console.error('Error saving file path to database:', error);
+            res.status(500).send('Internal Server Error');
+        }
     } else {
         console.error('File upload failed');
         res.status(500).send('File upload failed');
     }
 });
 
+router.delete('/delete/:courseId/:assignmentId', async (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    const studentId = req.session.studentId;
+
+    try {
+        const result = await pool.query(
+            `SELECT "submissionFile" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
+            [studentId, courseId, assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Submission not found');
+        }
+
+        const filePath = result.rows[0].submissionFile;
+        fs.unlink(filePath, async (err) => {
+            if (err) {
+                console.error('Error deleting file:', err);
+                return res.status(500).send('Error deleting file');
+            }
+
+            await pool.query(
+                `DELETE FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
+                [studentId, courseId, assignmentId]
+            );
+
+            res.status(200).send('File deleted successfully');
+        });
+    } catch (error) {
+        console.error('Error deleting submission:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/submission/:courseId/:assignmentId', async (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    const studentId = req.session.studentId;
+
+    try {
+        const result = await pool.query(
+            `SELECT "submissionFile" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
+            [studentId, courseId, assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Submission not found');
+        }
+
+        const filePath = result.rows[0].submissionFile;
+        res.status(200).send(filePath);
+    } catch (error) {
+        console.error('Error retrieving file path from database:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 module.exports = router;

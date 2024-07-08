@@ -101,7 +101,8 @@ CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
     "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE,
+    UNIQUE ("studentId", "courseId", "assignmentId")
 );
 
 CREATE TABLE IF NOT EXISTS "AssignmentGrade"(

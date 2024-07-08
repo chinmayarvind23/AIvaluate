@@ -58,44 +58,104 @@ I completed all the planned tasks, including data flow diagrams, Relationship En
 
 # Cycle Summary (June 5 - June 7) - 8.5 hours
 
-## Wednesday June 5th
-### 3  hours
-- Reviewing the project design documents
-  
-  
-## Thursday June 6th
-###  3.5 hours
-- Working on  front-end Login/logout design page
-- Learning react
+### Timesheet
+Clockify report
 
-## Friday June 7th
-### 2 hours
-  - Working on  front-end 
+### Current Tasks 
+  * #1: Reviewing the project design documents
+  * #2: Working on front-end Login/logout design page
+  * #3: Learning React
 
-  
-- # Timesheet (June 7 - June 11) - 9.5 hours
+### Progress Update (since 6/5/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Reviewing the project design documents</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Working on front-end Login/logout design page</td>
+        <td>In progress</td>
+    </tr>
+    <tr>
+        <td>Learning React</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Working on front-end</td>
+        <td>In Progress</td>
+    </tr>
+</table>
 
-## Friday June 7th
-###  4 hours
+### Cycle Goal Review 
+I reviewed the project design documents as planned. I started working on the front-end Login/logout design page and began learning React. However, the front-end work is still in progress.
 
-- Working on  front-end Login/logout design page
-- Worked on the design video presentation
-- Worked on trying to help solve merge conflicts to merge the branch with the dockerized backend
+### Next Cycle Goals 
+  * Goal 1: Continue working on the front-end Login/logout design page
+  * Goal 2: Further learning and implementing React
+  * Goal 3: Worked on the design video presentation
+  * Goal 4: Worked on trying to help solve merge conflicts to merge the branch with the dockerized backend
+    
+# Timesheet (June 7 - June 11) - 9.5 hours
 
-## Saturday June 8th
-###  2.5 hours
-- Worked on learning and understanding react
-  
-## Sunday June 9th
-### 0.5 hour
-- Code review, merged the Frontend login pages to the development branch
+### Timesheet
+Clockify report
 
+### Current Tasks 
+  * #1: Working on front-end Login/logout design page
+  * #2: Worked on the design video presentation
+  * #3: Helped solve merge conflicts to merge the branch with the dockerized backend
+  * #4: Learning and Understanding React
+  * #5: Code review and merged the Frontend login pages to the development branch
+  * #7: Worked on frontend design Assignment frontend page
 
-## Tuesday June 11th
-### 2.5 hours
-- Team meeting and planning (0.5 hour)
-- worked on frontend design Assignment  frontend  page (2 hours)
+### Progress Update (since 6/7/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Working on front-end Login/logout design page</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Worked on the design video presentation</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Helped solve merge conflicts to merge the branch with the dockerized backend</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Learning and understanding React</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Code review and merged the Frontend login pages to the development branch</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Team meeting and planning</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Worked on frontend design Assignment frontend page</td>
+        <td>In Progress</td>
+    </tr>
+</table>
 
+### Cycle Goal Review 
+I made significant progress on multiple fronts. The design video presentation and solving merge conflicts were completed successfully. Learning React and working on the frontend login/logout design page are ongoing. The code review and merge of the frontend login pages to the development branch were completed. The team meeting and planning were productive.
+
+### Next Cycle Goals 
+  * Goal 1: Continue working on the front-end Login/logout design page
+  * Goal 2: Further learning and implementing React
+  * Goal 3: Complete the frontend design assignment page
+  * Goal 4: Start integrating the back-end with the front-end
 
 
 

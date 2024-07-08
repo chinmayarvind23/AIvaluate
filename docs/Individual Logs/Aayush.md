@@ -153,23 +153,52 @@ I made significant progress on multiple fronts. The design video presentation,fr
 
 # Timesheet (June 12 - June 14) - 14 hours
 
-## Wednesday June 12th
-### 2.5 hour
-- Completed the  design Assignment frontend page (localhost:5173/designAssignment)
-- Worked on creating course creation function backend logic
-  
+### Timesheet
+Clockify report
 
-## Thursday June 13th
-### 10 hours
-- Team meeting and planning 
-- Worked on the backend of the search course 
-- Helped in login and signup Backend  
-- Finalizing everything for the Friday's presentation 
+### Current Tasks 
+  * #1: Completed the design Assignment frontend page (localhost:5173/designAssignment)
+  * #2: Worked on creating course creation function backend logic
+  * #3: Team meeting and planning
+  * #4: Worked on the backend of the search course
+  * #5: Helped in login and signup Backend
+  * #6: Finalizing everything for the Friday's presentation
 
-  
-## Friday June 14th
-###  1.5 hours
-- Finalizing the presentation
+### Progress Update (since 6/12/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Completed the design Assignment frontend page </td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Worked on creating course creation function backend logic</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Team meeting and planning</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Worked on the backend of the search course</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Helped in login and signup Backend</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Finalizing everything for the Friday's presentation</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Finalizing the presentation</td>
+        <td>In Progress</td>
+    </tr>
+</table>
 
 
 # Timesheet (June 14 - June 19) - 15 hours

@@ -139,6 +139,7 @@
 // export default SubmitAssignment;
 
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../GeneralStyling.css';
@@ -195,9 +196,19 @@ const SubmitAssignment = () => {
         setFile(e.target.files[0]);
     };
 
-    const handleSubmit = () => {
-        // Logic for submitting the assignment
-        console.log('File submitted:', file);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            await axios.post(`http://localhost:5173/stu-api/upload/${courseId}/${assignmentId}`, formData);
+            alert('File uploaded successfully');
+        } catch (err) {
+            console.error(err);
+            alert('File upload failed');
+        }
     };
 
     if (loading) {
@@ -232,23 +243,25 @@ const SubmitAssignment = () => {
                                 <h3>Score: {assignmentDetails.InstructorAssignedFinalGrade}/{assignmentDetails.maxObtainableGrade}</h3>
                             </div>
                         </div>
-                        
-                        <div className="file-upload">
-                            <label htmlFor="file-upload" className="file-upload-label">
-                                Drag files here or Click to browse files
-                            </label>
-                            <input 
-                                type="file" 
-                                id="file-upload" 
-                                className="file-upload-input" 
-                                onChange={handleFileChange} 
-                            />
-                        </div>
-                        <div className="submit-right">
-                            <h2 className="assignment-text">Assignment Details</h2>
-                            <div className="empty"> </div>
-                            <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
-                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className="file-upload">
+                                <label htmlFor="file-upload" className="file-upload-label">
+                                    Drag files here or Click to browse files
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="file-upload" 
+                                    className="file-upload-input" 
+                                    onChange={handleFileChange} 
+                                    required
+                                />
+                            </div>
+                            <div className="submit-right">
+                                <h2 className="assignment-text">Assignment Details</h2>
+                                <div className="empty"> </div>
+                                <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
+                            </div>
+                        </form>
                         <div className="assignment-details">
                             <pre className="details-content">{assignmentDetails.criteria}</pre>
                         </div>

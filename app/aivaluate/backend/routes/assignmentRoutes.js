@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
 const { formatDueDate } = require('../util');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 // Create a new assignment
 router.post('/assignments', async (req, res) => {
@@ -288,6 +291,43 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     } catch (err) {
         console.error('Error fetching assignment details:', err);
         res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+// Configure multer for file storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const { courseId, assignmentId } = req.params;
+      const studentId = req.user.studentId;
+  
+      if (!studentId) {
+        return cb(new Error('Student ID not found in session'), false);
+      }
+  
+      const dir = `./assignmentSubmissions/${courseId}/${assignmentId}/${studentId}`;
+      console.log(`Destination directory: ${dir}`);
+
+      // Create the directory if it doesn't exist
+      fs.mkdirSync(dir, { recursive: true });
+  
+      cb(null, dir);
+    },
+    filename: (req, file, cb) => {
+        console.log(`Filename: ${file.originalname}`);
+      cb(null, file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+  
+  router.post('/upload/:courseId/:assignmentId', upload.single('file'), (req, res) => {
+    if (req.file) {
+        console.log('File uploaded successfully:', req.file);
+        res.send('File uploaded successfully');
+    } else {
+        console.error('File upload failed');
+        res.status(500).send('File upload failed');
     }
 });
 

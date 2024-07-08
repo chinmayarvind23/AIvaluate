@@ -159,10 +159,9 @@ Clockify report
 ### Current Tasks 
   * #1: design Assignment frontend page 
   * #2: Worked on creating course creation function backend logic
-  * #3: Team meeting and planning
-  * #4: Worked on the backend of the search course
-  * #5: Helped in login and signup Backend
-  * #6: Finalizing everything for the Friday's presentation
+  * #3: Worked on the backend of the search course
+  * #4: Helped in login and signup Backend
+  * #5: Finalizing everything for the Friday's presentation
 
 ### Progress Update (since 6/13/2024)
 <table>
@@ -178,10 +177,7 @@ Clockify report
         <td> creating course creation function backend logic</td>
         <td>Complete</td>
     </tr>
-    <tr>
-        <td>Team meeting and planning</td>
-        <td>Complete</td>
-    </tr>
+    
     <tr>
         <td>Worked on the backend of the search course</td>
         <td>Complete</td>

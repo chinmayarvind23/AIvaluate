@@ -1,5 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../AssignmentProf.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -11,21 +12,21 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
     const navBarText = `${courseCode} - ${courseName}`;
-
+    const navigate = useNavigate();
      const [currentPage, setCurrentPage] = useState(1);
      const itemsPerPage = 6;
      const [searchTerm, setSearchTerm] = useState('');
      const [filteredFiles, setFilteredFiles] = useState([]);
 
      const files = [
-         { name: 'Lab 1', published: true },
-         { name: 'Lab 2', published: true },
-         { name: 'Lab 3', published: false },
-         { name: 'Assignment 1', published: false },
-         { name: 'Assignment 2', published: false },
-         { name: 'Assigment 3', published: false },
-         { name: 'Lab 4', published: false },
-         { name: 'Lab 5', published: false },
+         { name: 'Lab 1', graded: true },
+         { name: 'Lab 2', graded: true },
+         { name: 'Lab 3', graded: false },
+         { name: 'Assignment 1', graded: false },
+         { name: 'Assignment 2', graded: false },
+         { name: 'Assigment 3', graded: false },
+         { name: 'Lab 4', graded: false },
+         { name: 'Lab 5', graded: false },
      ];
 
      useEffect(() => {
@@ -56,6 +57,18 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
      }
      };
 
+     const handleAssignmentSelect = () => {
+        navigate(`/eval/selected/assignmentId`);
+    };
+
+    const handleAssignmentCreation = () => {
+        navigate(`/eval/create/assignment`);
+    };
+
+    const handleAssignmentBrowse = () => {
+        navigate(`/eval/browse/assignments`);
+    };
+
      return (
          <div>
              <AIvaluateNavBarEval navBarText={navBarText} />
@@ -67,14 +80,14 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
                             <h1>Assignments</h1>
                             <div className="empty"> </div>
                              <div className="left-button">
-                                 <button className="assignButton">
+                                 <button className="assignButton" onClick={() => handleAssignmentCreation()}>
                                  <CircumIcon name="circle_plus"/> 
                                  Create New Assignment
                                  </button>
                              </div>
                              
                              <div className="right-button">
-                                 <button className="assignButton">
+                                 <button className="assignButton" onClick={() => handleAssignmentBrowse()}>
                                      <div className="file-icon"><CircumIcon name="folder_on" /></div>
                                      Browse My Assignments
                                  </button>
@@ -82,9 +95,9 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
                          </div>
                          <div className="filetab">
                              {currentFiles.map((file, index) => (
-                                 <div className="file-item" key={index}>
+                                 <div className="file-item" key={index} onClick={() => handleAssignmentSelect()}>
                                      <div className="file-name">{file.name}</div>
-                                     <div className="file-status">{file.published ? 'Published' : 'Unpublished'}</div>
+                                     <div className="file-status">{file.graded ? '*Grading Posted' : ''}</div>
                                      <div className="file-icon"><CircumIcon name="circle_more"/></div>
                                  </div>
                              ))}

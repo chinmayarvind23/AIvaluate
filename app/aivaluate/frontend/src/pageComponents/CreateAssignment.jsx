@@ -1,10 +1,14 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
+import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const CreateAssignment = () => {
+    const navigate = useNavigate();
     const [assignment, setAssignment] = useState({
         assignmentName: '',
         dueDate: '',
@@ -64,11 +68,15 @@ const CreateAssignment = () => {
         <div>
             <AIvaluateNavBarEval navBarText="Course number - Course name"/>
             <SideMenuBarEval tab="assignments" />
-            <div className="create-assignment-page">
-                <div className="create-assignment-container fourth-colorbg">
-                    <div className="assignment-header"> {/* Hidden via CSS */}</div>
+            <div className="main-margin">
+                <div className="top-bar">
+                    <div className="back-btn-div">
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                    </div>
+                    <div className="title-text"><h1>Create Assignment</h1></div>
+                </div>
+                <div className="scrollable-div">
                     <div className="create-assignment-content">
-                        <h2>Create Assignment</h2>
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="assignmentName">Assignment Name:</label>
                             <input

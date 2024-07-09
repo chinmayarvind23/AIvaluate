@@ -632,6 +632,10 @@ This cycle went really well for me. The backend was much better then I expected 
   * #1: MVP presentation
   * #2: Backend testing
 
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C11.png)
+
 ### Progress Update (since June 14th 2024) 
 <table>
     <tr>
@@ -670,4 +674,56 @@ This cycle I didn't have very much ime to get thigns done which caused some issu
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - File storage and managerment
 - Fix back buttons and make them unified
+-----------------------------------------------------------------------------------
+
+
+## Cycle 12: Friday July 5th - Wednesday July 10th
+
+### Current Tasks
+  * #1: Redo ALL frontend pages to look more like canvas (as requested by our client)
+  * #2: File Submission
+  * #3: Finish testing for student backend
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C12.png)
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Redo ALL frontend pages
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> File Submission
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Finish testing for student backend
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+ 
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle my main focus was redoing all of our frontend to look more like canvas. I did this becasue our client requested this as he felt as though our UI was too crowded. I used added more Icons as request by the client. What I found REALLY challenging was trying to manage working through my other memebers old frontend code which was all over the place and nothing matched.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Implement AI with dummy frontend page with base promtp + tests
+- Finish up all testing for the backend
 -----------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ const CreateAssignment = () => {
     const [assignment, setAssignment] = useState({
         assignmentName: '',
         dueDate: '',
-        assignmentRubric: '',
+        criteria: '',
         maxObtainableGrade: '',
         courseId: courseId
     });
@@ -38,10 +38,10 @@ const CreateAssignment = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setAssignment({
-            ...assignment,
+        setAssignment(prevAssignment => ({
+            ...prevAssignment,
             [name]: value
-        });
+        }));
     };
 
     const handleFileChange = (e) => {
@@ -93,6 +93,15 @@ const CreateAssignment = () => {
         }
     };
 
+    const handleRubricClick = (criteria) => {
+        setAssignment(prevAssignment => ({
+            ...prevAssignment,
+            criteria: criteria
+        }));
+        // Optional: Scroll back to the text area after selecting a rubric
+        document.getElementById('criteria').scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
@@ -100,7 +109,7 @@ const CreateAssignment = () => {
             <div className="main-margin">
                 <div className="top-bar">
                     <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                     </div>
                     <div className="title-text"><h1>Create Assignment</h1></div>
                 </div>
@@ -125,7 +134,7 @@ const CreateAssignment = () => {
                             />
                             <div className="rubric-options">
                                 <span>or</span>
-                                <a href="#" className="use-past-rubric" onClick={handleUsePastRubricClick}>Use a past Rubric</a>
+                                <button type="button" className="use-past-rubric" onClick={handleUsePastRubricClick}>Use a past Rubric</button>
                             </div>
                             <label htmlFor="dueDate">Due Date:</label>
                             <div className="date-picker">
@@ -158,7 +167,7 @@ const CreateAssignment = () => {
                             <h3>Available Rubrics</h3>
                             <ul>
                                 {rubrics.map(rubric => (
-                                    <li key={rubric.assignmentRubricId}>
+                                    <li key={rubric.assignmentRubricId} onClick={() => handleRubricClick(rubric.criteria)}>
                                         {rubric.rubricName}
                                     </li>
                                 ))}

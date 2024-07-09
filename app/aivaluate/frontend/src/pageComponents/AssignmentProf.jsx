@@ -58,7 +58,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
      };
 
      const handleAssignmentSelect = () => {
-        navigate(`/eval/selected/assignmentId`);
+        navigate(`/eval/published/assignment`);
     };
 
     const handleAssignmentCreation = () => {

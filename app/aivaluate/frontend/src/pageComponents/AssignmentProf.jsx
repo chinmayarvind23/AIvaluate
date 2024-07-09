@@ -150,7 +150,7 @@ const AssignmentProf = () => {
     };
 
     const handleAssignmentCreation = () => {
-        navigate(`/eval/create/assignment`);
+        navigate(`/eval/create/assignment/${courseId}`);
     };
 
     const handleAssignmentBrowse = () => {

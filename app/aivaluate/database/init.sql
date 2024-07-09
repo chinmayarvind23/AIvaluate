@@ -147,7 +147,9 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
     "rubricName" VARCHAR(150),
-    "criteria" VARCHAR(1000)
+    "criteria" VARCHAR(1000),
+    "courseId" INT,
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "useRubric"(

@@ -103,7 +103,7 @@ const App = () => {
           <Route path="/eval/submissions/:courseId" element={<PrivateRouteEval element={EvalViewSubmissions} />} /> {/* Done*/}
           <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} /> {/* Done*/}
           <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} /> {/* Done*/}
-          <Route path="/eval/create/assignment" element={<PrivateRouteEval element={CreateAssignment} />} /> {/* Done*/}
+          <Route path="/eval/create/assignment/:courseId" element={<PrivateRouteEval element={CreateAssignment} />} /> {/* Done*/}
           <Route path="/eval/rubrics/:courseId" element={<PrivateRouteEval element={Rubrics} />} /> {/* Done*/}
           <Route path="/eval/students/:courseId" element={<PrivateRouteEval element={Students} />} /> {/* Done*/}
           <Route path="/eval/grades/:courseId" element={<PrivateRouteEval element={EvaluatorGrades} />} /> {/* Done*/}

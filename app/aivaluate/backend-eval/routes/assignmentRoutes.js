@@ -25,7 +25,7 @@ router.post('/assignments', async (req, res) => {
     try {
         // Begin transaction
         await pool.query('BEGIN');
-
+ 
         // Insert the new assignment
         const assignmentResult = await pool.query(
             'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "maxObtainableGrade") VALUES ($1, $2, $3, $4) RETURNING "assignmentId"',
@@ -36,8 +36,8 @@ router.post('/assignments', async (req, res) => {
 
         // Insert the corresponding rubric
         const rubricResult = await pool.query(
-            'INSERT INTO "AssignmentRubric" ("rubricName", "criteria") VALUES ($1, $2) RETURNING "assignmentRubricId"',
-            [assignmentName, criteria]
+            'INSERT INTO "AssignmentRubric" ("rubricName", "criteria", "courseId") VALUES ($1, $2, $3) RETURNING "assignmentRubricId"',
+            [assignmentName, criteria, courseId]
         );
 
         const assignmentRubricId = rubricResult.rows[0].assignmentRubricId;

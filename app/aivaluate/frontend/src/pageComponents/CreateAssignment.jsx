@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -10,10 +10,11 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 const CreateAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const courseId = sessionStorage.getItem('courseId');
+    const { courseId } = useParams();
     const navBarText = `${courseCode} - ${courseName}`;
 
     const navigate = useNavigate();
+    const availableRubricsRef = useRef(null);
     const [assignment, setAssignment] = useState({
         assignmentName: '',
         dueDate: '',
@@ -26,14 +27,14 @@ const CreateAssignment = () => {
     const [solutionFile, setSolutionFile] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5173/eval-api/rubrics')
+        axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
             .then(response => {
                 setRubrics(response.data);
             })
             .catch(error => {
                 console.error('Error fetching rubrics:', error);
             });
-    }, []);
+    }, [courseId]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -85,6 +86,13 @@ const CreateAssignment = () => {
             });
     };
 
+    const handleUsePastRubricClick = (e) => {
+        e.preventDefault();
+        if (availableRubricsRef.current) {
+            availableRubricsRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
@@ -117,7 +125,7 @@ const CreateAssignment = () => {
                             />
                             <div className="rubric-options">
                                 <span>or</span>
-                                <a href="#" className="use-past-rubric">Use a past Rubric</a>
+                                <a href="#" className="use-past-rubric" onClick={handleUsePastRubricClick}>Use a past Rubric</a>
                             </div>
                             <label htmlFor="dueDate">Due Date:</label>
                             <div className="date-picker">
@@ -146,12 +154,12 @@ const CreateAssignment = () => {
                                 <button type="submit" className="post-button">Post</button>
                             </div>
                         </form>
-                        <div className="available-rubrics">
+                        <div className="available-rubrics" ref={availableRubricsRef}>
                             <h3>Available Rubrics</h3>
                             <ul>
                                 {rubrics.map(rubric => (
                                     <li key={rubric.assignmentRubricId}>
-                                        {rubric.criteria}
+                                        {rubric.rubricName}
                                     </li>
                                 ))}
                             </ul>

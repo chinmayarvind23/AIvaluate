@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../HelpPage.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../GeneralStyling.css';
 
-
-const aivaluatePurple = {
-    color: '#4d24d4'
-  }
 
 const HelpPage = () => {
 

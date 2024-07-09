@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Auth.css';
+// import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -59,26 +59,41 @@ const SelectedAssignment = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
+    const assignmentName = 'Lab 1';
+    const [gradesVisible, setGradesVisible] = useState(true);
+
+    const toggleGradesVisibility = () => {
+        setGradesVisible(!gradesVisible);
+    };
   return (
   <div>
     <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
-    <SideMenuBarEval tab="submissions" />
+    <SideMenuBarEval tab="assignments" />
     <div className="accented-outside rborder">
-        <div className="portal-all">
+        <div className="main-margin">
             <div className="portal-container">
-                <div className="topBar">
-                <button className="back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                    <h1>Lab 1 - Submissions</h1>
-                    {/* <div className="search-box">
-                        <FaSearch className="search-icon" />
-                        <input 
-                            type="text" 
-                            placeholder="Search..." 
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                        />
-                    </div> */}
-                    <div className="right"><button className="addEvalButton secondary-button">Hide Grades</button><button className="addEvalButton secondary-button">Publish Grades</button></div>
+                <div className="top-bar">
+                    <div className="back-btn-div">
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                    </div>
+                    <div className="title-text"><h1>{assignmentName} - Submissions</h1></div>
+                    <div className="empty"> </div>
+                    {/* <button className="grades-button">Hide Grades</button>
+                    <button className="grades-button">Publish Grades</button> */}
+                    <button 
+                                className="grades-button" 
+                                disabled={gradesVisible} 
+                                onClick={toggleGradesVisibility}
+                            >
+                                Hide Grades
+                            </button>
+                            <button 
+                                className="grades-button" 
+                                disabled={!gradesVisible} 
+                                onClick={toggleGradesVisibility}
+                            >
+                                Publish Grades
+                            </button>
                 </div>
                 <div className="filetab">
                     {currentFiles.map((file, index) => (

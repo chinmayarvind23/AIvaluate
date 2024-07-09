@@ -1,14 +1,16 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../AssignmentProf.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 
  const BrowseAllAssignmentsEval = () => {
-
+     const navigate = useNavigate();
      const [currentPage, setCurrentPage] = useState(1);
      const itemsPerPage = 6;
      const [searchTerm, setSearchTerm] = useState('');
@@ -58,10 +60,13 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
              <AIvaluateNavBar navBarText="Admin Home Portal"/>
              <SideMenuBarEval tab="assignments" />
              <div className="accented-outside rborder">
-                 <div className="portal-all">
+                 <div className="main-margin">
                      <div className="portal-container">
-                     <div className="topBar">
-                            <h1>Students</h1>
+                        <div className="top-bar">
+                            <div className="back-btn-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                            </div>
+                            <div className="title-text"><h1>All Assignments</h1></div>
                             <div className="search-container">
                                 <div className="search-box">
                                     <FaSearch className="search-icon" />
@@ -73,6 +78,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
                                     />
                                 </div>
                             </div>
+                            <div className="empty"> </div>
                         </div>
                          <div className="filetab">
                              {currentFiles.map((file, index) => (

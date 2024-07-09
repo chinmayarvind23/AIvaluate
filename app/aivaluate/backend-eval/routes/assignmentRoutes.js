@@ -20,7 +20,7 @@ const { formatDueDate } = require('../util');
 // });
 
 router.post('/assignments', async (req, res) => {
-    const { courseId, dueDate, assignmentName, maxObtainableGrade, rubricName, criteria } = req.body;
+    const { courseId, dueDate, assignmentName, maxObtainableGrade, rubricName, criteria, assignmentKey } = req.body;
 
     try {
         // Begin transaction
@@ -28,8 +28,8 @@ router.post('/assignments', async (req, res) => {
  
         // Insert the new assignment
         const assignmentResult = await pool.query(
-            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "maxObtainableGrade") VALUES ($1, $2, $3, $4) RETURNING "assignmentId"',
-            [courseId, dueDate, assignmentName, maxObtainableGrade]
+            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "maxObtainableGrade", "assignmentKey") VALUES ($1, $2, $3, $4, $5) RETURNING "assignmentId"',
+            [courseId, dueDate, assignmentName, maxObtainableGrade, assignmentKey]
         );
 
         const assignmentId = assignmentResult.rows[0].assignmentId;
@@ -98,22 +98,22 @@ router.post('/rubrics', async (req, res) => {
     }
 });
 
-// Add a solution
-router.post('/assignments/:assignmentId/solutions', async (req, res) => {
-    const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
+// // Add a solution
+// router.post('/assignments/:assignmentId/solutions', async (req, res) => {
+//     const { assignmentId } = req.params;
+//     const { solutionFile } = req.body;
 
-    try {
-        await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
-            [solutionFile, assignmentId]
-        );
-        res.status(200).json({ message: 'Solution added successfully' });
-    } catch (error) {
-        console.error('Error adding solution:', error);
-        res.status(500).json({ message: 'Error adding solution' });
-    }
-});
+//     try {
+//         await pool.query(
+//             'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
+//             [solutionFile, assignmentId]
+//         );
+//         res.status(200).json({ message: 'Solution added successfully' });
+//     } catch (error) {
+//         console.error('Error adding solution:', error);
+//         res.status(500).json({ message: 'Error adding solution' });
+//     }
+// });
 
 // Get solution by assignment ID
 router.get('/assignments/:assignmentId/solutions', async (req, res) => {

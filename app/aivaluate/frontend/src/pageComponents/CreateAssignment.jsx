@@ -15,16 +15,19 @@ const CreateAssignment = () => {
 
     const navigate = useNavigate();
     const availableRubricsRef = useRef(null);
+    const criteriaRef = useRef(null);
     const [assignment, setAssignment] = useState({
         assignmentName: '',
         dueDate: '',
         criteria: '',
         maxObtainableGrade: '',
-        courseId: courseId
+        courseId: courseId,
+        assignmentKey: ''
     });
 
     const [rubrics, setRubrics] = useState([]);
     const [solutionFile, setSolutionFile] = useState(null);
+    const [dragging, setDragging] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
@@ -44,8 +47,36 @@ const CreateAssignment = () => {
         }));
     };
 
-    const handleFileChange = (e) => {
-        setSolutionFile(e.target.files[0]);
+    const handleFileChange = (file) => {
+        const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
+
+        if (file && !allowedExtensions.exec(file.name)) {
+            alert('Please upload file having extensions .css, .html, .js, or .jsx only.');
+            return false;
+        } else {
+            setSolutionFile(file);
+            setAssignment(prevAssignment => ({
+                ...prevAssignment,
+                assignmentKey: file.name
+            }));
+            return true;
+        }
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const file = e.dataTransfer.files[0];
+        handleFileChange(file);
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+
+    const handleDragLeave = () => {
+        setDragging(false);
     };
 
     const handleSubmit = (e) => {
@@ -72,14 +103,15 @@ const CreateAssignment = () => {
                 if (solutionFile) {
                     const formData = new FormData();
                     formData.append('solutionFile', solutionFile);
-                    axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData)
-                        .then(res => {
-                            console.log('Solution added:', res.data);
-                        })
-                        .catch(err => {
-                            console.error('Error adding solution:', err);
-                        });
+                    // axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData)
+                    //     .then(res => {
+                    //         console.log('Solution added:', res.data);
+                    //     })
+                    //     .catch(err => {
+                    //         console.error('Error adding solution:', err);
+                    //     });
                 }
+                navigate(`/eval/assignments/${courseId}`); // Redirect after successful creation
             })
             .catch(error => {
                 console.error('Error creating assignment:', error);
@@ -98,8 +130,9 @@ const CreateAssignment = () => {
             ...prevAssignment,
             criteria: criteria
         }));
-        // Optional: Scroll back to the text area after selecting a rubric
-        document.getElementById('criteria').scrollIntoView({ behavior: 'smooth' });
+        if (criteriaRef.current) {
+            criteriaRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
@@ -128,6 +161,7 @@ const CreateAssignment = () => {
                             <textarea
                                 id="criteria"
                                 name="criteria"
+                                ref={criteriaRef}
                                 placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended."
                                 value={assignment.criteria}
                                 onChange={handleInputChange}
@@ -155,10 +189,25 @@ const CreateAssignment = () => {
                                 onChange={handleInputChange}
                             />
                             <label htmlFor="solutionFile">Add a solution <span className="optional">*Not required</span></label>
-                            <label className="file-upload">
-                                <input type="file" id="solutionFile" name="solutionFile" onChange={handleFileChange} />
+                            <div
+                                className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
+                                <input
+                                    type="file"
+                                    id="solutionFile"
+                                    name="solutionFile"
+                                    onChange={(e) => handleFileChange(e.target.files[0])}
+                                />
                                 <span>Drag files here or Click to browse files</span>
-                            </label>
+                            </div>
+                            {solutionFile && (
+                                <div className="file-preview">
+                                    <p>Uploaded File: {solutionFile.name}</p>
+                                </div>
+                            )}
                             <div className="form-footer">
                                 <button type="submit" className="post-button">Post</button>
                             </div>

@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
-import '../AdminHelpPage.css';
+import React from 'react';
+import '../HelpPage.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
-import '../GeneralStyling.css';
-
-
-const aivaluatePurple = {
-    color: '#4d24d4'
-  }
 
 const AdminHelpPage = () => {
 

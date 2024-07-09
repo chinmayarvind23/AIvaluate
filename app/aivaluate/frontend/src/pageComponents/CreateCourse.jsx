@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
-import '../styles.css';
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
@@ -82,7 +81,7 @@ const CreateCourse = () => {
   return (
     <>
       <AIvaluateNavBarEval navBarText='Create a Course' />
-      <div className='secondary-colorbg form-container'>
+      <div className='form-container'>
         <section>
           <div className="form-content">
             <form onSubmit={handleSubmit}>

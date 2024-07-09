@@ -12,6 +12,8 @@ RUN npm install axios
 
 RUN npm run build
 
+RUN npm install react-markdown remark-gfm
+
 RUN ls -la /app/dist
 
 FROM nginx:alpine

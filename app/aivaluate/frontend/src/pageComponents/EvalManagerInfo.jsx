@@ -1,11 +1,14 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import CircumIcon from "@klarr-agency/circum-icons-react";
+import { useNavigate } from 'react-router-dom';
 import '../EvalManagerInfo.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import '../GeneralStyling.css';
+import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
 const EvalManagerInfo = () => {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [courses, setCourses] = useState([
         { code: 'COSC 499', name: 'Capstone Software Engineering Project' },
@@ -17,20 +20,33 @@ const EvalManagerInfo = () => {
         setCourses(courses.filter(course => course.code !== courseCode));
     };
 
+    const handelRegister = () => {
+        navigate(`/admin/CreateAccPT`);
+    };
+
     return (
         <div className="admin-container">
-            <AIvaluateNavBar navBarText="Admin Home Portal" />
-            <SideMenuBarAdmin tab="studentManager" />
-            <div className="details-container">
+            <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
+            <SideMenuBarAdmin tab="evalManager" />
+            <div className="main-margin">
+            <div className="top-bar">
+                <div className="back-btn-div">
+                    <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                </div>
+                <h1 className="eval-text">Evaluator Info</h1>
+                <div className="empty"> </div>
+                <button className="create-eval" onClick={() => handelRegister()}>Register Evaluator</button>
+            </div>
                 <div className="user-info">
                     <div className="user-details">
                         <h2>Scott Fazackerley</h2>
-                        <label>
-                            <input type="checkbox" /> Teaching Assistant
-                        </label>
+                        <div className="align-check">
+                            <label className="checkbox-label2 ">
+                                <input type="checkbox" /> Teaching Assistant
+                            </label>
+                        </div>
                         <div className="action-buttons">
                             <button className="delete-button">Delete user</button>
-                            <button className="create-button">Create user</button>
                         </div>
                     </div>
                     <div className="info-row">

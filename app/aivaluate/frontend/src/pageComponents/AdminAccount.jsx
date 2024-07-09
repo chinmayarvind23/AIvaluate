@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import '../Account.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
-import '../styles.css';
 
 const AdminAccount = () => {
     const [firstName, setFirstName] = useState("");

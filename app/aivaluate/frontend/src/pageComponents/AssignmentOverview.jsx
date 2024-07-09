@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { FaFile, FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../AssignmentOverview.css';
-import '../CourseHome.css';
+// import '../CourseHome.css';
+import axios from 'axios';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
-import axios from 'axios';
 
 const AssignmentOverview = () => {
   const courseCode = sessionStorage.getItem('courseCode');
@@ -63,8 +64,9 @@ const AssignmentOverview = () => {
     fetchAssignments();
   }, [courseId]);
 
-  const handleNavigate = () => {
-    navigate('/stu/assignment-feedback');
+  const handleNavigate = (assignmentId) => {
+    navigate(`/stu/submit/${courseId}/${assignmentId}`);
+
   };
   
   useEffect(() => {
@@ -89,56 +91,59 @@ const AssignmentOverview = () => {
     <div>
       <AIvaluateNavBar navBarText={navBarText} />
       <SideMenuBar tab="assignments" />
-      <div className="assignment-search-container">
-        <div className="search-container">
-          <div className="search-box">
-            <FaSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
+      <div className="main-margin">
+          <div className="top-bar">
+            <h1>Assignments</h1>
+            <div className="search-container">
+              <div className="search-box">
+                <FaSearch className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div className="table-container">
-        <main className="assignment-table-content">
-          <section className="table-section">
-            {error ? (
-              <div className="error-message">{error}</div>
-            ) : (
-              <table className="assignment-table">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Due Date</th>
-                    <th>Obtainable Grade</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAssignments.map((assignment, index) => (
-                    <tr key={index}>
-                      <td>
-                        <button className="icon-button" onClick={handleNavigate}>
-                          <FaFile className="file-icon" />
-                        </button>
-                      </td>
-                      <td>
-                        <button className="link-button" onClick={handleNavigate}>
-                          {assignment.assignmentName}
-                        </button>
-                      </td>
-                      <td>{assignment.dueDate}</td>
-                      <td>{assignment.maxObtainableGrade}</td>
+        <div className="scrollable-div">
+          <main className="assignment-table-content">
+            <section className="table-section">
+              {error ? (
+                <div className="error-message">{error}</div>
+              ) : (
+                <table className="assignment-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Name</th>
+                      <th>Due Date</th>
+                      <th>Obtainable Grade</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </section>
-        </main>
+                  </thead>
+                  <tbody>
+                    {filteredAssignments.map((assignment, index) => (
+                      <tr key={index}>
+                        <td>
+                          <button className="icon-button" onClick={() => handleNavigate(assignment.assignmentId)}>
+                            <FaFile className="file-icon" />
+                          </button>
+                        </td>
+                        <td>
+                          <button className="link-button" onClick={() => handleNavigate(assignment.assignmentId)}>
+                            {assignment.assignmentName}
+                          </button>
+                        </td>
+                        <td>{assignment.dueDate}</td>
+                        <td>{assignment.maxObtainableGrade}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </section>
+          </main>
+        </div>
       </div>
     </div>
   );

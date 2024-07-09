@@ -86,14 +86,18 @@ const Rubrics = () => {
         setCurrentPage(1);
     };
 
+    const handleRubric = (rubricId) => {
+        navigate(`/eval/rubric/${rubricId}`);
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="rubrics" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>Your Rubrics</h1>
                             <div className="search-container">
                                 <div className="search-box">
@@ -109,7 +113,7 @@ const Rubrics = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
+                                <div className="file-item" key={index} onClick={() => handleRubric(file.rubricId)}>
                                     <div className="folder-icon"><CircumIcon name="file_on"/></div>
                                     <div className="file-name">{file.criteria}</div>
                                 </div>

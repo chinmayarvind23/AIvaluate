@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
     "assignmentId" INT NOT NULL,
+    "rubricName" VARCHAR(150),
     "courseId" INT NOT NULL,
     "instructorId" INT NOT NULL,
     "criteria" VARCHAR(1000), /* Rubric upload as a file */
@@ -339,9 +340,9 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "instructorId", "criteria")
+INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "instructorId", "criteria", "rubricName")
 VALUES 
-    (1, 1, 5, 'Correctness, Efficiency, Documentation'),
-    (2, 2, 5, 'Problem Solving, Mathematical Reasoning'),
-    (3, 3, 5, 'Experimental Design, Analysis')
+    (1, 1, 5, 'Correctness, Efficiency, Documentation', 'Rubric Name'),
+    (2, 2, 5, 'Problem Solving, Mathematical Reasoning', 'Rubric Name'),
+    (3, 3, 5, 'Experimental Design, Analysis', 'Rubric Name')
 ON CONFLICT DO NOTHING;

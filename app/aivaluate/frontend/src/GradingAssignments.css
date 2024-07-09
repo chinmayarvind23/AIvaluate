@@ -1,13 +1,4 @@
 /* Main container */
-.grading-container {
-  display: flex;
-  padding: 5px;
-  max-width: 2000px;
-  margin-left: 350px;
-  margin-right: 300px;
-  border-radius: 50px;
-  box-shadow: 0 2px 4px #0000001a;
-}
 
 .content {
   flex-grow: 1;
@@ -46,19 +37,21 @@
   margin-left: 20px;
 }
 
+.score-div{
+  display:flex;
+}
+
 .aiscore {
-  flex-grow: 1;
-  margin: 0;
+  margin-left: 20px;
   font-size: 24px;
-  color: rgb(255, 255, 255);
+  width: 350px;
+  color: var(--primary-color)
 }
 
 /* Student info box styling */
 .student-info {
-  background-color: white;
   padding: 20px;
   border-radius: 50px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .student-info h3 {
@@ -68,7 +61,6 @@
 .due-date-container {
   display: flex;
   align-items: center;
-  margin: 0 0 20px;
 }
 
 .due-date {
@@ -80,7 +72,7 @@
 .edit-button, .save-button {
   background-color: var(--primary-color);
   border: none;
-  color: white;
+  color: var(--secondary-color);
   padding: 5px 10px;
   border-radius: 50px;
   cursor: pointer;
@@ -121,6 +113,10 @@
   margin-top: 20px;
 }
 
+.final-score{
+  width: 700px;
+  margin-right: 20px;
+}
 
 .final-score input {
   width: 100px;
@@ -134,6 +130,6 @@
   flex-grow: 2;
   margin: 0;
   font-size: 24px;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 

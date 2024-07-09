@@ -28,29 +28,30 @@ const EditRubric = () => {
         <div>
             <AIvaluateNavBarEval navBarText="Course number - Course Name" />
             <SideMenuBarEval tab="rubrics"/>
-            <div className="rubric-container rborder secondary-colorbg">
-                <div className="line-up-title">
-                    <button className="back-button" onClick={() => navigate(-1)}>
-                        <CircumIcon name="circle_chev_left" className="icon-size" />
-                    </button>
+            <div className="main-margin">
+                <div className="top-bar">
+                    <div className="back-btn-div">
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                    </div>
+                    <h1>Rubric:</h1>
                     <input 
                         type="text" 
-                        className="title-input primary-color-text" 
+                        className="title-rubric" 
                         value={title} 
                         onChange={handleTitleChange} 
                     /> 
                     <h3 className="edit-text">Click to edit</h3>
                 </div>
-                <div className="line-main-text">
+                <div className="main-text2">
                     <textarea
-                        className="rubric-textarea"
+                        className="rubric-text2"
                         value={rubricContent}
                         onChange={handleContentChange}
                     />
-                    <h3 className="edit-text-2">Click to edit</h3>
+                    <h3 className="edit-textt">Click to edit</h3>
                 </div>
                 <div className="bottom-bar">
-                    <div className="empty-space"></div>
+                    <div className="empty"></div>
                     <button 
                         className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
                         disabled={!isEdited}

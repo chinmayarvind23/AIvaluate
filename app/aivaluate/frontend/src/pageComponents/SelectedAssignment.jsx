@@ -59,6 +59,8 @@ const SelectedAssignment = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
+    
+
     const assignmentName = 'Lab 1';
     const [gradesVisible, setGradesVisible] = useState(true);
 
@@ -97,7 +99,7 @@ const SelectedAssignment = () => {
                 </div>
                 <div className="filetab">
                     {currentFiles.map((file, index) => (
-                        <div className="file-item" key={index}>
+                        <div className="file-item" key={index} >
                             <div className="folder-icon"><CircumIcon name="folder_on"/></div>
                             <div className="file-name">{file.stu_number} - {file.assignment} Submission</div>
                             {file.graded && <div className="file-status">*Marked as graded</div>}

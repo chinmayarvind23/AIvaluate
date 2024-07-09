@@ -54,7 +54,7 @@ const AIvaluateNavBarEval = ({navBarText , tab}) => {
                   Account
                 </a>
                 <a href="/eval/help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
-                  Get Help...
+                  Get Help
                 </a>
                 <button onClick={handleLogout} className="logout">Logout</button>
                 </div>

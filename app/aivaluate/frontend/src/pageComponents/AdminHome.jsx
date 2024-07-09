@@ -3,7 +3,6 @@ import '../Admin.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import '../styles.css';
 
 const AdminHome = () => {
     const [students, setStudents] = useState([]);

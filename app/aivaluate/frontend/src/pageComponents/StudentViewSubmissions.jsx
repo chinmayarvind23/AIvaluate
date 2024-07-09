@@ -1,10 +1,11 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
@@ -88,9 +89,9 @@ const StudentViewSubmissions = () => {
             <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
             <SideMenuBar tab="submissions" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>Submissions</h1>
                             <div className="search-container">
                                 <div className="search-box">

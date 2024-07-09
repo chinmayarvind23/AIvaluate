@@ -3,7 +3,9 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
     height: 90px;
     z-index: 9;
     min-width: 800px;
@@ -58,8 +60,9 @@
     border-radius: 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    width: 400px;
+    width: 300px; 
     z-index: 1;
+    border: var(--primary-color) 2px solid;
   }
   
   .menu .dropdown a {

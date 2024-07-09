@@ -3,19 +3,60 @@ const router = express.Router();
 const { pool } = require('../dbConfig');
 const { formatDueDate } = require('../util');
 
-// Create a new assignment
+// // Create a new assignment
+// router.post('/assignments', async (req, res) => {
+//     const { courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription } = req.body;
+
+//     try {
+//         const result = await pool.query(
+//             'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription") VALUES ($1, $2, $3, $4, $5) RETURNING "assignmentId"',
+//             [courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription]
+//         );
+//         res.status(201).json({ assignmentId: result.rows[0].assignmentId, message: 'Assignment created successfully' });
+//     } catch (error) {
+//         console.error('Error creating assignment:', error);
+//         res.status(500).json({ message: 'Error creating assignment' });
+//     }
+// });
+
 router.post('/assignments', async (req, res) => {
-    const { courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription } = req.body;
+    const { courseId, dueDate, assignmentName, maxObtainableGrade, rubricName, criteria } = req.body;
 
     try {
-        const result = await pool.query(
-            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription") VALUES ($1, $2, $3, $4, $5) RETURNING "assignmentId"',
-            [courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription]
+        // Begin transaction
+        await pool.query('BEGIN');
+
+        // Insert the new assignment
+        const assignmentResult = await pool.query(
+            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "maxObtainableGrade") VALUES ($1, $2, $3, $4) RETURNING "assignmentId"',
+            [courseId, dueDate, assignmentName, maxObtainableGrade]
         );
-        res.status(201).json({ assignmentId: result.rows[0].assignmentId, message: 'Assignment created successfully' });
+
+        const assignmentId = assignmentResult.rows[0].assignmentId;
+
+        // Insert the corresponding rubric
+        const rubricResult = await pool.query(
+            'INSERT INTO "AssignmentRubric" ("rubricName", "criteria") VALUES ($1, $2) RETURNING "assignmentRubricId"',
+            [assignmentName, criteria]
+        );
+
+        const assignmentRubricId = rubricResult.rows[0].assignmentRubricId;
+
+        // Insert into useRubric table
+        await pool.query(
+            'INSERT INTO "useRubric" ("assignmentId", "assignmentRubricId") VALUES ($1, $2)',
+            [assignmentId, assignmentRubricId]
+        );
+
+        // Commit transaction
+        await pool.query('COMMIT');
+
+        res.status(201).json({ assignmentId, assignmentRubricId, message: 'Assignment and rubric created successfully' });
     } catch (error) {
-        console.error('Error creating assignment:', error);
-        res.status(500).json({ message: 'Error creating assignment' });
+        // Rollback transaction in case of error
+        await pool.query('ROLLBACK');
+        console.error('Error creating assignment and rubric:', error);
+        res.status(500).json({ message: 'Error creating assignment and rubric' });
     }
 });
 

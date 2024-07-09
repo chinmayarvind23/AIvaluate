@@ -8,13 +8,18 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const CreateAssignment = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const courseId = sessionStorage.getItem('courseId');
+    const navBarText = `${courseCode} - ${courseName}`;
+
     const navigate = useNavigate();
     const [assignment, setAssignment] = useState({
         assignmentName: '',
         dueDate: '',
         assignmentRubric: '',
-        maxPoints: '',
-        assignmentDescription: ''
+        maxObtainableGrade: '',
+        courseId: courseId
     });
 
     const [rubrics, setRubrics] = useState([]);
@@ -44,6 +49,22 @@ const CreateAssignment = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Check for empty fields
+        if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        // Check if the due date is in the past
+        const dueDate = new Date(assignment.dueDate);
+        const today = new Date();
+
+        if (dueDate < today) {
+            alert('Due date cannot be in the past.');
+            return;
+        }
+
         axios.post('http://localhost:5173/eval-api/assignments', assignment)
             .then(response => {
                 console.log('Assignment created:', response.data);
@@ -66,7 +87,7 @@ const CreateAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText="Course number - Course name"/>
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="assignments" />
             <div className="main-margin">
                 <div className="top-bar">
@@ -86,12 +107,12 @@ const CreateAssignment = () => {
                                 value={assignment.assignmentName}
                                 onChange={handleInputChange}
                             />
-                            <label htmlFor="assignmentRubric">Assignment Rubric</label>
+                            <label htmlFor="criteria">Assignment Rubric</label>
                             <textarea
-                                id="assignmentRubric"
-                                name="assignmentRubric"
-                                placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible."
-                                value={assignment.assignmentRubric}
+                                id="criteria"
+                                name="criteria"
+                                placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended."
+                                value={assignment.criteria}
                                 onChange={handleInputChange}
                             />
                             <div className="rubric-options">
@@ -108,12 +129,12 @@ const CreateAssignment = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <label htmlFor="maxPoints">Max Points:</label>
+                            <label htmlFor="maxObtainableGrade">Max Points:</label>
                             <input
                                 type="number"
-                                id="maxPoints"
-                                name="maxPoints"
-                                value={assignment.maxPoints}
+                                id="maxObtainableGrade"
+                                name="maxObtainableGrade"
+                                value={assignment.maxObtainableGrade}
                                 onChange={handleInputChange}
                             />
                             <label htmlFor="solutionFile">Add a solution <span className="optional">*Not required</span></label>

@@ -77,8 +77,7 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentDescription" VARCHAR(1000),
     "isPublished" BOOLEAN DEFAULT false,
     "isGraded" BOOLEAN DEFAULT false,
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") 
-    ON DELETE CASCADE
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS "CourseNotification"(
@@ -147,14 +146,16 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
 
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
-    "assignmentId" INT NOT NULL,
     "rubricName" VARCHAR(150),
-    "courseId" INT NOT NULL,
-    "instructorId" INT NOT NULL,
-    "criteria" VARCHAR(1000), /* Rubric upload as a file */
+    "criteria" VARCHAR(1000)
+);
+
+CREATE TABLE IF NOT EXISTS "useRubric"(
+    "assignmentId" INT NOT NULL,
+    "assignmentRubricId" INT NOT NULL,
+    PRIMARY KEY ("assignmentId", "assignmentRubricId"),
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
-    ON DELETE CASCADE
+    FOREIGN KEY ("assignmentRubricId") REFERENCES "AssignmentRubric"("assignmentRubricId") ON DELETE CASCADE
 );
 
 -- Insert dummy data for testing
@@ -230,22 +231,22 @@ VALUES
     ('Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
-VALUES (1, 3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css'),
-       (2, 3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css'),
-       (3, 3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css'),
-       (4, 4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation'),
-       (5, 4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation'),
-       (6, 4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions'),
-       (7, 2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css'),
-       (8, 2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads'),
-       (9, 2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css'),
-       (10, 5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html'),
-       (11, 5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html'),
-       (12, 5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript'),
-       (13, 1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag'),
-       (14, 1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag'),
-       (15, 1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag')
+INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES (3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css'),
+       (3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css'),
+       (3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css'),
+       (4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation'),
+       (4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation'),
+       (4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions'),
+       (2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css'),
+       (2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads'),
+       (2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css'),
+       (5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html'),
+       (5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html'),
+       (5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript'),
+       (1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag'),
+       (1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag'),
+       (1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table
@@ -342,9 +343,9 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "instructorId", "criteria", "rubricName")
+INSERT INTO "AssignmentRubric" ("criteria", "rubricName")
 VALUES 
-    (1, 1, 5, 'Correctness, Efficiency, Documentation', 'Rubric Name'),
-    (2, 2, 5, 'Problem Solving, Mathematical Reasoning', 'Rubric Name'),
-    (3, 3, 5, 'Experimental Design, Analysis', 'Rubric Name')
+    ('Correctness, Efficiency, Documentation', 'Rubric 1'),
+    ('Problem Solving, Mathematical Reasoning', 'Rubric 2'),
+    ('Experimental Design, Analysis', 'Rubric 3')
 ON CONFLICT DO NOTHING;

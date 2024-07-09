@@ -81,7 +81,7 @@ const App = () => {
           {/* Session validation routes for student */}
           <Route path="/stu/dashboard" element={<PrivateRouteStu element={Dashboard} />} /> {/* Done*/}
           <Route path="/stu/assignment/:courseId" element={<PrivateRouteStu element={AssignmentOverview} />} /> {/*done*/}
-          <Route path="/stu/account" element={<PrivateRouteStu element={StudentAccount} />} />
+          <Route path="/stu/account" element={<PrivateRouteStu element={StudentAccount} />} /> {/* Done*/}
           <Route path="/stu/help" element={<PrivateRouteStu element={HelpPage} />} /> {/* Done*/}
           <Route path="/stu/join-course" element={<PrivateRouteStu element={JoinCourse} />} /> {/* Done*/}
           <Route path="/stu/people/:courseId" element={<PrivateRouteStu element={People} />} /> {/* Done*/}
@@ -90,14 +90,12 @@ const App = () => {
           <Route path="/stu/submit/:courseId/:assignmentId" element={<PrivateRouteStu element={SubmitAssignment} />} /> {/*done*/}
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} /> {/* Done*/}
-          <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} />
-          <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} />
+          <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} /> {/* Done*/}
+          <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} /> {/* Done*/}
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} /> {/* Done*/}
-          <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} />
+          <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} /> {/* Done*/}
           <Route path="/admin/help" element={<PrivateRouteAdmin element={AdminHelpPage} />} /> {/* Done*/}
-          <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} />
-          {/* <Route path="/admin/student/studentId" element={<SelectStudentAdmin />} /> */}
-          <Route path="/admin/account" element={<PrivateRouteAdmin element={AdminAccount} />} />
+          <Route path="/admin/account" element={<PrivateRouteAdmin element={AdminAccount} />} /> {/* Done*/}
           
           {/* Session validation routes for evaluators */}
           <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const SelectedAssignment = () => {
@@ -67,7 +67,7 @@ const SelectedAssignment = () => {
     };
   return (
   <div>
-    <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
+    <AIvaluateNavBarEval navBarText='Course number - Course Name' tab='submissions' />
     <SideMenuBarEval tab="assignments" />
     <div className="accented-outside rborder">
         <div className="main-margin">

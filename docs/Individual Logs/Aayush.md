@@ -221,7 +221,7 @@ Clockify report
     </tr>
     <tr>
         <td>Database Connectivity testing</td>
-        <td>Complete</td>
+        <td>In Progress</td>
     </tr>
     <tr>
         <td>Assignment submission frontend page</td>

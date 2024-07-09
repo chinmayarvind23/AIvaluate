@@ -1,10 +1,4 @@
-.select-student-admin-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    margin-left: 450px;
-}
+
 
 .back-to-last-page {
     display: flex;
@@ -44,13 +38,12 @@
     color: #000;
 }
 
-.user-info {
-    background-color: #3c3c3c;
+.user-info2 {
+    background-color: #3b3b3b;
     color: #fff;
     border-radius: 10px;
     padding: 20px;
-    width: 100%;
-    max-width: 500px;
+    width: 900px;
 }
 
 .user-name {
@@ -70,6 +63,13 @@
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.center-it{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: stretch;
 }
 
 .password span {

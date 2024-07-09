@@ -2,6 +2,7 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CreateAccPT.css';
+import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
@@ -35,14 +36,21 @@ const CreateAccPT = () => {
   return (
     <div className="admin-home-portal">
       <AIvaluateNavBar navBarText="Admin Home Portal" />
-      <div className="main-content">
-        <SideMenuBarAdmin tab="evalManager"/>
+      <SideMenuBarAdmin tab="evalManager"/>
+      <div className="main-margin">
+        
+        <div className="top-bar">
+                <div className="back-btn-div">
+                    <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                </div>
+                <h1 className="eval-text">Register Evaluator</h1>
+                <div className="empty"> </div>
+            </div>
         <div className="content">
-          <button className="back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
           <form className="user-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <div className="box">
-                <label>
+                <label className="primary-text">
                   First Name:
                   <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} />
                 </label>
@@ -61,7 +69,7 @@ const CreateAccPT = () => {
                   <span className="checkbox-text">Teaching Assistant</span>
                   </div>
                 </label>
-
+                
               </div>
             </div>
             <div className="form-group">
@@ -79,8 +87,9 @@ const CreateAccPT = () => {
                   <input type="text" name="department" value={formData.department} onChange={handleChange} />
                 </label>
               </div>
+              <button type="submit" className="create-user-button">Create user</button>
             </div>
-            <button type="submit" className="create-user-button">Create user</button>
+            
           </form>
         </div>
       </div>

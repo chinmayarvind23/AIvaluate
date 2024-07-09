@@ -30,7 +30,7 @@ const EditRubric = () => {
             <SideMenuBarEval tab="rubrics"/>
             <div className="rubric-container rborder secondary-colorbg">
                 <div className="line-up-title">
-                    <button className="back-button" onClick={() => navigate(-1)}>
+                    <button className="back-button02" onClick={() => navigate(-1)}>
                         <CircumIcon name="circle_chev_left" className="icon-size" />
                     </button>
                     <input 

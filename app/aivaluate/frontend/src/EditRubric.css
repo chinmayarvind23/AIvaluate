@@ -10,7 +10,7 @@
     min-width: 850px;
 }
 
-.back-button {
+.back-button02 {
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -27,7 +27,7 @@
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.back-button:hover {
+.back-button02:hover {
     background-color: var(--secondary-color);
     color: var(--primary-color);
     border: solid 1px var(--primary-color);

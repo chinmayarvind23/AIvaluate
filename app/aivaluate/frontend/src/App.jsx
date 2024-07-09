@@ -116,7 +116,7 @@ const App = () => {
           <Route path="/eval/assignments/:courseId" element={<PrivateRouteEval element={AssignmentProf} />} />
           <Route path="/eval/browse/assignment" element={<PrivateRouteEval element={BrowseAllAssignmentsEval} />} />
           <Route path="/eval/help" element={<PrivateRouteEval element={EvalhelpPage} />} />
-          <Route path="/eval/rubrics/:courseId" element={<PrivateRouteEval element={EditRubric} />} />
+          <Route path="/eval/rubrics/editrubric" element={<PrivateRouteEval element={EditRubric} />} />
           <Route path="/eval/individualrubric" element={<PrivateRouteEval element={ProfIndividualRubric} />} />
           <Route path="/published-rubric" element={<PrivateRouteEval element={PublishAssignment} />} />
 

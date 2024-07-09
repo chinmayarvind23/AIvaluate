@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
+const { formatDueDate } = require('../util');
 
 // Create a new assignment
 router.post('/assignments', async (req, res) => {
@@ -177,5 +178,51 @@ router.get('/rubrics/:courseId', async (req, res) => {
         res.status(500).json({ message: 'Error fetching rubrics' });
     }
 });
+
+// Get assignments by course ID
+router.get('/assignments/course/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    if (isNaN(courseId)) {
+        return res.status(400).json({ message: 'Invalid course ID' });
+    }
+
+    try {
+        const result = await pool.query('SELECT * FROM "Assignment" WHERE "courseId" = $1', [courseId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No assignments found for this course' });
+        }
+
+        const assignments = result.rows.map(assignment => ({
+            ...assignment,
+            dueDate: formatDueDate(assignment.dueDate)
+        }));
+
+        res.status(200).json(assignments);
+    } catch (error) {
+        console.error('Error fetching assignments:', error.message);
+        res.status(500).json({ message: 'Error fetching assignments' });
+    }
+});
+
+// Get total assignments by course ID
+router.get('/assignments/count/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    if (isNaN(courseId)) {
+        return res.status(400).json({ message: 'Invalid course ID' });
+    }
+
+    try {
+        const result = await pool.query('SELECT COUNT(*) FROM "Assignment" WHERE "courseId" = $1', [courseId]);
+        const totalAssignments = parseInt(result.rows[0].count, 10);
+        res.status(200).json({ totalAssignments });
+    } catch (error) {
+        console.error('Error fetching total assignments:', error.message);
+        res.status(500).json({ message: 'Error fetching total assignments' });
+    }
+});
+
 
 module.exports = router;

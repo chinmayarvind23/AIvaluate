@@ -295,75 +295,180 @@ I completed the database connectivity testing, designed the selected rubric page
 
 # Timesheet (June 21 - June 26) - 10 hours
 
-## Friday June 21st
-### 4 hours
-- Worked on the bugs for database connectivity testing
-- Started the Write testing for user authentication
+### Timesheet
+Clockify report
 
-## Monday June 24th
-### 3 hours
-- testing for user authentication
-  
+### Current Tasks 
+  * #1: Worked on the bugs for database connectivity testing
+  * #2: Started writing tests for user authentication
+  * #3: Continued testing for user authentication
+  * #4: Database connectivity testing
 
-## Tuesday June 25th
-### 3 hours
-- database connectivity testing
-- testing for user authentication
+### Progress Update (since 6/21/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Worked on the bugs for database connectivity testing</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Started writing tests for user authentication</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Continued testing for user authentication</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Database connectivity testing</td>
+        <td>Complete</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I worked on fixing bugs for database connectivity testing and started writing tests for user authentication. The user authentication testing is ongoing, and the database connectivity testing was completed successfully.
+
+### Next Cycle Goals 
+  * Goal 1: Complete the testing for user authentication
+  * Goal 2: Refine and improve database connectivity based on test results
+  * Goal 3: Implement additional security features for user authentication
+  * Goal 4: Integrate frontend components with the backend services
 
 
 # Timesheet (June 26 - June 28) - 8.5 hours
 
-## Wednesday, June 26th
-### 5 hours
-- Team meeting
-- code review
-  
-  
-## Thursday, June 27th
-### 2 hours
-- Fixing errors in the Design specific assignment submission page - prof/TA view (Frontend)
-- Fixing errors in View individual assignment rubric/description page - prof/TA (Frontend)
+### Timesheet
+Clockify report
 
-## Friday, June 28th
-### 1.5 hours
-- Fixing errors in Design specific assignment submission page - prof/TA view (Frontend)
-- Fixing errors in View individual assignment rubric/description page - prof/TA (Frontend)
+### Current Tasks 
+  * #1: Team meeting
+  * #2: Code review
+  * #3: Fixing errors in the Design specific assignment submission page - prof/TA view (Frontend)
+  * #4: Fixing errors in the View individual assignment rubric/description page - prof/TA (Frontend)
+
+### Progress Update (since 6/26/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Team meeting</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Code review</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Fixing errors in the Design specific assignment submission page - prof/TA view (Frontend)</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Fixing errors in the View individual assignment rubric/description page - prof/TA (Frontend)</td>
+        <td>In Progress</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I completed the team meeting and code review. I worked on fixing errors in both the Design specific assignment submission page and the View individual assignment rubric/description page for prof/TA view, which are still in progress.
+
+### Next Cycle Goals 
+  * Goal 1: Complete fixing errors in the Design specific assignment submission page - prof/TA view (Frontend)
+  * Goal 2: Complete fixing errors in the View individual assignment rubric/description page - prof/TA (Frontend)
+  * Goal 3: Enhance the user interface for better usability
+  * Goal 4: Begin integration of the updated frontend with backend services
 
 
 
 # Timesheet (June 28 - July 3) - 8.5 hours
 
+### Timesheet
+Clockify report
 
-## Sunday, June 30th
-### 2.5 hour
-- Admin Help page (Frontend)
-- Evaluator Help Page (Frontend)
-## Monday, July 1st
-### 2 hours
-- Publish Assignment /rubric page for prof 
+### Current Tasks 
+  * #1: Admin Help page (Frontend)
+  * #2: Evaluator Help Page (Frontend)
+  * #3: Publish Assignment/Rubric page for prof
 
-## Tuesday, July 2nd
-### 3 hour
-- Completed Publish Assignment /rubric page for prof 
+### Progress Update (since 6/28/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Admin Help page (Frontend)</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Evaluator Help Page (Frontend)</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Publish Assignment/Rubric page for prof</td>
+        <td>Complete</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I completed the Admin Help page and Evaluator Help Page for the frontend. Additionally, I finished the Publish Assignment/Rubric page for professors.
+
+### Next Cycle Goals 
+  * Goal 1: Review and refine the Admin Help page for improved user experience
+  * Goal 2: Gather feedback on the Evaluator Help Page and implement improvements
+  * Goal 3: Begin working on the Student Submission page
+  * Goal 4: Enhance the Publish Assignment/Rubric page based on user feedback
 
 
 
 
 # Timesheet (July 3 - July 5) - 6 hours
 
-## Wednesday, July 3rd
-### 3 hours
-- Team meeting
-- code review
-  
+### Timesheet
+Clockify report
 
-## Thursday, July 4th
-### 2 hours
-- finalizing code for MVP
+### Current Tasks 
+  * #1: Team meeting
+  * #2: Code review
+  * #3: Finalizing code for MVP
+  * #4: Making the presentation for MVP
 
-## Friday, July 5th
-### 2 hours
-- Making the presentation for MVP
+### Progress Update (since 7/3/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Team meeting</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Code review</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Finalizing code for MVP</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Making the presentation for MVP</td>
+        <td>Complete</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I completed the team meeting and code review. Additionally, I finalized the code for the MVP and created the presentation for it.
+
+### Next Cycle Goals 
+  * Goal 1: Review the MVP presentation and make necessary improvements
+  * Goal 2: Start collecting feedback on the MVP from stakeholders
+  * Goal 3: Plan the next phase of development based on feedback
+  * Goal 4: Begin implementing high-priority features identified during the MVP review
 
 
 

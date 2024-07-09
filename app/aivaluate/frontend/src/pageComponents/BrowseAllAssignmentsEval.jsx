@@ -1,11 +1,12 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../AssignmentProf.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 
@@ -15,6 +16,10 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
      const itemsPerPage = 6;
      const [searchTerm, setSearchTerm] = useState('');
      const [filteredFiles, setFilteredFiles] = useState([]);
+     
+     const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+      };
 
      const files = [
          { name: 'Lab 1', published: true },
@@ -57,7 +62,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 
      return (
          <div>
-             <AIvaluateNavBar navBarText="Admin Home Portal"/>
+             <AIvaluateNavBarEval navBarText="Admin Home Portal"/>
              <SideMenuBarEval tab="assignments" />
              <div className="accented-outside rborder">
                  <div className="main-margin">

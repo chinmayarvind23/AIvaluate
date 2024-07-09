@@ -1,34 +1,70 @@
 import React from 'react';
-import '../HelpPage.css';
+import '../Account.css';
+import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import '../styles.css';
 
-const EvalHelpPage = () => {
+const EvalAccount = () => {
+    
 
-  return (
-    <div>
-        <AIvaluateNavBarEval navBarText='Help Page'  />
-        <div className='secondary-colorbg help-section'>
-            <section>
-                <div className="help-content">
-                <h3>Home </h3>
-                    <p>The main dashboard where the professor can get an overview of the course, including announcements, upcoming deadlines </p>
-                    <h3>Student Grades </h3>
-                    <p>This Fuction is for viewing and managing student grades. Professors can enter, update, and review grades for various assignments </p>
-                    <h3>Assignments </h3>
-                    <p>In this fuction professors can create, manage, and distribute assignments to students. This includes setting due dates, uploading relevant materials, and providing instructions. </p>
-                    <h3>Students </h3>
-                    <p>This provides a list of all enrolled students. </p>
-                    <h3>All Submissions </h3>
-                    <p>This Function is to view and evaluate all student submissions for assignments and exams. Professors can provide feedback, mark assignments, and ensure all submissions are accounted for. </p>
-                    <h3>Rubrics </h3>
-                    <p>This fuction contains the  rubrics for various assignments and projects. Professors can create, modify, and apply rubrics to ensure consistent and transparent grading criteria. </p>
-                
+    return (
+        <div className="background-colour">
+            <AIvaluateNavBarEval navBarText='Your Account' tab='account' />
+            <div className="fourth-colorbg account-details">
+                <div className="detail-label">First Name</div>
+                <div className="detail-row">
+                    <div className="primary-colorbg detail-value">first name</div>
                 </div>
-            </section>
+                <div className="detail-label">Last Name</div>
+                <div className="detail-row">
+                    <div className="primary-colorbg detail-value">last name</div>
+                </div>
+                <div className="detail-label">Email</div>
+                <div className="detail-row">
+                    <div className="primary-colorbg detail-value">email</div>
+                </div>
+                <div className="detail-label">Password</div>
+                <div>
+                            <div>
+                                <input
+                                    type="password"
+                                    className="primary-colorbg password-input"
+                                    placeholder="Current Password"
+                             
+                                />
+                            </div>
+                            <div className="password-edit-container-hidden">
+                                <input
+                                    type="password"
+                                    className="primary-colorbg password-input"
+                                    placeholder="New Password"
+                               
+                                />
+                            </div>
+                            <div className="password-edit-container-hidden">
+                                <input
+                                    type="password"
+                                    className="primary-colorbg password-input"
+                                    placeholder="Confirm New Password"
+  
+                                />
+                                <button className="primary-button save-button" >Save</button>
+                                <div className="empty"></div>
+                            </div>
+
+                        <div className="password-edit-container">
+                        
+                            <button className="primary-button edit-button" >Edit</button>
+                        </div>
+
+                </div>
+                <div className="detail-label"></div>
+                <div className="detail-row">
+                    <div className="primary-colorbg detail-value"></div>
+                </div>
+            </div>
         </div>
-    </div>
-  );
+    );
 };
 
-export default EvalHelpPage;
-
+export default EvalAccount;

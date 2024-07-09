@@ -142,17 +142,25 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
     ON DELETE CASCADE
 );
-
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
     "assignmentId" INT NOT NULL,
     "courseId" INT NOT NULL,
     "instructorId" INT NOT NULL,
-    "criteria" VARCHAR(1000), /* Rubric upload as a file */
+    "title" VARCHAR(255) NOT NULL,
+    "criteria" VARCHAR(1000),  -- Note: Removed comment here to avoid confusion in SQL parsing
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
-    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
-    ON DELETE CASCADE
-);
+    FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE,
+    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId") ON DELETE CASCADE
+);  -- Ensure no trailing comma before this closing parenthesis
+
+
+
+
+
+
+
+
 
 -- Insert dummy data for testing
 -- Insert dummy data into Student table
@@ -339,9 +347,11 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "instructorId", "criteria")
-VALUES 
-    (1, 1, 5, 'Correctness, Efficiency, Documentation'),
-    (2, 2, 5, 'Problem Solving, Mathematical Reasoning'),
-    (3, 3, 5, 'Experimental Design, Analysis')
+INSERT INTO "AssignmentRubric" ( "assignmentRubricId","assignmentId", "courseId","instructorId", "title", "criteria")
+VALUES
+    (1, 1, 1, 5, 'Correctness, Efficiency, Documentation','abc'),
+
+    (2, 2, 2, 5, 'Problem Solving, Mathematical Reasoning','def'),
+
+    (3, 3, 3, 5, 'Experimental Design, Analysis','ddbdbbfbffbfgb')
 ON CONFLICT DO NOTHING;

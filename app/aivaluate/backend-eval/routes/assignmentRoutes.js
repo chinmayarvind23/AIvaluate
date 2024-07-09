@@ -29,7 +29,22 @@ router.get('/assignments', async (req, res) => {
     }
 });
 
-// Fetch rubrics
+// Fetch a single rubric by ID
+router.get('/rubrics/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query('SELECT * FROM "AssignmentRubric" WHERE "assignmentRubricId" = $1', [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Rubric not found' });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching rubric:', error);
+        res.status(500).json({ message: 'Error fetching rubric' });
+    }
+});
+// Fetch all rubrics
 router.get('/rubrics', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM "AssignmentRubric"');
@@ -39,15 +54,14 @@ router.get('/rubrics', async (req, res) => {
         res.status(500).json({ message: 'Error fetching rubrics' });
     }
 });
-
 // Add a rubric
 router.post('/rubrics', async (req, res) => {
-    const { assignmentId, courseId, criteria } = req.body;
+    const { assignmentId, courseId, title, criteria } = req.body;
 
     try {
         const result = await pool.query(
-            'INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "criteria") VALUES ($1, $2, $3) RETURNING *',
-            [assignmentId, courseId, criteria]
+            'INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "title", "criteria") VALUES ($1, $2, $3, $4) RETURNING *',
+            [assignmentId, courseId, title, criteria]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
@@ -55,6 +69,26 @@ router.post('/rubrics', async (req, res) => {
         res.status(500).json({ message: 'Error adding rubric' });
     }
 });
+// Update a rubric
+router.put('/rubrics/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title, criteria } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE "AssignmentRubric" SET "title" = $1, "criteria" = $2 WHERE "assignmentRubricId" = $3 RETURNING *',
+            [title, criteria, id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Rubric not found' });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error updating rubric:', error);
+        res.status(500).json({ message: 'Error updating rubric' });
+    }
+});
+
 
 // Add a solution
 router.post('/assignments/:assignmentId/solutions', async (req, res) => {

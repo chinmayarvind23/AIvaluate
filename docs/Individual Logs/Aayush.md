@@ -241,29 +241,56 @@ Clockify report
 I completed the database testing, the Design assignment frontend page, and the Assignment submission frontend page.
 
 ### Next Cycle Goals 
-  * Goal 1: Refine the database based on testing results
+  * Goal 1: Design selected rubric page - prof view only (frontend)
   * Goal 2: Implement additional features for the Assignment submission frontend page
-  * Goal 3: Start working on user authentication improvements
-  * Goal 4: Plan and begin integration of frontend with backend services
+  * Goal 3: View individual assignment rubric/description page - prof/TA (Frontend)
+  * Goal 4: Design specific assignment submission page - prof/TA view (Frontend)
 
-# Timesheet (June 19 - June 21) - 10  hours
-
-## Wednesday June 19th
-### 2 hours
--  database connectivity testing 
   
 
-## Thursday June 20th
-### 4 hours
-- Design selected rubric page - prof view only (frontend)
-- W  database connectivity testing 
-  
+# Timesheet (June 19 - June 21) - 10 hours
 
-## Friday June 21st
-### 4 hours
-- Design specific assignment submission page - prof/TA view (Frontend)
-- View individual assignment rubric/description page - prof/TA (Frontend)
-  
+### Timesheet
+Clockify report
+
+### Current Tasks 
+  * #1: Database connectivity testing
+  * #2: Design selected rubric page - prof view only (frontend)
+  * #3: Design specific assignment submission page - prof/TA view (frontend)
+  * #4: View individual assignment rubric/description page - prof/TA (frontend)
+
+### Progress Update (since 6/20/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Database connectivity testing</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Design selected rubric page - prof view only (frontend)</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Design specific assignment submission page - prof/TA view (frontend)</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>View individual assignment rubric/description page - prof/TA (frontend)</td>
+        <td>Complete</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I completed the database connectivity testing, designed the selected rubric page for prof view only, the specific assignment submission page for prof/TA view, and the individual assignment rubric/description page for prof/TA view.
+
+### Next Cycle Goals 
+  * Goal 1: Refine and improve the database connectivity
+  * Goal 2: Implement user feedback on the rubric and assignment pages
+  * Goal 3: Develop additional features for the assignment submission page
+  * Goal 4: Begin integration of frontend and backend components
 
 
 # Timesheet (June 21 - June 26) - 10 hours

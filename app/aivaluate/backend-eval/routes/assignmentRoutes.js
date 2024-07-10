@@ -311,7 +311,7 @@ router.get('/assignments/count/:courseId', async (req, res) => {
 });
 
 // Count all assignments by course ID
-router.get('/assignments/count/:courseId', async (req, res) => {
+router.get('/assignments/count/:courseId/all', async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
 
     if (isNaN(courseId)) {
@@ -334,7 +334,7 @@ router.get('/assignments/:assignmentId', async (req, res) => {
 
     try {
         const result = await pool.query(
-            `SELECT a."assignmentName", a."dueDate", ar."criteria" 
+            `SELECT a."assignmentName", a."dueDate", a."isPublished", ar."criteria" 
              FROM "Assignment" a 
              LEFT JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId" 
              LEFT JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId" 
@@ -365,7 +365,7 @@ router.get('/assignments/:assignmentId', async (req, res) => {
 
             // Fetch the updated assignment with the new rubric
             const updatedResult = await pool.query(
-                `SELECT a."assignmentName", a."dueDate", ar."criteria" 
+                `SELECT a."assignmentName", a."dueDate", a."isPublished", ar."criteria" 
                  FROM "Assignment" a 
                  JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId" 
                  JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId" 

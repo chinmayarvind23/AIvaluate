@@ -17,29 +17,29 @@ const PublishAssignment = () => {
     const [deadline, setDeadline] = useState("");
     const [rubricContent, setRubricContent] = useState("");
     const [isEdited, setIsEdited] = useState(false);
-    const [isPublished, setIsPublished] = useState(false);
+    const [isPublished, setIsPublished] = useState(null);
+
+    const fetchAssignment = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
+                withCredentials: true
+            });
+            if (response.status === 200) {
+                const { assignmentName, dueDate, criteria, isPublished } = response.data;
+                setTitle(assignmentName);
+                setDeadline(dueDate);
+                setRubricContent(criteria);
+                setIsPublished(isPublished);
+                console.log("Fetched assignment:", response.data);
+            } else {
+                console.error('Failed to fetch assignment:', response);
+            }
+        } catch (error) {
+            console.error('Error fetching assignment:', error);
+        }
+    };
 
     useEffect(() => {
-        // Fetch assignment details from API
-        const fetchAssignment = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
-                    withCredentials: true
-                });
-                if (response.status === 200) {
-                    const { assignmentName, dueDate, criteria, isPublished } = response.data;
-                    setTitle(assignmentName);
-                    setDeadline(dueDate);
-                    setRubricContent(criteria);
-                    setIsPublished(isPublished);
-                } else {
-                    console.error('Failed to fetch assignment:', response);
-                }
-            } catch (error) {
-                console.error('Error fetching assignment:', error);
-            }
-        };
-
         fetchAssignment();
     }, [assignmentId]);
 
@@ -68,8 +68,9 @@ const PublishAssignment = () => {
                 withCredentials: true
             });
             if (response.status === 200) {
-                setIsPublished(!isPublished);
-                // Optionally, show a success message
+                // Fetch the latest state from the database after toggling
+                fetchAssignment();
+                console.log(`Assignment ${isPublished ? 'unpublished' : 'published'} successfully`);
             } else {
                 console.error(`Failed to ${isPublished ? 'unpublish' : 'publish'} assignment:`, response);
             }
@@ -88,7 +89,7 @@ const PublishAssignment = () => {
                 withCredentials: true
             });
             setIsEdited(false);
-            // Optionally, show a success message
+            console.log('Assignment updated successfully');
         } catch (error) {
             console.error('Error updating assignment:', error);
         }

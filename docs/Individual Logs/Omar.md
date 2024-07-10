@@ -248,7 +248,7 @@ This cycle was pretty good, I managed to understand backend and how exactly to m
 
 
 
-## Cycle 11 : Friday, June 3rd - Wednesday, July 35th
+## Cycle 11 : Friday, June 3rd - Wednesday, July 5th
 Timesheet
 <img width="958" alt="Cycle 11" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/649da372-4644-4f47-9ad6-c63667fa5883">
 
@@ -274,4 +274,45 @@ This cycle I focused on testing for the backend-eval but it was super tricky and
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - I will focus on testing and fixing some of the issues we got from the client
+
+
+
+
+
+
+
+
+
+
+
+## Cycle 12 : Wednesday, July 5th - Wednesday July 10
+Timesheet
+
+
+<img width="844" alt="cycle 12" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97817367/a1f3138a-7de1-44ea-b26a-99c0df3a0bde">
+
+
+
+
+### Current Tasks
+
+- Testing
+- Backend for signing up an eval
+- Backend for managing an eval
+- Frontend (INSIDE ACTUAL EMAIL) for reset password
+
+Progress Update: 
+### Progress Update (since June 21)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 /Testing  |not-Completed  |
+| Task #2 / Backend for signing up an eval | not-Completed |
+| Task #3 / Backend for managing an eval | not-Completed |
+| Task #4 / Frontend (INSIDE ACTUAL EMAIL) for reset password | not-Completed |
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I worked on some of the backend issues I had but wasn't successful in getting any done since I was facing alot of problems. Also, I was outside the city which made it a little harder.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- From next cycle, I will be working well and getting all my issues done plus some new issues added to them to catch up!
 

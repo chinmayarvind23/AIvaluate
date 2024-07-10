@@ -34,7 +34,8 @@
 | Task #2 | Completed  |
 | Task #3 | Completed  |
 | Task #4 | Ongoing |
-| Task #5 | Not Completed |
+| Task #5 | Ongoing |
+| Task #6 | Not Completed |
 
 # Cycle Goal Review
 During this cycle, I focused on refining the evaluator assignment features, create course, frontend navigation, fetching submission list/rubric list, publish/unpublish assignments and so on. I also implemented some backend tests for the assignment routes.

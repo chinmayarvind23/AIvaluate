@@ -17,6 +17,7 @@ const PublishAssignment = () => {
     const [deadline, setDeadline] = useState("");
     const [rubricContent, setRubricContent] = useState("");
     const [isEdited, setIsEdited] = useState(false);
+    const [isPublished, setIsPublished] = useState(false);
 
     useEffect(() => {
         // Fetch assignment details from API
@@ -26,10 +27,11 @@ const PublishAssignment = () => {
                     withCredentials: true
                 });
                 if (response.status === 200) {
-                    const { assignmentName, dueDate, criteria } = response.data;
+                    const { assignmentName, dueDate, criteria, isPublished } = response.data;
                     setTitle(assignmentName);
                     setDeadline(dueDate);
                     setRubricContent(criteria);
+                    setIsPublished(isPublished);
                 } else {
                     console.error('Failed to fetch assignment:', response);
                 }
@@ -58,6 +60,22 @@ const PublishAssignment = () => {
 
     const handleViewSubmissions = () => {
         navigate(`/eval/selected/${assignmentId}`);
+    };
+
+    const handlePublishToggle = async () => {
+        try {
+            const response = await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}/${isPublished ? 'unpublish' : 'publish'}`, {}, {
+                withCredentials: true
+            });
+            if (response.status === 200) {
+                setIsPublished(!isPublished);
+                // Optionally, show a success message
+            } else {
+                console.error(`Failed to ${isPublished ? 'unpublish' : 'publish'} assignment:`, response);
+            }
+        } catch (error) {
+            console.error(`Error ${isPublished ? 'unpublishing' : 'publishing'} assignment:`, error);
+        }
     };
 
     const handleSubmitChanges = async () => {
@@ -108,8 +126,8 @@ const PublishAssignment = () => {
                             <button className="assignment-button" onClick={handleViewSubmissions}>
                                 View Submissions
                             </button>
-                            <button className="assignment-button">
-                                Unpublish assignment
+                            <button className="assignment-button" onClick={handlePublishToggle}>
+                                {isPublished ? 'Unpublish Assignment' : 'Publish Assignment'}
                             </button>
                         </div>
                         <div className="main-text">

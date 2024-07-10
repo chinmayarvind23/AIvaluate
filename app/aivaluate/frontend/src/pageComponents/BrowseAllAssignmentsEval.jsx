@@ -48,7 +48,7 @@ const BrowseAllAssignmentsEval = () => {
 
         const fetchTotalAssignments = async () => {
             try {
-                const response = await axios.get(`http://localhost:5173/eval-api/assignments/count/${courseId}`, {
+                const response = await axios.get(`http://localhost:5173/eval-api/assignments/count/${courseId}/all`, {
                     withCredentials: true
                 });
                 if (response.status === 200) {
@@ -63,7 +63,7 @@ const BrowseAllAssignmentsEval = () => {
 
         const fetchAssignments = async () => {
             try {
-                const response = await axios.get(`http://localhost:5173/eval-api/assignments/course/${courseId}`, {
+                const response = await axios.get(`http://localhost:5173/eval-api/assignments/course/${courseId}/all`, {
                     withCredentials: true
                 });
                 if (response.status === 200) {
@@ -108,6 +108,10 @@ const BrowseAllAssignmentsEval = () => {
         }
     };
 
+    const handleAssignmentSelect = (assignmentId) => {
+        navigate(`/eval/published/${assignmentId}`);
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
@@ -135,7 +139,7 @@ const BrowseAllAssignmentsEval = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
+                                <div className="file-item" key={index} onClick={() => handleAssignmentSelect(file.assignmentId)}>
                                     <div className="file-name">{file.assignmentName}</div>
                                     <div className="file-status">{file.isPublished ? 'Published' : 'Unpublished'}</div>
                                     <div className="file-icon"><CircumIcon name="circle_more"/></div>

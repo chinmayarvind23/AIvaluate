@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
     "rubricName" VARCHAR(150),
     "criteria" VARCHAR(1000),
-    "courseId" INT,
+    "courseId" INT NOT NULL,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
@@ -345,9 +345,10 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("criteria", "rubricName")
+
+INSERT INTO "AssignmentRubric" ("assignmentRubricId", "rubricName","criteria" ,"courseId")
 VALUES 
-    ('Correctness, Efficiency, Documentation', 'Rubric 1'),
-    ('Problem Solving, Mathematical Reasoning', 'Rubric 2'),
-    ('Experimental Design, Analysis', 'Rubric 3')
+    (1, 'Rubric 1','Correctness, Efficiency, Documentation', 1),
+    (2, 'Rubric 2','Problem Solving, Mathematical Reasoning', 2 ),
+    (3, 'Rubric 3','Experimental Design, Analysis', 3)
 ON CONFLICT DO NOTHING;

@@ -29,7 +29,7 @@ router.get('/assignments', async (req, res) => {
     }
 });
 
-// Fetch rubrics
+//Fetch rubrics
 router.get('/rubrics', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM "AssignmentRubric"');
@@ -39,6 +39,43 @@ router.get('/rubrics', async (req, res) => {
         res.status(500).json({ message: 'Error fetching rubrics' });
     }
 });
+
+//Fetch rubrics by id 
+// router.get('/rubrics/:assignmentRubricId', async (req, res) => {
+//     const assignmentRubricId = parseInt(req.params.assignmentRubricId, 10);  // Ensure the id is treated as an integer
+
+//     try {
+//         const result = await pool.query('SELECT * FROM "AssignmentRubric" WHERE "assignmentRubricId" = $1', [assignmentRubricId]);
+        
+//         if (result.rowCount > 0) {
+//             res.status(200).json(result.rows[0]);  // Send back the found rubric data
+//         } else {
+//             res.status(404).json({ message: 'Rubric not found' });  // Inform the client if no rubric is found
+//         }
+//     } catch (error) {
+//         console.error('Error fetching rubric:', error);
+//         res.status(500).json({ message: 'Error fetching rubric' });  // Handle server errors gracefully
+//     }
+// });
+
+
+// router.put('/rubrics/:assignmentRubricId', async (req, res) => {
+//     const { id } = req.params;
+//     const { rubricName, criteria } = req.body;
+//     try {
+//         const result = await pool.query(
+//             'UPDATE "AssignmentRubric" SET "rubricName" = $1, "criteria" = $2 WHERE "assignmentRubricId" = $3 RETURNING *',
+//             [rubricName, criteria, id]
+//         );
+//         if (result.rows.length === 0) {
+//             return res.status(404).json({ message: 'Rubric not found' });
+//         }
+//         res.status(200).json(result.rows[0]);
+//     } catch (error) {
+//         console.error('Error updating rubric:', error);
+//         res.status(500).json({ message: 'Error updating rubric' });
+//     }
+// });
 
 // Add a rubric
 router.post('/rubrics', async (req, res) => {

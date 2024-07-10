@@ -152,7 +152,8 @@ CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "criteria" VARCHAR(1000), /* Rubric upload as a file */
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId") ON DELETE CASCADE
 );
 
 -- Insert dummy data for testing
@@ -340,9 +341,9 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("assignmentId", "courseId", "instructorId", "criteria", "rubricName")
+INSERT INTO "AssignmentRubric" ("assignmentRubricId","assignmentId", "courseId", "instructorId", "criteria", "rubricName")
 VALUES 
-    (1, 1, 5, 'Correctness, Efficiency, Documentation', 'Rubric Name'),
-    (2, 2, 5, 'Problem Solving, Mathematical Reasoning', 'Rubric Name'),
-    (3, 3, 5, 'Experimental Design, Analysis', 'Rubric Name')
+    (1, 1, 1, 5, 'Correctness, Efficiency, Documentation', 'Rubric Name'),
+    (2, 2, 2, 5, 'Problem Solving, Mathematical Reasoning', 'Rubric Name'),
+    (3, 3, 3, 5, 'Experimental Design, Analysis', 'Rubric Name')
 ON CONFLICT DO NOTHING;

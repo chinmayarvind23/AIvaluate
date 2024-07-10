@@ -290,4 +290,21 @@ router.get('/courses/:id/tas', async (req, res) => {
     }
 });
 
+// Determine whether the evaluator is a prof or a TA
+router.get('/instructor/:id/isTA', async (req, res) => {
+    const instructorId = req.params.id;
+
+    try {
+        const result = await pool.query('SELECT "isTA" FROM "Instructor" WHERE "instructorId" = $1', [instructorId]);
+        if (result.rowCount === 0) {
+            return res.status(404).json({ message: 'Instructor not found' });
+        }
+
+        res.status(200).json({ isTA: result.rows[0].isTA });
+    } catch (error) {
+        console.error('Error fetching instructor:', error);
+        res.status(500).json({ message: 'Error fetching instructor' });
+    }
+});
+
 module.exports = router;

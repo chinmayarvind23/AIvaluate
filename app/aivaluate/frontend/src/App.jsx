@@ -103,18 +103,18 @@ const App = () => {
           <Route path="/eval/submissions/:courseId" element={<PrivateRouteEval element={EvalViewSubmissions} />} /> {/* Done*/}
           <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} /> {/* Done*/}
           <Route path="/eval/coursehome/:courseId" element={<PrivateRouteEval element={CourseHome} />} /> {/* Done*/}
-          <Route path="/eval/create/assignment" element={<PrivateRouteEval element={CreateAssignment} />} /> {/* Done*/}
+          <Route path="/eval/create/assignment/:courseId" element={<PrivateRouteEval element={CreateAssignment} />} /> {/* Done*/}
           <Route path="/eval/rubrics/:courseId" element={<PrivateRouteEval element={Rubrics} />} /> {/* Done*/}
           <Route path="/eval/students/:courseId" element={<PrivateRouteEval element={Students} />} /> {/* Done*/}
           <Route path="/eval/grades/:courseId" element={<PrivateRouteEval element={EvaluatorGrades} />} /> {/* Done*/}
           <Route path="/eval/account" element={<PrivateRouteEval element={EvalAccount} />} /> {/* Done*/}
-          <Route path="/eval/selected/assignmentId" element={<PrivateRouteEval element={SelectedAssignment} />} /> {/* Done*/}
+          <Route path="/eval/selected/:assignmentId" element={<PrivateRouteEval element={SelectedAssignment} />} /> {/* Done*/}
           <Route path="/eval/assignments/:courseId" element={<PrivateRouteEval element={AssignmentProf} />} /> {/* Done*/}
           <Route path="/eval/browse/assignments" element={<PrivateRouteEval element={BrowseAllAssignmentsEval} />} /> {/* Done*/}
           <Route path="/eval/help" element={<PrivateRouteEval element={EvalhelpPage} />} /> {/* Done*/}
           <Route path="/eval/rubric/:rubricId" element={<PrivateRouteEval element={EditRubric} />} /> {/* Done*/}
           {/* <Route path="/eval/individualrubric" element={<PrivateRouteEval element={ProfIndividualRubric} />} />  */} {/* This is the same page as EditRubric*/}
-          <Route path="/eval/published/assignment" element={<PrivateRouteEval element={PublishAssignment} />} /> {/* Done*/}
+          <Route path="/eval/published/:assignmentId" element={<PrivateRouteEval element={PublishAssignment} />} /> {/* Done*/}
 
 
         </Routes>

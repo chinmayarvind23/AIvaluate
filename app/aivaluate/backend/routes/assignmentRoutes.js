@@ -278,6 +278,7 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     }
 });
 
+// Configure multer for file storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const { courseId, assignmentId } = req.params;
@@ -301,15 +302,11 @@ const storage = multer.diskStorage({
         });
     },
     filename: (req, file, cb) => {
-        // Append a timestamp to the file name to ensure it is unique
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        const baseName = path.basename(file.originalname, ext);
-        cb(null, `${baseName}-${uniqueSuffix}${ext}`);
+        console.log(`Filename: ${file.originalname}`);
+        cb(null, file.originalname);
     },
 });
 
-// Define the fileFilter function to filter files based on their extensions
 const fileFilter = (req, file, cb) => {
     const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
     if (!allowedExtensions.exec(file.originalname)) {
@@ -318,56 +315,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
 };
 
-// Configure multer for file storage with file filter
 const upload = multer({ storage: storage, fileFilter: fileFilter });
-
-// Add a solution with multiple files
-router.post('/assignments/:assignmentId/solutions', upload.array('assignmentKey', 10), async (req, res) => {
-    const { assignmentId } = req.params;
-    const files = req.files;
-    const filePaths = files.map(file => file.path);
-
-    try {
-        await pool.query(
-            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2',
-            [JSON.stringify(filePaths), assignmentId]
-        );
-        res.status(200).send({ message: 'Solutions added successfully' });
-    } catch (error) {
-        console.error('Error adding solutions:', error);
-        res.status(500).send({ message: 'Error adding solutions' });
-    }
-});
-
-// Upload multiple files for an assignment
-router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async (req, res) => {
-    const { courseId, assignmentId } = req.params;
-    const studentId = req.session.studentId;
-    const files = req.files;
-    const filePaths = files.map(file => file.path);
-    const currentDate = new Date();
-    const formattedDate = new Intl.DateTimeFormat('en-GB', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    }).format(currentDate);
-
-    try {
-        await pool.query(
-            `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "isSubmitted", "submittedAt") VALUES ($1, $2, $3, $4, true, $5)
-             ON CONFLICT ("studentId", "courseId", "assignmentId") 
-             DO UPDATE SET "submissionFile" = $4, "isSubmitted" = true, "submittedAt" = $5`,
-            [studentId, courseId, assignmentId, JSON.stringify(filePaths), formattedDate]
-        );
-        res.status(200).send('Files uploaded and paths saved successfully');
-    } catch (error) {
-        console.error('Error saving file paths to database:', error);
-        res.status(500).send('Internal Server Error');
-    }
-});
 
 // Add a solution
 router.post('/assignments/:assignmentId/solutions', upload.single('assignmentKey'), async (req, res) => {
@@ -383,6 +331,39 @@ router.post('/assignments/:assignmentId/solutions', upload.single('assignmentKey
     } catch (error) {
         console.error('Error adding solution:', error);
         res.status(500).send({ message: 'Error adding solution' });
+    }
+});
+
+router.post('/upload/:courseId/:assignmentId', upload.single('file'), async (req, res) => {
+    if (req.file) {
+        const { courseId, assignmentId } = req.params;
+        const studentId = req.session.studentId;
+        const filePath = req.file.path;
+        const currentDate = new Date();
+        const formattedDate = new Intl.DateTimeFormat('en-GB', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }).format(currentDate);
+
+        try {
+            await pool.query(
+                `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "isSubmitted", "submittedAt") VALUES ($1, $2, $3, $4, true, $5)
+                 ON CONFLICT ("studentId", "courseId", "assignmentId") 
+                 DO UPDATE SET "submissionFile" = $4, "isSubmitted" = true, "submittedAt" = $5`,
+                [studentId, courseId, assignmentId, filePath, formattedDate]
+            );
+            res.status(200).send('File uploaded and path saved successfully');
+        } catch (error) {
+            console.error('Error saving file path to database:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        console.error('File upload failed');
+        res.status(500).send('File upload failed');
     }
 });
 
@@ -434,10 +415,10 @@ router.get('/submission/:courseId/:assignmentId', async (req, res) => {
             return res.status(404).send('Submission not found');
         }
 
-        const filePaths = JSON.parse(result.rows[0].submissionFile);
-        res.status(200).send(filePaths);
+        const filePath = result.rows[0].submissionFile;
+        res.status(200).send(filePath);
     } catch (error) {
-        console.error('Error retrieving file paths from database:', error);
+        console.error('Error retrieving file path from database:', error);
         res.status(500).send('Internal Server Error');
     }
 });

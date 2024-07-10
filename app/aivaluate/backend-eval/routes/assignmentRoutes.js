@@ -189,6 +189,24 @@ router.post('/submissions/:submissionId/grade', async (req, res) => {
     }
 });
 
+// Fetch submissions by assignment ID
+router.get('/assignments/:assignmentId/submissions', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query('SELECT * FROM "AssignmentSubmission" WHERE "assignmentId" = $1', [assignmentId]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No submissions found for this assignment.' });
+        }
+
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching submissions:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // Fetch rubrics for a specific instructor
 router.get('/instructors/:instructorId/rubrics', async (req, res) => {
     const { instructorId } = req.params;
@@ -220,8 +238,36 @@ router.get('/rubrics/:courseId', async (req, res) => {
     }
 });
 
-// Get assignments by course ID
+// Get published assignments by course ID
 router.get('/assignments/course/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    if (isNaN(courseId)) {
+        return res.status(400).json({ message: 'Invalid course ID' });
+    }
+
+    try {
+        // const result = await pool.query('SELECT * FROM "Assignment" WHERE "courseId" = $1 AND "isPublished" = true', [courseId]);
+        const result = await pool.query('SELECT * FROM "Assignment" WHERE "courseId" = $1', [courseId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No assignments found for this course' });
+        }
+
+        const assignments = result.rows.map(assignment => ({
+            ...assignment,
+            dueDate: formatDueDate(assignment.dueDate)
+        }));
+
+        res.status(200).json(assignments);
+    } catch (error) {
+        console.error('Error fetching assignments:', error.message);
+        res.status(500).json({ message: 'Error fetching assignments' });
+    }
+});
+
+// Get all assignments by course ID
+router.get('/assignments/course/:courseId/all', async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
 
     if (isNaN(courseId)) {

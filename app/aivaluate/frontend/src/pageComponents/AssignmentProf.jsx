@@ -145,8 +145,13 @@ const AssignmentProf = () => {
         }
     };
 
-    const handleAssignmentSelect = () => {
-        navigate(`/eval/published/assignment`);
+    const handleAssignmentSelect = (assignmentId) => {
+        if(!isTA) {
+            navigate(`/eval/published/assignment/`);
+        }
+        if(isTA) {
+            navigate(`/eval/selected/${assignmentId}`);
+        }
     };
 
     const handleAssignmentCreation = () => {
@@ -186,7 +191,7 @@ const AssignmentProf = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((assignment, index) => (
-                                <div className="file-item" key={index} onClick={() => handleAssignmentSelect()}>
+                                <div className="file-item" key={index} onClick={() => handleAssignmentSelect(assignment.assignmentId)}>
                                     <div className="file-name">{assignment.assignmentName}</div>
                                     <div className="file-status">{assignment.isGraded ? '*Grading Posted' : ''}</div>
                                     <div className="file-icon"><CircumIcon name="circle_more" /></div>
@@ -207,4 +212,4 @@ const AssignmentProf = () => {
     );
 };
 
- export default AssignmentProf;
+export default AssignmentProf;

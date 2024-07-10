@@ -559,7 +559,7 @@ Clockify report: Total hours - 9.5 hours
 - **#1:** MVP presentation (3 hours) (XL Task)
 - **#2:** Backend and PRs reviwes (6.5 hours) (XL Task)
 
-## Progress Update (since 6/28/2024)
+## Progress Update (since 7/3/2024)
 
 | TASK/ISSUE # | STATUS      |
 |--------------|-------------|
@@ -589,7 +589,7 @@ Clockify report: Total hours - 26 hours
 - **#3:** Testing backend for evaluator backend (7 hours) (XL Task)
 - **#4:** File submissions for assignment submissions, multiple submissions, and evaluator assignment keys (10 hours) (XL Task)
 
-## Progress Update (since 6/28/2024)
+## Progress Update (since 7/5/2024)
 
 | TASK/ISSUE # | STATUS      |
 |--------------|-------------|

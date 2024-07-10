@@ -12,16 +12,27 @@ steps:
       DB_PASS: admin
       DB_NAME: AIvaluatedb
     commands:
-      - apt-get update && apt-get install -y netcat
-      - cd app/aivaluate/backend
+      - docker-compose up --build
+      - cd ./app/aivaluate/backend
+      - npm install
+      - sh -c "while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done"
+      - npm test
+      - cd ..
+      - cd ./app/aivaluate/backend-eval
+      - npm install
+      - sh -c "while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done"
+      - npm test
+      - cd ..
+      - cd ./app/aivaluate/backend-admin
       - npm install
       - sh -c "while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done"
       - npm test
 
+
   - name: build-frontend
     image: node:20.14.0-buster
     commands:
-      - cd app/aivaluate/frontend
+      - cd ./app/aivaluate/frontend
       - npm install
       - npm test
       - npm run build
@@ -36,7 +47,9 @@ services:
 
 trigger:
   branch:
-    - '*'
+    - master
+    - development
+    - ci-cd-setup
   event:
     - pull_request
     - push

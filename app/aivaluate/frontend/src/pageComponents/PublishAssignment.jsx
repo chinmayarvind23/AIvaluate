@@ -8,6 +8,10 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 import useParams from 'react-router-dom';
 
 const PublishAssignment = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const courseId = sessionStorage.getItem('courseId');
+    const navBarText = `${courseCode} - ${courseName}`;
     const navigate = useNavigate();
     const [title, setTitle] = useState(" Lab 3 - Build a Personal Portfolio Page");
     const [deadline, setDeadline] = useState("May 30 11:59 p.m.");
@@ -38,7 +42,7 @@ const PublishAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText="Course number - Course Name" />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="rubrics"/>
             <div className="main-margin">
                 <div className="rubric-div">

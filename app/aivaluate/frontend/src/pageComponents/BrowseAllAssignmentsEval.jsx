@@ -2,6 +2,7 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../AssignmentProf.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -9,64 +10,111 @@ import '../SearchBar.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
+const BrowseAllAssignmentsEval = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const courseId = sessionStorage.getItem('courseId');
+    const navBarText = `${courseCode} - ${courseName}`;
+    const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+    const [searchTerm, setSearchTerm] = useState('');
+    const [assignments, setAssignments] = useState([]);
+    const [filteredAssignments, setFilteredAssignments] = useState([]);
+    const [totalAssignments, setTotalAssignments] = useState(0);
+    const [error, setError] = useState(null);
 
- const BrowseAllAssignmentsEval = () => {
-     const navigate = useNavigate();
-     const [currentPage, setCurrentPage] = useState(1);
-     const itemsPerPage = 6;
-     const [searchTerm, setSearchTerm] = useState('');
-     const [filteredFiles, setFilteredFiles] = useState([]);
-     
-     const handleSearchChange = (e) => {
+    const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-      };
+    };
 
-     const files = [
-         { name: 'Lab 1', published: true },
-         { name: 'Lab 2', published: true },
-         { name: 'Lab 3', published: false },
-         { name: 'Assignment 1', published: false },
-         { name: 'Assignment 2', published: false },
-         { name: 'Assigment 3', published: false },
-         { name: 'Lab 4', published: false },
-         { name: 'Lab 5', published: false },
-     ];
+    useEffect(() => {
+        if (searchTerm) {
+            const filtered = assignments.filter(assignment =>
+                assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredAssignments(filtered);
+        } else {
+            setFilteredAssignments(assignments);
+        }
+        setCurrentPage(1); // Reset to first page on new search
+    }, [searchTerm, assignments]);
 
-     useEffect(() => {
-         const filtered = files.filter(file =>
-             file.name.toLowerCase().includes(searchTerm.toLowerCase())
-         );
-         setFilteredFiles(filtered);
-         setCurrentPage(1); // Reset to first page on new search
-     }, [searchTerm]);
+    useEffect(() => {
+        if (!courseId) {
+            console.error('Course ID is not set in session storage');
+            return;
+        }
 
-     // Calculates the current items to display
-     const indexOfLastItem = currentPage * itemsPerPage;
-     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
+        const fetchTotalAssignments = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5173/eval-api/assignments/count/${courseId}`, {
+                    withCredentials: true
+                });
+                if (response.status === 200) {
+                    setTotalAssignments(response.data.totalAssignments);
+                } else {
+                    console.error('Failed to fetch total assignments:', response);
+                }
+            } catch (error) {
+                console.error('Error fetching total assignments:', error);
+            }
+        };
 
-     // This calculates the total number of pages based of the max number of items per page
-     const totalPages = Math.ceil(files.length / itemsPerPage);
+        const fetchAssignments = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5173/eval-api/assignments/course/${courseId}`, {
+                    withCredentials: true
+                });
+                if (response.status === 200) {
+                    setAssignments(response.data);
+                    setFilteredAssignments(response.data);
+                    setError(null);
+                } else {
+                    console.error('Expected an array but got:', response.data);
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    setError('No assignments found for this course.');
+                    setAssignments([]);
+                    setFilteredAssignments([]);
+                } else {
+                    console.error('Error fetching assignments:', error);
+                }
+            }
+        };
 
-     const handleNextPage = () => {
-     if (currentPage < totalPages) {
-         setCurrentPage(prevPage => prevPage + 1);
-     }
-     };
+        fetchTotalAssignments();
+        fetchAssignments();
+    }, [courseId]);
 
-     const handlePrevPage = () => {
-     if (currentPage > 1) {
-         setCurrentPage(prevPage => prevPage - 1);
-     }
-     };
+    // Calculates the current items to display
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentFiles = filteredAssignments.slice(indexOfFirstItem, indexOfLastItem);
 
-     return (
-         <div>
-             <AIvaluateNavBarEval navBarText="Admin Home Portal"/>
-             <SideMenuBarEval tab="assignments" />
-             <div className="accented-outside rborder">
-                 <div className="main-margin">
-                     <div className="portal-container">
+    // This calculates the total number of pages based on the max number of items per page
+    const totalPages = Math.ceil(filteredAssignments.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
+    return (
+        <div>
+            <AIvaluateNavBarEval navBarText={navBarText} />
+            <SideMenuBarEval tab="assignments" />
+            <div className="accented-outside rborder">
+                <div className="main-margin">
+                    <div className="portal-container">
                         <div className="top-bar">
                             <div className="back-btn-div">
                                 <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
@@ -85,27 +133,27 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
                             </div>
                             <div className="empty"> </div>
                         </div>
-                         <div className="filetab">
-                             {currentFiles.map((file, index) => (
-                                 <div className="file-item" key={index}>
-                                     <div className="file-name">{file.name}</div>
-                                     <div className="file-status">{file.published ? 'Published' : 'Unpublished'}</div>
-                                     <div className="file-icon"><CircumIcon name="circle_more"/></div>
-                                 </div>
-                             ))}
-                         </div>
-                     </div>
-                     <div className="pagination-controls">
-                         <span>Page {currentPage} of {totalPages}</span>
-                         <div className="pagination-buttons">
-                             <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                             <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                         </div>
-                     </div>
-                 </div> 
-             </div>
-         </div>
-     );
- };
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                <div className="file-item" key={index}>
+                                    <div className="file-name">{file.assignmentName}</div>
+                                    <div className="file-status">{file.isPublished ? 'Published' : 'Unpublished'}</div>
+                                    <div className="file-icon"><CircumIcon name="circle_more"/></div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    );
+};
 
- export default BrowseAllAssignmentsEval;
+export default BrowseAllAssignmentsEval;

@@ -1,5 +1,47 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 5 - July 9) - 15 hours
+
+## Tuesday July 9th
+### 9.5 hours
+- Completed Evaluator Assignment Handling Kanban Board Issues #268, #295, #298 (7.5 hours)
+- Code Review, Bug Fixing, Backend Testing for Eval-view Assignment Routes (2 hours)
+
+## Monday July 8th
+### 3.5 hours
+- Evaluator Assignment Handling Kanban Board Issues #268, #295, #298 (3.5 hours)
+
+## Sunday July 7th
+### 0.5 hours
+- Evaluator Assignment Handling Kanban Board Issues #268, #295, #298 (0.5 hours)
+
+## Friday July 5th
+### 1.5 hours
+- Team meeting, project planning and deciding on task priorities (1.5 hours)
+  
+# Current Tasks
+- #1 Add assignment fetching feature for evaluators #268
+- #2 Backend for assignment creation #295
+- #3 Backend for eval main assignment page #298
+- #4 Implement various backend testings 
+- #5 Fix other known bugs that prevent existing features from running.
+- #6 Frontend and backend for AI setting page
+
+# Progress Update (since June 26)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Completed  |
+| Task #4 | Ongoing |
+| Task #5 | Not Completed |
+
+# Cycle Goal Review
+During this cycle, I focused on refining the evaluator assignment features, create course, frontend navigation, fetching submission list/rubric list, publish/unpublish assignments and so on. I also implemented some backend tests for the assignment routes.
+
+# Next Cycle 
+More backend testing, implement the frontend and backend for AI prompt setting. Help the team with implementing AI grading features.
+
 # Timesheet (June 3 - July 5 Morning) - 13 hours
 
 ## Friday July 5th

@@ -73,7 +73,7 @@
         </td>
     </tr>
 <tr>
-        <td> -
+        <td> File submissions - evaluator assignment keys & multiple submissions
         </td>
     </tr>
     <tr>

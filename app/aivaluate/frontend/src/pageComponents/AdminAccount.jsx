@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import '../Account.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
-
+//Test Comment
 const AdminAccount = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");//Test Comment
+    const [lastName, setLastName] = useState("");//fhfhfhfhfh
     const [email, setEmail] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");

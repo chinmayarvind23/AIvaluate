@@ -1,12 +1,17 @@
-// tests/instructorRoutes.test.js
 const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
+const { Pool } = require('pg');
 
-// Mocking the database pool
-const pool = {
-  query: jest.fn()
-};
+// Mock the pg module
+jest.mock('pg', () => {
+  const mPool = {
+    query: jest.fn(),
+  };
+  return { Pool: jest.fn(() => mPool) };
+});
+
+const pool = new Pool();
 
 const app = express();
 app.use(bodyParser.json());
@@ -35,9 +40,7 @@ app.delete('/teaches/:courseId/:instructorId', async (req, res) => {
 
 describe('GET /tas', () => {
   it('should fetch all TAs', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(null, { rows: [{ instructorId: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', isTA: true }] });
-    });
+    pool.query.mockResolvedValue({ rows: [{ instructorId: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', isTA: true }] });
 
     const response = await request(app).get('/tas');
 
@@ -46,9 +49,7 @@ describe('GET /tas', () => {
   });
 
   it('should return an error when fetching TAs', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(new Error('Database error'), null);
-    });
+    pool.query.mockRejectedValue(new Error('Database error'));
 
     const response = await request(app).get('/tas');
 
@@ -59,9 +60,7 @@ describe('GET /tas', () => {
 
 describe('DELETE /teaches/:courseId/:instructorId', () => {
   it('should remove an instructor or TA from a course', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(null, { rows: [] });
-    });
+    pool.query.mockResolvedValue({ rows: [] });
 
     const response = await request(app).delete('/teaches/1/2');
 
@@ -70,9 +69,7 @@ describe('DELETE /teaches/:courseId/:instructorId', () => {
   });
 
   it('should return an error when removing an instructor or TA from a course', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(new Error('Database error'), null);
-    });
+    pool.query.mockRejectedValue(new Error('Database error'));
 
     const response = await request(app).delete('/teaches/1/2');
 

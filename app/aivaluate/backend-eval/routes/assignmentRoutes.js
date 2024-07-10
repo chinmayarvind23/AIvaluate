@@ -311,5 +311,69 @@ router.get('/assignments/count/:courseId', async (req, res) => {
     }
 });
 
+// Fetch assignment by ID
+router.get('/assignments/:assignmentId', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query(
+            `SELECT a."assignmentName", a."dueDate", ar."criteria" 
+             FROM "Assignment" a 
+             JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId" 
+             JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId" 
+             WHERE a."assignmentId" = $1`,
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching assignment:', error);
+        res.status(500).json({ message: 'Error fetching assignment' });
+    }
+});
+
+// Update assignment by ID
+router.put('/assignments/:assignmentId', async (req, res) => {
+    const { assignmentId } = req.params;
+    const { assignmentName, dueDate, criteria } = req.body;
+
+    try {
+        // Begin transaction
+        await pool.query('BEGIN');
+
+        // Update the assignment
+        const result = await pool.query(
+            'UPDATE "Assignment" SET "assignmentName" = $1, "dueDate" = $2 WHERE "assignmentId" = $3 RETURNING *',
+            [assignmentName, dueDate, assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            await pool.query('ROLLBACK');
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        // Update the rubric criteria
+        await pool.query(
+            `UPDATE "AssignmentRubric" 
+             SET "criteria" = $1 
+             WHERE "assignmentRubricId" = (SELECT "assignmentRubricId" FROM "useRubric" WHERE "assignmentId" = $2)`,
+            [criteria, assignmentId]
+        );
+
+        // Commit transaction
+        await pool.query('COMMIT');
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        console.error('Error updating assignment:', error);
+        res.status(500).json({ message: 'Error updating assignment' });
+    }
+});
+
 
 module.exports = router;

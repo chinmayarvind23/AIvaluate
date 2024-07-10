@@ -1674,6 +1674,10 @@ I completed the team meeting and code review. Additionally, I finalized the code
 
 ### Timesheet
 Clockify report
+<img width="896" alt="Screenshot 2024-07-10 at 1 37 34 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/97553042/e7388c03-f6b9-4c5b-a3c1-8ac7710e1685">
+
+
+
 
 ### Current Tasks 
   * #1: Backend for a single selected rubric

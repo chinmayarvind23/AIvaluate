@@ -1670,7 +1670,7 @@ I completed the team meeting and code review. Additionally, I finalized the code
   * Goal 4: Begin implementing high-priority features identified during the MVP review
 
 
-# Timesheet (July 5 - July 11) -  hours
+# Timesheet (July 5 - July 10) -  hours
 
 ### Timesheet
 Clockify report
@@ -1679,7 +1679,7 @@ Clockify report
   * #1: Backend for a single selected rubric
   * #2: Publish assignment rubric Backend
 
-### Progress Update (since 7/10/2024)
+### Progress Update (since 7/09/2024)
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong></td>

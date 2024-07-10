@@ -176,23 +176,6 @@ router.delete('/rubrics/:rubricId', async (req, res) => {
     }
 });
 
-// Add a solution
-router.post('/assignments/:assignmentId/solutions', async (req, res) => {
-    const { assignmentId } = req.params;
-    const { assignmentKey } = req.body;
-
-    try {
-        await pool.query(
-            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2',
-            [assignmentKey, assignmentId]
-        );
-        res.status(200).send({ message: 'Solution added successfully' });
-    } catch (error) {
-        console.error('Error adding solution:', error);
-        res.status(500).send({ message: 'Error adding solution' });
-    }
-});
-
 // Get solution by assignment ID
 router.get('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
@@ -268,7 +251,8 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
                 a."maxObtainableGrade",
                 ag."InstructorAssignedFinalGrade"
             FROM "Assignment" a
-            LEFT JOIN "AssignmentRubric" ar ON a."assignmentId" = ar."assignmentId"
+            LEFT JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId"
+            LEFT JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId"
             LEFT JOIN "AssignmentGrade" ag ON a."assignmentId" = ag."assignmentId"
             AND ag."assignmentSubmissionId" = (
                 SELECT "assignmentSubmissionId"
@@ -323,7 +307,32 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+    const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
+    if (!allowedExtensions.exec(file.originalname)) {
+        return cb(new Error('Please upload file having extensions .css, .html, .js, or .jsx only.'));
+    }
+    cb(null, true);
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+// Add a solution
+router.post('/assignments/:assignmentId/solutions', upload.single('assignmentKey'), async (req, res) => {
+    const { assignmentId } = req.params;
+    const assignmentKey = req.file.path;
+
+    try {
+        await pool.query(
+            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2',
+            [assignmentKey, assignmentId]
+        );
+        res.status(200).send({ message: 'Solution added successfully' });
+    } catch (error) {
+        console.error('Error adding solution:', error);
+        res.status(500).send({ message: 'Error adding solution' });
+    }
+});
 
 router.post('/upload/:courseId/:assignmentId', upload.single('file'), async (req, res) => {
     if (req.file) {

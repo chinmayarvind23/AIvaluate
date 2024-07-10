@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
-import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 import axios from 'axios';
 

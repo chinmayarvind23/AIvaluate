@@ -230,21 +230,21 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 INSERT INTO "Assignment" ("assignmentId", "courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
-VALUES (1, 3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css'),
-       (2, 3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css'),
-       (3, 3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css'),
-       (4, 4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation'),
-       (5, 4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation'),
-       (6, 4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions'),
-       (7, 2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css'),
-       (8, 2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads'),
-       (9, 2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css'),
-       (10, 5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html'),
-       (11, 5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html'),
-       (12, 5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript'),
-       (13, 1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag'),
-       (14, 1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag'),
-       (15, 1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag')
+VALUES (1, 3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip/file/path',  10, 'Design a login page with html and css'),
+       (2, 3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip/file/path',  25, 'Design an account page with html and css'),
+       (3, 3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip/file/path',  12, 'Design a home page with html and css'),
+       (4, 4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip/file/path',  12, 'Create a login page with JavaScript validation'),
+       (5, 4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip/file/path',  12, 'Create a sign up page with JavaScript validation'),
+       (6, 4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip/file/path',  12, 'Create a dashboard page with JavaScript variables and functions'),
+       (7, 2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip/file/path',  20, 'Design a interactive page with html and css'),
+       (8, 2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip/file/path',  35, 'Design a menu that pops down from the nav bar when the html loads'),
+       (9, 2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip/file/path',  65, 'Make a moving background with html and css'),
+       (10, 5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip/file/path',  100, 'Create design plan document with html'),
+       (11, 5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip/file/path',  88, 'Create project plan document with html'),
+       (12, 5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip/file/path',  50, 'Design you sign in page with html, css, and javascript'),
+       (13, 1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip/file/path',  5, 'Create a html page that says hello world in a heading tag'),
+       (14, 1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip/file/path',  10, 'Create a html page that has a list of your favorite things in a list tag'),
+       (15, 1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip/file/path',  10, 'Create a html page that has a table of your favorite things in a table tag')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table

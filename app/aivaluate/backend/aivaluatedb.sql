@@ -155,9 +155,9 @@ VALUES (1, 'Admin', 'User', 'admin@example.com', 'adminpassword');
 
 -- Insert dummy data into Assignment table
 INSERT INTO Assignment (assignmentId, courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription)
-VALUES (1, 1, '2022-01-15', 'assignment1', 100, 'Write a program to calculate the factorial of a number'),
-    (2, 2, '2022-02-10', 'assignment2', 100, 'Solve the following calculus problems'),
-    (3, 3, '2022-03-05', 'assignment3', 100, 'Perform experiments to verify Newton''s laws of motion');
+VALUES (1, 1, '2022-01-15', 'assignment1/file/path', 100, 'Write a program to calculate the factorial of a number'),
+    (2, 2, '2022-02-10', 'assignment2/file/path', 100, 'Solve the following calculus problems'),
+    (3, 3, '2022-03-05', 'assignment3/file/path', 100, 'Perform experiments to verify Newton''s laws of motion');
 
 -- Insert dummy data into CourseNotification table
 INSERT INTO CourseNotification (senderId, receiverId, courseId, notificationMessage, isRead)
@@ -167,9 +167,9 @@ VALUES (1, 2, 1, 'Reminder: Assignment 1 ''is'' due tomorrow', false),
 
 -- Insert dummy data into AssignmentSubmission table
 INSERT INTO AssignmentSubmission (assignmentSubmissionId, studentId, courseId, assignmentId, submittedAt, submissionFile, isSubmitted, updatedAt, isGraded)
-VALUES (1, 1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
-    (2, 2, 1, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
-    (3, 3, 2, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false);
+VALUES (1, 1, 1, 1, '2022-01-14', 'submission1.html', true, '2022-01-14', true),
+    (2, 2, 1, 1, '2022-01-15', 'submission2.css', true, '2022-01-15', true),
+    (3, 3, 2, 2, '2022-02-10', 'submission3.js', true, '2022-02-10', false);
 
 -- Insert dummy data into AssignmentGrade table
 INSERT INTO AssignmentGrade (assignmentSubmissionId, assignmentId, maxObtainableGrade, AIassignedGrade, InstructorAssignedFinalGrade, isGraded)

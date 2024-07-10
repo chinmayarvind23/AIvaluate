@@ -179,12 +179,12 @@ router.delete('/rubrics/:rubricId', async (req, res) => {
 // Add a solution
 router.post('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
+    const { assignmentKey } = req.body;
 
     try {
         await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
-            [solutionFile, assignmentId]
+            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2',
+            [assignmentKey, assignmentId]
         );
         res.status(200).send({ message: 'Solution added successfully' });
     } catch (error) {
@@ -198,7 +198,7 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
 
     try {
-        const result = await pool.query('SELECT "solutionFile" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+        const result = await pool.query('SELECT "assignmentKey" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
         if (result.rows.length === 0) {
             return res.status(404).send({ message: 'Solution not found' });
         }
@@ -213,12 +213,12 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
 // Update solution by assignment ID
 router.put('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
+    const { assignmentKey } = req.body;
 
     try {
         const result = await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2 RETURNING *',
-            [solutionFile, assignmentId]
+            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2 RETURNING *',
+            [assignmentKey, assignmentId]
         );
         if (result.rows.length === 0) {
             return res.status(404).send({ message: 'Solution not found' });
@@ -236,7 +236,7 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = NULL WHERE "assignmentId" = $1 RETURNING *',
+            'UPDATE "Assignment" SET "assignmentKey" = NULL WHERE "assignmentId" = $1 RETURNING *',
             [assignmentId]
         );
         if (result.rows.length === 0) {
@@ -330,13 +330,22 @@ router.post('/upload/:courseId/:assignmentId', upload.single('file'), async (req
         const { courseId, assignmentId } = req.params;
         const studentId = req.session.studentId;
         const filePath = req.file.path;
+        const currentDate = new Date();
+        const formattedDate = new Intl.DateTimeFormat('en-GB', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }).format(currentDate);
 
         try {
             await pool.query(
-                `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "isSubmitted", "submittedAt") VALUES ($1, $2, $3, $4, true, NOW())
+                `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "isSubmitted", "submittedAt") VALUES ($1, $2, $3, $4, true, $5)
                  ON CONFLICT ("studentId", "courseId", "assignmentId") 
-                 DO UPDATE SET "submissionFile" = $4, "isSubmitted" = true, "submittedAt" = NOW()`,
-                [studentId, courseId, assignmentId, filePath]
+                 DO UPDATE SET "submissionFile" = $4, "isSubmitted" = true, "submittedAt" = $5`,
+                [studentId, courseId, assignmentId, filePath, formattedDate]
             );
             res.status(200).send('File uploaded and path saved successfully');
         } catch (error) {

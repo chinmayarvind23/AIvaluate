@@ -59,12 +59,12 @@ router.post('/rubrics', async (req, res) => {
 // Add a solution
 router.post('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
+    const { assignmentKey } = req.body;
 
     try {
         await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
-            [solutionFile, assignmentId]
+            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2',
+            [assignmentKey, assignmentId]
         );
         res.status(200).json({ message: 'Solution added successfully' });
     } catch (error) {
@@ -78,7 +78,7 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
 
     try {
-        const result = await pool.query('SELECT "solutionFile" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+        const result = await pool.query('SELECT "assignmentKey" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Solution not found' });
         }
@@ -92,12 +92,12 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
 // Update solution by assignment ID
 router.put('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
+    const { assignmentKey } = req.body;
 
     try {
         const result = await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2 RETURNING *',
-            [solutionFile, assignmentId]
+            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2 RETURNING *',
+            [assignmentKey, assignmentId]
         );
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Solution not found' });
@@ -115,7 +115,7 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = NULL WHERE "assignmentId" = $1 RETURNING *',
+            'UPDATE "Assignment" SET "assignmentKey" = NULL WHERE "assignmentId" = $1 RETURNING *',
             [assignmentId]
         );
         if (result.rows.length === 0) {

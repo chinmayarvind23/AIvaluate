@@ -14,7 +14,7 @@ const CreateAssignment = () => {
     });
 
     const [rubrics, setRubrics] = useState([]);
-    const [solutionFile, setSolutionFile] = useState(null);
+    const [assignmentKey, setassignmentKey] = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost:5173/eval-api/rubrics')
@@ -35,7 +35,7 @@ const CreateAssignment = () => {
     };
 
     const handleFileChange = (e) => {
-        setSolutionFile(e.target.files[0]);
+        setassignmentKey(e.target.files[0]);
     };
 
     const handleSubmit = (e) => {
@@ -43,9 +43,9 @@ const CreateAssignment = () => {
         axios.post('http://localhost:5173/eval-api/assignments', assignment)
             .then(response => {
                 console.log('Assignment created:', response.data);
-                if (solutionFile) {
+                if (assignmentKey) {
                     const formData = new FormData();
-                    formData.append('solutionFile', solutionFile);
+                    formData.append('assignmentKey', assignmentKey);
                     axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData)
                         .then(res => {
                             console.log('Solution added:', res.data);
@@ -108,9 +108,9 @@ const CreateAssignment = () => {
                                 value={assignment.maxPoints}
                                 onChange={handleInputChange}
                             />
-                            <label htmlFor="solutionFile">Add a solution <span className="optional">*Not required</span></label>
+                            <label htmlFor="assignmentKey">Add a solution <span className="optional">*Not required</span></label>
                             <label className="file-upload">
-                                <input type="file" id="solutionFile" name="solutionFile" onChange={handleFileChange} />
+                                <input type="file" id="assignmentKey" name="assignmentKey" onChange={handleFileChange} />
                                 <span>Drag files here or Click to browse files</span>
                             </label>
                             <div className="form-footer">

@@ -157,7 +157,8 @@ const SubmitAssignment = () => {
         criteria: '',
         dueDate: '',
         maxObtainableGrade: '',
-        InstructorAssignedFinalGrade: ''
+        InstructorAssignedFinalGrade: '',
+        assignmentDescription: ''
     });
     const [loading, setLoading] = useState(true);
 
@@ -220,7 +221,7 @@ const SubmitAssignment = () => {
         return <div>Loading...</div>;
     }
 
-    const navBarText = `${assignmentDetails.assignmentName} - ${assignmentDetails.rubricName}`;
+    const navBarText = `${assignmentDetails.assignmentName} - ${assignmentDetails.assignmentDescription}`;
 
     return (
         <div>
@@ -236,7 +237,7 @@ const SubmitAssignment = () => {
                                 </button>
                             </div>
                             <div className="header-content">
-                                <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName} - {assignmentDetails.rubricName}</h1>
+                                <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName} - {assignmentDetails.assignmentDescription}</h1>
                             </div>
                         </div>
                     </div>

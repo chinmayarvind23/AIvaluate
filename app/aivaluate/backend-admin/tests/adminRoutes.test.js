@@ -9,7 +9,6 @@ jest.mock('../dbConfig', () => ({
 const { pool } = require('../dbConfig');
 const adminRoutes = require('../routes/adminRoutes');
 const bcrypt = require('bcryptjs');
-const nodemailer = require('nodemailer');
 
 jest.mock('bcryptjs');
 jest.mock('nodemailer');

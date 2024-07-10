@@ -559,7 +559,7 @@ Clockify report: Total hours - 9.5 hours
 - **#1:** MVP presentation (3 hours) (XL Task)
 - **#2:** Backend and PRs reviwes (6.5 hours) (XL Task)
 
-## Progress Update (since 6/28/2024)
+## Progress Update (since 7/3/2024)
 
 | TASK/ISSUE # | STATUS      |
 |--------------|-------------|
@@ -574,3 +574,38 @@ Completed all my tasks, ran into multiple issues fixing dev, but it all finally 
 
 - Goal 1: Notifications system/AI grading
 - Goal 2: Node volume file storage
+
+## July 5th - July 10th
+
+## Timesheet
+
+Clockify report: Total hours - 26 hours
+<img width="1920" alt="Screenshot 2024-07-10 at 6 52 21 AM" src="https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8/assets/144177741/d0eaa231-e0f9-436a-a0f7-0c7982270443">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** CI-CD fix (6 hours) (XL Task)
+- **#2:** Helping others out with their work (3 hours) (XL Task)
+- **#3:** Testing backend for evaluator backend (7 hours) (XL Task)
+- **#4:** File submissions for assignment submissions, multiple submissions, and evaluator assignment keys (10 hours) (XL Task)
+
+## Progress Update (since 7/5/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Completed |
+| Task 3       | Mostly completed, will be completed in the next cycle |
+| Task 4       | Partially complete, running into issues with the backend for multiple submissions, will be worked on in the next cycle |
+
+## Cycle Goal Review
+
+Completed 65% of my tasks, ran into multiple issues merging dev into my file submissions code, but will spend this next little cycle to fix these and make sure they all work.
+
+## Next Cycle Goals
+
+- Goal 1: File submissions
+- Goal 2: Evaluator backend testing DB error fix
+- Goal 3: AI file submission
+- Goal 4: Backend for assignment page student view
+- Goal 5: Finishing issues that Aayush & Omar did not finish

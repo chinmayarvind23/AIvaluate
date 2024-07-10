@@ -27,7 +27,7 @@ const CreateAssignment = () => {
     });
 
     const [rubrics, setRubrics] = useState([]);
-    const [assignmentKey, setassignmentKey] = useState(null);
+    const [assignmentKey, setAssignmentKey] = useState(null);
     const [dragging, setDragging] = useState(false);
 
     useEffect(() => {
@@ -48,20 +48,19 @@ const CreateAssignment = () => {
         }));
     };
 
-    const handleFileChange = (file) => {
-        setassignmentKey(e.target.files[0]);
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
         const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
 
         if (file && !allowedExtensions.exec(file.name)) {
             alert('Please upload file having extensions .css, .html, .js, or .jsx only.');
             return false;
         } else {
-            setassignmentKey(file);
+            setAssignmentKey(file);
             setAssignment(prevAssignment => ({
                 ...prevAssignment,
                 assignmentKey: file.name
             }));
-            return true;
         }
     };
 
@@ -69,7 +68,7 @@ const CreateAssignment = () => {
         e.preventDefault();
         setDragging(false);
         const file = e.dataTransfer.files[0];
-        handleFileChange(file);
+        handleFileChange({ target: { files: [file] } });
     };
 
     const handleDragOver = (e) => {
@@ -83,14 +82,10 @@ const CreateAssignment = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Check for empty fields
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
             alert('Please fill in all fields.');
             return;
         }
-
-        // Check if the due date is in the past
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
 
@@ -105,7 +100,11 @@ const CreateAssignment = () => {
                 if (assignmentKey) {
                     const formData = new FormData();
                     formData.append('assignmentKey', assignmentKey);
-                    axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData)
+                    axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                         .then(res => {
                             console.log('Solution added:', res.data);
                         })
@@ -113,7 +112,7 @@ const CreateAssignment = () => {
                             console.error('Error adding solution:', err);
                         });
                 }
-                navigate(`/eval/assignments/${courseId}`); // Redirect after successful creation
+                navigate(`/eval/assignments/${courseId}`);
             })
             .catch(error => {
                 console.error('Error creating assignment:', error);
@@ -201,7 +200,7 @@ const CreateAssignment = () => {
                                     type="file"
                                     id="assignmentKey"
                                     name="assignmentKey"
-                                    onChange={(e) => handleFileChange(e.target.files[0])}
+                                    onChange={handleFileChange}
                                 />
                                 <span>Drag files here or Click to browse files</span>
                             </div>

@@ -5,6 +5,7 @@ import '../GeneralStyling.css';
 import '../PublishAssignment.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
+import useParams from 'react-router-dom';
 
 const PublishAssignment = () => {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ const PublishAssignment = () => {
     };
 
     const handleViewSubmissions = () => {
-        navigate(`/eval/selected/assignmentId`);
+        navigate(`/eval/selected/{"assignmentId}`);
     }
 
     return (

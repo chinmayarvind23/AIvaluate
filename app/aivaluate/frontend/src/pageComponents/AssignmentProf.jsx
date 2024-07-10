@@ -147,7 +147,7 @@ const AssignmentProf = () => {
 
     const handleAssignmentSelect = (assignmentId) => {
         if(!isTA) {
-            navigate(`/eval/published/assignment/`);
+            navigate(`/eval/published/${assignmentId}`);
         }
         if(isTA) {
             navigate(`/eval/selected/${assignmentId}`);

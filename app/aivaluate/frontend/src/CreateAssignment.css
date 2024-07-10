@@ -198,3 +198,7 @@
 body {
     overflow-x: hidden;
 }
+
+.file-preview{
+    color: var(--primary-color);
+}

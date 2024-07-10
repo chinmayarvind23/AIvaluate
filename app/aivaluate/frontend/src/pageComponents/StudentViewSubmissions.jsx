@@ -1,5 +1,5 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
@@ -12,15 +12,13 @@ const StudentViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
     const navBarText = `${courseCode} - ${courseName}`;
-
-    const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
-    const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
+    const [setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -52,7 +50,7 @@ const StudentViewSubmissions = () => {
     
         fetchCourseDetails();
         fetchSubmissions();
-    }, [courseId]);
+    });
 
     useEffect(() => {
         const filtered = files.filter(file =>

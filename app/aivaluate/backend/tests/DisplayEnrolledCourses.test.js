@@ -1,4 +1,3 @@
-// tests/enrolledCourses.test.js
 const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,6 +7,7 @@ const pool = {
 };
 
 // Mocking the authentication 
+// checks if user is authenticated
 const checkAuthenticated = (req, res, next) => {
   req.user = { studentId: 'student123' }; // Mocked user
   next();

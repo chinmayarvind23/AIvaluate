@@ -151,7 +151,7 @@ const EvaluatorGrades = () => {
     };
 
     const filteredGrades = grades.filter((grade) =>
-        grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        grade.name && grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     let sumOfAvgGrades = grades.reduce((sum, grade) => sum + grade.avgGrade, 0);

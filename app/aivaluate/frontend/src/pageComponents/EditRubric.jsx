@@ -8,6 +8,9 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EditRubric = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
     const navigate = useNavigate();
     const { assignmentRubricId } = useParams();
     const [title, setTitle] = useState("");
@@ -85,8 +88,8 @@ const EditRubric = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText="Course number - Course Name" />
-            <SideMenuBarEval tab="rubrics"/>
+            <AIvaluateNavBarEval navBarText={navBarText} />
+            <SideMenuBarEval tab="rubrics" />
             <div className="main-margin">
                 <div className="top-bar">
                     <div className="back-btn-div">

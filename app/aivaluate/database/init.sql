@@ -160,6 +160,14 @@ CREATE TABLE IF NOT EXISTS "useRubric"(
     FOREIGN KEY ("assignmentRubricId") REFERENCES "AssignmentRubric"("assignmentRubricId") ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS "Prompt"(
+    "promptId" SERIAL NOT NULL PRIMARY KEY,
+    "promptName" VARCHAR(100),
+    "promptText" VARCHAR(2000),
+    "instructorId" INT,
+    FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId") ON DELETE CASCADE
+);
+
 -- Insert dummy data for testing
 -- Insert dummy data into Student table
 -- INSERT INTO "Student" ("studentId", "firstName", "lastName", "email", "password")
@@ -349,6 +357,13 @@ INSERT INTO "AssignmentRubric" ("criteria", "rubricName", "courseId")
 VALUES 
     ('Correctness, Efficiency, Documentation', 'Rubric 1', '1'),
     ('Problem Solving, Mathematical Reasoning', 'Rubric 2', '2'),
-    ('Experimental Design, Analysis', 'Rubric 3', '3')
+    ('Experimental Design, Analysis', 'Rubric 3', '3');
+
+-- Insert dummy data into Prompt table
+INSERT INTO "Prompt" ("promptName", "promptText", "instructorId")
+VALUES 
+    ('Prompt 1', 'Prompt 1 description', '5'),
+    ('Prompt 2', 'Prompt 2 description', '5'),
+    ('Prompt 3', 'Prompt 3 description', '5')
 
 ON CONFLICT DO NOTHING;

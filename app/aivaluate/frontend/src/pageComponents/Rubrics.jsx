@@ -86,8 +86,8 @@ const Rubrics = () => {
         setCurrentPage(1);
     };
 
-    const handleRubric = (rubricId) => {
-        navigate(`/eval/rubric/${rubricId}`);
+    const handleRubric = (assignmentRubricId) => {
+        navigate(`/eval/rubric/${assignmentRubricId}`);
     };
 
     return (
@@ -113,9 +113,9 @@ const Rubrics = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index} onClick={() => handleRubric(file.rubricId)}>
+                                <div className="file-item" key={index} onClick={() => handleRubric(file.assignmentRubricId)}>
                                     <div className="folder-icon"><CircumIcon name="file_on"/></div>
-                                    <div className="file-name">{file.criteria}</div>
+                                    <div className="file-name">{file.rubricName}</div>
                                 </div>
                             ))}
                         </div>

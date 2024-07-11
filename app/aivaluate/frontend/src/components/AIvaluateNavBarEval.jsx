@@ -56,6 +56,9 @@ const AIvaluateNavBarEval = ({navBarText , tab}) => {
                 <a href="/eval/help" className={`${tab === 'help' ? 'primary-color-text' : 'third-color-text'}`}>
                   Get Help
                 </a>
+                <a href="/eval/ai/settings" className={`${tab === 'ai' ? 'primary-color-text' : 'third-color-text'}`}>
+                  AI Settings
+                </a>
                 <button onClick={handleLogout} className="logout">Logout</button>
                 </div>
                 </div>

@@ -600,7 +600,7 @@ Clockify report: Total hours - 26 hours
 
 ## Cycle Goal Review
 
-Completed 65% of my tasks, ran into multiple issues merging dev into my file submissions code, but will spend this next little cycle to fix these and make sure they all work.
+Completed 85% of my tasks, ran into multiple issues merging dev into my file submissions code, but will spend this next little cycle to fix these and make sure they all work.
 
 ## Next Cycle Goals
 
@@ -609,3 +609,37 @@ Completed 65% of my tasks, ran into multiple issues merging dev into my file sub
 - Goal 3: AI file submission
 - Goal 4: Backend for assignment page student view
 - Goal 5: Finishing issues that Aayush & Omar did not finish
+
+## July 10th - July 12th
+
+## Timesheet
+
+Clockify report: Total hours - 16 hours
+<img width="1920" alt="Screenshot 2024-07-12 at 4 43 27 AM" src="https://github.com/user-attachments/assets/3b28104a-8ff2-491f-afa3-ef676d3783c3">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** File submissions for Evaluators and Students + testing (12 hours) (XL Task)
+- **#2:** Evaluator backend testing DB error fix (3 hours) (XL Task)
+- **#3:** SQL Injection attack protection (1 hours) (XL Task)
+
+## Progress Update (since 7/10/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | In progress, a couple of my teammates figured out how to fix the DB error on their machines and I will use their help to get the tests to work on my end and fix any broken code that's not passing tests (61/73 tests passing as of now) |
+| Task 3       | Completed |
+
+## Cycle Goal Review
+
+Completed 90% of my tasks, testing done and file submissions finished, and will need to consult my teammates to get the DB error fixed on my end.
+
+## Next Cycle Goals
+
+- Goal 1: Evaluator backend testing DB error fix
+- Goal 2: File downloads to device on-click
+- Goal 3: AI file submission implementation
+- Goal 4: Testing and coverage report
+- Goal 5: Deployment and hosting of DB, Docker, and website
+- Goal 6: Finishing up helping Omar with his issues and Aayush

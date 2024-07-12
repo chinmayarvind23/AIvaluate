@@ -105,4 +105,21 @@ router.put('/prompt/select/:promptId', async (req, res) => {
     }
 });
 
+// Clear isSelected for all prompts of an instructor
+router.put('/prompt/clear/:instructorId', async (req, res) => {
+    try {
+        const { instructorId } = req.params;
+        
+        await pool.query(
+            'UPDATE "Prompt" SET "isSelected" = false WHERE "instructorId" = $1',
+            [instructorId]
+        );
+        
+        res.json('All prompts cleared');
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json('Server error');
+    }
+});
+
 module.exports = router;

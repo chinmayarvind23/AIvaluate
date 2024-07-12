@@ -77,16 +77,26 @@ const AISettings = () => {
 
     const handlePromptSelect = async (event) => {
         const selectedId = event.target.value;
-        const selectedPrompt = prompts.find(prompt => prompt.promptId.toString() === selectedId);
 
-        try {
-            await axios.put(`http://localhost:5173/eval-api/prompt/select/${selectedId}`, {
-                instructorId: instructorId
-            });
-            setSelectedPromptId(selectedId);
-            setPromptText(selectedPrompt ? selectedPrompt.promptText : '');
-        } catch (error) {
-            console.error('There was an error updating the selected prompt:', error);
+        if (selectedId === 'clear') {
+            try {
+                await axios.put(`http://localhost:5173/eval-api/prompt/clear/${instructorId}`, {});
+                setSelectedPromptId('');
+                setPromptText('');
+            } catch (error) {
+                console.error('There was an error clearing the selected prompt:', error);
+            }
+        } else {
+            const selectedPrompt = prompts.find(prompt => prompt.promptId.toString() === selectedId);
+            try {
+                await axios.put(`http://localhost:5173/eval-api/prompt/select/${selectedId}`, {
+                    instructorId: instructorId
+                });
+                setSelectedPromptId(selectedId);
+                setPromptText(selectedPrompt ? selectedPrompt.promptText : '');
+            } catch (error) {
+                console.error('There was an error updating the selected prompt:', error);
+            }
         }
     };
 
@@ -95,16 +105,21 @@ const AISettings = () => {
             <AIvaluateNavBarEval tab="ai" navBarText="AI Settings" />
             <div className='secondary-colorbg ai-section'>
                 <div className="ai-settings-div">
-                    <h1>Your prompt AI engineering:</h1>
+                    <h1>Your Prompt AI Engineering</h1>
                     <div className="ai-settings-content">
-                        <textarea
-                            value={promptText}
-                            readOnly
-                            placeholder="Enter your prompt here"
-                            rows="4"
-                            cols="50"
-                            className="ai-settings-textarea"
-                        />
+                        <div className="textarea-button-group">
+                            <textarea
+                                value={promptText}
+                                readOnly
+                                placeholder="No prompt selected"
+                                rows="4"
+                                cols="50"
+                                className="ai-settings-textarea"
+                            />
+                            <button type="submit" className="update-ai">
+                                <CircumIcon name="coffee_cup" /> Retrain AI
+                            </button>
+                        </div>
                         <div className="radio-group">
                             {prompts.map(prompt => (
                                 <div key={prompt.promptId} className="radio-item">
@@ -119,11 +134,19 @@ const AISettings = () => {
                                     </label>
                                 </div>
                             ))}
+                            <div className="radio-item">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        value="clear"
+                                        checked={selectedPromptId === ''}
+                                        onChange={handlePromptSelect}
+                                    />
+                                    Clear Prompt
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <button type="submit" className="update-ai">
-                        <CircumIcon name="coffee_cup" /> Retrain AI
-                    </button>
                 </div>
             </div>
         </div>

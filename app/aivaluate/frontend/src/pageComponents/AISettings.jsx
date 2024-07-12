@@ -54,6 +54,9 @@ const AISettings = () => {
                     const response = await axios.get(`http://localhost:5173/eval-api/prompt/${instructorId}`, {
                         withCredentials: true
                     });
+                    if (response.data.promptId) {
+                        setSelectedPromptId(response.data.promptId.toString());
+                    }
                     setPromptText(response.data.promptText || response.data || ''); // Handle undefined promptText and the message
                 } catch (error) {
                     console.error('There was an error fetching the prompt data:', error);
@@ -100,18 +103,52 @@ const AISettings = () => {
         }
     };
 
+    const handleEditPrompt = async (promptId) => {
+        const prompt = prompts.find(p => p.promptId === promptId);
+        const newName = window.prompt("Enter new name for the prompt:", prompt.promptName); // Show current name in prompt window
+        if (newName) {
+            updatePromptName(promptId, newName);
+        }
+    };
+
+    const updatePromptName = async (promptId, newName) => {
+        try {
+            await axios.put(`http://localhost:5173/eval-api/prompt/${promptId}`, {
+                promptName: newName
+            });
+            setPrompts(prompts.map(prompt => 
+                prompt.promptId === promptId ? { ...prompt, promptName: newName } : prompt
+            ));
+        } catch (error) {
+            console.error('There was an error updating the prompt name:', error);
+        }
+    };
+
+    const handleDeletePrompt = async (promptId) => {
+        const prompt = prompts.find(p => p.promptId === promptId);
+        const confirmDelete = window.confirm(`Are you sure you want to delete the prompt: ${prompt.promptName}?`);
+        if (confirmDelete) {
+            try {
+                await axios.delete(`http://localhost:5173/eval-api/prompt/${promptId}`);
+                setPrompts(prompts.filter(prompt => prompt.promptId !== promptId));
+            } catch (error) {
+                console.error('There was an error deleting the prompt:', error);
+            }
+        }
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval tab="ai" navBarText="AI Settings" />
             <div className='secondary-colorbg ai-section'>
                 <div className="ai-settings-div">
-                    <h1>Your Prompt AI Engineering</h1>
+                    <h1>Your prompt AI engineering:</h1>
                     <div className="ai-settings-content">
                         <div className="textarea-button-group">
                             <textarea
                                 value={promptText}
                                 readOnly
-                                placeholder="No prompt selected"
+                                placeholder="Enter your prompt here"
                                 rows="4"
                                 cols="50"
                                 className="ai-settings-textarea"
@@ -132,6 +169,14 @@ const AISettings = () => {
                                         />
                                         {prompt.promptName}
                                     </label>
+                                    <div className="icon-buttons">
+                                        <button onClick={() => handleEditPrompt(prompt.promptId)}>
+                                            <CircumIcon name="edit" />
+                                        </button>
+                                        <button className="trash-icon" onClick={() => handleDeletePrompt(prompt.promptId)}>
+                                            <CircumIcon name="trash" />
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                             <div className="radio-item">

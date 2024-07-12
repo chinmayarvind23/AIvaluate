@@ -28,7 +28,7 @@
 .textarea-button-group {
     display: flex;
     flex-direction: column;
-    width: 40%; /* Adjust width to align with the left half */
+    width: 50%; /* Adjust width to align with the left half */
 }
 
 .ai-settings-textarea {
@@ -72,18 +72,19 @@
 .radio-group {
     display: flex;
     flex-direction: column; /* Ensure items are stacked vertically */
-    gap: 10px; /* Adjust the gap between radio items */
+    gap: 5px; /* Adjust the gap between radio items to a smaller value */
     align-items: flex-start; /* Align items to the start */
     margin-left: 20px; /* Adjust margin between radio group and textarea */
     margin-top: 20px; /* Set margin top */
-    width: 50%; /* Adjusted width to occupy right half */
+    width: 40%; /* Adjusted width to occupy right half */
 }
 
 .radio-item {
     display: flex;
     align-items: center; /* Align items vertically */
-    gap: 2px; /* Space between radio button and label */
+    gap: 5px; /* Space between radio button and label */
     width: auto; /* Adjust to fit content */
+    position: relative;
 }
 
 .radio-item label {
@@ -99,4 +100,33 @@
 .radio-item input[type="radio"] {
     margin: 0; /* Remove any default margin */
     vertical-align: middle; /* Ensure vertical alignment */
+}
+
+.icon-buttons {
+    display: flex;
+    margin-left: 50px; /* Adjusted margin to the left */
+    visibility: hidden; /* Hide the icons by default */
+    right: 0; /* Adjust position to the right */
+}
+
+.icon-buttons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.icon-buttons button:hover {
+    color: var(--third-color);
+}
+
+.icon-buttons button.trash-icon {
+    color: red; /* Color the trashcan icon red */
+}
+
+.radio-item:hover .icon-buttons {
+    visibility: visible; /* Show the icons on hover */
 }

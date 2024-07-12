@@ -1,5 +1,38 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 10 - July 12 Morning) - 13.5 hours
+
+## Friday July 12th Morning
+### 0.5 hours
+- Unit testing for prompt routes
+
+## Thursday July 11th 
+### 7.5 hours
+- AI prompt CRUD features, backend, database table, and frontend integration/revamp
+
+## Wednesday July 10th 
+### 5.5 hours
+- Team meetings, deciding on task priorities, helping teammates (2.5 hours)
+- Select rubric backend, select rubric edit feature (3 hours)
+
+# Current Tasks
+- #1 AI setting prompt CRUD Features #296
+- #2 Backend for a single selected rubrics, edit rubrics #294
+- #3 Backend testings 
+
+# Progress Update (since July 10)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Ongoing  |
+
+# Cycle Goal Review
+During this cycle, I took over Aayush's issue #294 and finished implementing AI prompt CRUD features for the professor users. As this is a shorter cycle, only two days long, I feel it has been a productive cycle for me. I also implemented backend unit testing for the new routes I created. 
+
+# Next Cycle 
+During the next cycle, I'll work with my teammates to implement the AI grading, add more unit tests, and fix any existing bugs. I'm also assigned to do the student view of assignment page, and archiving a course(if time permits)
+
 # Timesheet (June 5 - July 9) - 15 hours
 
 ## Tuesday July 9th

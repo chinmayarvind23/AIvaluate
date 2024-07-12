@@ -44,7 +44,7 @@ const CreateAccPT = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/admin-api/create', {
+      const response = await axios.post('http://localhost:3000/admin-api/createUser', {
         firstName: firstname,
         lastName: lastname,
         email: email,
@@ -53,7 +53,7 @@ const CreateAccPT = () => {
         hasFullAccess: !isTeachingAssistant
       });
       console.log(response.data);
-      navigate('/admin/success'); // Redirect to a success page or display a success message
+      navigate('../AdminHelpPage'); // Redirect to a success page or display a success message
     } catch (error) {
       console.error('Error creating user:', error.response ? error.response.data : error.message);
       alert(`Error creating user: ${error.response ? error.response.data.error : error.message}`);

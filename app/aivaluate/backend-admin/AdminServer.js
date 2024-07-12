@@ -9,9 +9,9 @@ const flash = require("express-flash");
 const bodyParser = require('body-parser');
 const passport = require("passport");
 
-const adminRoutes = require('./routes/adminRoutes');
-const studentRoutes = require('./routes/studentRoutes');
-const instructorRoutes = require('./routes/instructorRoutes');
+const adminRoutes = require('./routes/adminRoutes');  // Correct path based on directory structure
+const studentRoutes = require('./routes/studentRoutes'); // Correct path based on directory structure
+const instructorRoutes = require('./routes/instructorRoutes'); // Correct path based on directory structure
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
     secret: 'secret',
@@ -52,7 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/admin-api', adminRoutes);
+app.use('/admin-api', adminRoutes);  // Ensure this is correctly placed
 app.use('/admin-api', studentRoutes);
 app.use('/admin-api', instructorRoutes);
 

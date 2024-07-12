@@ -124,27 +124,6 @@ router.get('/evaluators', checkAuthenticated, async (req, res) => {
     }
 });
 
-// Create a new instructor
-router.post('/admin-api/create', async (req, res) => {
-  const { firstName, lastName, email, password, department, hasFullAccess } = req.body;
-
-  if (!firstName || !lastName || !email || !password || !department) {
-      return res.status(400).json({ error: 'Please fill in all fields' });
-  }
-
-  try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const result = await pool.query(
-          'INSERT INTO "Instructor" ("firstName", "lastName", "email", "userPassword", "department", "hasFullAccess") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-          [firstName, lastName, email, hashedPassword, department, hasFullAccess]
-      );
-      res.status(201).json(result.rows[0]);
-  } catch (err) {
-      console.error('Error creating user:', err.message);
-      res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 // Get all instructors
 router.get('/admin-api/get-instructors', async (req, res) => {
   try {
@@ -183,6 +162,27 @@ router.delete('/admin-api/remove-instructor/:instructorId', async (req, res) => 
   } catch (err) {
       console.error('Error removing instructor:', err.message);
       res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Create a new instructor
+router.post('/admin-api/createUser', async (req, res) => {
+  const { firstName, lastName, email, password, department, hasFullAccess } = req.body;
+
+  if (!firstName || !lastName || !email || !password || !department) {
+    return res.status(400).json({ error: 'Please fill in all fields' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      'INSERT INTO "Instructor" ("firstName", "lastName", "email", "userPassword", "department", "hasFullAccess") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [firstName, lastName, email, hashedPassword, department, hasFullAccess]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error creating user:', err.message);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 

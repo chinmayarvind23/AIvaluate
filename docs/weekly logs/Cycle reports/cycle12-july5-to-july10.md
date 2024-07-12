@@ -1,4 +1,4 @@
-# Cycle 10 Weekly Log
+# Cycle 12 Weekly Log
 
 - ## Date range: July 5 - July 10, 2024
 

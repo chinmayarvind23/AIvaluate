@@ -1690,7 +1690,7 @@ I have been working on the backend for a single selected rubric and the publish 
 
 
 
-# Timesheet (July 10 - July 12) - 6 hours
+# Timesheet (July 10 - July 12) - 14 hours
 
 ### Timesheet
 Clockify report
@@ -1704,7 +1704,7 @@ Clockify report
   * #3: Student Backend Testing 
 
 
-### Progress Update (since 7/3/2024)
+### Progress Update (since 7/12/2024)
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong></td>

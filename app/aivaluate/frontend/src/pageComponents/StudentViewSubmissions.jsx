@@ -1,22 +1,25 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
 const StudentViewSubmissions = () => {
-    const navigate = useNavigate();
-    const { studentId, courseId } = useParams();
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
+    const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
-    const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
+    const [setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -35,7 +38,7 @@ const StudentViewSubmissions = () => {
     
         const fetchSubmissions = async () => {
             try {
-                const response = await fetch(`/stu-api/stu/submissions/${courseId}/${studentId}`);
+                const response = await fetch(`/stu-api/courses/${courseId}/submissions`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -48,7 +51,7 @@ const StudentViewSubmissions = () => {
     
         fetchCourseDetails();
         fetchSubmissions();
-    }, [studentId, courseId]);
+    });
 
     useEffect(() => {
         const filtered = files.filter(file =>
@@ -83,15 +86,12 @@ const StudentViewSubmissions = () => {
 
     return (
         <div>
-            <AIvaluateNavBar 
-                navBarText={`${courseDetails.courseCode} - ${courseDetails.courseName}`} 
-                tab='submissions' 
-            />
+            <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
             <SideMenuBar tab="submissions" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>Submissions</h1>
                             <div className="search-container">
                                 <div className="search-box">

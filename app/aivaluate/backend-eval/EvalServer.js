@@ -61,9 +61,13 @@ function checkAuthenticated(req, res, next) {
 }
 
 // Instructor dashboard route
-app.get('/eval-api/dashboard', checkAuthenticated, (req, res) => {
-    res.send('Evaluator Dashboard');
-    // res.json({ user: req.user });
+// app.get('/eval-api/dashboard', checkAuthenticated, (req, res) => {
+//     res.send('Evaluator Dashboard');
+//     // res.json({ user: req.user });
+// });
+
+app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
+    res.json({ user: req.user });
 });
 
 // app.use('/eval-api', evalRoutes);
@@ -98,6 +102,13 @@ app.get('/eval-api/logout', (req, res, next) => {
         });
     });
 });
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/eval-api/login");
+}
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

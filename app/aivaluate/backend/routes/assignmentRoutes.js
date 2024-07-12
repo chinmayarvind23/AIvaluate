@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
+const { formatDueDate } = require('../util');
 
 // Create a new assignment
 router.post('/assignments', async (req, res) => {
@@ -44,6 +45,34 @@ router.get('/assignments/:assignmentId', async (req, res) => {
         res.status(500).send({ message: 'Error fetching assignment' });
     }
 });
+
+// Get assignments by course ID
+router.get('/assignments/course/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    if (isNaN(courseId)) {
+        return res.status(400).json({ message: 'Invalid course ID' });
+    }
+
+    try {
+        const result = await pool.query('SELECT * FROM "Assignment" WHERE "courseId" = $1', [courseId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No assignments found for this course' });
+        }
+
+        const assignments = result.rows.map(assignment => ({
+            ...assignment,
+            dueDate: formatDueDate(assignment.dueDate)
+        }));
+
+        res.status(200).json(assignments);
+    } catch (error) {
+        console.error('Error fetching assignments:', error.message);
+        res.status(500).json({ message: 'Error fetching assignments' });
+    }
+});
+
 
 // Update an assignment
 router.put('/assignments/:assignmentId', async (req, res) => {
@@ -177,6 +206,7 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
     }
 });
 
+
 // Update solution by assignment ID
 router.put('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
@@ -215,5 +245,51 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
         res.status(500).send({ message: 'Error deleting solution' });
     }
 });
+
+
+router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    const studentId = req.session.studentId; // Assuming studentId is saved in the session storage
+
+    if (!studentId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    try {
+        const assignmentQuery = `
+            SELECT 
+                a."assignmentName",
+                ar."rubricName",
+                ar."criteria",
+                a."dueDate",
+                a."maxObtainableGrade",
+                ag."InstructorAssignedFinalGrade"
+            FROM "Assignment" a
+            LEFT JOIN "AssignmentRubric" ar ON a."assignmentId" = ar."assignmentId"
+            LEFT JOIN "AssignmentGrade" ag ON a."assignmentId" = ag."assignmentId"
+            AND ag."assignmentSubmissionId" = (
+                SELECT "assignmentSubmissionId"
+                FROM "AssignmentSubmission"
+                WHERE "assignmentId" = $1 AND "studentId" = $2 AND "courseId" = $3
+                LIMIT 1
+            )
+            WHERE a."assignmentId" = $1 AND a."courseId" = $3
+        `;
+        const result = await pool.query(assignmentQuery, [assignmentId, studentId, courseId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        const assignment = result.rows[0];
+        assignment.InstructorAssignedFinalGrade = assignment.InstructorAssignedFinalGrade || "--";
+
+        res.json(assignment);
+    } catch (err) {
+        console.error('Error fetching assignment details:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 module.exports = router;

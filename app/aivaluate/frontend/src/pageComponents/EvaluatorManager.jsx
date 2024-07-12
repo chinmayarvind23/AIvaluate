@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
@@ -68,9 +69,9 @@ const EvaluatorManager = () => {
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
             <SideMenuBarAdmin tab="evalManager" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>Professors</h1>
                             <div className="search-container">
                                 <div className="search-box">
@@ -83,7 +84,8 @@ const EvaluatorManager = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="right"><button className="addEvalButton secondary-button">Add Evaluator</button></div>
+                            <div className="empty"> </div>
+                            <button className="addEvalButton">Add Evaluator</button>
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (

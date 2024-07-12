@@ -1,64 +1,79 @@
-// tests/enrollment.test.js
 const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
+const { Pool } = require('pg');
 
-// Mocking the database pool
-const pool = {
-  query: jest.fn()
-};
+// Mock the pg module
+jest.mock('pg', () => {
+  const mPool = {
+    query: jest.fn(),
+  };
+  return { Pool: jest.fn(() => mPool) };
+});
 
-// Mocking the authentication
-const checkAuthenticated = (req, res, next) => {
-  req.user = { studentId: '5' }; // Mocked user
-  next();
-};
+const pool = new Pool();
 
 const app = express();
 app.use(bodyParser.json());
 
-// Define the enrollment route
-app.post('/enroll-course', checkAuthenticated, (req, res) => {
-  const studentId = req.user.studentId;
-  const { courseId } = req.body;
-
-  pool.query(
-    `INSERT INTO "EnrolledIn" ("studentId", "courseId") VALUES ($1, $2)`,
-    [studentId, courseId],
-    (err, results) => {
-      if (err) {
-        console.error('Error enrolling student:', err);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.status(200).json({ message: 'Successfully enrolled in the course' });
-    }
-  );
+// Define the routes
+app.get('/tas', async (req, res) => {
+  try {
+    const tas = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = TRUE');
+    res.status(200).send(tas.rows);
+  } catch (error) {
+    console.error('Error fetching TAs:', error);
+    res.status(500).send({ message: 'Error fetching TAs' });
+  }
 });
 
-describe('POST /enroll-course', () => {
-  it('should enroll in the course successfully', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(null, { rows: [] }); // Simulate successful query
-    });
+app.delete('/teaches/:courseId/:instructorId', async (req, res) => {
+  const { courseId, instructorId } = req.params;
+  try {
+    await pool.query('DELETE FROM "Teaches" WHERE "courseId" = $1 AND "instructorId" = $2', [courseId, instructorId]);
+    res.status(200).send({ message: 'Instructor/TA removed from course successfully' });
+  } catch (error) {
+    console.error('Error removing Instructor/TA from course:', error);
+    res.status(500).send({ message: 'Error removing Instructor/TA from course' });
+  }
+});
 
-    const response = await request(app)
-      .post('/enroll-course')
-      .send({ courseId: '2' });
+describe('GET /tas', () => {
+  it('should fetch all TAs', async () => {
+    pool.query.mockResolvedValue({ rows: [{ instructorId: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', isTA: true }] });
+
+    const response = await request(app).get('/tas');
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'Successfully enrolled in the course' });
+    expect(response.body).toEqual([{ instructorId: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', isTA: true }]);
   });
 
-  it('should return a database error', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(new Error('Database error'), null); // Simulate database error
-    });
+  it('should return an error when fetching TAs', async () => {
+    pool.query.mockRejectedValue(new Error('Database error'));
 
-    const response = await request(app)
-      .post('/enroll-course')
-      .send({ courseId: '2' });
+    const response = await request(app).get('/tas');
 
     expect(response.status).toBe(500);
-    expect(response.body).toEqual({ error: 'Database error' });
+    expect(response.body).toEqual({ message: 'Error fetching TAs' });
+  });
+});
+
+describe('DELETE /teaches/:courseId/:instructorId', () => {
+  it('should remove an instructor or TA from a course', async () => {
+    pool.query.mockResolvedValue({ rows: [] });
+
+    const response = await request(app).delete('/teaches/1/2');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ message: 'Instructor/TA removed from course successfully' });
+  });
+
+  it('should return an error when removing an instructor or TA from a course', async () => {
+    pool.query.mockRejectedValue(new Error('Database error'));
+
+    const response = await request(app).delete('/teaches/1/2');
+
+    expect(response.status).toBe(500);
+    expect(response.body).toEqual({ message: 'Error removing Instructor/TA from course' });
   });
 });

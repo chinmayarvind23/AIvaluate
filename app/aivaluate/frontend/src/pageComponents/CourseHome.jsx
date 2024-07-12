@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../CourseHome.css';
+import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
-import '../styles.css';
 import AssignTaModal from './AssignTaModal';
 import CourseEditModal from './CourseEditModal';
 
 const CourseHome = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
     const { courseId } = useParams();
     const navigate = useNavigate();
     const [course, setCourse] = useState({});
@@ -90,21 +92,26 @@ const CourseHome = () => {
                 // Handle failure properly
             });
     }
+    const navBarText = `${courseCode} - ${courseName}`;
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={course?.courseName} />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab='management' />
-            <div style={{marginTop: '120px'}}>
-                <button className="course-delete-button" onClick={handleDeleteCourse}>Delete Course</button>
-                <br />
-                <button className="course-edit-button" onClick={handleEditCourse}>Edit Course</button>
-                <CourseEditModal isOpen={isEditModalOpen} onClose={closeEditModal} course={course} onSave={saveCourseEdits} />
-                <br />
-                <button className="course-ta-button" onClick={handleTaModal}>Assign TA</button>
-                <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
-                <br />
-                <Link to={`/eval/submissions/${courseId}`} className="view-submissions-link">View Submissions</Link>
+            <div className="main-margin">
+                <div className="top-bar">
+                    <h1>Course Management</h1>
+                </div>
+                <div>
+                    <button className="course-button" onClick={handleDeleteCourse}>Delete Course</button>
+                    <br />
+                    <button className="course-button" onClick={handleEditCourse}>Edit Course</button>
+                    <CourseEditModal isOpen={isEditModalOpen} onClose={closeEditModal} course={course} onSave={saveCourseEdits} />
+                    <br />
+                    <button className="course-button" onClick={handleTaModal}>Assign TA</button>
+                    <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
+                    <br />
+                </div>
             </div>
         </div>
     );

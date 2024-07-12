@@ -1,6 +1,6 @@
 .grades-section {
-    margin-right: 20px;
-    margin-left: 350px;
+    /* margin-right: 20px; */
+    /* margin-left: 350px; */
 }
 
 .grades-table {
@@ -42,17 +42,20 @@
 
 }
 
-.fill-empty {
-    width:stretch;
-
-}
-
 
 .class-avg{
     display:flex;
-    width: 800px;
+    width: 1600px;
     height: 50px;
     margin-top: 50px;
+    margin-right: 20px;
+    color: var(--third-color);
+    /* border: red 2px solid; */
+}
+
+.grade-summary-text{
+    width: 2500px;
+    /* border: red 2px solid; */
 }
 
 

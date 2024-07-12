@@ -3,11 +3,14 @@ import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBar from "../components/AIvaluateNavBar";
 import SideMenuBar from '../components/SideMenuBar';
 
 const People = () => {
     const { courseId } = useParams();
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -62,14 +65,16 @@ const People = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
+    const navBarText = `${courseCode} - ${courseName}`;
+
     return (
         <div>
-            <AIvaluateNavBar navBarText="Course number - Course name"/>
+            <AIvaluateNavBar navBarText={navBarText}/>
             <SideMenuBar tab="people" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>People</h1>
                             <div className="search-container">
                                 <div className="search-box">

@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
-import '../AdminHelpPage.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../GeneralStyling.css';
-
-
-const aivaluatePurple = {
-    color: '#4d24d4'
-  }
+import React from 'react';
+import '../HelpPage.css';
+import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 
 const AdminHelpPage = () => {
 
   return (
     <>
-    <AIvaluateNavBar navBarText='Help Page'  />
+    <AIvaluateNavBarAdmin navBarText='Help Page'  />
       <div className='secondary-colorbg help-section'>
           <section>
             <div className="help-content">

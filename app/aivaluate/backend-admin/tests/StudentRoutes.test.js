@@ -37,8 +37,8 @@ describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
     });
 
     test('Should drop a course for a student successfully', async () => {
-        const studentId = 5; // Use a valid student ID from your database
-        const courseCode = 'COSC 499'; // Use a valid course code from your database
+        const studentId = 5;
+        const courseCode = 'COSC 499'; 
 
         // Ensure the student is enrolled in the course before dropping
         const enrollmentCheckQuery = `

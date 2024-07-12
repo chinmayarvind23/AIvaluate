@@ -316,3 +316,37 @@ This cycle I worked on some of the backend issues I had but wasn't successful in
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - From next cycle, I will be working well and getting all my issues done plus some new issues added to them to catch up!
 
+
+
+
+
+## Cycle 13 : Wednesday, July 10 - Friday July 12
+Timesheet
+
+<img width="844" alt="Cycle 13" src="https://github.com/user-attachments/assets/470394ed-064a-4a7e-bf6a-1376aded6030">
+
+
+
+
+
+### Current Tasks
+
+- Testing
+- Backend for signing up an eval
+- Backend for managing an eval
+
+  
+Progress Update: 
+### Progress Update (since July 5th)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 /Testing  |not-Completed  |
+| Task #2 / Backend for signing up an eval | not-Completed |
+| Task #3 / Backend for managing an eval | not-Completed |
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+I have been working really hard on these 2 issues but keep on facing a lot of issues since the project has gone really far and a lot of new stuff has been added.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Moving on I will keep on fixing issues that I have and assign myself new issues to make sure the project is going well on track!
+

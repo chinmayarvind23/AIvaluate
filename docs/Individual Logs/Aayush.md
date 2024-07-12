@@ -1726,7 +1726,7 @@ Clockify report
 </table>
 
 ### Cycle Goal Review 
-I worked extensively on testing, fixed one of the errors I had been facing for a long time, and worked on student backend testing. These tasks were crucial for Testing
+I worked extensively on testing, fixed one of the errors we had been facing for a long time, and worked on student backend testing. These tasks were crucial for Testing
 ### Next Cycle Goals 
   * Goal 1: Do more Testing 
   * Goal 4: Backend coding 

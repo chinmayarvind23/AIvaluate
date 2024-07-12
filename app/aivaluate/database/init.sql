@@ -347,7 +347,7 @@ ON CONFLICT DO NOTHING;
 -- Insert dummy data into AssignmentRubric table
 INSERT INTO "AssignmentRubric" ("criteria", "rubricName", "courseId")
 VALUES 
-    ('Correctness, Efficiency, Documentation', 'Rubric 1'),
-    ('Problem Solving, Mathematical Reasoning', 'Rubric 2'),
-    ('Experimental Design, Analysis', 'Rubric 3')
+    ('Correctness, Efficiency, Documentation', 'Rubric 1', '1'),
+    ('Problem Solving, Mathematical Reasoning', 'Rubric 2', '2'),
+    ('Experimental Design, Analysis', 'Rubric 3', '3')
 ON CONFLICT DO NOTHING;

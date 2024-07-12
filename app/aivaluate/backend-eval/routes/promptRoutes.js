@@ -5,6 +5,25 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+// Fetch selected prompt by instructor id
+router.get('/prompt/:instructorId', async (req, res) => {
+    try {
+        const { instructorId } = req.params;
+        const prompt = await pool.query(
+            'SELECT * FROM "Prompt" WHERE "instructorId" = $1 AND "isSelected" = true',
+            [instructorId]
+        );
+        if (prompt.rows.length === 0) {
+            return res.json('No prompt has been selected'); // Return an empty string if no prompt is selected
+        }
+        res.json(prompt.rows[0]);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json('Server error');
+    }
+});
+
+
 // Fetch all prompts by instructor id
 router.get('/prompts/:instructorId', async (req, res) => {
     try {

@@ -93,6 +93,8 @@ services:
       - "6000:6000"
     depends_on:
       - db
+    volumes:
+      - assignment_keys:/app/aivaluate/backend-eval/assignmentKeys
     env_file:
       - ./aivaluate/backend-eval/.env
     networks:
@@ -121,3 +123,4 @@ networks:
 
 volumes:
   assignment_submissions:
+  assignment_keys:

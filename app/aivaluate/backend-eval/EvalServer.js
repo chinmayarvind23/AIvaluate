@@ -1,15 +1,10 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 const cors = require('cors');
-const { pool } = require('./dbConfig');
-const bcrypt = require('bcryptjs'); 
 const session = require('express-session');
 const flash = require("express-flash");
 const bodyParser = require('body-parser');
 const passport = require("passport");
-
-const evalRoutes = require('./routes/evalRoutes');
 const courseRoutes = require('./routes/courseRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
@@ -33,10 +28,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 // 24 hours
+        maxAge: 1000 * 60 * 60 * 24,
     }
 }));
-
 
 const corsOptions = {
     origin: 'http://localhost:5173',
@@ -49,28 +43,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use((req, res, next) => {
+    if (!req.session.courseId && req.body.courseId) {
+        req.session.courseId = req.body.courseId;
+    }
+    if (!req.session.instructorId && req.body.instructorId) {
+        req.session.instructorId = req.body.instructorId;
+    }
+    next();
+});
+
+// Function to check if user is authenticated (can be used for protected routes)
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next(); // User is authenticated, continue to the next middleware
     }
-    // Redirect to login page only if not already on the login page
-    if (req.originalUrl !== '/eval-api/login') {
-        return res.redirect('/eval-api/login');
-    }
-    next(); // Continue to the next middleware if already on the login page
+    res.redirect('/eval-api/login');
 }
 
-// Instructor dashboard route
-// app.get('/eval-api/dashboard', checkAuthenticated, (req, res) => {
-//     res.send('Evaluator Dashboard');
-//     // res.json({ user: req.user });
-// });
-
-app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
-    res.json({ user: req.user });
-});
-
-// app.use('/eval-api', evalRoutes);
 app.use('/eval-api', courseRoutes);
 app.use('/eval-api', assignmentRoutes);
 app.use('/eval-api', instructorRoutes);
@@ -82,6 +72,15 @@ app.post("/eval-api/login", passport.authenticate("local", {
     failureRedirect: "/eval-api/login",
     failureFlash: true
 }));
+
+app.get("/eval-api/dashboard", checkAuthenticated, (req, res) => {
+    if (req.isAuthenticated()) {
+        req.session.instructorId = req.user.instructorId;
+        res.json({ user: req.user });
+    } else {
+        res.redirect("/eval-api/login");
+    }
+});
 
 app.get('/eval-api/logout', (req, res, next) => {
     console.log('Attempting to logout...');
@@ -103,12 +102,12 @@ app.get('/eval-api/logout', (req, res, next) => {
     });
 });
 
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/eval-api/login");
-}
+app.post('/eval-api/set-course', (req, res) => {
+    const { courseId, instructorId } = req.body;
+    req.session.courseId = courseId;
+    req.session.instructorId = instructorId;
+    res.status(200).json({ message: 'Course ID and Instructor ID set in session', courseId, instructorId });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

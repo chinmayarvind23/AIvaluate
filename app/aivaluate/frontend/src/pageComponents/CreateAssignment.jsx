@@ -1,19 +1,20 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
+axios.defaults.withCredentials = true;
+
 const CreateAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const { courseId } = useParams();
+    const { courseId } = sessionStorage.getItem('courseId');
     const navBarText = `${courseCode} - ${courseName}`;
-
     const navigate = useNavigate();
     const availableRubricsRef = useRef(null);
     const criteriaRef = useRef(null);
@@ -80,7 +81,7 @@ const CreateAssignment = () => {
         setDragging(false);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
             alert('Please fill in all fields.');
@@ -88,36 +89,43 @@ const CreateAssignment = () => {
         }
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
-
+    
         if (dueDate < today) {
             alert('Due date cannot be in the past.');
             return;
         }
-
-        axios.post('http://localhost:5173/eval-api/assignments', assignment)
-            .then(response => {
-                console.log('Assignment created:', response.data);
-                if (assignmentKey) {
-                    const formData = new FormData();
-                    formData.append('assignmentKey', assignmentKey);
-                    axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                        .then(res => {
-                            console.log('Solution added:', res.data);
-                        })
-                        .catch(err => {
-                            console.error('Error adding solution:', err);
-                        });
-                }
-                navigate(`/eval/assignments/${courseId}`);
-            })
-            .catch(error => {
-                console.error('Error creating assignment:', error);
+    
+        try {
+            const instructorId = sessionStorage.getItem('instructorId');
+            const courseId = sessionStorage.getItem('courseId');
+            const response = await axios.post('http://localhost:5173/eval-api/assignments', {
+                ...assignment,
+                instructorId,
+                courseId,
+                rubricName: 'Default Rubric',
             });
-    };
+            console.log('Assignment created:', response.data);
+            if (assignmentKey) {
+                const formData = new FormData();
+                formData.append('assignmentKey', assignmentKey);
+                formData.append('instructorId', instructorId);
+                formData.append('courseId', courseId);
+    
+                await axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                console.log('Solution added');
+            }
+            navigate(`/eval/assignments/${courseId}`);
+        } catch (error) {
+            console.error('Error creating assignment:', error);
+            if (error.response && error.response.data) {
+                console.error('Error response data:', error.response.data);
+            }
+        }
+    };             
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();

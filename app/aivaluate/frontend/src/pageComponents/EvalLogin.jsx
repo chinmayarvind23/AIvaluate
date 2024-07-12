@@ -8,9 +8,9 @@ const EvalLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  
   const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   };
 
@@ -32,8 +32,8 @@ const EvalLogin = () => {
 
     try {
       const response = await axios.post('http://localhost:5173/eval-api/login', {
-        email,
-        password
+        email: email.trim(),
+        password: password.trim()
       }, { withCredentials: true });
       console.log('Login successful:', response.data);
       navigate('/eval/dashboard');
@@ -53,8 +53,8 @@ const EvalLogin = () => {
       </div>
       <div className="auth-container">
         <div className="auth-form secondary-colorbg">
-        <h2 className="auth-title third-color-text">Login</h2>
-        <form onSubmit={handleSubmit}>
+          <h2 className="auth-title third-color-text">Login</h2>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <input 
                 type="email" 

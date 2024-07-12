@@ -24,7 +24,7 @@ const SignupAdmin = () => {
   };
 
   const validatePassword = (password) => {
-    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // At least one letter and one number, minimum 6 characters
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return re.test(password);
   };
 
@@ -37,7 +37,7 @@ const SignupAdmin = () => {
     if (!email) newErrors.email = 'Email is required';
     if (!password) newErrors.password = 'Password is required';
     if (!password2) newErrors.password2 = 'Confirm Password is required';
-    if (!accessKey) newErrors.major = 'Access key is required';
+    if (!accessKey) newErrors.accessKey = 'Access key is required';
 
     if (!validateEmail(email)) {
       newErrors.email = 'Invalid email address';
@@ -51,8 +51,8 @@ const SignupAdmin = () => {
       newErrors.password2 = 'Passwords do not match';
     }
 
-    if(accessKey !== "ubcadmin"){
-        newErrors.accessKey = 'Invalid access key';
+    if (accessKey !== "ubcadmin") {
+      newErrors.accessKey = 'Invalid access key';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -62,15 +62,15 @@ const SignupAdmin = () => {
 
     try {
       const response = await axios.post('http://localhost:5173/admin-api/signup', {
-        firstName,
-        lastName,
-        email,
-        password,
-        password2,
-        accessKey
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        password2: password2.trim(),
+        accessKey: accessKey.trim()
       });
       console.log('Signup successful:', response.data);
-      navigate('/admin/login'); // Redirect to login after successful signup
+      navigate('/admin/login');
     } catch (error) {
       console.error('There was an error signing up:', error);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -151,19 +151,16 @@ const SignupAdmin = () => {
               onChange={(e) => setPassword2(e.target.value)}
               required 
             />
-
-            {/* Major is not required for now*/}
-
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
             <input
-                type="password"
-                placeholder="Access Key"
-                className="auth-input"
-                value={accessKey}
-                onChange={(e) => setAccessKey(e.target.value)}
-                required
+              type="password"
+              placeholder="Access Key"
+              className="auth-input"
+              value={accessKey}
+              onChange={(e) => setAccessKey(e.target.value)}
+              required
             />
-            {errors.major && <p className="error-message">{errors.major}</p>}
+            {errors.accessKey && <p className="error-message">{errors.accessKey}</p>}
             <button className="auth-submit primary-colorbg" type="submit">Create Account</button>
           </form>
         </div>

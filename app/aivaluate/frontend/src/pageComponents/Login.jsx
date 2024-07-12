@@ -38,7 +38,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:5173/stu-api/login', {
         email,
         password
-      }, { withCredentials: true }); // Ensure cookies are sent/received
+      }, { withCredentials: true });
       console.log('Login successful:', response.data);
       navigate('/stu/dashboard');
     } catch (error) {
@@ -73,7 +73,6 @@ const Login = () => {
                 required 
               />
             </div>
-            {error && <p className="error-message">{error}</p>}
             <div className="form-group">
               <input 
                 type="password" 

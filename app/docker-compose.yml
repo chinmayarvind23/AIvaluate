@@ -42,7 +42,7 @@ services:
     ports:
       - "5433:5432" 
     volumes:
-      - ./aivaluate/test-database:/docker-entrypoint-initdb.d
+      - ./aivaluate/database:/docker-entrypoint-initdb.d
     networks:
       - aivaluate-net
 
@@ -63,6 +63,7 @@ services:
       - "4000:4000"
     depends_on:
       - db
+      - test_db
     env_file:
       - ./aivaluate/backend/.env
     networks:
@@ -77,6 +78,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - test_db
     env_file:
       - ./aivaluate/backend-admin/.env
     networks:
@@ -91,6 +93,7 @@ services:
       - "6000:6000"
     depends_on:
       - db
+      - test_db
     env_file:
       - ./aivaluate/backend-eval/.env
     networks:

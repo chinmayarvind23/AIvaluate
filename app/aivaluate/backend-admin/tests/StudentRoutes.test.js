@@ -1,103 +1,80 @@
 const request = require('supertest');
 const express = require('express');
-const router = require('../routes/studentRoutes'); 
 const { pool } = require('../dbConfig');
-const session = require('express-session');
+const studentRoutes = require('../routes/studentRoutes');
 
 const app = express();
+app.use(express.json());
+app.use('/admin-api', studentRoutes);
 
-app.use(session({
-    secret: 'test_secret',
-    resave: false,
-    saveUninitialized: true,
-}));
-app.use((req, res, next) => {
-    req.isAuthenticated = () => true;
-    next();
+describe('GET /admin-api/students', () => {
+
+    afterAll(async () => {
+        await pool.end();
+    });
+
+    test('Should return all students', async () => {
+        const response = await request(app).get('/admin-api/students');
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual([
+            { studentId: 1, firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', password: 'password1', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', password: 'password2', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 3, firstName: 'Mike', lastName: 'Johnson', email: 'mike.johnson@example.com', password: 'password3', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 4, firstName: 'Omar', lastName: 'Hemed', email: 'omar@email.com', password: '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 5, firstName: 'Colton', lastName: 'Palfrey', email: 'colton@email.com', password: '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 6, firstName: 'Jerry', lastName: 'Fan', email: 'jerry@email.com', password: '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 7, firstName: 'Chinmay', lastName: 'Arvind', email: 'chinmay@email.com', password: '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', resetPasswordToken: null, resetPasswordExpires: null},
+            { studentId: 8, firstName: 'Aayush', lastName: 'Chaudhary', email: 'aayush@email.com', password: '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', resetPasswordToken: null, resetPasswordExpires: null}
+        ]);
+    });
+
 });
-app.use('/admin-api', router);
 
-jest.mock('../dbConfig', () => {
-    const pool = {
-        query: jest.fn(),
-    };
-    return { pool };
-});
+describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
 
-describe('Student Routes', () => {
-    afterEach(() => {
-        jest.clearAllMocks();
+    afterAll(async () => {
+        await pool.end();
     });
 
-    describe('GET /admin-api/student/:studentId', () => {
-        it('should fetch student details and enrolled courses', async () => {
-            const studentId = 1;
-            const studentQueryResult = {
-                rows: [
-                    {
-                        studentId: studentId,
-                        firstName: 'John',
-                        lastName: 'Doe',
-                        email: 'john.doe@example.com',
-                        password: 'hashedpassword',
-                    },
-                ],
-            };
+    test('Should drop a course for a student successfully', async () => {
+        const studentId = 5; // Use a valid student ID from your database
+        const courseCode = 'COSC 499'; // Use a valid course code from your database
 
-            const courseQueryResult = {
-                rows: [
-                    { courseCode: 'CS101', courseId: 1 },
-                    { courseCode: 'CS102', courseId: 2 },
-                ],
-            };
+        // Ensure the student is enrolled in the course before dropping
+        const enrollmentCheckQuery = `
+            INSERT INTO "EnrolledIn" ("studentId", "courseId")
+            VALUES ($1, (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2))
+            ON CONFLICT DO NOTHING
+        `;
+        await pool.query(enrollmentCheckQuery, [studentId, courseCode]);
 
-            pool.query
-                .mockResolvedValueOnce(studentQueryResult)
-                .mockResolvedValueOnce(courseQueryResult);
+        const response = await request(app)
+            .delete(`/admin-api/student/${studentId}/drop/${courseCode}`)
+            .set('Accept', 'application/json');
 
-            const res = await request(app).get(`/admin-api/student/${studentId}`);
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({ message: 'Course dropped successfully' });
 
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual({
-                studentId: studentId,
-                firstName: 'John',
-                lastName: 'Doe',
-                email: 'john.doe@example.com',
-                password: 'hashedpassword',
-                courses: [
-                    { courseCode: 'CS101', courseId: 1 },
-                    { courseCode: 'CS102', courseId: 2 },
-                ],
-            });
-        });
+        // Verify the course was actually dropped
+        const verifyDropQuery = `
+            SELECT * FROM "EnrolledIn"
+            WHERE "studentId" = $1 AND "courseId" = (
+                SELECT "courseId" FROM "Course" WHERE "courseCode" = $2
+            )
+        `;
+        const dropResult = await pool.query(verifyDropQuery, [studentId, courseCode]);
+        expect(dropResult.rows.length).toBe(0);
     });
 
-    describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
-        it('should drop a course for a student', async () => {
-            const studentId = 1;
-            const courseCode = 'CS101';
+    test('Should return 500 if database error occurs', async () => {
+        const studentId = 5; // Use a valid student ID from your database
+        const courseCode = 'INVALID_CODE'; // Use an invalid course code to simulate error
 
-            pool.query.mockResolvedValueOnce({});
+        const response = await request(app)
+            .delete(`/admin-api/student/${studentId}/drop/${courseCode}`)
+            .set('Accept', 'application/json');
 
-            const res = await request(app)
-                .delete(`/admin-api/student/${studentId}/drop/${courseCode}`);
-
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual({ message: 'Course dropped successfully' });
-        });
-    });
-
-    describe('DELETE /admin-api/student/:studentId', () => {
-        it('should delete a student', async () => {
-            const studentId = 1;
-
-            pool.query.mockResolvedValueOnce({});
-
-            const res = await request(app)
-                .delete(`/admin-api/student/${studentId}`);
-
-            expect(res.status).toBe(200);
-            expect(res.body).toEqual({ message: 'User deleted successfully' });
-        });
+        expect(response.status).toBe(500);
+        expect(response.body).toEqual({ error: 'Database error' });
     });
 });

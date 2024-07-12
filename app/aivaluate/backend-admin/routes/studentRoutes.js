@@ -34,6 +34,9 @@ router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
             WHERE s."studentId" = $1
         `;
         const studentResult = await pool.query(studentQuery, [studentId]);
+        if (studentResult.rows.length === 0) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
         const student = studentResult.rows[0];
 
         const courseQuery = `
@@ -91,21 +94,21 @@ router.delete('/student/:studentId', checkAuthenticated, async (req, res) => {
     }
 });
 
-// Endpoint to fetch all students
-router.get('/students', checkAuthenticated, async (req, res) => {
-    try {
-        const query = `
-            SELECT "studentId", "firstName", "lastName"
-            FROM "Student"
-        `;
-        const result = await pool.query(query);
+// // Endpoint to fetch all students
+// router.get('/students', checkAuthenticated, async (req, res) => {
+//     try {
+//         const query = `
+//             SELECT "studentId", "firstName", "lastName"
+//             FROM "Student"
+//         `;
+//         const result = await pool.query(query);
 
-        res.json(result.rows);
-    } catch (err) {
-        console.error('Error fetching students:', err);
-        res.status(500).json({ error: 'Database error' });
-    }
-});
+//         res.json(result.rows);
+//     } catch (err) {
+//         console.error('Error fetching students:', err);
+//         res.status(500).json({ error: 'Database error' });
+//     }
+// });
 
 
 

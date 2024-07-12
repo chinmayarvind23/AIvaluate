@@ -7,12 +7,11 @@ const app = express();
 app.use(express.json());
 app.use('/admin-api', studentRoutes);
 
+afterAll(async () => {
+    await pool.end();
+});
+
 describe('GET /admin-api/students', () => {
-
-    afterAll(async () => {
-        await pool.end();
-    });
-
     test('Should return all students', async () => {
         const response = await request(app).get('/admin-api/students');
         expect(response.status).toBe(200);
@@ -31,18 +30,21 @@ describe('GET /admin-api/students', () => {
 });
 
 describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
-
-    test('Should drop a course for a student successfully', async () => {
-        const studentId = 5; // Use a valid student ID from your database
-        const courseCode = 'COSC 499'; // Use a valid course code from your database
-
-        // Ensure the student is enrolled in the course before dropping
+    beforeAll(async () => {
+        // Ensure test data is in place before running tests
+        const studentId = 1; // Use a valid student ID from your database
+        const courseCode = 'COSC 455'; // Use a valid course code from your database
         const enrollmentCheckQuery = `
             INSERT INTO "EnrolledIn" ("studentId", "courseId")
             VALUES ($1, (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2))
             ON CONFLICT DO NOTHING
         `;
         await pool.query(enrollmentCheckQuery, [studentId, courseCode]);
+    });
+
+    test('Should drop a course for a student successfully', async () => {
+        const studentId = 1; // Use a valid student ID from your database
+        const courseCode = 'COSC 455'; // Use a valid course code from your database
 
         const response = await request(app)
             .delete(`/admin-api/student/${studentId}/drop/${courseCode}`)

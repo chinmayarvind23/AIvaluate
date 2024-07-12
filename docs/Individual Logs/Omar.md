@@ -342,10 +342,10 @@ Progress Update:
 | ----------- | --- |
 | Task #1 /Testing  |not-Completed  |
 | Task #2 / Backend for signing up an eval | not-Completed |
-| Task #3 / Backend for managing an eval | not-Completed |
+| Task #3 / Backend for managing an eval | Completed |
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-I have been working really hard on these 2 issues but keep on facing a lot of issues since the project has gone really far and a lot of new stuff has been added.
+I have been working really hard on these 2 issues but keep on facing a lot of issues since the project has gone really far and a lot of new stuff has been added. So far, I managed to get one of the issues done!
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - Moving on I will keep on fixing issues that I have and assign myself new issues to make sure the project is going well on track!

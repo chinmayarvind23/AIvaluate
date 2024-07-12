@@ -205,7 +205,7 @@ const AISettings = () => {
             <AIvaluateNavBarEval tab="ai" navBarText="AI Settings" />
             <div className='secondary-colorbg ai-section'>
                 <div className="ai-settings-div">
-                    <h1>Your prompt AI engineering:</h1>
+                    <h1>Your AI Prompt Engineering</h1>
                     <div className="ai-settings-content">
                         <div className="textarea-button-group">
                             <textarea
@@ -222,7 +222,7 @@ const AISettings = () => {
                                     <CircumIcon name="circle_plus" /> Create Prompt
                                 </button>
                                 <button type="submit" className="update-ai" onClick={handleSavePromptText}>
-                                    <CircumIcon name="coffee_cup" /> Retrain AI
+                                    <CircumIcon name="coffee_cup" /> Save Prompt
                                 </button>
                             </div>
                         </div>

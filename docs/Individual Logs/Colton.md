@@ -727,3 +727,44 @@ This cycle my main focus was redoing all of our frontend to look more like canva
 - Implement AI with dummy frontend page with base promtp + tests
 - Finish up all testing for the backend
 -----------------------------------------------------------------------------------
+
+## Cycle 13: Wednesday July 10th - Friday July 12th
+
+### Current Tasks
+  * #1: Testing
+  * #2: Frontend AI Setting page
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C14.png)
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Frontend AI Setting page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> testing
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+I hade alot of problems connecting our test to the database this cycle but after many hours of reasearch I figured it all out and our testing should go much faster from now on.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- AI and AI prompt set up
+-----------------------------------------------------------------------------------

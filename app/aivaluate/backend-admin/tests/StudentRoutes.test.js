@@ -32,13 +32,9 @@ describe('GET /admin-api/students', () => {
 
 describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
 
-    afterAll(async () => {
-        await pool.end();
-    });
-
     test('Should drop a course for a student successfully', async () => {
-        const studentId = 5;
-        const courseCode = 'COSC 499'; 
+        const studentId = 5; // Use a valid student ID from your database
+        const courseCode = 'COSC 499'; // Use a valid course code from your database
 
         // Ensure the student is enrolled in the course before dropping
         const enrollmentCheckQuery = `
@@ -66,9 +62,26 @@ describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
         expect(dropResult.rows.length).toBe(0);
     });
 
-    test('Should return 500 if database error occurs', async () => {
+    test('Should return 404 if course not found or not enrolled', async () => {
         const studentId = 5; // Use a valid student ID from your database
-        const courseCode = 'INVALID_CODE'; // Use an invalid course code to simulate error
+        const courseCode = 'NON_EXISTENT_CODE'; // Use a non-existent course code to simulate error
+
+        const response = await request(app)
+            .delete(`/admin-api/student/${studentId}/drop/${courseCode}`)
+            .set('Accept', 'application/json');
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ error: 'Course not found or not enrolled' });
+    });
+
+    test('Should handle database errors gracefully', async () => {
+        // Simulate a database error
+        jest.spyOn(pool, 'query').mockImplementationOnce(() => {
+            throw new Error('Database error');
+        });
+
+        const studentId = 5;
+        const courseCode = 'COSC 499';
 
         const response = await request(app)
             .delete(`/admin-api/student/${studentId}/drop/${courseCode}`)
@@ -76,5 +89,8 @@ describe('DELETE /admin-api/student/:studentId/drop/:courseCode', () => {
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual({ error: 'Database error' });
+
+        // Restore the original implementation of pool.query
+        pool.query.mockRestore();
     });
 });

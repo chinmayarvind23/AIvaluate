@@ -1726,10 +1726,9 @@ Clockify report
 </table>
 
 ### Cycle Goal Review 
-I completed the team meeting and code review. Additionally, I finalized the code for the MVP and created the presentation for it.
-
+I worked extensively on testing, fixed one of the errors I had been facing for a long time, and worked on student backend testing. These tasks were crucial for Testing
 ### Next Cycle Goals 
-  * Goal 1: Testing 
+  * Goal 1: Do more Testing 
   * Goal 4: Backend coding 
 
 

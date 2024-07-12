@@ -736,7 +736,7 @@ This cycle my main focus was redoing all of our frontend to look more like canva
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/colton-clockify_C11.png)
+![alt text](./clockify-images/colton-clockify_C14.png)
 
 ### Progress Update (since June 14th 2024) 
 <table>
@@ -763,9 +763,8 @@ Clockify report
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-This cycle I didn't have very much ime to get thigns done which caused some issues. I continue to have ltos of issues with testing and will spend this weekend wathcing for videos on jest to figure out what I am doing wrong.
+I hade alot of problems connecting our test to the database this cycle but after many hours of reasearch I figured it all out and our testing should go much faster from now on.
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
-- File storage and managerment
-- Fix back buttons and make them unified
+- AI and AI prompt set up
 -----------------------------------------------------------------------------------

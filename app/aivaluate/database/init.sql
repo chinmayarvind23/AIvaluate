@@ -345,7 +345,7 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table
-INSERT INTO "AssignmentRubric" ("criteria", "rubricName")
+INSERT INTO "AssignmentRubric" ("criteria", "rubricName", "courseId")
 VALUES 
     ('Correctness, Efficiency, Documentation', 'Rubric 1'),
     ('Problem Solving, Mathematical Reasoning', 'Rubric 2'),

@@ -332,6 +332,22 @@ router.get('/rubrics/:courseId', async (req, res) => {
     }
 });
 
+// Fetch rubrics by rubricId
+router.get('/rubric/:rubricId', async (req, res) => {
+    const { rubricId } = req.params;
+    try {
+        const result = await pool.query(
+            'SELECT * FROM "AssignmentRubric" WHERE "assignmentRubricId" = $1',
+            [rubricId]
+        );
+        console.log('Fetched Rubric:', result.rows); // Debug log
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubric:', error);
+        res.status(500).json({ message: 'Error fetching rubric' });
+    }
+});
+
 // Get published assignments by course ID
 router.get('/assignments/course/:courseId', async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
@@ -563,6 +579,36 @@ router.put('/assignments/:assignmentId/unpublish', async (req, res) => {
     } catch (error) {
         console.error('Error unpublishing assignment:', error);
         res.status(500).json({ message: 'Error unpublishing assignment' });
+    }
+});
+
+router.put('/rubric/:rubricId', async (req, res) => {
+    const { rubricId } = req.params;
+    const { rubricName, criteria } = req.body;
+
+    try {
+        // Begin transaction
+        await pool.query('BEGIN');
+
+        // Update the rubric
+        const result = await pool.query(
+            'UPDATE "AssignmentRubric" SET "rubricName" = $1, "criteria" = $2 WHERE "assignmentRubricId" = $3 RETURNING *',
+            [rubricName, criteria, rubricId]
+        );
+
+        if (result.rows.length === 0) {
+            await pool.query('ROLLBACK');
+            return res.status(404).json({ message: 'Rubric not found' });
+        }
+
+        // Commit transaction
+        await pool.query('COMMIT');
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        console.error('Error updating rubric:', error);
+        res.status(500).json({ message: 'Error updating rubric' });
     }
 });
 

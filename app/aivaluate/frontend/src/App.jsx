@@ -4,6 +4,7 @@ import './App.css';
 import PrivateRouteAdmin from './SessionCheck/PrivateRouteAdmin';
 import PrivateRouteEval from './SessionCheck/PrivateRouteEval';
 import PrivateRouteStu from './SessionCheck/PrivateRouteStudent';
+import AISettings from './pageComponents/AISettings';
 import AdminAccount from './pageComponents/AdminAccount';
 import AdminHelpPage from './pageComponents/AdminHelpPage';
 import AdminLogin from './pageComponents/AdminLogin';
@@ -31,6 +32,7 @@ import HelpPage from './pageComponents/HelpPage';
 import JoinCourse from './pageComponents/JoinCourse';
 import Login from './pageComponents/Login';
 import People from './pageComponents/People';
+import PublishAssignment from './pageComponents/PublishAssignment';
 import ResetPassword from './pageComponents/ResetPassword';
 import ResetPasswordAdmin from './pageComponents/ResetPasswordAdmin';
 import ResetPasswordEval from './pageComponents/ResetPasswordEval';
@@ -45,8 +47,6 @@ import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
-
-import PublishAssignment from './pageComponents/PublishAssignment';
 
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
 import TestForComponents from './pageComponents/testForComponents';
@@ -112,9 +112,10 @@ const App = () => {
           <Route path="/eval/assignments/:courseId" element={<PrivateRouteEval element={AssignmentProf} />} /> {/* Done*/}
           <Route path="/eval/browse/assignments" element={<PrivateRouteEval element={BrowseAllAssignmentsEval} />} /> {/* Done*/}
           <Route path="/eval/help" element={<PrivateRouteEval element={EvalhelpPage} />} /> {/* Done*/}
-          <Route path="/eval/rubric/:rubricId" element={<PrivateRouteEval element={EditRubric} />} /> {/* Done*/}
+          <Route path="/eval/rubric/:assignmentRubricId" element={<PrivateRouteEval element={EditRubric} />} /> {/* Done*/}
           {/* <Route path="/eval/individualrubric" element={<PrivateRouteEval element={ProfIndividualRubric} />} />  */} {/* This is the same page as EditRubric*/}
           <Route path="/eval/published/:assignmentId" element={<PrivateRouteEval element={PublishAssignment} />} /> {/* Done*/}
+          <Route path="/eval/ai/settings" element={<PrivateRouteEval element={AISettings} />} /> {/* Done*/}
 
 
         </Routes>

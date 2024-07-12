@@ -9,6 +9,10 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const Rubrics = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
+
     const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
@@ -82,17 +86,18 @@ const Rubrics = () => {
         setCurrentPage(1);
     };
 
+    const handleRubric = (assignmentRubricId) => {
+        navigate(`/eval/rubric/${assignmentRubricId}`);
+    };
+
     return (
         <div>
-            <AIvaluateNavBarEval 
-                navBarText={`${courseDetails.courseCode} - ${courseDetails.courseName}`} 
-                tab='rubrics' 
-            />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="rubrics" />
             <div className="accented-outside rborder">
-                <div className="portal-all">
+                <div className="main-margin">
                     <div className="portal-container">
-                        <div className="topBar">
+                        <div className="top-bar">
                             <h1>Your Rubrics</h1>
                             <div className="search-container">
                                 <div className="search-box">
@@ -108,9 +113,9 @@ const Rubrics = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
+                                <div className="file-item" key={index} onClick={() => handleRubric(file.assignmentRubricId)}>
                                     <div className="folder-icon"><CircumIcon name="file_on"/></div>
-                                    <div className="file-name">{file.criteria}</div>
+                                    <div className="file-name">{file.rubricName}</div>
                                 </div>
                             ))}
                         </div>

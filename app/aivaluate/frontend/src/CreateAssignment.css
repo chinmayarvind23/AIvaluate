@@ -6,16 +6,19 @@
     margin-left: 250px;
     margin-right: 250px;
     box-sizing: border-box;
+    
 }
 
 .create-assignment-container {
-    background: var(--secondary-color);
+    /* display: flex; */
     padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 60%;
-    margin-top: 60px;
+    width: 100%;
+    /* overflow: auto; */
+    overflow-y: scroll;
+    max-height: 750px;
     box-sizing: border-box;
+    border: red 2px solid;
+    align-items: center;
 }
 
 .assignment-header {
@@ -51,14 +54,28 @@
     color: var(--third-color);
 }
 
+.title-text{
+    
+}
+
 .create-assignment-content input[type="text"],
-.create-assignment-content input[type="number"],
-.create-assignment-content textarea {
+.create-assignment-content input[type="number"]{
     padding: 10px;
     border: 1px solid var(--primary-color);
-    border-radius: 5px;
+    border-radius: 50px;
     margin-bottom: 20px;
     resize: vertical;
+    color:var(--primary-color);
+    font-size: 15px;
+}
+.create-assignment-content textarea {
+    padding: 15px;
+    border: 1px solid var(--primary-color);
+    border-radius: 50px;
+    margin-bottom: 20px;
+    resize: vertical;
+    color:var(--primary-color);
+    font-size: 15px;
 }
 
 .rubric-options {
@@ -88,7 +105,7 @@
 .date-picker input[type="date"] {
     padding: 10px;
     border: 1px solid var(--primary-color);
-    border-radius: 5px;
+    border-radius: 50px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -104,6 +121,7 @@
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
+    
 }
 
 .file-upload input[type="file"] {
@@ -114,6 +132,7 @@
     height: 100%;
     opacity: 0;
     cursor: pointer;
+    
 }
 
 .file-upload span {
@@ -130,7 +149,7 @@
     color: var(--secondary-color);
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 16px;
 }
@@ -153,12 +172,13 @@
     padding: 0;
 }
 
+
 .available-rubrics li {
     background: var(--secondary-color);
     color: var(--third-color);
     padding: 10px;
     border: 1px solid var(--primary-color);
-    border-radius: 5px;
+    border-radius: 50px;
     margin-bottom: 10px;
 }
 
@@ -177,4 +197,8 @@
 
 body {
     overflow-x: hidden;
+}
+
+.file-preview{
+    color: var(--primary-color);
 }

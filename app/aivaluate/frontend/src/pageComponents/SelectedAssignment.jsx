@@ -1,57 +1,84 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../Auth.css';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
+import axios from 'axios';
 
 const SelectedAssignment = () => {
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredFiles, setFilteredFiles] = useState([]);
-
-  const files = [
-    { stu_number: '35559748', assignment: 'Lab 1', graded: true },
-    { stu_number: '26450923', assignment: 'Lab 1', graded: true  },
-    { stu_number: '87621931', assignment: 'Lab 1', graded: true  },
-    { stu_number: '38289312', assignment: 'Lab 1', graded: false  },
-    { stu_number: '89273919', assignment: 'Lab 1', graded: true  },
-    { stu_number: '32187638', assignment: 'Lab 1', graded: false  },
-    { stu_number: '12339781', assignment: 'Lab 1', graded: false  },
-    { stu_number: '87621931', assignment: 'Lab 2', graded: false  },
-    ]
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const courseId = sessionStorage.getItem('courseId');
+    const navBarText = `${courseCode} - ${courseName}`;
+    const navigate = useNavigate();
+    const { assignmentId } = useParams(); // Assuming assignmentId is passed as a URL parameter
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredFiles, setFilteredFiles] = useState([]);
+    const [submissions, setSubmissions] = useState([]);
+    const [error, setError] = useState(null);
+    const [gradesVisible, setGradesVisible] = useState(true);
 
     useEffect(() => {
-        const filtered = files.filter(file =>
-        file.assignment.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        file.stu_number.includes(searchTerm)
-        );
-        setFilteredFiles(filtered);
-        setCurrentPage(1); // Reset to first page on new search
-    }, [searchTerm]);
+        const fetchSubmissions = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
+                    withCredentials: true
+                });
+
+                if (response.status === 200) {
+                    setSubmissions(response.data);
+                    setFilteredFiles(response.data);
+                } else {
+                    console.error('Expected an array but got:', response.data);
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    setError('No submissions found for this assignment.');
+                    setSubmissions([]);
+                    setFilteredFiles([]);
+                } else {
+                    console.error('Error fetching submissions:', error);
+                }
+            }
+        };
+
+        fetchSubmissions();
+    }, [assignmentId]);
+
+    useEffect(() => {
+        if (searchTerm) {
+            const results = submissions.filter(file =>
+                file.submissionFile.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                file.studentId.includes(searchTerm)
+            );
+            setFilteredFiles(results);
+        } else {
+            setFilteredFiles(submissions);
+        }
+    }, [searchTerm, submissions]);
 
     // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
 
-    // This calculates the total number of pages based of the max number of items per page
-    const totalPages = Math.ceil(files.length / itemsPerPage);
+    // This calculates the total number of pages based on the max number of items per page
+    const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
-    if (currentPage < totalPages) {
-        setCurrentPage(prevPage => prevPage + 1);
-    }
+        if (currentPage < totalPages) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
     };
 
     const handlePrevPage = () => {
-    if (currentPage > 1) {
-        setCurrentPage(prevPage => prevPage - 1);
-    }
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
     };
 
     const handleSearchChange = (e) => {
@@ -59,48 +86,51 @@ const SelectedAssignment = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
-  return (
-  <div>
-    <AIvaluateNavBar navBarText='Course number - Course Name' tab='submissions' />
-    <SideMenuBarEval tab="submissions" />
-    <div className="accented-outside rborder">
-        <div className="portal-all">
-            <div className="portal-container">
-                <div className="topBar">
-                <button className="back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                    <h1>Lab 1 - Submissions</h1>
-                    {/* <div className="search-box">
-                        <FaSearch className="search-icon" />
-                        <input 
-                            type="text" 
-                            placeholder="Search..." 
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                        />
-                    </div> */}
-                    <div className="right"><button className="addEvalButton secondary-button">Hide Grades</button><button className="addEvalButton secondary-button">Publish Grades</button></div>
-                </div>
-                <div className="filetab">
-                    {currentFiles.map((file, index) => (
-                        <div className="file-item" key={index}>
-                            <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                            <div className="file-name">{file.stu_number} - {file.assignment} Submission</div>
-                            {file.graded && <div className="file-status">*Marked as graded</div>}
+    const toggleGradesVisibility = () => {
+        setGradesVisible(!gradesVisible);
+    };
+
+    return (
+        <div>
+            <AIvaluateNavBarEval navBarText={navBarText} />
+            <SideMenuBarEval tab="assignments" />
+            <div className="accented-outside rborder">
+                <div className="main-margin">
+                    <div className="portal-container">
+                        <div className="top-bar">
+                            <div className="back-btn-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                            </div>
+                            <div className="title-text"><h1>Assignment - Submissions</h1></div>
+                            <div className="empty"> </div>
+                            <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
+                                Hide Grades
+                            </button>
+                            <button className="grades-button" disabled={!gradesVisible} onClick={toggleGradesVisibility}>
+                                Publish Grades
+                            </button>
                         </div>
-                    ))}
-                </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                <div className="file-item" key={index}>
+                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
+                                    {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        </div>
+                    </div>
+                </div> 
             </div>
-            <div className="pagination-controls">
-                <span>Page {currentPage} of {totalPages}</span>
-                <div className="pagination-buttons">
-                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                </div>
-            </div>
-        </div> 
-    </div>
-  </div>
-  );
+        </div>
+    );
 };
 
 export default SelectedAssignment;

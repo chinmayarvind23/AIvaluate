@@ -1,13 +1,18 @@
 .assignment-table-content {
   flex-grow: 1;
   height: 100%;
-  margin-top: 50px;
   margin-right: 50px;
-  margin-left: 400px;
-  border: 10px solid transparent;
-  border-radius: 50px; 
   padding: 20px;
   font-size: 1.5em;
+}
+
+.assignment-table tr {
+  border-bottom: 3px solid var(--third-color); /* Line separating each row */
+
+}
+.assignment-table th,
+.assignment-table td {
+  color: var(--third-color); /* Ensure text color is visible */
 }
 
 .table-section {
@@ -31,11 +36,6 @@
   margin-right: 10px;
 }
 
-.assignment-search-container {
-  margin-top:40px;
-  margin-left:400px;
-}
-
 .icon-button, .link-button {
   background: none;
   border: none;
@@ -48,6 +48,11 @@
   display: inline;
 }
 
+.link-button {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+
 .icon-button .file-icon {
   font-size: inherit;
 }
@@ -55,3 +60,5 @@
 .icon-button:focus, .link-button:focus {
   outline: none;
 }
+
+

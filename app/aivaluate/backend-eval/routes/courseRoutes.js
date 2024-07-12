@@ -116,6 +116,24 @@ router.put('/courses/:id', async (req, res) => {
     }
 });
 
+// Create a course
+router.post('/courses', async (req, res) => {
+    const { courseName, courseCode, maxStudents } = req.body;
+
+    console.log(req.body);
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO "Course" ("courseName", "courseCode", "maxStudents") VALUES ($1, $2, $3) RETURNING "courseId"',
+            [courseName, courseCode, maxStudents]
+        );
+        res.status(201).send({ courseId: result.rows[0].courseId, message: 'Course created successfully' });
+    } catch (error) {
+        console.error('Error creating course:', error);
+        res.status(500).send({ message: 'Error creating course' });
+    }
+});
+
 
 // Get a single course by ID
 router.get('/courses/:courseId', async (req, res) => {
@@ -138,7 +156,6 @@ router.get('/courses/:courseId', async (req, res) => {
 // Fetch all submissions for a course
 router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
-    const studentId = req.user.studentId;
 
     try {
         const result = await pool.query(
@@ -152,9 +169,10 @@ router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res
             FROM "AssignmentSubmission"
             JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
             JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
-            WHERE "AssignmentSubmission"."courseId" = $1 AND "AssignmentSubmission"."studentId" = $2`,
-            [courseId, studentId]
+            WHERE "AssignmentSubmission"."courseId" = $1`,
+            [courseId]
         );
+        console.log("Submissions Query Result:", result.rows);  // Debugging
         res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error fetching submissions:', error);

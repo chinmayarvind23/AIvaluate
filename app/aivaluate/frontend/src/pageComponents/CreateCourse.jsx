@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../styles.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
@@ -73,7 +72,7 @@ const CreateCourse = () => {
       }
 
       console.log('Course created successfully:', response.data);
-      navigate('/dashboard'); // Redirect to dashboard after successful creation
+      navigate('/eval/dashboard'); // Redirect to dashboard after successful creation
     } catch (error) {
       console.error('There was an error creating the course:', error);
     }
@@ -81,8 +80,8 @@ const CreateCourse = () => {
 
   return (
     <>
-      <AIvaluateNavBar navBarText='Create a Course' />
-      <div className='secondary-colorbg form-container'>
+      <AIvaluateNavBarEval navBarText='Create a Course' />
+      <div className='form-container'>
         <section>
           <div className="form-content">
             <form onSubmit={handleSubmit}>

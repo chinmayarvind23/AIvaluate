@@ -122,6 +122,10 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const EvaluatorGrades = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const navBarText = `${courseCode} - ${courseName}`;
+
     const { courseId } = useParams();
     const [grades, setGrades] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -147,7 +151,7 @@ const EvaluatorGrades = () => {
     };
 
     const filteredGrades = grades.filter((grade) =>
-        grade.name.toLowerCase().includes(searchQuery.toLowerCase())
+        grade.name && grade.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     let sumOfAvgGrades = grades.reduce((sum, grade) => sum + grade.avgGrade, 0);
@@ -161,48 +165,52 @@ const EvaluatorGrades = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText='Student Grades' tab="home" />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab="grades"/>
-            <div className="grades-section">
-                <div className="title"><h1>Class Grade Summary</h1></div>
-                <div className="top-bar">
-                    <div className="search-div">
-                        <div className="search-container">
-                            <div className="search-box">
-                                <FaSearch className="search-icon" />
-                                <input
-                                    type="text"
-                                    placeholder="Search..."
-                                    value={searchQuery}
-                                    onChange={handleSearch}
-                                />
+            <div className="main-margin">
+                {/* <div className="grades-section"> */}
+                    <div className="top-bar">
+                    <div className="grade-summary-text"><h1>Grade Summary</h1></div>
+                        <div className="search-div">
+                            <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search..."
+                                        value={searchQuery}
+                                        onChange={handleSearch}
+                                    />
+                                </div>
                             </div>
                         </div>
+                        <div className="empty"> </div>
+                        <div className="class-avg"><h2>Class Average: {average}%</h2></div>
                     </div>
-                    <div className="fill-empty"> </div>
-                    <div className="class-avg"><h2>Class Average: {average}%</h2></div>
-                </div>
-                <table className="grades-table secondary-colorbg">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Avg. Grade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredGrades.map((grade, index) => (
-                            <tr key={index}>
-                                <td>
-                                    <div className="file-icon"></div>
-                                    {grade.name}
-                                </td>
-                                <td>{new Date(grade.due).toLocaleDateString()}</td>
-                                <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                    <div className="scrollable-div">
+                        <table className="grades-table secondary-colorbg">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Avg. Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredGrades.map((grade, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <div className="file-icon"></div>
+                                            {grade.name}
+                                        </td>
+                                        <td>{new Date(grade.due).toLocaleDateString()}</td>
+                                        <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                {/* </div> */}
             </div>
         </div>
     );

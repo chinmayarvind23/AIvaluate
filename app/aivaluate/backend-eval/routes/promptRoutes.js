@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
-const bcrypt = require('bcryptjs');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 // Fetch selected prompt by instructor id
@@ -14,7 +12,7 @@ router.get('/prompt/:instructorId', async (req, res) => {
             [instructorId]
         );
         if (prompt.rows.length === 0) {
-            return res.json('No prompt has been selected'); // Return an empty string if no prompt is selected
+            return res.status(404).json('No prompt selected');
         }
         res.json(prompt.rows[0]);
     } catch (error) {
@@ -22,7 +20,6 @@ router.get('/prompt/:instructorId', async (req, res) => {
         res.status(500).json('Server error');
     }
 });
-
 
 // Fetch all prompts by instructor id
 router.get('/prompts/:instructorId', async (req, res) => {
@@ -78,6 +75,29 @@ router.put('/prompt/:promptid', async (req, res) => {
             'UPDATE "Prompt" SET "promptName" = $1, "promptText" = $2 WHERE "promptId" = $3 RETURNING *',
             [promptName, promptText, promptId]
         );
+        res.json(updatePrompt.rows[0]);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json('Server error');
+    }
+});
+
+// Update isSelected for a prompt and set all others to false
+router.put('/prompt/select/:promptId', async (req, res) => {
+    try {
+        const { promptId } = req.params;
+        const { instructorId } = req.body;
+        
+        await pool.query(
+            'UPDATE "Prompt" SET "isSelected" = false WHERE "instructorId" = $1',
+            [instructorId]
+        );
+
+        const updatePrompt = await pool.query(
+            'UPDATE "Prompt" SET "isSelected" = true WHERE "promptId" = $1 RETURNING *',
+            [promptId]
+        );
+        
         res.json(updatePrompt.rows[0]);
     } catch (error) {
         console.error(error.message);

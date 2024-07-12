@@ -10,6 +10,8 @@ const AISettings = () => {
     const [detailLevel, setDetailLevel] = useState('');
     const [promptText, setPromptText] = useState('');
     const [instructorId, setInstructorId] = useState('');
+    const [prompts, setPrompts] = useState([]);
+    const [selectedPromptId, setSelectedPromptId] = useState('');
 
     // Fetch instructorId
     useEffect(() => {
@@ -26,6 +28,23 @@ const AISettings = () => {
 
         fetchInstructorData();
     }, []);
+
+    // Fetch all prompts of the instructor
+    useEffect(() => {
+        const fetchPromptsData = async () => {
+            if (instructorId) {
+                try {
+                    const response = await axios.get(`http://localhost:5173/eval-api/prompts/${instructorId}`, {
+                        withCredentials: true
+                    });
+                    setPrompts(response.data);
+                } catch (error) {
+                    console.error('There was an error fetching the prompts data:', error);
+                }
+            }
+        };
+        fetchPromptsData();
+    }, [instructorId]);
 
     // Fetch current selected prompt of the instructor
     useEffect(() => {
@@ -56,21 +75,52 @@ const AISettings = () => {
         setPromptText(event.target.value);
     };
 
+    const handlePromptSelect = async (event) => {
+        const selectedId = event.target.value;
+        const selectedPrompt = prompts.find(prompt => prompt.promptId.toString() === selectedId);
+
+        try {
+            await axios.put(`http://localhost:5173/eval-api/prompt/select/${selectedId}`, {
+                instructorId: instructorId
+            });
+            setSelectedPromptId(selectedId);
+            setPromptText(selectedPrompt ? selectedPrompt.promptText : '');
+        } catch (error) {
+            console.error('There was an error updating the selected prompt:', error);
+        }
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval tab="ai" navBarText="AI Settings" />
             <div className='secondary-colorbg ai-section'>
                 <div className="ai-settings-div">
                     <h1>Your prompt AI engineering:</h1>
-                    <div className="empty"> </div>
-                    <textarea
-                        value={promptText}
-                        onChange={handlePromptTextChange}
-                        placeholder="Enter your prompt here"
-                        rows="4"
-                        cols="50"
-                        className="ai-settings-textarea"
-                    />
+                    <div className="ai-settings-content">
+                        <textarea
+                            value={promptText}
+                            readOnly
+                            placeholder="Enter your prompt here"
+                            rows="4"
+                            cols="50"
+                            className="ai-settings-textarea"
+                        />
+                        <div className="radio-group">
+                            {prompts.map(prompt => (
+                                <div key={prompt.promptId} className="radio-item">
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            value={prompt.promptId}
+                                            checked={selectedPromptId === prompt.promptId.toString()}
+                                            onChange={handlePromptSelect}
+                                        />
+                                        {prompt.promptName}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                     <button type="submit" className="update-ai">
                         <CircumIcon name="coffee_cup" /> Retrain AI
                     </button>

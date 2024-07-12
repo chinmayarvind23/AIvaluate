@@ -1602,29 +1602,9 @@ I completed the Admin Help page and Evaluator Help Page for the frontend. Additi
   * Goal 2: Gather feedback on the Evaluator Help Page and implement improvements
   * Goal 3: Begin working on the Student Submission page
   * Goal 4: Enhance the Publish Assignment/Rubric page based on user feedback
-Let me know if there are any further adjustments needed!
 
-Convert this 
-# Timesheet (July 3 - July 5) - 6 hours
 
-## Wednesday, July 3rd
-### 3 hours
-- Team meeting
-- code review
-  
 
-## Thursday, July 4th
-### 2 hours
-- finalizing code for MVP
-
-## Friday, July 5th
-### 2 hours
-- Making the presentation for MVP
-ChatGPT
-Here is the converted Markdown using the final format, including the "Next Cycle Goals" section:
-
-markdown
-Copy code
 # Timesheet (July 3 - July 5) - 6 hours
 
 ### Timesheet
@@ -1708,6 +1688,49 @@ I have been working on the backend for a single selected rubric and the publish 
   * Goal 3: Complete the backend for a single selected rubric
   * Goal 4: Complete the publish assignment rubric backend
 
+
+
+# Timesheet (July 10 - July 12) - 6 hours
+
+### Timesheet
+Clockify report
+
+<img width="908" alt="Screenshot 2024-07-12 at 12 33 13 AM" src="https://github.com/user-attachments/assets/d2b3d42b-18c1-4ab8-b48e-96191ae87f21">
+
+
+### Current Tasks 
+  * #1: Backend for a single selected rubric
+  * #2: Fixed errors in the testing
+  * #3: Student Backend Testing 
+
+
+### Progress Update (since 7/3/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Backend for a single selected rubric</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Fixed errors in the testing</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Student Backend Testing </td>
+        <td>Complete</td>
+    </tr>
+    
+</table>
+
+### Cycle Goal Review 
+I completed the team meeting and code review. Additionally, I finalized the code for the MVP and created the presentation for it.
+
+### Next Cycle Goals 
+  * Goal 1: Testing 
+  * Goal 4: Backend coding 
 
 
 

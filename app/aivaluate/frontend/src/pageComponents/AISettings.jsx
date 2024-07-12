@@ -8,10 +8,11 @@ import axios from 'axios';
 const AISettings = () => {
     const [answerType, setAnswerType] = useState('');
     const [detailLevel, setDetailLevel] = useState('');
-    const [promptText, setPromptText] = useState('');
+    const [promptText, setPromptText] = useState('No Prompt Selected');
     const [instructorId, setInstructorId] = useState('');
     const [prompts, setPrompts] = useState([]);
     const [selectedPromptId, setSelectedPromptId] = useState('');
+    const [isEditable, setIsEditable] = useState(false);
 
     // Fetch instructorId
     useEffect(() => {
@@ -56,10 +57,22 @@ const AISettings = () => {
                     });
                     if (response.data.promptId) {
                         setSelectedPromptId(response.data.promptId.toString());
+                        setPromptText(response.data.promptText || '');
+                        setIsEditable(true);
+                    } else {
+                        setSelectedPromptId('clear');
+                        setPromptText('No Prompt Selected');
+                        setIsEditable(false);
                     }
-                    setPromptText(response.data.promptText || response.data || ''); // Handle undefined promptText and the message
                 } catch (error) {
-                    console.error('There was an error fetching the prompt data:', error);
+                    if (error.response && error.response.status === 404) {
+                        // Handle 404 error gracefully
+                        setSelectedPromptId('clear');
+                        setPromptText('No Prompt Selected');
+                        setIsEditable(false);
+                    } else {
+                        console.error('There was an error fetching the prompt data:', error);
+                    }
                 }
             }
         };
@@ -80,12 +93,14 @@ const AISettings = () => {
 
     const handlePromptSelect = async (event) => {
         const selectedId = event.target.value;
+        console.log("selectedId is: ", selectedId);
 
         if (selectedId === 'clear') {
             try {
                 await axios.put(`http://localhost:5173/eval-api/prompt/clear/${instructorId}`, {});
-                setSelectedPromptId('');
-                setPromptText('');
+                setSelectedPromptId('clear');
+                setPromptText('No Prompt Selected');
+                setIsEditable(false);
             } catch (error) {
                 console.error('There was an error clearing the selected prompt:', error);
             }
@@ -96,7 +111,8 @@ const AISettings = () => {
                     instructorId: instructorId
                 });
                 setSelectedPromptId(selectedId);
-                setPromptText(selectedPrompt ? selectedPrompt.promptText : '');
+                setPromptText(selectedPrompt ? (selectedPrompt.promptText || '') : '');
+                setIsEditable(true);
             } catch (error) {
                 console.error('There was an error updating the selected prompt:', error);
             }
@@ -113,11 +129,11 @@ const AISettings = () => {
 
     const updatePromptName = async (promptId, newName) => {
         try {
-            await axios.put(`http://localhost:5173/eval-api/prompt/${promptId}`, {
+            const response = await axios.put(`http://localhost:5173/eval-api/prompt/name/${promptId}`, {
                 promptName: newName
             });
             setPrompts(prompts.map(prompt => 
-                prompt.promptId === promptId ? { ...prompt, promptName: newName } : prompt
+                prompt.promptId === promptId ? { ...prompt, promptName: response.data.promptName } : prompt
             ));
         } catch (error) {
             console.error('There was an error updating the prompt name:', error);
@@ -131,8 +147,55 @@ const AISettings = () => {
             try {
                 await axios.delete(`http://localhost:5173/eval-api/prompt/${promptId}`);
                 setPrompts(prompts.filter(prompt => prompt.promptId !== promptId));
+                if (promptId.toString() === selectedPromptId) {
+                    setSelectedPromptId('clear');
+                    setPromptText('No Prompt Selected');
+                    setIsEditable(false);
+                }
             } catch (error) {
                 console.error('There was an error deleting the prompt:', error);
+            }
+        }
+    };
+
+    const handleCreatePrompt = () => {
+        const newPromptName = window.prompt("Enter name for the new prompt:");
+        if (newPromptName) {
+            createNewPrompt(newPromptName);
+        }
+    };
+
+    const createNewPrompt = async (promptName) => {
+        try {
+            const response = await axios.post('http://localhost:5173/eval-api/prompt', {
+                promptName,
+                promptText: '',
+                instructorId
+            });
+            const newPrompt = response.data;
+            setPrompts([...prompts, newPrompt]);
+            setSelectedPromptId(newPrompt.promptId.toString());
+            setPromptText('');
+            setIsEditable(true);
+            await handlePromptSelect({ target: { value: newPrompt.promptId.toString() } }); // Auto-select the new prompt
+        } catch (error) {
+            console.error('There was an error creating the new prompt:', error);
+        }
+    };
+
+    const handleSavePromptText = async () => {
+        if (selectedPromptId) {
+            try {
+                await axios.put(`http://localhost:5173/eval-api/prompt/text/${selectedPromptId}`, {
+                    promptText
+                });
+                const updatedPrompts = prompts.map(prompt =>
+                    prompt.promptId.toString() === selectedPromptId ? { ...prompt, promptText } : prompt
+                );
+                setPrompts(updatedPrompts);
+                alert("Prompt has been saved successfully");
+            } catch (error) {
+                console.error('There was an error updating the prompt text:', error);
             }
         }
     };
@@ -147,15 +210,21 @@ const AISettings = () => {
                         <div className="textarea-button-group">
                             <textarea
                                 value={promptText}
-                                readOnly
+                                onChange={handlePromptTextChange}
                                 placeholder="Enter your prompt here"
                                 rows="4"
                                 cols="50"
                                 className="ai-settings-textarea"
+                                readOnly={!isEditable}
                             />
-                            <button type="submit" className="update-ai">
-                                <CircumIcon name="coffee_cup" /> Retrain AI
-                            </button>
+                            <div className="button-group">
+                                <button type="button" className="create-prompt" onClick={handleCreatePrompt}>
+                                    <CircumIcon name="circle_plus" /> Create Prompt
+                                </button>
+                                <button type="submit" className="update-ai" onClick={handleSavePromptText}>
+                                    <CircumIcon name="coffee_cup" /> Retrain AI
+                                </button>
+                            </div>
                         </div>
                         <div className="radio-group">
                             {prompts.map(prompt => (
@@ -184,7 +253,7 @@ const AISettings = () => {
                                     <input
                                         type="radio"
                                         value="clear"
-                                        checked={selectedPromptId === ''}
+                                        checked={selectedPromptId === 'clear'}
                                         onChange={handlePromptSelect}
                                     />
                                     Clear Prompt

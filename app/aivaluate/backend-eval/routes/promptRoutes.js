@@ -12,12 +12,12 @@ router.get('/prompt/:instructorId', async (req, res) => {
             [instructorId]
         );
         if (prompt.rows.length === 0) {
-            return res.status(404).json('No prompt selected');
+            return res.status(404).json({ message: 'No prompt selected' });
         }
         res.json(prompt.rows[0]);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -32,7 +32,7 @@ router.get('/prompts/:instructorId', async (req, res) => {
         res.json(prompts.rows);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -47,38 +47,54 @@ router.post('/prompt', async (req, res) => {
         res.json(newPrompt.rows[0]);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
 // Delete a prompt
-router.delete('/prompt/:promptid', async (req, res) => {
+router.delete('/prompt/:promptId', async (req, res) => {
     try {
         const { promptId } = req.params;
         const deletePrompt = await pool.query(
             'DELETE FROM "Prompt" WHERE "promptId" = $1',
             [promptId]
         );
-        res.json('Prompt was deleted');
+        res.json({ message: 'Prompt was deleted' });
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
-// Update a prompt
-router.put('/prompt/:promptid', async (req, res) => {
+// Update a prompt name
+router.put('/prompt/name/:promptId', async (req, res) => {
     try {
         const { promptId } = req.params;
-        const { promptName, promptText } = req.body;
+        const { promptName } = req.body;
         const updatePrompt = await pool.query(
-            'UPDATE "Prompt" SET "promptName" = $1, "promptText" = $2 WHERE "promptId" = $3 RETURNING *',
-            [promptName, promptText, promptId]
+            'UPDATE "Prompt" SET "promptName" = $1 WHERE "promptId" = $2 RETURNING *',
+            [promptName, promptId]
         );
         res.json(updatePrompt.rows[0]);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Update a prompt text
+router.put('/prompt/text/:promptId', async (req, res) => {
+    try {
+        const { promptId } = req.params;
+        const { promptText } = req.body;
+        const updatePrompt = await pool.query(
+            'UPDATE "Prompt" SET "promptText" = $1 WHERE "promptId" = $2 RETURNING *',
+            [promptText, promptId]
+        );
+        res.json(updatePrompt.rows[0]);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -101,7 +117,7 @@ router.put('/prompt/select/:promptId', async (req, res) => {
         res.json(updatePrompt.rows[0]);
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
@@ -115,10 +131,10 @@ router.put('/prompt/clear/:instructorId', async (req, res) => {
             [instructorId]
         );
         
-        res.json('All prompts cleared');
+        res.json({ message: 'All prompts cleared' });
     } catch (error) {
         console.error(error.message);
-        res.status(500).json('Server error');
+        res.status(500).json({ message: 'Server error' });
     }
 });
 

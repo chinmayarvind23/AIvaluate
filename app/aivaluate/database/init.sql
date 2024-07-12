@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS "Prompt"(
     "promptName" VARCHAR(100),
     "promptText" VARCHAR(2000),
     "instructorId" INT,
+    "isSelected" BOOLEAN DEFAULT false,
     FOREIGN KEY ("instructorId") REFERENCES "Instructor"("instructorId") ON DELETE CASCADE
 );
 

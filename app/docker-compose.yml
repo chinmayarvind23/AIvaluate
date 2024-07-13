@@ -113,6 +113,30 @@ services:
     networks:
       - aivaluate-net
 
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "8000:8000"
+    networks:
+      - aivaluate-net
+    environment:
+      - MODEL_PATH=/models/llama3
+
+  backend-ollama:
+    build:
+      context: ./aivaluate/backend-ollama
+      dockerfile: Dockerfile
+    container_name: backend-ollama
+    ports:
+      - "9000:9000"
+    depends_on:
+      - ollama
+    networks:
+      - aivaluate-net
+    env_file:
+      - ./aivaluate/backend-ollama/.env
+
 networks:
   aivaluate-net:
     driver: bridge

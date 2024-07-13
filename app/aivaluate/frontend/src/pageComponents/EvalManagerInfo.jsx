@@ -19,7 +19,9 @@ const EvalManagerInfo = () => {
     useEffect(() => {
         const fetchEvaluatorDetails = async () => {
             try {
-                const response = await axios.get(`/eval-api/evaluator/${id}`);
+                const response = await axios.get(`http://localhost:5173/admin-api/evaluator/${instructorId}`, {
+                    credentials: 'include'
+                });
                 if (response.data) {
                     setEvaluator(response.data);
                     setIsTeachingAssistant(!response.data.hasFullAccess);
@@ -31,7 +33,9 @@ const EvalManagerInfo = () => {
 
         const fetchCourses = async () => {
             try {
-                const response = await axios.get(`/eval-api/evaluator/${id}/courses`);
+                const response = await axios.get(`http://localhost:5173/admin-api/evaluator/${instructorId}/courses`, {
+                    credentials: 'include'
+                });
                 setCourses(response.data);
             } catch (error) {
                 console.error('Error fetching courses:', error);
@@ -40,11 +44,13 @@ const EvalManagerInfo = () => {
 
         fetchEvaluatorDetails();
         fetchCourses();
-    }, [id]);
+    }, [instructorId]);
 
     const handleRemoveCourse = async (courseId) => {
         try {
-            await axios.delete(`/eval-api/evaluator/${id}/course/${courseId}`);
+            await axios.delete(`http://localhost:5173/admin-api/evaluator/${instructorId}/course/${courseId}`, {
+                credentials: 'include'
+            });
             setCourses(courses.filter(course => course.courseId !== courseId));
         } catch (error) {
             console.error('Error removing course:', error);
@@ -53,7 +59,9 @@ const EvalManagerInfo = () => {
 
     const handleDeleteEvaluator = async () => {
         try {
-            await axios.delete(`/eval-api/evaluator/${id}`);
+            await axios.delete(`http://localhost:5173/admin-api/evaluator/${instructorId}`, {
+                credentials: 'include'
+            });
             navigate('/admin/evaluatormanager'); // Redirect to the evaluator manager page
         } catch (error) {
             console.error('Error deleting evaluator:', error);
@@ -99,7 +107,7 @@ const EvalManagerInfo = () => {
                     </div>
                     <div className="info-row">
                         <span>Password:</span>
-                        <span>{'*'.repeat(evaluator.passwordLength || 10)}</span>
+                        <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
                     </div>
                     <div className="info-row">
                         <span>Department:</span>

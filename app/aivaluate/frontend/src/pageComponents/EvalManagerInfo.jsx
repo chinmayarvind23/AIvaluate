@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const EvalManagerInfo = () => {
     const navigate = useNavigate();
-    const { id } = useParams();
+    const { instructorId } = useParams();
     const [searchTerm, setSearchTerm] = useState('');
     const [evaluator, setEvaluator] = useState({});
     const [courses, setCourses] = useState([]);

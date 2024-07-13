@@ -36,16 +36,16 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/admin-api/login');
 }
 
-// Get all evaluators
-router.get('/evaluators', checkAuthenticated, async (req, res) => {
-    try {
-        const result = await pool.query('SELECT "instructorId", "firstName", "lastName", "hasFullAccess" FROM "Instructor"');
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching evaluators:', error);
-        res.status(500).json({ error: 'Database error' });
-    }
-});
+// // Get all evaluators
+// router.get('/evaluators', checkAuthenticated, async (req, res) => {
+//     try {
+//         const result = await pool.query('SELECT "instructorId", "firstName", "lastName", "hasFullAccess" FROM "Instructor"');
+//         res.json(result.rows);
+//     } catch (error) {
+//         console.error('Error fetching evaluators:', error);
+//         res.status(500).json({ error: 'Database error' });
+//     }
+// });
 
 // Get evaluator details
 router.get('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {

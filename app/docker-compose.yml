@@ -117,10 +117,12 @@ services:
     image: ollama/ollama:latest
     container_name: ollama
     ports:
-      - "8000:8000"
+      - "11434:11434"
     networks:
       - aivaluate-net
     environment:
+      - OLLAMA_INTEL_GPU=false
+      - OLLAMA_LLM_LIBRARY=cpu
       - MODEL_PATH=/models/llama3
 
   backend-ollama:
@@ -136,6 +138,8 @@ services:
       - aivaluate-net
     env_file:
       - ./aivaluate/backend-ollama/.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   aivaluate-net:

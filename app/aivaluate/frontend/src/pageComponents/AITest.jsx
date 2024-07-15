@@ -7,9 +7,10 @@ const AITest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setAIResponse('Typing...');
 
     try {
-      const response = await axios.post('/ai-api/api/llama', { prompt: input });
+      const response = await axios.post(`http://localhost:5173/ai-api/api/gpt`, { prompt: input });
       setAIResponse(response.data.response);
     } catch (error) {
       console.error('Error communicating with AI backend:', error);

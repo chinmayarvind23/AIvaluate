@@ -1,8 +1,8 @@
-# Use an official Node runtime as a parent image
+# Use an official Node.js runtime as a parent image
 FROM node:20.14.0-buster as build
 
 # Set the working directory
-WORKDIR /app/aivaluate/backend-ollama
+WORKDIR /app/aivaluate/backend-ai
 
 # Copy package.json and package-lock.json
 COPY package*.json ./

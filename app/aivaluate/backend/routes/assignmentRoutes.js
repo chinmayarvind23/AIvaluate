@@ -294,6 +294,25 @@ const createNewSubmissionId = async (studentId, courseId, assignmentId, formatte
     }
 };
 
+const removeEmptyDirs = (directory) => {
+    if (!fs.existsSync(directory)) {
+        return;
+    }
+    const files = fs.readdirSync(directory);
+    if (files.length > 0) {
+        files.forEach((file) => {
+            const fullPath = path.join(directory, file);
+            if (fs.lstatSync(fullPath).isDirectory()) {
+                removeEmptyDirs(fullPath);
+            }
+        });
+    }
+
+    if (fs.readdirSync(directory).length === 0) {
+        fs.rmdirSync(directory);
+    }
+};
+
 const fileFilter = (req, file, cb) => {
     const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
     if (!allowedExtensions.exec(file.originalname)) {
@@ -319,7 +338,8 @@ const storage = multer.diskStorage({
             const assignmentSubmissionId = await createNewSubmissionId(studentId, courseId, assignmentId, formattedDate);
             const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}/${assignmentSubmissionId}`);
             fs.mkdirSync(dir, { recursive: true });
-
+            req.assignmentSubmissionIds = req.assignmentSubmissionIds || [];
+            req.assignmentSubmissionIds.push({ assignmentSubmissionId, dir });
             cb(null, dir);
         } catch (err) {
             console.error('Error creating directory:', err);
@@ -341,56 +361,39 @@ router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async 
         const formattedDate = currentDate.toISOString();
 
         try {
-            const filePromises = req.files.map(async (file) => {
-                let assignmentSubmissionId;
-                try {
-                    assignmentSubmissionId = await createNewSubmissionId(studentId, courseId, assignmentId, formattedDate);
-                } catch (err) {
-                    console.error('Error creating submission ID for file:', file.originalname, err);
-                    return null;
-                }
+            req.assignmentSubmissionIds = req.assignmentSubmissionIds || [];
+            const assignmentSubmissionIdPromises = req.files.map(async () => {
+                return await createNewSubmissionId(studentId, courseId, assignmentId, formattedDate);
+            });
 
-                if (!assignmentSubmissionId) {
-                    return null;
-                }
-
-                const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}/${assignmentSubmissionId}`);
-                const newPath = path.join(dir, file.filename);
+            const assignmentSubmissionIds = await Promise.all(assignmentSubmissionIdPromises);
+            req.assignmentSubmissionIds = assignmentSubmissionIds.map((id, index) => {
+                const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}/${id}`);
                 fs.mkdirSync(dir, { recursive: true });
+                return { assignmentSubmissionId: id, dir };
+            });
+
+            const filePromises = req.files.map(async (file, index) => {
+                const { assignmentSubmissionId, dir } = req.assignmentSubmissionIds[index];
+                const newPath = path.join(dir, file.originalname);
+                fs.mkdirSync(path.dirname(newPath), { recursive: true });
                 fs.renameSync(file.path, newPath);
+
+                const relativePath = path.relative(path.resolve(__dirname, '../'), newPath);
+
                 await pool.query(
-                    `UPDATE "AssignmentSubmission" 
-                     SET "submissionFile" = $1, "submittedAt" = $2, "updatedAt" = $2 
-                     WHERE "assignmentSubmissionId" = $3`,
-                    [newPath, formattedDate, assignmentSubmissionId]
+                    `UPDATE "AssignmentSubmission" SET "submissionFile" = $1, "submittedAt" = $2, "updatedAt" = $2 WHERE "assignmentSubmissionId" = $3`,
+                    [relativePath, formattedDate, assignmentSubmissionId]
                 );
 
-                return newPath;
+                return { assignmentSubmissionId, relativePath };
             });
 
             const validFiles = (await Promise.all(filePromises)).filter(Boolean);
-
             if (validFiles.length > 0) {
                 await pool.query(
                     `DELETE FROM "AssignmentSubmission" WHERE "submissionFile" IS NULL`
                 );
-                const removeEmptyDirs = (directory) => {
-                    const isDir = fs.statSync(directory).isDirectory();
-                    if (!isDir) return;
-
-                    let files = fs.readdirSync(directory);
-                    if (files.length > 0) {
-                        files.forEach((file) => {
-                            const fullPath = path.join(directory, file);
-                            removeEmptyDirs(fullPath);
-                        });
-                        files = fs.readdirSync(directory);
-                    }
-
-                    if (files.length === 0) {
-                        fs.rmdirSync(directory);
-                    }
-                };
                 const rootDir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}`);
                 removeEmptyDirs(rootDir);
 

@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:20.14.0-buster as build
+FROM node:20.14.0-buster
 
 # Set the working directory
 WORKDIR /app/aivaluate/backend-ai

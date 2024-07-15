@@ -15,7 +15,6 @@ const EvalAccount = () => {
     const [prof, setProf] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const idLabel = prof ? "Evaluator ID" : "Student ID";
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -179,7 +178,7 @@ const EvalAccount = () => {
                     )}
                     {successMessage && <div className="success-message">{successMessage}</div>}
                 </div>
-                <div className="detail-label">{idLabel}</div>
+                <div className="detail-label">Evaluator ID</div>
                 <div className="detail-row">
                     <div className="primary-colorbg detail-value">{accountId}</div>
                 </div>

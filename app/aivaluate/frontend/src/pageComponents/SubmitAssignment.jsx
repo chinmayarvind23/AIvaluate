@@ -13,6 +13,7 @@ const SubmitAssignment = () => {
     const { courseId, assignmentId } = useParams();
     const [files, setFiles] = useState([]);
     const [isGraded, setIsGraded] = useState(false);
+    const [dragging, setDragging] = useState(false);
     const [assignmentDetails, setAssignmentDetails] = useState({
         assignmentName: '',
         rubricName: '',
@@ -72,19 +73,35 @@ const SubmitAssignment = () => {
         }
     };
 
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
+    };
+    
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+    
+    const handleDragLeave = () => {
+        setDragging(false);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (files.length === 0) {
             setErrorMessage('Please select files to upload.');
             return;
         }
-
+    
         const formData = new FormData();
         files.forEach(file => {
             formData.append('files', file);
         });
-
+    
         try {
             await axios.post(`/stu-api/upload/${courseId}/${assignmentId}`, formData, {
                 headers: {
@@ -98,7 +115,7 @@ const SubmitAssignment = () => {
             console.error('File upload failed:', err);
             setErrorMessage('File upload failed. Please try again.');
         }
-    };
+    };    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -133,7 +150,12 @@ const SubmitAssignment = () => {
                             </div>
                         </div>
                         <form onSubmit={handleSubmit}>
-                            <div className="file-upload">
+                            <div
+                                className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
                                 <label htmlFor="file-upload" className="file-upload-label">
                                     Drag files here or Click to browse files
                                 </label>
@@ -141,9 +163,9 @@ const SubmitAssignment = () => {
                                     type="file" 
                                     id="file-upload" 
                                     className="file-upload-input" 
+                                    name="files"
                                     onChange={handleFileChange}
                                     multiple 
-                                    required
                                 />
                             </div>
                             {errorMessage && <p className="error-message">{errorMessage}</p>}

@@ -1,6 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
@@ -68,18 +68,18 @@ const CreateAssignment = () => {
     const handleDrop = (e) => {
         e.preventDefault();
         setDragging(false);
-        const file = e.dataTransfer.files[0];
-        handleFileChange({ target: { files: [file] } });
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
     };
-
+    
     const handleDragOver = (e) => {
         e.preventDefault();
         setDragging(true);
     };
-
+    
     const handleDragLeave = () => {
         setDragging(false);
-    };
+    };    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -125,7 +125,7 @@ const CreateAssignment = () => {
                 console.error('Error response data:', error.response.data);
             }
         }
-    };             
+    };                
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();
@@ -204,13 +204,17 @@ const CreateAssignment = () => {
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
                             >
-                                <input
-                                    type="file"
-                                    id="assignmentKey"
+                                <label htmlFor="file-upload" className="file-upload-label">
+                                    Drag files here or Click to browse files
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="file-upload" 
+                                    className="file-upload-input" 
                                     name="assignmentKey"
                                     onChange={handleFileChange}
+                                    multiple 
                                 />
-                                <span>Drag files here or Click to browse files</span>
                             </div>
                             {assignmentKey && (
                                 <div className="file-preview">

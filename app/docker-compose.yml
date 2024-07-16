@@ -11,7 +11,6 @@ services:
       - backend
       - backend-admin
       - backend-eval
-      - backend-ai
     networks:
       - aivaluate-net
 
@@ -114,33 +113,33 @@ services:
     networks:
       - aivaluate-net
 
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    networks:
-      - aivaluate-net
-    environment:
-      - OLLAMA_INTEL_GPU=false
-      - OLLAMA_LLM_LIBRARY=cpu
-      - MODEL_PATH=/models/llama3
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: ollama
+  #   ports:
+  #     - "11434:11434"
+  #   networks:
+  #     - aivaluate-net
+  #   environment:
+  #     - OLLAMA_INTEL_GPU=false
+  #     - OLLAMA_LLM_LIBRARY=cpu
+  #     - MODEL_PATH=/models/llama3
 
-  backend-ollama:
-    build:
-      context: ./aivaluate/backend-ollama
-      dockerfile: Dockerfile
-    container_name: backend-ollama
-    ports:
-      - "9000:9000"
-    depends_on:
-      - ollama
-    networks:
-      - aivaluate-net
-    env_file:
-      - ./aivaluate/backend-ollama/.env
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  # backend-ollama:
+  #   build:
+  #     context: ./aivaluate/backend-ollama
+  #     dockerfile: Dockerfile
+  #   container_name: backend-ollama
+  #   ports:
+  #     - "9000:9000"
+  #   depends_on:
+  #     - ollama
+  #   networks:
+  #     - aivaluate-net
+  #   env_file:
+  #     - ./aivaluate/backend-ollama/.env
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   aivaluate-net:

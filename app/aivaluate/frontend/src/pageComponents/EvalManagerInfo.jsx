@@ -14,7 +14,7 @@ const EvalManagerInfo = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [evaluator, setEvaluator] = useState({});
     const [courses, setCourses] = useState([]);
-    const [isTeachingAssistant, setIsTeachingAssistant] = useState(false);
+    const [isTeachingAssistant, setIsTeachingAssistant] = useState('');
 
     useEffect(() => {
         const fetchEvaluatorDetails = async () => {
@@ -24,13 +24,13 @@ const EvalManagerInfo = () => {
                 });
                 if (response.data) {
                     setEvaluator(response.data);
-                    setIsTeachingAssistant(!response.data.hasFullAccess);
+                    setIsTeachingAssistant(response.data.isTA); // Ensure this is correct
                 }
             } catch (error) {
                 console.error('Error fetching evaluator details:', error);
             }
         };
-
+    
         const fetchCourses = async () => {
             try {
                 const response = await axios.get(`http://localhost:5173/admin-api/evaluator/${instructorId}/courses`, {
@@ -41,10 +41,11 @@ const EvalManagerInfo = () => {
                 console.error('Error fetching courses:', error);
             }
         };
-
+    
         fetchEvaluatorDetails();
         fetchCourses();
     }, [instructorId]);
+    
 
     const handleRemoveCourse = async (courseId) => {
         try {

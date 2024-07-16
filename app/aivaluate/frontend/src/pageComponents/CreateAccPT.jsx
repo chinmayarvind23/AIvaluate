@@ -14,7 +14,8 @@ const CreateAccPT = () => {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    department: '' 
   });
 
   const [message, setMessage] = useState('');
@@ -37,7 +38,9 @@ const CreateAccPT = () => {
       const response = await axios.post('http://localhost:5173/admin-api/evaluatorRegister', data, {
         withCredentials: true
       });
-      setMessage(response.data.message);
+      window.alert('User successfully registered!');
+      console.log('User successfully registered!');
+      
     } catch (error) {
       console.error('Error registering evaluator:', error);
       setMessage('Failed to register evaluator');

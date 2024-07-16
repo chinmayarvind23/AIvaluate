@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const bcrypt = require('bcryptjs')
 const { pool } = require('../dbConfig'); 
 
 
@@ -67,7 +67,7 @@ router.get('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
 router.get('/evaluator/:instructorId/courses', checkAuthenticated, async (req, res) => {
     const { instructorId } = req.params;
     try {
-        const result = await pool.query('SELECT "courseId", "courseCode", "courseName" FROM "Course" WHERE "instructorId" = $1', [instructorId]);
+        const result = await pool.query('SELECT "Course"."courseName","Course"."courseCode" FROM "Course"JOIN "Teaches" ON "Course"."courseId" = "Teaches"."courseId"WHERE "Teaches"."instructorId" = $1;', [instructorId]);
         res.json(result.rows);
     } catch (error) {
         console.error('Error fetching courses:', error);
@@ -77,16 +77,17 @@ router.get('/evaluator/:instructorId/courses', checkAuthenticated, async (req, r
 
 // Register a new evaluator
 router.post('/evaluatorRegister', checkAuthenticated, async (req, res) => {
-    const { firstName, lastName, email, password, isTA } = req.body;
+    const { firstName, lastName, email, password, isTA, department } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
+        // Insert without specifying instructorId to let PostgreSQL handle it
         await pool.query(
-            'INSERT INTO "Instructor" ("firstName", "lastName", "email", "password", "isTA") VALUES ($1, $2, $3, $4, true)',
-            [firstName, lastName, email, hashedPassword, isTA]
+            'INSERT INTO "Instructor" ("firstName", "lastName", "email", "password", "isTA", "department") VALUES ($1, $2, $3, $4, $5, $6)',
+            [firstName, lastName, email, hashedPassword, isTA, department]
         );
-        res.status(201).json({ message: 'Evaluator registered successfully' });
+        res.status(201).json({ message: 'Instructor registered successfully' });
     } catch (error) {
-        console.error('Error registering evaluator:', error);
+        console.error('Error registering instructor:', error);
         console.error('Request body:', req.body);
         if (error.stack) {
             console.error(error.stack);
@@ -94,6 +95,68 @@ router.post('/evaluatorRegister', checkAuthenticated, async (req, res) => {
         res.status(500).json({ error: 'Database error' });
     }
 });
+
+
+// app.post("/stu-api/signup", async (req, res) => {
+//     let { firstName, lastName, email, password, password2 } = req.body;
+
+//     let errors = [];
+
+//     if (!firstName || !lastName || !email || !password || !password2) {
+//         errors.push({ message: "Please enter all fields" });
+//     }
+
+//     if (password.length < 6) {
+//         errors.push({ message: "Password should be at least 6 characters long" });
+//     }
+
+//     if (password != password2) {
+//         errors.push({ message: "Passwords do not match" });
+//     }
+
+//     if (errors.length > 0) {
+//         return res.status(400).json({ errors });
+//     } else {
+//         let hashedPassword = await bcrypt.hash(password, 10);
+
+//         pool.query(
+//             'SELECT * FROM "Student" WHERE email = $1',
+//             [email],
+//             (err, results) => {
+//                 if (err) {
+//                     console.error('Error during SELECT:', err);
+//                     return res.status(500).json({ errors: [{ message: "Database error" }] });
+//                 }
+
+//                 if (results.rows.length > 0) {
+//                     errors.push({ message: "Email already registered" });
+//                     return res.status(400).json({ errors });
+//                 } else {
+//                     pool.query(
+//                         'INSERT INTO "Student" ("firstName", "lastName", email, password) VALUES ($1, $2, $3, $4) RETURNING "studentId", password',
+//                         [firstName, lastName, email, hashedPassword],
+//                         (err, results) => {
+//                             if (err) {
+//                                 console.error('Error during INSERT:', err);
+//                                 return res.status(500).json({ errors: [{ message: "Database error" }] });
+//                             }
+//                             res.status(201).json({ message: "You are now registered. Please log in" });
+//                         }
+//                     );
+//                 }
+//             }
+//         );
+//     }
+// });
+
+
+
+
+
+
+
+
+
 
 // Delete evaluator
 router.delete('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {

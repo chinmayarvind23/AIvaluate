@@ -10,51 +10,46 @@ function checkAuthenticated(req, res, next) {
 }
 
 router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => {
-    const studentId = req.user.studentId;
     const { courseId } = req.params;
+    const studentId = req.user.studentId;
+
+    if (!studentId) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
 
     try {
-        // Query to get student name and grade sums
-        const studentInfoQuery = `
-            SELECT s."firstName", 
-                   COALESCE(SUM(ag."InstructorAssignedFinalGrade"), 0) AS "totalGrade",
-                   COALESCE(SUM(a."maxObtainableGrade"), 0) AS "totalMaxGrade"
-            FROM "Student" s
-            LEFT JOIN "AssignmentSubmission" asub ON s."studentId" = asub."studentId"
-            LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
-            LEFT JOIN "Assignment" a ON asub."assignmentId" = a."assignmentId"
-            WHERE s."studentId" = $1 AND asub."courseId" = $2 AND ag."isGraded" = true
-            GROUP BY s."firstName"
-        `;
-        const studentInfoResult = await pool.query(studentInfoQuery, [studentId, courseId]);
-        const studentInfo = studentInfoResult.rows[0];
-
-        // Query to get assignment details
-        const assignmentDetailsQuery = `
-            SELECT a."assignmentDescription" AS "name", 
-                   a."dueDate" AS "due",
-                   asub."isSubmitted" AS "submitted", 
-                   COALESCE(ag."InstructorAssignedFinalGrade", 0) AS "score",
-                   a."maxObtainableGrade" AS "total",
-                   ag."isGraded" AS "marked"
+        const query = `
+            SELECT 
+                a."assignmentName" AS name,
+                a."dueDate" AS due,
+                COALESCE(MAX(ag."InstructorAssignedFinalGrade"), 0) AS score,
+                a."maxObtainableGrade" AS total,
+                MAX(COALESCE(s."submittedAt", '1970-01-01'::date)) > '1970-01-01'::date AS submitted,
+                BOOL_OR(s."isGraded") AS marked
             FROM "Assignment" a
-            LEFT JOIN "AssignmentSubmission" asub ON a."assignmentId" = asub."assignmentId"
-            LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
-            WHERE asub."studentId" = $1 AND a."courseId" = $2
+            LEFT JOIN "AssignmentSubmission" s ON a."assignmentId" = s."assignmentId" AND s."studentId" = $1
+            LEFT JOIN "AssignmentGrade" ag ON s."assignmentSubmissionId" = ag."assignmentSubmissionId"
+            WHERE a."courseId" = $2
+            GROUP BY a."assignmentId"
         `;
-        const assignmentDetailsResult = await pool.query(assignmentDetailsQuery, [studentId, courseId]);
-        const assignmentDetails = assignmentDetailsResult.rows;
+        const result = await pool.query(query, [studentId, courseId]);
 
-        // Send the combined result as response
-        res.json({
-            studentName: studentInfo.firstName,
-            totalGrade: studentInfo.totalGrade,
-            totalMaxGrade: studentInfo.totalMaxGrade,
-            assignments: assignmentDetails
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No grades found' });
+        }
+
+        const totalGrade = result.rows.reduce((sum, row) => sum + row.score, 0);
+        const totalMaxGrade = result.rows.reduce((sum, row) => sum + row.total, 0);
+
+        res.status(200).json({
+            studentName: req.user.name,
+            totalGrade,
+            totalMaxGrade,
+            assignments: result.rows
         });
-    } catch (err) {
-        console.error('Error fetching student grades:', err);
-        res.status(500).json({ error: 'Database error' });
+    } catch (error) {
+        console.error('Error fetching student grades:', error);
+        res.status(500).json({ message: 'Error fetching student grades' });
     }
 });
 

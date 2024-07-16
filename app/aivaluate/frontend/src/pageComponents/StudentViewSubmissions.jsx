@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -18,39 +18,25 @@ const StudentViewSubmissions = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
-    const [setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
     useEffect(() => {
-        const fetchCourseDetails = async () => {
-            try {
-                const response = await fetch(`/stu-api/courses/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setCourseDetails(data);
-                } else {
-                    console.error('Error fetching course details:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching course details:', error);
-            }
-        };
-    
         const fetchSubmissions = async () => {
             try {
                 const response = await fetch(`/stu-api/courses/${courseId}/submissions`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                if (response.ok) {
+                    const data = await response.json();
+                    setFiles(data);
+                    setFilteredFiles(data);
+                } else {
+                    console.error('Error fetching submissions:', response.statusText);
                 }
-                const data = await response.json();
-                setFiles(data);
             } catch (error) {
                 console.error('Error fetching submissions:', error);
             }
         };
-    
-        fetchCourseDetails();
+
         fetchSubmissions();
-    });
+    }, [courseId]);
 
     useEffect(() => {
         const filtered = files.filter(file =>
@@ -85,7 +71,7 @@ const StudentViewSubmissions = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
+            <AIvaluateNavBar navBarText={navBarText} tab='submissions' />
             <SideMenuBar tab="submissions" />
             <div className="accented-outside rborder">
                 <div className="main-margin">
@@ -108,7 +94,7 @@ const StudentViewSubmissions = () => {
                             {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index}>
                                     <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">{file.assignmentKey} Submission</div>
+                                    <div className="file-name">{file.submissionFile} Submission</div>
                                     {file.isGraded && <div className="file-status">Marked as graded</div>}
                                 </div>
                             ))}

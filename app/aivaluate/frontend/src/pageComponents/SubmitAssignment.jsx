@@ -28,20 +28,15 @@ const SubmitAssignment = () => {
 
     const fetchAssignmentDetails = useCallback(async () => {
         try {
-            const response = await fetch(`/stu-api/assignment/${courseId}/${assignmentId}`, {
-                method: 'GET',
+            const response = await axios.get(`/stu-api/assignment/${courseId}/${assignmentId}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include'
+                withCredentials: true
             });
-            const data = await response.json();
-            if (response.ok) {
-                setAssignmentDetails(data);
-                setIsGraded(data.InstructorAssignedFinalGrade !== "--");
-            } else {
-                console.error('Error fetching assignment details:', data.message);
-            }
+            const data = response.data;
+            setAssignmentDetails(data);
+            setIsGraded(data.InstructorAssignedFinalGrade !== "--");
         } catch (error) {
             console.error('Error fetching assignment details:', error);
         } finally {
@@ -161,22 +156,36 @@ const SubmitAssignment = () => {
                         <div className="assignment-details">
                             <pre className="details-content">{assignmentDetails.criteria}</pre>
                         </div>
-                        <h2>Recently Uploaded Files</h2>
+                        <h2>Files to be uploaded</h2>
                         <div className="uploaded-files-container">
-                            {uploadedFiles.length > 0 ? (
+                            {files.length > 0 ? (
                                 <ul>
-                                    {uploadedFiles.flatMap(submission => (
-                                        submission.files.map((file, index) => (
-                                            <li key={index}>
-                                                <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
-                                            </li>
-                                        ))
+                                    {files.map((file, index) => (
+                                        <li key={index}>
+                                            <span>{file.name}</span>
+                                        </li>
                                     ))}
                                 </ul>
                             ) : (
-                                <p>No files uploaded yet.</p>
+                                <p>No files selected yet.</p>
                             )}
                         </div>
+                        <h2>Recently Uploaded Files</h2>
+                            <div className="uploaded-files-container">
+                                {uploadedFiles.length > 0 ? (
+                                    <ul>
+                                        {uploadedFiles.flatMap(submission => (
+                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
+                                                <li key={index}>
+                                                    <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
+                                                </li>
+                                            )) : null
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>No files uploaded yet.</p>
+                                )}
+                            </div>
                         <h2>Feedback</h2>
                         <div className="feedback-container">
                             {isGraded ? (

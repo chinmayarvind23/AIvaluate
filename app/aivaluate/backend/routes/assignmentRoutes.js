@@ -352,10 +352,12 @@ router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async 
                 fs.renameSync(file.path, newPath);
 
                 const relativePath = path.relative(path.resolve(__dirname, '../'), newPath);
+                const submissionFile = `${relativePath}`;
+
                 const existingSubmission = await pool.query(
                     `SELECT "assignmentSubmissionId" FROM "AssignmentSubmission"
                     WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3 AND "submissionFile" = $4`,
-                    [studentId, courseId, assignmentId, relativePath]
+                    [studentId, courseId, assignmentId, submissionFile]
                 );
 
                 if (existingSubmission.rows.length > 0) {
@@ -368,7 +370,7 @@ router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async 
                     await pool.query(
                         `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "submittedAt", "updatedAt", "isSubmitted")
                         VALUES ($1, $2, $3, $4, $5, $5, true)`,
-                        [studentId, courseId, assignmentId, relativePath, formattedDate]
+                        [studentId, courseId, assignmentId, submissionFile, formattedDate]
                     );
                 }
 
@@ -413,7 +415,7 @@ router.get('/submission/:courseId/:assignmentId', async (req, res) => {
 
         res.status(200).send(result.rows.map(row => ({
             assignmentSubmissionId: row.assignmentSubmissionId,
-            files: row.submissionFile ? row.submissionFile.split(',') : [] // Handle potential null values
+            files: row.submissionFile ? row.submissionFile.split(',') : []
         })));
     } catch (error) {
         console.error('Error retrieving file paths from database:', error);

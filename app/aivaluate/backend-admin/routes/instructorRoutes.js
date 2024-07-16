@@ -171,11 +171,13 @@ router.delete('/evaluator/:instructorId', checkAuthenticated, async (req, res) =
 });
 
 // Remove course from evaluator
-router.delete('/evaluator/:instructorId/course/:courseId', checkAuthenticated, async (req, res) => {
-    const { instructorId, courseId } = req.params;
+router.delete('/evaluator/:instructorId/drop/:courseCode', checkAuthenticated, async (req, res) => {
+    const { instructorId, courseCode } = req.params;
     try {
-        await pool.query('UPDATE "Course" SET "instructorId" = NULL WHERE "courseId" = $1 AND "instructorId" = $2', [courseId, instructorId]);
-        res.status(200).json({ message: 'Course removed from evaluator successfully' });
+        const dropQuery = ` DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = ( SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
+
+            await pool.query(dropQuery, [instructorId,courseCode]);
+        res.status(200).json({ message: 'Course removed from instructor successfully' });
     } catch (error) {
         console.error('Error removing course from evaluator:', error);
         res.status(500).json({ error: 'Database error' });

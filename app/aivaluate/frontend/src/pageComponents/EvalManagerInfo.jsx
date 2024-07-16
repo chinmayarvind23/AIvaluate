@@ -47,16 +47,27 @@ const EvalManagerInfo = () => {
     }, [instructorId]);
     
 
-    const handleRemoveCourse = async (courseId) => {
-        try {
-            await axios.delete(`http://localhost:5173/admin-api/evaluator/${instructorId}/course/${courseId}`, {
-                credentials: 'include'
-            });
-            setCourses(courses.filter(course => course.courseId !== courseId));
-        } catch (error) {
-            console.error('Error removing course:', error);
+    const handleRemoveCourse = async (courseCode) => {
+       const confirmRemove = window.confirm(`Are you sure you want to remove the course ${courseCode}?`);
+        if (confirmRemove) {
+            try {
+                const response = await fetch(`http://localhost:5173/admin-api/evaluator/${instructorId}/drop/${courseCode}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                if (response.ok) {
+                    setCourses(courses.filter(course => course.courseCode !== courseCode));
+                    alert(`Removed course: ${courseCode}`);
+                } else {
+                    alert('Failed to remove the course');
+                }
+            } catch (error) {
+                console.error('Error removing course:', error);
+                alert('Failed to remove the course');
+            }
         }
     };
+    
 
     const handleDeleteEvaluator = async () => {
         try {
@@ -128,7 +139,7 @@ const EvalManagerInfo = () => {
                     {filteredCourses.map((course, index) => (
                         <div className="course-item" key={index}>
                             <span>{course.courseCode} - {course.courseName}</span>
-                            <button className="remove-button" onClick={() => handleRemoveCourse(course.courseId)}>Remove</button>
+                            <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Remove</button>
                         </div>
                     ))}
                 </div>

@@ -139,7 +139,7 @@ const EvalManagerInfo = () => {
                     {filteredCourses.map((course, index) => (
                         <div className="course-item" key={index}>
                             <span>{course.courseCode} - {course.courseName}</span>
-                            <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Remove</button>
+                            <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Drop</button>
                         </div>
                     ))}
                 </div>

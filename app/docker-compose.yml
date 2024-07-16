@@ -11,6 +11,7 @@ services:
       - backend
       - backend-admin
       - backend-eval
+      - backend-ai
     networks:
       - aivaluate-net
 

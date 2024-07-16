@@ -47,6 +47,7 @@ import StudentManager from './pageComponents/StudentManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
+import Chat from './pageComponents/Chat';
 
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
 import TestForComponents from './pageComponents/testForComponents';
@@ -73,6 +74,7 @@ const App = () => {
           <Route path="/eval/login" element={<EvalLogin />} /> {/* Done*/}
           <Route path="/admin/signup" element={<SignupAdmin />} /> {/* Done*/}
           <Route path="/test" element={<TestForComponents />} /> {/* Done*/}
+          <Route path="/chat" element={<Chat />} />
 
           <Route path="/ai-test" element={<AITest />} />
           {/* <Route path="/eval/rubric/rubricId" element={<EditRubric />} /> */}

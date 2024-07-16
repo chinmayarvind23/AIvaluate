@@ -12,7 +12,7 @@ app.post('/ai-api/api/gpt', async (req, res) => {
 
   try {
     const response = await axios.post('https://api.openai.com/v1/completions', {
-      model: 'gpt-3.5-turbo-0125', // Use the correct model name
+      model: 'gpt-3.5-turbo', // Use the correct model name
       prompt: prompt,
       max_tokens: 100
     }, {
@@ -21,6 +21,7 @@ app.post('/ai-api/api/gpt', async (req, res) => {
         'Content-Type': 'application/json'
       }
     });
+
 
     res.json({ response: response.data.choices[0].text.trim() });
   } catch (error) {

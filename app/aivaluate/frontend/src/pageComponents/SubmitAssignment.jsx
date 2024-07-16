@@ -165,10 +165,10 @@ const SubmitAssignment = () => {
                         <div className="uploaded-files-container">
                             {uploadedFiles.length > 0 ? (
                                 <ul>
-                                    {uploadedFiles.map(submission => (
+                                    {uploadedFiles.flatMap(submission => (
                                         submission.files.map((file, index) => (
                                             <li key={index}>
-                                                <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{file.split('/').pop()}</a>
+                                                <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
                                             </li>
                                         ))
                                     ))}

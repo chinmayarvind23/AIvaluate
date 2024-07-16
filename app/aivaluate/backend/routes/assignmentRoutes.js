@@ -235,7 +235,7 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
 
 router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     const { courseId, assignmentId } = req.params;
-    const studentId = req.session.studentId; // Assuming studentId is saved in the session storage
+    const studentId = req.session.studentId;
 
     if (!studentId) {
         return res.status(401).json({ message: 'Unauthorized' });
@@ -278,22 +278,6 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     }
 });
 
-// Function to create a new submission entry and return the new submission ID
-const createNewSubmissionId = async (studentId, courseId, assignmentId, formattedDate) => {
-    try {
-        const result = await pool.query(
-            `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "isSubmitted", "submittedAt", "updatedAt") 
-             VALUES ($1, $2, $3, true, $4, $4)
-             RETURNING "assignmentSubmissionId"`,
-            [studentId, courseId, assignmentId, formattedDate]
-        );
-        return result.rows[0].assignmentSubmissionId;
-    } catch (error) {
-        console.error('Error creating new submission ID:', error);
-        throw error;
-    }
-};
-
 const removeEmptyDirs = (directory) => {
     if (!fs.existsSync(directory)) {
         return;
@@ -331,15 +315,10 @@ const storage = multer.diskStorage({
             return cb(new Error('Student ID not found in session'), false);
         }
 
-        const currentDate = new Date();
-        const formattedDate = currentDate.toISOString();
-
         try {
-            const assignmentSubmissionId = await createNewSubmissionId(studentId, courseId, assignmentId, formattedDate);
-            const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}/${assignmentSubmissionId}`);
+            const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}`);
             fs.mkdirSync(dir, { recursive: true });
-            req.assignmentSubmissionIds = req.assignmentSubmissionIds || [];
-            req.assignmentSubmissionIds.push({ assignmentSubmissionId, dir });
+            req.assignmentDir = dir;
             cb(null, dir);
         } catch (err) {
             console.error('Error creating directory:', err);
@@ -347,6 +326,12 @@ const storage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
+        const { assignmentDir } = req;
+        const filePath = path.resolve(assignmentDir, file.originalname);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
         cb(null, file.originalname);
     },
 });
@@ -361,39 +346,37 @@ router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async 
         const formattedDate = currentDate.toISOString();
 
         try {
-            req.assignmentSubmissionIds = req.assignmentSubmissionIds || [];
-            const assignmentSubmissionIdPromises = req.files.map(async () => {
-                return await createNewSubmissionId(studentId, courseId, assignmentId, formattedDate);
-            });
-
-            const assignmentSubmissionIds = await Promise.all(assignmentSubmissionIdPromises);
-            req.assignmentSubmissionIds = assignmentSubmissionIds.map((id, index) => {
-                const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}/${id}`);
-                fs.mkdirSync(dir, { recursive: true });
-                return { assignmentSubmissionId: id, dir };
-            });
-
-            const filePromises = req.files.map(async (file, index) => {
-                const { assignmentSubmissionId, dir } = req.assignmentSubmissionIds[index];
-                const newPath = path.join(dir, file.originalname);
+            const filePromises = req.files.map(async (file) => {
+                const newPath = path.join(req.assignmentDir, file.originalname);
                 fs.mkdirSync(path.dirname(newPath), { recursive: true });
                 fs.renameSync(file.path, newPath);
 
                 const relativePath = path.relative(path.resolve(__dirname, '../'), newPath);
-
-                await pool.query(
-                    `UPDATE "AssignmentSubmission" SET "submissionFile" = $1, "submittedAt" = $2, "updatedAt" = $2 WHERE "assignmentSubmissionId" = $3`,
-                    [relativePath, formattedDate, assignmentSubmissionId]
+                const existingSubmission = await pool.query(
+                    `SELECT "assignmentSubmissionId" FROM "AssignmentSubmission"
+                    WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3 AND "submissionFile" = $4`,
+                    [studentId, courseId, assignmentId, relativePath]
                 );
 
-                return { assignmentSubmissionId, relativePath };
+                if (existingSubmission.rows.length > 0) {
+                    const assignmentSubmissionId = existingSubmission.rows[0].assignmentSubmissionId;
+                    await pool.query(
+                        `UPDATE "AssignmentSubmission" SET "submittedAt" = $1, "updatedAt" = $1 WHERE "assignmentSubmissionId" = $2`,
+                        [formattedDate, assignmentSubmissionId]
+                    );
+                } else {
+                    await pool.query(
+                        `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "submittedAt", "updatedAt", "isSubmitted")
+                        VALUES ($1, $2, $3, $4, $5, $5, true)`,
+                        [studentId, courseId, assignmentId, relativePath, formattedDate]
+                    );
+                }
+
+                return { relativePath };
             });
 
             const validFiles = (await Promise.all(filePromises)).filter(Boolean);
             if (validFiles.length > 0) {
-                await pool.query(
-                    `DELETE FROM "AssignmentSubmission" WHERE "submissionFile" IS NULL`
-                );
                 const rootDir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}`);
                 removeEmptyDirs(rootDir);
 

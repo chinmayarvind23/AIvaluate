@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
@@ -18,6 +18,11 @@ const AdminLogin = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -27,6 +32,11 @@ const AdminLogin = () => {
 
     if (!validateEmail(email)) {
       newErrors.email = 'Invalid email address';
+    }
+
+    if (!validateInput(email) || !validateInput(password)) {
+      setError('Invalid input detected.');
+      return;
     }
 
     if (Object.keys(newErrors).length > 0) {

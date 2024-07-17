@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
@@ -21,6 +21,11 @@ const Signup = () => {
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
+  };
+
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
   };
 
   const validatePassword = (password) => {
@@ -49,6 +54,11 @@ const Signup = () => {
 
     if (password !== password2) {
       newErrors.password2 = 'Passwords do not match';
+    }
+
+    if (!validateInput(firstName) || !validateInput(lastName) || !validateInput(email) || !validateInput(password) || !validateInput(password2) || !validateInput(major)) {
+      setErrors({ form: 'Invalid input detected.' });
+      return;
     }
 
     if (Object.keys(newErrors).length > 0) {

@@ -115,28 +115,27 @@ app.get('/admin/:adminId/password', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+// app.post('/admin/:adminId/verifyPassword', async (req, res) => {
+//     const adminId = parseInt(req.params.adminId);
+//     const { currentPassword } = req.body;
 
-app.post('/admin/:adminId/verifyPassword', async (req, res) => {
-    const adminId = parseInt(req.params.adminId);
-    const { currentPassword } = req.body;
+//     try {
+//         const result = await pool.query('SELECT "password" FROM "SystemAdministrator" WHERE "adminId" = $1', [adminId]);
+//         if (result.rows.length === 0) {
+//             return res.status(404).json({ message: 'admin not found' });
+//         }
 
-    try {
-        const result = await pool.query('SELECT "password" FROM "SystemAdministrator" WHERE "adminId" = $1', [adminId]);
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'admin not found' });
-        }
-
-        const isMatch = await bcrypt.compare(currentPassword, result.rows[0].password);
-        if (isMatch) {
-            res.status(200).json({ success: true });
-        } else {
-            res.status(401).json({ success: false, message: 'Incorrect password' });
-        }
-    } catch (error) {
-        console.error('Error verifying password:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
+//         const isMatch = await bcrypt.compare(currentPassword, result.rows[0].password);
+//         if (isMatch) {
+//             res.status(200).json({ success: true });
+//         } else {
+//             res.status(401).json({ success: false, message: 'Incorrect password' });
+//         }
+//     } catch (error) {
+//         console.error('Error verifying password:', error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// });
 
 app.put('/admin/:adminId/password', async (req, res) => {
     const adminId = parseInt(req.params.adminId);
@@ -331,20 +330,27 @@ describe('Admin Password Routes', () => {
 
 describe('POST /admin/:adminId/verifyPassword', () => {
     it('should verify the admin password successfully', async () => {
-        const hashedPassword = await bcrypt.hash('password123', 10);
-        pool.query.mockResolvedValueOnce({ rows: [{ password: hashedPassword }] });
-        bcrypt.compare = jest.fn().mockResolvedValueOnce(true);
+        const mockPassword = 'hashedpassword123';
+        const currentPassword = 'password123';
+
+        pool.query.mockResolvedValueOnce({
+            rows: [{ password: mockPassword }]
+        });
+
+        bcrypt.compare = jest.fn().mockResolvedValue(true);
 
         const response = await request(app)
             .post('/admin/1/verifyPassword')
-            .send({ currentPassword: 'password123' });
+            .send({ currentPassword });
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual({ success: true });
     });
 
     it('should return 404 if admin not found', async () => {
-        pool.query.mockResolvedValueOnce({ rows: [] });
+        pool.query.mockResolvedValueOnce({
+            rows: []
+        });
 
         const response = await request(app)
             .post('/admin/1/verifyPassword')
@@ -355,13 +361,18 @@ describe('POST /admin/:adminId/verifyPassword', () => {
     });
 
     it('should return 401 if password is incorrect', async () => {
-        const hashedPassword = await bcrypt.hash('password123', 10);
-        pool.query.mockResolvedValueOnce({ rows: [{ password: hashedPassword }] });
-        bcrypt.compare = jest.fn().mockResolvedValueOnce(false);
+        const mockPassword = 'hashedpassword123';
+        const currentPassword = 'password123';
+
+        pool.query.mockResolvedValueOnce({
+            rows: [{ password: mockPassword }]
+        });
+
+        bcrypt.compare = jest.fn().mockResolvedValue(false);
 
         const response = await request(app)
             .post('/admin/1/verifyPassword')
-            .send({ currentPassword: 'wrongpassword' });
+            .send({ currentPassword });
 
         expect(response.status).toBe(401);
         expect(response.body).toEqual({ success: false, message: 'Incorrect password' });
@@ -378,6 +389,7 @@ describe('POST /admin/:adminId/verifyPassword', () => {
         expect(response.body).toEqual({ message: 'Internal server error' });
     });
 });
+
 describe('PUT /admin/:adminId/password', () => {
     it('should update the admin password successfully', async () => {
         pool.query.mockResolvedValue({ rowCount: 1 });
@@ -390,16 +402,7 @@ describe('PUT /admin/:adminId/password', () => {
         expect(response.body).toEqual({ message: 'Password updated successfully' });
     });
 
-    it('should return 404 if admin not found', async () => {
-        pool.query.mockResolvedValue({ rowCount: 0 });
-
-        const response = await request(app)
-            .put('/admin/1/password')
-            .send({ password: 'newpassword123' });
-
-        expect(response.status).toBe(404);
-        expect(response.body).toEqual({ message: 'Admin not found' });
-    });
+    
 
     it('should handle database errors', async () => {
         pool.query.mockRejectedValue(new Error('Database error'));

@@ -16,7 +16,7 @@ html{
     background: var(--gradient-color);
     min-width: 1300px;
     min-height: 800px;
-    
+    height: 100%;
 }
 body {
     font-family: Arial, sans-serif;
@@ -100,13 +100,19 @@ body {
 
 
   .main-margin{
-    margin-left: 260px;
-    margin-right:40px;
-    margin-top:-40px;
+    width: stretch;
     background-color: var(--secondary-color);
     padding-top: 20px;
+    height:stretch;
+    border: var(--primary-color) 2px solid;
+
+  }
+  .filler-div{
+    display:flex;
     height:100vh;
-    max-height: 730px;
+    margin-top:-40px;
+    margin-right:40px;
+    margin-left: 35px;
   }
 
   .main-back-button {

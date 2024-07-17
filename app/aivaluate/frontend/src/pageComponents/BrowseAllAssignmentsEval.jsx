@@ -1,8 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import '../AssignmentProf.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -115,46 +115,48 @@ const BrowseAllAssignmentsEval = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="assignments" />
-            <div className="accented-outside rborder">
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <div className="back-btn-div">
-                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                            </div>
-                            <div className="title-text"><h1>All Assignments</h1></div>
-                            <div className="search-container">
-                                <div className="search-box">
-                                    <FaSearch className="search-icon" />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
+            <div className="filler-div">
+                <SideMenuBarEval tab="assignments" />
+                <div className="accented-outside rborder">
+                    <div className="main-margin">
+                        <div className="portal-container">
+                            <div className="top-bar">
+                                <div className="back-btn-div">
+                                    <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
                                 </div>
-                            </div>
-                            <div className="empty"> </div>
-                        </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index} onClick={() => handleAssignmentSelect(file.assignmentId)}>
-                                    <div className="file-name">{file.assignmentName}</div>
-                                    <div className="file-status">{file.isPublished ? 'Published' : 'Unpublished'}</div>
-                                    <div className="file-icon"><CircumIcon name="circle_more"/></div>
+                                <div className="title-text"><h1>All Assignments</h1></div>
+                                <div className="search-container">
+                                    <div className="search-box">
+                                        <FaSearch className="search-icon" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="Search..." 
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                        />
+                                    </div>
                                 </div>
-                            ))}
+                                <div className="empty"> </div>
+                            </div>
+                            <div className="filetab">
+                                {currentFiles.map((file, index) => (
+                                    <div className="file-item" key={index} onClick={() => handleAssignmentSelect(file.assignmentId)}>
+                                        <div className="file-name">{file.assignmentName}</div>
+                                        <div className="file-status">{file.isPublished ? 'Published' : 'Unpublished'}</div>
+                                        <div className="file-icon"><CircumIcon name="circle_more"/></div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     );

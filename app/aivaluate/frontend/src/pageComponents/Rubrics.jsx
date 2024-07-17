@@ -93,41 +93,43 @@ const Rubrics = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="rubrics" />
-            <div className="accented-outside rborder">
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <h1>Your Rubrics</h1>
-                            <div className="search-container">
-                                <div className="search-box">
-                                    <FaSearch className="search-icon" />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
+            <div className="filler-div">
+                <SideMenuBarEval tab="rubrics" />
+                <div className="accented-outside rborder">
+                    <div className="main-margin">
+                        <div className="portal-container">
+                            <div className="top-bar">
+                                <h1>Your Rubrics</h1>
+                                <div className="search-container">
+                                    <div className="search-box">
+                                        <FaSearch className="search-icon" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="Search..." 
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                        />
+                                    </div>
                                 </div>
                             </div>
+                            <div className="filetab">
+                                {currentFiles.map((file, index) => (
+                                    <div className="file-item" key={index} onClick={() => handleRubric(file.assignmentRubricId)}>
+                                        <div className="folder-icon"><CircumIcon name="file_on"/></div>
+                                        <div className="file-name">{file.rubricName}</div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index} onClick={() => handleRubric(file.assignmentRubricId)}>
-                                    <div className="folder-icon"><CircumIcon name="file_on"/></div>
-                                    <div className="file-name">{file.rubricName}</div>
-                                </div>
-                            ))}
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                        </div>
-                    </div>
-                </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     );

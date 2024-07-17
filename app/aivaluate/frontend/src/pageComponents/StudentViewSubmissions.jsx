@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -87,42 +87,44 @@ const StudentViewSubmissions = () => {
     return (
         <div>
             <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
-            <SideMenuBar tab="submissions" />
-            <div className="accented-outside rborder">
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <h1>Submissions</h1>
-                            <div className="search-container">
-                                <div className="search-box">
-                                    <FaSearch className="search-icon" />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
+            <div className="filler-div">
+                <SideMenuBar tab="submissions" />
+                <div className="accented-outside rborder">
+                    <div className="main-margin">
+                        <div className="portal-container">
+                            <div className="top-bar">
+                                <h1>Submissions</h1>
+                                <div className="search-container">
+                                    <div className="search-box">
+                                        <FaSearch className="search-icon" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="Search..." 
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                        />
+                                    </div>
                                 </div>
                             </div>
+                            <div className="filetab">
+                                {currentFiles.map((file, index) => (
+                                    <div className="file-item" key={index}>
+                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                        <div className="file-name">{file.assignmentKey} Submission</div>
+                                        {file.isGraded && <div className="file-status">Marked as graded</div>}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
-                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">{file.assignmentKey} Submission</div>
-                                    {file.isGraded && <div className="file-status">Marked as graded</div>}
-                                </div>
-                            ))}
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                        </div>
-                    </div>
-                </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     );

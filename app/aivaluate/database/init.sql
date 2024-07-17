@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS "Course" (
     "courseCode" VARCHAR(100),
     "maxStudents" INT CHECK ("maxStudents" > 0),
     "courseDescription" VARCHAR(1000),
-    "isApproved" BOOLEAN DEFAULT FALSE
+    "isArchived" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS "Teaches"(

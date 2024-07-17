@@ -736,7 +736,7 @@ This cycle my main focus was redoing all of our frontend to look more like canva
 
 ### Timesheet
 Clockify report
-![alt text](./clockify-images/colton-clockify_C14.png)
+![alt text](./clockify-images/colton-clockify_C13.png)
 
 ### Progress Update (since June 14th 2024) 
 <table>
@@ -767,4 +767,70 @@ I hade alot of problems connecting our test to the database this cycle but after
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - AI and AI prompt set up
+-----------------------------------------------------------------------------------
+
+## Cycle 14: Friday July 12th - Wednesdau July 17th
+
+### Current Tasks
+  * #1: Submit assignment frontend
+  * #2: Submit assignment backend
+  * #3: Set up AI model
+  * #4: Set up backend tests for AI model
+  * #5: Containerize AI model and set up with proxy
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C14.png)
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Submit assignment frontend
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Submit assignment backend
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up AI model
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Set up backend tests for AI model
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Containerize AI model and set up with proxy
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+I had a lot of problems with the Ollama API as I found the documentation was not very good. Once I finally got Ollama set up is was so slow that my team and I decided we didn't want to use it in our project. We have switched back to our original plan which is to use OpenAI's GPT. I set up our project with chatGPT and set up a basic testing page to prove that it works and it is very fast!!
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Fix date problem.
+- Fix a major design flaw in our frontend pages not lining up at the bottom.
 -----------------------------------------------------------------------------------

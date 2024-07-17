@@ -1,11 +1,11 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
-import axios from 'axios';
 
 const SelectedAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -90,6 +90,10 @@ const SelectedAssignment = () => {
         setGradesVisible(!gradesVisible);
     };
 
+    const handleMarkAssignment = (studentId, assignmentId) => {
+        navigate(`/eval/${studentId}/${assignmentId}/grading`);
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
@@ -112,7 +116,7 @@ const SelectedAssignment = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
+                                <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
                                     <div className="folder-icon"><CircumIcon name="folder_on"/></div>
                                     <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
                                     {file.isGraded && <div className="file-status">*Marked as graded</div>}

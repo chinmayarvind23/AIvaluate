@@ -98,7 +98,8 @@ const App = () => {
           <Route path="/admin/account" element={<PrivateRouteAdmin element={AdminAccount} />} /> {/* Done*/}
           
           {/* Session validation routes for evaluators */}
-          <Route path="/eval/grading" element={<PrivateRouteEval element={GradingAssignments} />} />
+          {/* /:studentId/:assignmentId */}
+          <Route path="/eval/:studentId/:assignmentId/grading" element={<PrivateRouteEval element={GradingAssignments} />} />
           <Route path="/eval/dashboard" element={<PrivateRouteEval element={DashboardEval} />} /> {/* Done*/}
           <Route path="/eval/submissions/:courseId" element={<PrivateRouteEval element={EvalViewSubmissions} />} /> {/* Done*/}
           <Route path="/eval/createcourse" element={<PrivateRouteEval element={CreateCourse} />} /> {/* Done*/}

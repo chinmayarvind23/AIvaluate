@@ -3,21 +3,12 @@ const router = express.Router();
 const { pool } = require('../dbConfig');
 const { formatDueDate } = require('../util');
 
-// // Create a new assignment
-// router.post('/assignments', async (req, res) => {
-//     const { courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription } = req.body;
-
-//     try {
-//         const result = await pool.query(
-//             'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription") VALUES ($1, $2, $3, $4, $5) RETURNING "assignmentId"',
-//             [courseId, dueDate, assignmentKey, maxObtainableGrade, assignmentDescription]
-//         );
-//         res.status(201).json({ assignmentId: result.rows[0].assignmentId, message: 'Assignment created successfully' });
-//     } catch (error) {
-//         console.error('Error creating assignment:', error);
-//         res.status(500).json({ message: 'Error creating assignment' });
-//     }
-// });
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/eval-api/login');
+}
 
 router.post('/assignments', async (req, res) => {
     const { courseId, dueDate, assignmentName, maxObtainableGrade, rubricName, criteria, assignmentKey } = req.body;
@@ -98,22 +89,6 @@ router.post('/rubrics', async (req, res) => {
     }
 });
 
-// // Add a solution
-// router.post('/assignments/:assignmentId/solutions', async (req, res) => {
-//     const { assignmentId } = req.params;
-//     const { solutionFile } = req.body;
-
-//     try {
-//         await pool.query(
-//             'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
-//             [solutionFile, assignmentId]
-//         );
-//         res.status(200).json({ message: 'Solution added successfully' });
-//     } catch (error) {
-//         console.error('Error adding solution:', error);
-//         res.status(500).json({ message: 'Error adding solution' });
-//     }
-// });
 
 // Get solution by assignment ID
 router.get('/assignments/:assignmentId/solutions', async (req, res) => {
@@ -586,6 +561,96 @@ router.put('/rubric/:rubricId', async (req, res) => {
         res.status(500).json({ message: 'Error updating rubric' });
     }
 });
+
+
+
+// Route to get assignment details
+router.get('/assignment/:studentId/:assignmentId', checkAuthenticated, async (req, res) => {
+    const { studentId, assignmentId } = req.params;
+
+    try {
+        const query = `
+            SELECT
+                a."assignmentName",
+                s."studentId" AS studentNumber,
+                a."dueDate",
+                a."maxObtainableGrade",
+                sf."AIFeedbackText",
+                sf."InstructorFeedbackText",
+                ag."AIassignedGrade",
+                ag."InstructorAssignedFinalGrade"
+            FROM
+                "Assignment" a
+            JOIN
+                "AssignmentSubmission" asub ON a."assignmentId" = asub."assignmentId"
+            JOIN
+                "Student" s ON asub."studentId" = s."studentId"
+            LEFT JOIN
+                "StudentFeedback" sf ON asub."assignmentId" = sf."assignmentId" AND asub."studentId" = sf."studentId"
+            LEFT JOIN
+                "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
+            WHERE
+                s."studentId" = $1 AND a."assignmentId" = $2;`;
+
+        const result = await pool.query(query, [studentId, assignmentId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Assignment not found' });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching assignment details:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+// Route to mark assignment as complete
+router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, async (req, res) => {
+    const { studentId, assignmentId } = req.params;
+    const { dueDate, InstructorAssignedFinalGrade, AIFeedbackText, InstructorFeedbackText } = req.body;
+
+    try {
+        const updateQuery = `
+            UPDATE "Assignment"
+            SET
+                "dueDate" = $1,
+                "isGraded" = true
+            WHERE
+                "assignmentId" = $2`;
+
+        await pool.query(updateQuery, [dueDate, assignmentId]);
+
+        const updateGradeQuery = `
+            UPDATE "AssignmentGrade"
+            SET
+                "InstructorAssignedFinalGrade" = $1,
+                "isGraded" = true
+            WHERE
+                "assignmentId" = $2 AND "assignmentSubmissionId" = (
+                    SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "assignmentId" = $2 AND "studentId" = $3
+                )`;
+
+        await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, assignmentId, studentId]);
+
+        const updateFeedbackQuery = `
+            UPDATE "StudentFeedback"
+            SET
+                "AIFeedbackText" = $1,
+                "InstructorFeedbackText" = $2
+            WHERE
+                "assignmentId" = $3 AND "studentId" = $4`;
+
+        await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, assignmentId, studentId]);
+
+        res.status(200).json({ message: 'Assignment marked as complete' });
+    } catch (error) {
+        console.error('Error marking assignment as complete:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+module.exports = router;
 
 
 

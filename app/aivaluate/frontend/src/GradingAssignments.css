@@ -39,7 +39,7 @@
 
 .score-div{
   display:flex;
-  /* border: red solid 2px; */
+  margin-top: -40px;
 }
 
 
@@ -118,7 +118,7 @@
 }
 
 .due-date-container input[type="text"] {
-  width: 160px;
+  width: 10px;
 }
 
 .feedback, .evaluator-comments, .student-submission {
@@ -182,7 +182,7 @@
 
 .final-score{
   display: flex;
-  width: 560px;
+  width: 620px;
   margin-right: 20px;
   margin-top: 20px;
   color: var(--third-color);
@@ -191,7 +191,7 @@
 
 .full-score{
   color: var(--third-color);
-  margin-top: 1px;
+  margin-top: -1px;
   margin-left: 10px;
   font-size: 25px;
 }

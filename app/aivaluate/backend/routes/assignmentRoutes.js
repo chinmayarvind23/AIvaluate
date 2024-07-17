@@ -5,6 +5,7 @@ const { formatDueDate } = require('../util');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const baseDir = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 
 // Create a new assignment
 router.post('/assignments', async (req, res) => {
@@ -420,6 +421,37 @@ router.get('/submission/:courseId/:assignmentId', async (req, res) => {
     } catch (error) {
         console.error('Error retrieving file paths from database:', error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+// Serve submission file
+router.get('/download-submission/:studentId/:courseId/:assignmentId/:fileName', async (req, res) => {
+    const { studentId, courseId, assignmentId, fileName } = req.params;
+    console.log(`Received params - Student ID: ${studentId}, Course ID: ${courseId}, Assignment ID: ${assignmentId}, File Name: ${fileName}`);
+    if (!assignmentId || assignmentId === 'undefined') {
+        return res.status(400).send('Assignment ID is required');
+    }
+
+    try {
+        const result = await pool.query(
+            'SELECT "submissionFile" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3',
+            [studentId, courseId, assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Submission not found');
+        }
+        const fullFilePath = path.join(baseDir, studentId, courseId, assignmentId, fileName);
+        console.log(`Full file path: ${fullFilePath}`);
+        res.download(fullFilePath, fileName, (err) => {
+            if (err) {
+                console.error('Error downloading file:', err);
+                res.status(500).send('Error downloading file');
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching submission file from database:', error);
+        res.status(500).send('Error fetching submission file');
     }
 });
 

@@ -1,4 +1,3 @@
-import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
@@ -11,7 +10,6 @@ import SideMenuBar from '../components/SideMenuBar';
 const StudentViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const navBarText = `${courseCode} - ${courseName}`;
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -26,7 +24,6 @@ const StudentViewSubmissions = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setFiles(data);
-                    setFilteredFiles(data);
                 } else {
                     console.error('Error fetching submissions:', response.statusText);
                 }
@@ -44,7 +41,7 @@ const StudentViewSubmissions = () => {
             file.studentId.toString().includes(searchTerm)
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1); 
+        setCurrentPage(1);
     }, [searchTerm, files]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -69,15 +66,17 @@ const StudentViewSubmissions = () => {
         setCurrentPage(1);
     };
 
+    const navBarText = `${courseCode} - ${courseName}`;
+
     return (
         <div>
-            <AIvaluateNavBar navBarText={navBarText} tab='submissions' />
+            <AIvaluateNavBar navBarText={navBarText} />
             <SideMenuBar tab="submissions" />
             <div className="accented-outside rborder">
                 <div className="main-margin">
                     <div className="portal-container">
                         <div className="top-bar">
-                            <h1>Submissions</h1>
+                            <h1>Student Submissions</h1>
                             <div className="search-container">
                                 <div className="search-box">
                                     <FaSearch className="search-icon" />
@@ -93,8 +92,15 @@ const StudentViewSubmissions = () => {
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index}>
-                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">{file.submissionFile} Submission</div>
+                                    {console.log('File:', file)}
+                                    {console.log('Assignment ID:', file.assignmentId)}
+                                    <a 
+                                        className="file-name" 
+                                        href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
+                                        download
+                                    >
+                                        {file.submissionFile.split('/').pop()} Submission
+                                    </a>
                                     {file.isGraded && <div className="file-status">Marked as graded</div>}
                                 </div>
                             ))}

@@ -172,6 +172,7 @@ router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res
                 "Student"."firstName",
                 "Student"."lastName",
                 "Assignment"."assignmentKey",
+                "Assignment"."assignmentId",
                 "AssignmentSubmission"."isGraded",
                 "AssignmentSubmission"."submissionFile"
             FROM "AssignmentSubmission"

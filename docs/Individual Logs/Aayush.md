@@ -1741,9 +1741,9 @@ Clockify report
 
 
 ### Current Tasks 
-  * #1: Testing
-  * #2: Fixed errors in testing
-  * #3: Student backend testing
+  * #1: Student Backend Testing
+  * #2: Evaluator Backend Testing
+  * #3: Admin  backend testing
 
 ### Progress Update (since 7/12/2024)
 <table>

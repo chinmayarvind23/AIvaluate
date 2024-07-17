@@ -1,4 +1,4 @@
-<img width="937" alt="Screenshot 2024-07-16 at 10 04 18 PM" src="https://github.com/user-attachments/assets/45b68ad5-6cac-4f07-a548-56969e325546"><img width="937" alt="Screenshot 2024-07-16 at 10 04 18 PM" src="https://github.com/user-attachments/assets/13ceeb41-65a4-480d-9a97-7f579b5b0982"># Aayush Chaudhary - Project Contribution Time Log
+# Aayush Chaudhary - Project Contribution Time Log
 
 ## Wednesday May 29th
 ### 2 hours

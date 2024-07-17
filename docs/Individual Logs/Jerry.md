@@ -1,5 +1,39 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 12 - July 16) - 16.5 hours
+
+## Tuesday July 16th
+### 4.5 hours
+- Course Archive Backend for eval and student view (4.5 hours)
+
+## Monday July 15th
+### 11 hours
+- Code Review and help teammates solve issues (3.5 hours)
+- Exploring AI Implementation - Codellama (3 hours)
+- Exploring AI Implementation - OpenAI (4.5 hours)
+
+## Friday July 12th
+### 1 hour
+- Team meeting and deciding on task priorities (1 hour)
+
+# Current Tasks
+- #1 Course Archive Feature evaluator view and student view #320
+- #2 AI Interaction, passing in prompts #287
+- #3 Backend testings 
+
+# Progress Update (since July 10)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Mostly completed  |
+| Task #3 | Ongoing  |
+
+# Cycle Goal Review
+During this cycle, we worked as a team and focused on exploring how to implement the AI features. AI interaction and prompt setting are working separately as of now. We need to pass in the prompts to the AI. I also focused on implementing the course archive feature, which allows the professor to hide a course from students. 
+
+# Next Cycle 
+During the next cycle, I'll continue to work on AI grading and pass in prompts and files to OpenAI to generate usable feedback. I'm also going to focus on setting up Friday's test session.
+
 # Timesheet (June 10 - July 12 Morning) - 13.5 hours
 
 ## Friday July 12th Morning

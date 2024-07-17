@@ -667,7 +667,7 @@ Clockify report: Total hours - 33 hours
 
 ## Cycle Goal Review
 
-Completed 100% of my tasks, testing was added, but it failed, but Aayush will be taking care of the testing within the next cycle, so that should be handled, but the manual testing has been done. I will be putting in similar amounts of time to finish up the file submission for the AI in the following couple of cycles to ensure efficient and timely completion of the features for it.
+Completed 100% of my tasks, testing was added, but it failed. But, another team member who is working on testing will be taking care of the testing within the next cycle, so that should be handled, but the manual testing has been done. I will be putting in similar amounts of time to finish up the file submission for the AI in the following couple of cycles to ensure efficient and timely completion of the features for it.
 
 ## Next Cycle Goals
 

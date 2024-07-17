@@ -38,7 +38,6 @@ app.use(session({
     }
 }));
 
-
 const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true
@@ -61,17 +60,11 @@ function checkAuthenticated(req, res, next) {
     next(); // Continue to the next middleware if already on the login page
 }
 
-// Instructor dashboard route
-// app.get('/eval-api/dashboard', checkAuthenticated, (req, res) => {
-//     res.send('Evaluator Dashboard');
-//     // res.json({ user: req.user });
-// });
-
-app.get("/eval-api/dashboard", checkNotAuthenticated, (req, res) => {
+app.get("/eval-api/dashboard", checkAuthenticated, (req, res) => {
     res.json({ user: req.user });
 });
 
-// app.use('/eval-api', evalRoutes);
+app.use('/eval-api', evalRoutes);
 app.use('/eval-api', courseRoutes);
 app.use('/eval-api', assignmentRoutes);
 app.use('/eval-api', instructorRoutes);

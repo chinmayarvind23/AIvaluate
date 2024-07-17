@@ -2,6 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
+const bcrypt = require('bcrypt');
 const logger = require('../adminlogger'); // Ensure this path is correct
 
 // Mock the pg module correctly
@@ -16,12 +17,15 @@ const pool = new Pool();
 const app = express();
 app.use(bodyParser.json());
 
+// Middleware to mock isAuthenticated and user
 const checkAuthenticated = (req, res, next) => {
-    req.isAuthenticated = () => true; // Assume user is always authenticated for testing
+    req.isAuthenticated = () => true;
+    req.user = { adminId: 1 };
     next();
 };
 
 app.use(checkAuthenticated);
+
 
 app.get('/evaluators', async (req, res) => {
     try {
@@ -42,13 +46,13 @@ app.get('/evaluators', async (req, res) => {
 });
 
 
-
 app.get('/admin/me', (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(401).json({ message: 'Not authenticated' });
     }
     res.status(200).json({ adminId: req.user.adminId });
 });
+
 
 app.get('/admin/:adminId/firstName', async (req, res) => {
     const adminId = parseInt(req.params.adminId);
@@ -112,7 +116,6 @@ app.get('/admin/:adminId/password', async (req, res) => {
     }
 });
 
-// Define the route to verify admin password by admin ID
 app.post('/admin/:adminId/verifyPassword', async (req, res) => {
     const adminId = parseInt(req.params.adminId);
     const { currentPassword } = req.body;
@@ -130,7 +133,7 @@ app.post('/admin/:adminId/verifyPassword', async (req, res) => {
             res.status(401).json({ success: false, message: 'Incorrect password' });
         }
     } catch (error) {
-        logger.error('Error verifying password: ' + error.message);
+        console.error('Error verifying password:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -144,7 +147,7 @@ app.put('/admin/:adminId/password', async (req, res) => {
         await pool.query('UPDATE "SystemAdministrator" SET "password" = $1 WHERE "adminId" = $2', [hashedPassword, adminId]);
         res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {
-        logger.error('Error updating admin password: ' + error.message);
+        console.error('Error updating admin password:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -180,16 +183,15 @@ describe('Evaluator Management Routes', () => {
     });
 
 
-    describe('Admin Identity Routes', () => {
-        it('should fetch the current admin ID', async () => {
+    describe('GET /admin/me', () => {
+        it('should return the current admin ID if authenticated', async () => {
             const response = await request(app).get('/admin/me');
     
             expect(response.status).toBe(200);
-            expect(response.body).toEqual({ adminId: '123' });
+            expect(response.body).toEqual({ adminId: 1 });
         });
     
-        it('should return a 401 error if not authenticated', async () => {
-            // Modify isAuthenticated to return false for this test case
+        it('should return 401 if not authenticated', async () => {
             app.use((req, res, next) => {
                 req.isAuthenticated = () => false;
                 next();
@@ -201,10 +203,10 @@ describe('Evaluator Management Routes', () => {
             expect(response.body).toEqual({ message: 'Not authenticated' });
         });
     });
-
+    
 
     // Tests for Admin Routes
-describe('Admin Routes', () => {
+describe('Admin first name  Routes', () => {
     it('should fetch the first name of the admin by admin ID', async () => {
         const mockAdmin = { firstName: 'John' };
         pool.query.mockResolvedValue({ rows: [mockAdmin], rowCount: 1 });
@@ -327,70 +329,89 @@ describe('Admin Password Routes', () => {
     });
 });
 
-// Tests for Admin Password Verification Route
-describe('Admin Password Verification Route', () => {
-    it('should verify the password of the admin by admin ID correctly', async () => {
-        bcrypt.compare.mockResolvedValue(true);
-        pool.query.mockResolvedValue({ rows: [{ password: 'hashedPassword123' }], rowCount: 1 });
+describe('POST /admin/:adminId/verifyPassword', () => {
+    it('should verify the admin password successfully', async () => {
+        const hashedPassword = await bcrypt.hash('password123', 10);
+        pool.query.mockResolvedValueOnce({ rows: [{ password: hashedPassword }] });
+        bcrypt.compare = jest.fn().mockResolvedValueOnce(true);
 
-        const response = await request(app).post('/admin/123/verifyPassword').send({ currentPassword: 'testPassword' });
+        const response = await request(app)
+            .post('/admin/1/verifyPassword')
+            .send({ currentPassword: 'password123' });
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual({ success: true });
     });
 
-    it('should return false if the password is incorrect', async () => {
-        bcrypt.compare.mockResolvedValue(false);
-        pool.query.mockResolvedValue({ rows: [{ password: 'hashedPassword123' }], rowCount: 1 });
+    it('should return 404 if admin not found', async () => {
+        pool.query.mockResolvedValueOnce({ rows: [] });
 
-        const response = await request(app).post('/admin/123/verifyPassword').send({ currentPassword: 'wrongPassword' });
-
-        expect(response.status).toBe(401);
-        expect(response.body).toEqual({ success: false, message: 'Incorrect password' });
-    });
-
-    it('should return a 404 error if the admin is not found', async () => {
-        pool.query.mockResolvedValue({ rows: [], rowCount: 0 });
-
-        const response = await request(app).post('/admin/999/verifyPassword').send({ currentPassword: 'anyPassword' });
+        const response = await request(app)
+            .post('/admin/1/verifyPassword')
+            .send({ currentPassword: 'password123' });
 
         expect(response.status).toBe(404);
         expect(response.body).toEqual({ message: 'admin not found' });
     });
 
-    it('should handle database errors', async () => {
-        pool.query.mockRejectedValue(new Error('Database error'));
+    it('should return 401 if password is incorrect', async () => {
+        const hashedPassword = await bcrypt.hash('password123', 10);
+        pool.query.mockResolvedValueOnce({ rows: [{ password: hashedPassword }] });
+        bcrypt.compare = jest.fn().mockResolvedValueOnce(false);
 
-        const response = await request(app).post('/admin/123/verifyPassword').send({ currentPassword: 'anyPassword' });
+        const response = await request(app)
+            .post('/admin/1/verifyPassword')
+            .send({ currentPassword: 'wrongpassword' });
+
+        expect(response.status).toBe(401);
+        expect(response.body).toEqual({ success: false, message: 'Incorrect password' });
+    });
+
+    it('should handle database errors', async () => {
+        pool.query.mockRejectedValueOnce(new Error('Database error'));
+
+        const response = await request(app)
+            .post('/admin/1/verifyPassword')
+            .send({ currentPassword: 'password123' });
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual({ message: 'Internal server error' });
     });
 });
-
-// Tests for Admin Password Update Route
-describe('Admin Password Update Route', () => {
+describe('PUT /admin/:adminId/password', () => {
     it('should update the admin password successfully', async () => {
-        bcrypt.hash.mockResolvedValue('hashedPassword123');
         pool.query.mockResolvedValue({ rowCount: 1 });
 
-        const response = await request(app).put('/admin/123/password').send({ password: 'newPassword' });
+        const response = await request(app)
+            .put('/admin/1/password')
+            .send({ password: 'newpassword123' });
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual({ message: 'Password updated successfully' });
     });
 
-    it('should handle errors during password update', async () => {
-        bcrypt.hash.mockResolvedValue('hashedPassword123');
+    it('should return 404 if admin not found', async () => {
+        pool.query.mockResolvedValue({ rowCount: 0 });
+
+        const response = await request(app)
+            .put('/admin/1/password')
+            .send({ password: 'newpassword123' });
+
+        expect(response.status).toBe(404);
+        expect(response.body).toEqual({ message: 'Admin not found' });
+    });
+
+    it('should handle database errors', async () => {
         pool.query.mockRejectedValue(new Error('Database error'));
 
-        const response = await request(app).put('/admin/123/password').send({ password: 'newPassword' });
+        const response = await request(app)
+            .put('/admin/1/password')
+            .send({ password: 'newpassword123' });
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual({ message: 'Internal server error' });
     });
 });
-
 });
 
 module.exports = app; // Exporting for testing purposes

@@ -1,51 +1,56 @@
 const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
+const { Pool } = require('pg');
+const logger = require('../logger'); // Ensure this path is correct
 
-const pool = {
-  query: jest.fn()
-};
+// Mock the pg module correctly
+jest.mock('pg', () => ({
+    Pool: jest.fn(() => ({
+        query: jest.fn()
+    }))
+}));
 
-// Mocking the authentication 
-// checks if user is authenticated
-const checkAuthenticated = (req, res, next) => {
-  req.user = { studentId: 'student123' }; // Mocked user
-  next();
-};
+// Instantiate the mocked pool
+const pool = new Pool();
 
 const app = express();
 app.use(bodyParser.json());
 
-// Define the enrolled courses route
-app.get('/enrolled-courses', checkAuthenticated, (req, res) => {
-  const studentId = req.user.studentId;
+// Mocking the authentication
+// Checks if user is authenticated
+const checkAuthenticated = (req, res, next) => {
+  req.user = { studentId: '1' }; // Mocked user
+  next();
+};
 
-  pool.query(
-    `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName"
-     FROM "EnrolledIn" 
-     JOIN "Course" ON "EnrolledIn"."courseId" = "Course"."courseId" 
-     WHERE "EnrolledIn"."studentId" = $1`,
-    [studentId],
-    (err, results) => {
-      if (err) {
-        console.error('Error executing query:', err);
-        return res.status(500).json({ error: 'Database error' });
-      }
-      res.json(results.rows);
-    }
-  );
+app.get('/enrolled-courses', checkAuthenticated, async (req, res) => {
+  const studentId = req.user.studentId;
+  try {
+    const results = await pool.query(
+      `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName"
+       FROM "EnrolledIn" 
+       JOIN "Course" ON "EnrolledIn"."courseId" = "Course"."courseId" 
+       WHERE "EnrolledIn"."studentId" = $1`, [studentId]
+    );
+    res.json(results.rows);
+  } catch (error) {
+    logger.error('Error fetching enrolled courses: ' + error.message);
+    res.status(500).json({ error: 'Database error' }); // Updated to send an object with an "error" key
+  }
 });
 
+module.exports = app; // Exporting for testing
+
+// Tests for GET /enrolled-courses
 describe('GET /enrolled-courses', () => {
   it('should return enrolled courses for the student', async () => {
     const mockCourses = [
-      { courseId: 'course1', courseCode: 'CS101', courseName: 'Intro to Computer Science' },
-      { courseId: 'course2', courseCode: 'CS102', courseName: 'Data Structures' }
+      { courseId: '1', courseCode: 'CS101', courseName: 'An introductory course on programming' },
+      { courseId: '2', courseCode: 'COSC 455', courseName: 'A course on advanced CSS techniques' }
     ];
 
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(null, { rows: mockCourses }); // Simulate successful query
-    });
+    pool.query.mockResolvedValue({ rows: mockCourses });
 
     const response = await request(app)
       .get('/enrolled-courses')
@@ -56,9 +61,7 @@ describe('GET /enrolled-courses', () => {
   });
 
   it('should return a database error', async () => {
-    pool.query.mockImplementation((text, params, callback) => {
-      callback(new Error('Database error'), null); // Simulate database error
-    });
+    pool.query.mockRejectedValue(new Error('Database error'));
 
     const response = await request(app)
       .get('/enrolled-courses')

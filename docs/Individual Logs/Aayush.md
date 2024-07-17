@@ -1737,12 +1737,7 @@ I worked extensively on testing, fixed one of the errors we had been facing for 
 ### Timesheet
 Clockify report
 
-<img width="164" alt="Screenshot 2024-07-16 at 10 04 02 PM" src="https://github.com/user-attachments/assets/53ea8c0b-bc94-4e8f-88c9-2639e3305b3d">
-
-<img width="937" alt="Screenshot 2024-07-16 at 10 04 18 PM" src="https://github.com/user-attachments/assets/ec47081b-f3cf-4816-9d84-86ae866da47b">
-
-
-
+<img width="945" alt="Screenshot 2024-07-16 at 10 11 25 PM" src="https://github.com/user-attachments/assets/29b6b0f9-ab07-4063-b4c2-2d98f89ce8e9">
 
 
 ### Current Tasks 
@@ -1777,7 +1772,7 @@ I put in a lot of effort to complete the backend testing for students, evaluator
 ### Next Cycle Goals 
   * Goal 1: Work on the failing test and fix them 
   * Goal 2: Training AI
-  * Goal 3: Finalizing the code for Application demonstration on Friday
+  * Goal 3: Finalizing everything for  peer testing
  
 
 

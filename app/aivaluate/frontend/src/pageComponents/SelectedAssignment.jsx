@@ -1,11 +1,11 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
-import axios from 'axios';
 
 const SelectedAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -103,6 +103,9 @@ const SelectedAssignment = () => {
                             </div>
                             <div className="title-text"><h1>Assignment - Submissions</h1></div>
                             <div className="empty"> </div>
+                            <button className="grades-button">
+                                Grade With AI
+                            </button>
                             <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
                                 Hide Grades
                             </button>

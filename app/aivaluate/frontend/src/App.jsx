@@ -51,6 +51,8 @@ import SubmitAssignment from './pageComponents/SubmitAssignment';
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
 import TestForComponents from './pageComponents/testForComponents';
 
+import AITest from './pageComponents/AITest';
+
 const App = () => {
   return (
     <Router>
@@ -72,7 +74,7 @@ const App = () => {
           <Route path="/admin/signup" element={<SignupAdmin />} /> {/* Done*/}
           <Route path="/test" element={<TestForComponents />} /> {/* Done*/}
 
-
+          <Route path="/ai-test" element={<AITest />} />
           {/* <Route path="/eval/rubric/rubricId" element={<EditRubric />} /> */}
 
           {/* <Route path="/stu/submit/assignementId" element={<SubmitAssignment />} /> */}

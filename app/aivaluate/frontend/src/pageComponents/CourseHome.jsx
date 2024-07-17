@@ -18,12 +18,14 @@ const CourseHome = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isTaModalOpen, setIsTaModalOpen] = useState(false);
     const [isArchived, setIsArchived] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`http://localhost:5173/eval-api/courses/${courseId}`)
             .then(response => {
                 setCourse(response.data);
                 setIsArchived(response.data.isArchived); // Set the archived status
+                setLoading(false);
             })
             .catch(error => {
                 console.error('Failed to fetch course details', error);
@@ -87,7 +89,7 @@ const CourseHome = () => {
             axios.put(`http://localhost:5173/eval-api/courses/${courseId}/archive`)
                 .then(response => {
                     console.log(response.data);
-                    window.confirm('Course archived successfully');
+                    alert('Course archived successfully');
                     setIsArchived(true); // Update the archived status
                 })
                 .catch(error => {
@@ -102,7 +104,7 @@ const CourseHome = () => {
             axios.put(`http://localhost:5173/eval-api/courses/${courseId}/unarchive`)
                 .then(response => {
                     console.log(response.data);
-                    window.confirm('Course unarchived successfully');
+                    alert('Course unarchived successfully');
                     setIsArchived(false); // Update the archived status
                 })
                 .catch(error => {
@@ -120,7 +122,7 @@ const CourseHome = () => {
         axios.delete(`http://localhost:5173/eval-api/courses/${courseId}`)
             .then(response => {
                 console.log(response.data);
-                window.confirm('Course deleted successfully');
+                alert('Course deleted successfully');
                 navigate('/eval/dashboard');
             })
             .catch(error => {
@@ -129,6 +131,10 @@ const CourseHome = () => {
     }
 
     const navBarText = `${courseCode} - ${courseName}`;
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>

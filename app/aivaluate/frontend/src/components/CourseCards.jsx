@@ -66,6 +66,7 @@ const CourseCards = ({ navBarText, page }) => {
                             courseCode={course.courseCode} 
                             courseName={course.courseName} 
                             courseId={course.courseId}
+                            isArchived={course.isArchived}
                             user="joinCourse"
                         />
                     ))}
@@ -100,6 +101,7 @@ const CourseCards = ({ navBarText, page }) => {
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
                         courseId={course.courseId}
+                        isArchived={course.isArchived}
                         user = "stu"
                     />
                 ))}
@@ -133,6 +135,7 @@ const CourseCards = ({ navBarText, page }) => {
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
                         courseId={course.courseId}
+                        isArchived={course.isArchived}
                         user="prof" 
                     />
                 ))}

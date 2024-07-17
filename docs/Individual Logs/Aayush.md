@@ -1732,6 +1732,48 @@ I worked extensively on testing, fixed one of the errors we had been facing for 
   * Goal 4: Backend coding 
 
 
+# Timesheet (July 12 - July 17) - 33 hours
+
+### Timesheet
+Clockify report
+
+<img width="945" alt="Screenshot 2024-07-16 at 10 11 25 PM" src="https://github.com/user-attachments/assets/29b6b0f9-ab07-4063-b4c2-2d98f89ce8e9">
+
+
+### Current Tasks 
+  * #1: Student Backend Testing
+  * #2: Evaluator Backend Testing
+  * #3: Admin  backend testing
+
+### Progress Update (since 7/12/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Student Backend Testing</td>
+        <td> Complete </td>
+    </tr>
+    <tr>
+        <td> Evaluator Backend Testing</td>
+        <td>Complete </td>
+    </tr>
+    <tr>
+        <td> Admin  backend testing</td>
+        <td> Complete </td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+
+I put in a lot of effort to complete the backend testing for students, evaluators, and admins, which was crucial for ensuring our code's reliability. The backend testing is now 90% complete, with only a few minor fixes remaining. The majority of the work is done.
+
+### Next Cycle Goals 
+  * Goal 1: Work on the failing test and fix them 
+  * Goal 2: Training AI
+  * Goal 3: Finalizing everything for  peer testing
+ 
 
 
 

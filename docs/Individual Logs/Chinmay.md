@@ -621,7 +621,7 @@ Clockify report: Total hours - 16 hours
 
 - **#1:** File submissions for Evaluators and Students + testing (12 hours) (XL Task)
 - **#2:** Evaluator backend testing DB error fix (3 hours) (XL Task)
-- **#3:** SQL Injection attack protection (1 hours) (XL Task)
+- **#3:** SQL Injection attack protection (1 hour) (XL Task)
 
 ## Progress Update (since 7/10/2024)
 
@@ -643,3 +643,35 @@ Completed 90% of my tasks, testing done and file submissions finished, and will 
 - Goal 4: Testing and coverage report
 - Goal 5: Deployment and hosting of DB, Docker, and website
 - Goal 6: Finishing up helping Omar with his issues and Aayush
+
+## July 12th - July 17th
+
+## Timesheet
+
+Clockify report: Total hours - 33 hours
+<img width="1918" alt="Screenshot 2024-07-17 at 4 17 07 AM" src="https://github.com/user-attachments/assets/ec77750d-932f-465e-b94c-d75204e20c7f">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** File submissions for Evaluators and Students fixes in response to PR comments & team meetings (14 hours) (XL Task)
+- **#2:** File storage, downloads for students, multiple file uploads (16 hours) (XL Task)
+- **#3:** SQL Injection attack protection (3 hours) (XL Task)
+
+## Progress Update (since 7/12/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Completed |
+| Task 3       | Completed |
+
+## Cycle Goal Review
+
+Completed 100% of my tasks, testing was added, but it failed. But, another team member who is working on testing will be taking care of the testing within the next cycle, so that should be handled, but the manual testing has been done. I will be putting in similar amounts of time to finish up the file submission for the AI in the following couple of cycles to ensure efficient and timely completion of the features for it.
+
+## Next Cycle Goals
+
+- Goal 1: AI file submission and DB updates
+- Goal 2: File downloads and integration with new assignment grading UI
+- Goal 3: Peer Testing Document preparation
+- Goal 4: AI API details editing to match new model requirements

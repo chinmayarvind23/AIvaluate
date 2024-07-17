@@ -85,7 +85,8 @@ const EvalManagerInfo = () => {
     };
 
     const filteredCourses = courses.filter(course => 
-        course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
+        course.courseName.toLowerCase().includes(searchTerm.toLowerCase())||
+        course.courseCode.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -99,7 +100,6 @@ const EvalManagerInfo = () => {
                     </div>
                     <h1 className="eval-text">Evaluator Info</h1>
                     <div className="empty"> </div>
-                    <button className="create-eval" onClick={handleRegister}>Register Evaluator</button>
                 </div>
                 <div className="user-info">
                     <div className="user-details">

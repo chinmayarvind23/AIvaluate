@@ -1,4 +1,4 @@
-# Aayush Chaudhary - Project Contribution Time Log
+<img width="937" alt="Screenshot 2024-07-16 at 10 04 18 PM" src="https://github.com/user-attachments/assets/45b68ad5-6cac-4f07-a548-56969e325546"><img width="937" alt="Screenshot 2024-07-16 at 10 04 18 PM" src="https://github.com/user-attachments/assets/13ceeb41-65a4-480d-9a97-7f579b5b0982"># Aayush Chaudhary - Project Contribution Time Log
 
 ## Wednesday May 29th
 ### 2 hours
@@ -1732,6 +1732,53 @@ I worked extensively on testing, fixed one of the errors we had been facing for 
   * Goal 4: Backend coding 
 
 
+# Timesheet (July 12 - July 17) - 33 hours
+
+### Timesheet
+Clockify report
+
+<img width="164" alt="Screenshot 2024-07-16 at 10 04 02 PM" src="https://github.com/user-attachments/assets/53ea8c0b-bc94-4e8f-88c9-2639e3305b3d">
+
+<img width="937" alt="Screenshot 2024-07-16 at 10 04 18 PM" src="https://github.com/user-attachments/assets/ec47081b-f3cf-4816-9d84-86ae866da47b">
+
+
+
+
+
+### Current Tasks 
+  * #1: Testing
+  * #2: Fixed errors in testing
+  * #3: Student backend testing
+
+### Progress Update (since 7/12/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Student Backend Testing</td>
+        <td> Complete </td>
+    </tr>
+    <tr>
+        <td> Evaluator Backend Testing</td>
+        <td>Complete </td>
+    </tr>
+    <tr>
+        <td> Admin  backend testing</td>
+        <td> Complete </td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+
+I put in a lot of effort to complete the backend testing for students, evaluators, and admins, which was crucial for ensuring our code's reliability. The backend testing is now 90% complete, with only a few minor fixes remaining. The majority of the work is done.
+
+### Next Cycle Goals 
+  * Goal 1: Work on the failing test and fix them 
+  * Goal 2: Training AI
+  * Goal 3: Finalizing the code for Application demonstration on Friday
+ 
 
 
 

@@ -342,11 +342,47 @@ Progress Update:
 | ----------- | --- |
 | Task #1 /Testing  |not-Completed  |
 | Task #2 / Backend for signing up an eval | not-Completed |
-| Task #3 / Backend for managing an eval | not-Completed |
+| Task #3 / Backend for managing an eval | Completed |
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-I have been working really hard on these 2 issues but keep on facing a lot of issues since the project has gone really far and a lot of new stuff has been added.
+I have been working really hard on these 2 issues but keep on facing a lot of issues since the project has gone really far and a lot of new stuff has been added. So far, I managed to get one of the issues done!
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - Moving on I will keep on fixing issues that I have and assign myself new issues to make sure the project is going well on track!
+
+
+
+
+
+
+## Cycle 14 : Friday July 12 - Wednesday July 17
+Timesheet
+
+<img width="959" alt="cycle-14" src="https://github.com/user-attachments/assets/db630c62-2aca-41bf-954e-a698f6d0d2df">
+
+
+
+
+
+### Current Tasks
+
+- Backend for signing up an eval
+- Backend for managing an eval
+- Eval-Manager-Info-Backend (FRONTEND) FIXES
+- Backend for assignment page student view
+  
+Progress Update: 
+### Progress Update (since July 5th)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Backend for signing up an eval | Completed |
+| Task #2 / Backend for managing an eval | Completed |
+| Task #1 / Eval-Manager-Info-Backend (FRONTEND) FIXES | Not-Completed |
+| Task #2 / Backend for assignment page student view | Not-Completed |
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I focused on the backend and made sure that both of the issues I had worked perfectly. It went well after I had some assistance from my partners I got it ready to be merged
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Next cycle I will be working on the assignment backend for the student view, and I will also do a little frontend polish to my old issues.
+
 

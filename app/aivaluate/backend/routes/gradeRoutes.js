@@ -18,6 +18,23 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
     }
 
     try {
+        // Query to get student name and grade sums
+        const studentInfoQuery = `
+            SELECT s."firstName", 
+                   COALESCE(SUM(ag."InstructorAssignedFinalGrade"), 0) AS "totalGrade",
+                   COALESCE(SUM(a."maxObtainableGrade"), 0) AS "totalMaxGrade"
+            FROM "Student" s
+            LEFT JOIN "AssignmentSubmission" asub ON s."studentId" = asub."studentId"
+            LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
+            LEFT JOIN "Assignment" a ON asub."assignmentId" = a."assignmentId"
+            WHERE s."studentId" = $1 AND asub."courseId" = $2 AND ag."isGraded" = true
+            GROUP BY s."firstName"
+        `;
+        const studentInfoResult = await pool.query(studentInfoQuery, [studentId, courseId]);
+        const studentInfo = studentInfoResult.rows[0];
+
+        // Query to get assignment details
+
         const query = `
             SELECT 
                 a."assignmentName" AS name,

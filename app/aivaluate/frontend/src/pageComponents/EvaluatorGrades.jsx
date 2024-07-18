@@ -91,7 +91,8 @@ const EvaluatorGrades = () => {
                                             <div className="file-icon"></div>
                                             {grade.name}
                                         </td>
-                                        <td>{new Date(grade.due).toLocaleDateString()}</td>
+                                        {/* <td>{new Date(grade.due).toLocaleDateString()}</td> */}
+                                        <td>{grade.due}</td>
                                         <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>
                                     </tr>
                                 ))}

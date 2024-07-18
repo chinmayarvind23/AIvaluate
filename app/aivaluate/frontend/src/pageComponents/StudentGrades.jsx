@@ -68,7 +68,8 @@ const StudentGrades = () => {
                 {grades.map((grade, index) => (
                   <tr key={index}>
                     <td>{grade.name}</td>
-                    <td>{new Date(grade.due).toLocaleDateString()}</td>
+                    {/* <td>{new Date(grade.due).toLocaleDateString()}</td> */}
+                    <td>{grade.due}</td>
                     <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                     <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                     <td>{grade.score.toFixed(1)}/{grade.total}</td>

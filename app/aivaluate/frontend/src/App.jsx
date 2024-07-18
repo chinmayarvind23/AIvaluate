@@ -74,7 +74,6 @@ const App = () => {
           <Route path="/admin/signup" element={<SignupAdmin />} /> {/* Done*/}
           <Route path="/test" element={<TestForComponents />} /> {/* Done*/}
 
-          <Route path="/ai-test" element={<AITest />} />
           {/* <Route path="/eval/rubric/rubricId" element={<EditRubric />} /> */}
 
           {/* <Route path="/stu/submit/assignementId" element={<SubmitAssignment />} /> */}
@@ -118,7 +117,7 @@ const App = () => {
           {/* <Route path="/eval/individualrubric" element={<PrivateRouteEval element={ProfIndividualRubric} />} />  */} {/* This is the same page as EditRubric*/}
           <Route path="/eval/published/:assignmentId" element={<PrivateRouteEval element={PublishAssignment} />} /> {/* Done*/}
           <Route path="/eval/ai/settings" element={<PrivateRouteEval element={AISettings} />} /> {/* Done*/}
-
+          <Route path="/eval/ai-test" element={<PrivateRouteEval element={AITest} />} />
 
         </Routes>
       </div>

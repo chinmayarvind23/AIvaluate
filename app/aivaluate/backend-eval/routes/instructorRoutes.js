@@ -177,7 +177,7 @@ router.get('/instructor/:instructorId/password', async (req, res) => {
   }
 });
 
-// Route to verify instructor password by instructorId
+// Route to verify instructor password by instructorId//
 router.post('/instructor/:instructorId/verifyPassword', async (req, res) => {
   const instructorId = parseInt(req.params.instructorId);
   const { currentPassword } = req.body;
@@ -200,7 +200,7 @@ router.post('/instructor/:instructorId/verifyPassword', async (req, res) => {
   }
 });
 
-// Route to set instructor password by instructorId
+// Route to set instructor password by instructorId//
 router.put('/instructor/:instructorId/password', async (req, res) => {
   const instructorId = parseInt(req.params.instructorId);
   const { password } = req.body;

@@ -117,6 +117,18 @@ services:
     networks:
       - aivaluate-net
 
+  backend-ai:
+    build:
+      context: ./aivaluate/backend-ai
+      dockerfile: Dockerfile
+    container_name: backend-ai
+    ports:
+      - "9000:9000"
+    networks:
+      - aivaluate-net
+    env_file:
+      - ./aivaluate/backend-ai/.env
+      
 networks:
   aivaluate-net:
     driver: bridge

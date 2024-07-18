@@ -62,6 +62,11 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/eval-api/login');
 }
 
+app.get("/eval-api/dashboard", checkAuthenticated, (req, res) => {
+    res.json({ user: req.user });
+});
+
+app.use('/eval-api', evalRoutes);
 app.use('/eval-api', courseRoutes);
 app.use('/eval-api', assignmentRoutes);
 app.use('/eval-api', instructorRoutes);

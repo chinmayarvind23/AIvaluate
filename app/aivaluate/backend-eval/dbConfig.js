@@ -19,6 +19,8 @@ const { Pool } = require('pg');
 const isProduction = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 
+
+
 let connectionString;
 
 if (isProduction) {

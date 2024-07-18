@@ -38,6 +38,28 @@ router.get('/courses', async (req, res) => {
     }
 });
 
+// Get all archived courses
+router.get('/courses/archived', async (req, res) => {
+    try {
+        const courses = await pool.query('SELECT * FROM "Course" WHERE "isArchived" = TRUE');
+        res.status(200).send(courses.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send({ message: 'Error fetching courses' });
+    }
+});
+
+// Get all active courses
+router.get('/courses/active', async (req, res) => {
+    try {
+        const courses = await pool.query('SELECT * FROM "Course" WHERE "isArchived" = FALSE');
+        res.status(200).send(courses.rows);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).send({ message: 'Error fetching courses' });
+    }
+});
+
 router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
     const instructorId = req.user.instructorId;
     console.log('instructor ID:', instructorId);
@@ -205,6 +227,60 @@ router.get('/instructors/:instructorId/courses', async (req, res) => {
     } catch (error) {
         console.error('Error fetching courses:', error);
         res.status(500).json({ message: 'Error fetching courses' });
+    }
+});
+
+// Archive a course
+router.put('/courses/:courseId/archive', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const result = await pool.query('UPDATE "Course" SET "isArchived" = TRUE WHERE "courseId" = $1', [courseId]);
+
+        if (result.rowCount > 0) {
+            res.status(200).json({ message: 'Course archived successfully' });
+        } else {
+            res.status(404).json({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error archiving course:', error);
+        res.status(500).json({ message: 'Error archiving course' });
+    }
+});
+
+// Unarchive a course
+router.put('/courses/:courseId/unarchive', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const result = await pool.query('UPDATE "Course" SET "isArchived" = FALSE WHERE "courseId" = $1', [courseId]);
+
+        if (result.rowCount > 0) {
+            res.status(200).json({ message: 'Course unarchived successfully' });
+        } else {
+            res.status(404).json({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error unarchiving course:', error);
+        res.status(500).json({ message: 'Error unarchiving course' });
+    }
+});
+
+// Determine if a course is archived
+router.get('/courses/:courseId/is-archived', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+
+    try {
+        const result = await pool.query('SELECT "isArchived" FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        if (result.rowCount > 0) {
+            res.status(200).json({ isArchived: result.rows[0].isArchived });
+        } else {
+            res.status(404).json({ message: 'Course not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching course:', error);
+        res.status(500).json({ message: 'Error fetching course' });
     }
 });
 

@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
 const { formatDueDate } = require('../util');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const baseDir = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 
 // Create a new assignment
 router.post('/assignments', async (req, res) => {
@@ -173,29 +177,12 @@ router.delete('/rubrics/:rubricId', async (req, res) => {
     }
 });
 
-// Add a solution
-router.post('/assignments/:assignmentId/solutions', async (req, res) => {
-    const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
-
-    try {
-        await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2',
-            [solutionFile, assignmentId]
-        );
-        res.status(200).send({ message: 'Solution added successfully' });
-    } catch (error) {
-        console.error('Error adding solution:', error);
-        res.status(500).send({ message: 'Error adding solution' });
-    }
-});
-
 // Get solution by assignment ID
 router.get('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
 
     try {
-        const result = await pool.query('SELECT "solutionFile" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+        const result = await pool.query('SELECT "assignmentKey" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
         if (result.rows.length === 0) {
             return res.status(404).send({ message: 'Solution not found' });
         }
@@ -210,12 +197,12 @@ router.get('/assignments/:assignmentId/solutions', async (req, res) => {
 // Update solution by assignment ID
 router.put('/assignments/:assignmentId/solutions', async (req, res) => {
     const { assignmentId } = req.params;
-    const { solutionFile } = req.body;
+    const { assignmentKey } = req.body;
 
     try {
         const result = await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = $1 WHERE "assignmentId" = $2 RETURNING *',
-            [solutionFile, assignmentId]
+            'UPDATE "Assignment" SET "assignmentKey" = $1 WHERE "assignmentId" = $2 RETURNING *',
+            [assignmentKey, assignmentId]
         );
         if (result.rows.length === 0) {
             return res.status(404).send({ message: 'Solution not found' });
@@ -233,7 +220,7 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'UPDATE "Assignment" SET "solutionFile" = NULL WHERE "assignmentId" = $1 RETURNING *',
+            'UPDATE "Assignment" SET "assignmentKey" = NULL WHERE "assignmentId" = $1 RETURNING *',
             [assignmentId]
         );
         if (result.rows.length === 0) {
@@ -249,7 +236,7 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
 
 router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     const { courseId, assignmentId } = req.params;
-    const studentId = req.session.studentId; // Assuming studentId is saved in the session storage
+    const studentId = req.session.studentId;
 
     if (!studentId) {
         return res.status(401).json({ message: 'Unauthorized' });
@@ -265,7 +252,8 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
                 a."maxObtainableGrade",
                 ag."InstructorAssignedFinalGrade"
             FROM "Assignment" a
-            LEFT JOIN "AssignmentRubric" ar ON a."assignmentId" = ar."assignmentId"
+            LEFT JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId"
+            LEFT JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId"
             LEFT JOIN "AssignmentGrade" ag ON a."assignmentId" = ag."assignmentId"
             AND ag."assignmentSubmissionId" = (
                 SELECT "assignmentSubmissionId"
@@ -291,5 +279,180 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     }
 });
 
+const removeEmptyDirs = (directory) => {
+    if (!fs.existsSync(directory)) {
+        return;
+    }
+    const files = fs.readdirSync(directory);
+    if (files.length > 0) {
+        files.forEach((file) => {
+            const fullPath = path.join(directory, file);
+            if (fs.lstatSync(fullPath).isDirectory()) {
+                removeEmptyDirs(fullPath);
+            }
+        });
+    }
+
+    if (fs.readdirSync(directory).length === 0) {
+        fs.rmdirSync(directory);
+    }
+};
+
+const fileFilter = (req, file, cb) => {
+    const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
+    if (!allowedExtensions.exec(file.originalname)) {
+        return cb(new Error('Please upload file having extensions .css, .html, .js, or .jsx only.'));
+    }
+    cb(null, true);
+};
+
+const storage = multer.diskStorage({
+    destination: async (req, file, cb) => {
+        const { courseId, assignmentId } = req.params;
+        const studentId = req.session.studentId;
+
+        if (!studentId) {
+            console.error('Student ID not found in session');
+            return cb(new Error('Student ID not found in session'), false);
+        }
+
+        try {
+            const dir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}`);
+            fs.mkdirSync(dir, { recursive: true });
+            req.assignmentDir = dir;
+            cb(null, dir);
+        } catch (err) {
+            console.error('Error creating directory:', err);
+            cb(err);
+        }
+    },
+    filename: (req, file, cb) => {
+        const { assignmentDir } = req;
+        const filePath = path.resolve(assignmentDir, file.originalname);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        cb(null, file.originalname);
+    },
+});
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
+router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async (req, res) => {
+    if (req.files && req.files.length > 0) {
+        const { courseId, assignmentId } = req.params;
+        const studentId = req.session.studentId;
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString();
+
+        try {
+            const filePromises = req.files.map(async (file) => {
+                const newPath = path.join(req.assignmentDir, file.originalname);
+                fs.mkdirSync(path.dirname(newPath), { recursive: true });
+                fs.renameSync(file.path, newPath);
+
+                const relativePath = path.relative(path.resolve(__dirname, '../'), newPath);
+                const submissionFile = `${relativePath}`;
+
+                const existingSubmission = await pool.query(
+                    `SELECT "assignmentSubmissionId" FROM "AssignmentSubmission"
+                    WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3 AND "submissionFile" = $4`,
+                    [studentId, courseId, assignmentId, submissionFile]
+                );
+
+                if (existingSubmission.rows.length > 0) {
+                    const assignmentSubmissionId = existingSubmission.rows[0].assignmentSubmissionId;
+                    await pool.query(
+                        `UPDATE "AssignmentSubmission" SET "submittedAt" = $1, "updatedAt" = $1 WHERE "assignmentSubmissionId" = $2`,
+                        [formattedDate, assignmentSubmissionId]
+                    );
+                } else {
+                    await pool.query(
+                        `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "submittedAt", "updatedAt", "isSubmitted")
+                        VALUES ($1, $2, $3, $4, $5, $5, true)`,
+                        [studentId, courseId, assignmentId, submissionFile, formattedDate]
+                    );
+                }
+
+                return { relativePath };
+            });
+
+            const validFiles = (await Promise.all(filePromises)).filter(Boolean);
+            if (validFiles.length > 0) {
+                const rootDir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}`);
+                removeEmptyDirs(rootDir);
+
+                res.status(200).send('Files uploaded and paths saved successfully');
+            } else {
+                res.status(400).send('No valid files uploaded');
+            }
+        } catch (error) {
+            console.error('Error saving file paths to database:', error);
+            res.status(500).send('Internal Server Error');
+        }
+    } else {
+        res.status(400).send('No files uploaded');
+    }
+});
+
+router.get('/submission/:courseId/:assignmentId', async (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    const studentId = req.session.studentId;
+
+    if (!studentId) {
+        return res.status(401).send('Unauthorized');
+    }
+
+    try {
+        const result = await pool.query(
+            `SELECT "assignmentSubmissionId", "submissionFile" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
+            [studentId, courseId, assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Submission not found');
+        }
+
+        res.status(200).send(result.rows.map(row => ({
+            assignmentSubmissionId: row.assignmentSubmissionId,
+            files: row.submissionFile ? row.submissionFile.split(',') : []
+        })));
+    } catch (error) {
+        console.error('Error retrieving file paths from database:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Serve submission file
+router.get('/download-submission/:studentId/:courseId/:assignmentId/:fileName', async (req, res) => {
+    const { studentId, courseId, assignmentId, fileName } = req.params;
+    console.log(`Received params - Student ID: ${studentId}, Course ID: ${courseId}, Assignment ID: ${assignmentId}, File Name: ${fileName}`);
+    if (!assignmentId || assignmentId === 'undefined') {
+        return res.status(400).send('Assignment ID is required');
+    }
+
+    try {
+        const result = await pool.query(
+            'SELECT "submissionFile" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3',
+            [studentId, courseId, assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Submission not found');
+        }
+        const fullFilePath = path.join(baseDir, studentId, courseId, assignmentId, fileName);
+        console.log(`Full file path: ${fullFilePath}`);
+        res.download(fullFilePath, fileName, (err) => {
+            if (err) {
+                console.error('Error downloading file:', err);
+                res.status(500).send('Error downloading file');
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching submission file from database:', error);
+        res.status(500).send('Error fetching submission file');
+    }
+});
 
 module.exports = router;

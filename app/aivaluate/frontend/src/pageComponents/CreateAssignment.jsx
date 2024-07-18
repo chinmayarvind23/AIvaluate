@@ -1,18 +1,20 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
+import '../GeneralStyling.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
+axios.defaults.withCredentials = true;
+
 const CreateAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const { courseId } = useParams();
+    const { courseId } = sessionStorage.getItem('courseId');
     const navBarText = `${courseCode} - ${courseName}`;
-
     const navigate = useNavigate();
     const availableRubricsRef = useRef(null);
     const criteriaRef = useRef(null);
@@ -26,7 +28,7 @@ const CreateAssignment = () => {
     });
 
     const [rubrics, setRubrics] = useState([]);
-    const [solutionFile, setSolutionFile] = useState(null);
+    const [assignmentKey, setAssignmentKey] = useState(null);
     const [dragging, setDragging] = useState(false);
 
     useEffect(() => {
@@ -47,76 +49,83 @@ const CreateAssignment = () => {
         }));
     };
 
-    const handleFileChange = (file) => {
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
         const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
 
         if (file && !allowedExtensions.exec(file.name)) {
             alert('Please upload file having extensions .css, .html, .js, or .jsx only.');
             return false;
         } else {
-            setSolutionFile(file);
+            setAssignmentKey(file);
             setAssignment(prevAssignment => ({
                 ...prevAssignment,
                 assignmentKey: file.name
             }));
-            return true;
         }
     };
 
     const handleDrop = (e) => {
         e.preventDefault();
         setDragging(false);
-        const file = e.dataTransfer.files[0];
-        handleFileChange(file);
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
     };
-
+    
     const handleDragOver = (e) => {
         e.preventDefault();
         setDragging(true);
     };
-
+    
     const handleDragLeave = () => {
         setDragging(false);
-    };
+    };    
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Check for empty fields
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
             alert('Please fill in all fields.');
             return;
         }
-
-        // Check if the due date is in the past
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
-
+    
         if (dueDate < today) {
             alert('Due date cannot be in the past.');
             return;
         }
-
-        axios.post('http://localhost:5173/eval-api/assignments', assignment)
-            .then(response => {
-                console.log('Assignment created:', response.data);
-                if (solutionFile) {
-                    const formData = new FormData();
-                    formData.append('solutionFile', solutionFile);
-                    // axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData)
-                    //     .then(res => {
-                    //         console.log('Solution added:', res.data);
-                    //     })
-                    //     .catch(err => {
-                    //         console.error('Error adding solution:', err);
-                    //     });
-                }
-                navigate(`/eval/assignments/${courseId}`); // Redirect after successful creation
-            })
-            .catch(error => {
-                console.error('Error creating assignment:', error);
+    
+        try {
+            const instructorId = sessionStorage.getItem('instructorId');
+            const courseId = sessionStorage.getItem('courseId');
+            const response = await axios.post('http://localhost:5173/eval-api/assignments', {
+                ...assignment,
+                instructorId,
+                courseId,
+                rubricName: 'Default Rubric',
             });
-    };
+            console.log('Assignment created:', response.data);
+            if (assignmentKey) {
+                const formData = new FormData();
+                formData.append('assignmentKey', assignmentKey);
+                formData.append('instructorId', instructorId);
+                formData.append('courseId', courseId);
+    
+                await axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                console.log('Solution added');
+            }
+            navigate(`/eval/assignments/${courseId}`);
+        } catch (error) {
+            console.error('Error creating assignment:', error);
+            if (error.response && error.response.data) {
+                console.error('Error response data:', error.response.data);
+            }
+        }
+    };                
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();
@@ -188,24 +197,28 @@ const CreateAssignment = () => {
                                 value={assignment.maxObtainableGrade}
                                 onChange={handleInputChange}
                             />
-                            <label htmlFor="solutionFile">Add a solution <span className="optional">*Not required</span></label>
+                            <label htmlFor="assignmentKey">Add a solution <span className="optional">*Not required</span></label>
                             <div
                                 className={`file-upload ${dragging ? 'dragging' : ''}`}
                                 onDragOver={handleDragOver}
                                 onDragLeave={handleDragLeave}
                                 onDrop={handleDrop}
                             >
-                                <input
-                                    type="file"
-                                    id="solutionFile"
-                                    name="solutionFile"
-                                    onChange={(e) => handleFileChange(e.target.files[0])}
+                                <label htmlFor="file-upload" className="file-upload-label">
+                                    Drag files here or Click to browse files
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="file-upload" 
+                                    className="file-upload-input" 
+                                    name="assignmentKey"
+                                    onChange={handleFileChange}
+                                    multiple 
                                 />
-                                <span>Drag files here or Click to browse files</span>
                             </div>
-                            {solutionFile && (
+                            {assignmentKey && (
                                 <div className="file-preview">
-                                    <p>Uploaded File: {solutionFile.name}</p>
+                                    <p>Uploaded File: {assignmentKey.name}</p>
                                 </div>
                             )}
                             <div className="form-footer">

@@ -230,7 +230,7 @@ router.put('/courses/:id', async (req, res) => {
 // Fetch all submissions for a course
 router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);
-    const studentId = req.user.studentId; // Ensure the user is authenticated
+    const studentId = req.user.studentId;
 
     try {
         const result = await pool.query(
@@ -240,7 +240,9 @@ router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res
                 "Student"."firstName",
                 "Student"."lastName",
                 "Assignment"."assignmentKey",
-                "AssignmentSubmission"."isGraded"
+                "Assignment"."assignmentId",
+                "AssignmentSubmission"."isGraded",
+                "AssignmentSubmission"."submissionFile"
             FROM "AssignmentSubmission"
             JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
             JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
@@ -253,6 +255,7 @@ router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res
         res.status(500).json({ message: 'Error fetching submissions' });
     }
 });
+
 
 // Fetch all TAs for a course
 router.get('/courses/:id/tas', async (req, res) => {

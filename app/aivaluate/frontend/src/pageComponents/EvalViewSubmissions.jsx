@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -11,37 +11,19 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 const EvalViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
-    const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
     useEffect(() => {
-        const fetchCourseDetails = async () => {
-            try {
-                const response = await fetch(`/eval-api/courses/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Course Details:", data);  // Debugging
-                    setCourseDetails(data);
-                } else {
-                    console.error('Error fetching course details:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching course details:', error);
-            }
-        };
-
         const fetchSubmissions = async () => {
             try {
                 const response = await fetch(`/eval-api/courses/${courseId}/submissions`);
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Submissions:", data);  // Debugging
                     setFiles(data);
                 } else {
                     console.error('Error fetching submissions:', response.statusText);
@@ -51,7 +33,6 @@ const EvalViewSubmissions = () => {
             }
         };
 
-        fetchCourseDetails();
         fetchSubmissions();
     }, [courseId]);
 
@@ -85,6 +66,7 @@ const EvalViewSubmissions = () => {
         setSearchTerm(e.target.value);
         setCurrentPage(1);
     };
+
     const navBarText = `${courseCode} - ${courseName}`;
 
     return (
@@ -112,7 +94,7 @@ const EvalViewSubmissions = () => {
                             {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index}>
                                     <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">{file.studentId} - {file.assignmentKey} Submission</div>
+                                    <div className="file-name">{file.submissionFile} Submission</div>
                                     {file.isGraded && <div className="file-status">Marked as graded</div>}
                                 </div>
                             ))}

@@ -105,13 +105,13 @@
     margin: 20px;
 }
 
-.feedback{
+/*.feedback{ */
     /* display:flex; */
-}
+    /*} */
 
 .score{
     display:flex;
-    width: 180px;
+    width: fit-content;
     padding: 10px;
     padding-top:0px;
     padding-bottom: 20px;
@@ -122,6 +122,9 @@
     background-color: var(--primary-color);
     /* margin-top: -70px; */
     height: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    height: auto;
 }
 
 .score-class{

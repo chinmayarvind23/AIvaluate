@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 const cors = require('cors');
 const { pool } = require('./dbConfig');
@@ -83,7 +82,7 @@ app.post("/stu-api/signup", async (req, res) => {
         errors.push({ message: "Password should be at least 6 characters long" });
     }
 
-    if (password != password2) {
+    if (password !== password2) {
         errors.push({ message: "Passwords do not match" });
     }
 
@@ -122,11 +121,23 @@ app.post("/stu-api/signup", async (req, res) => {
     }
 });
 
-app.post("/stu-api/login", passport.authenticate("local", {
-    successRedirect: "/stu-api/dashboard",
-    failureRedirect: "/stu-api/login",
-    failureFlash: true
-}));
+app.post("/stu-api/login", (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            req.session.studentId = user.studentId; // Set the studentId in the session
+            return res.redirect("/stu-api/dashboard");
+        });
+    })(req, res, next);
+});
 
 app.get("/stu-api/dashboard", checkNotAuthenticated, (req, res) => {
     res.json({ user: req.user });
@@ -151,13 +162,6 @@ app.get('/stu-api/logout', (req, res, next) => {
         });
     });
 });
-
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/stu-api/dashboard');
-    }
-    next();
-}
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

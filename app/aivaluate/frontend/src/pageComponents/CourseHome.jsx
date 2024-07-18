@@ -130,6 +130,10 @@ const CourseHome = () => {
             });
     }
 
+    const handleAiTest = () => {
+        navigate('/eval/ai-test');
+    };
+
     const navBarText = `${courseCode} - ${courseName}`;
 
     if (loading) {
@@ -145,6 +149,8 @@ const CourseHome = () => {
                     <h1>Course Management</h1>
                 </div>
                 <div>
+                    <button className="course-button" onClick={handleAiTest}>AI Test</button>
+                    <br />
                     <button className="course-button" onClick={handleEditCourse}>Edit Course</button>
                     <CourseEditModal isOpen={isEditModalOpen} onClose={closeEditModal} course={course} onSave={saveCourseEdits} />
                     <br />

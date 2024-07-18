@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../dbConfig');
-const bcrypt = require('bcryptjs');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 function checkAuthenticated(req, res, next) {
@@ -16,7 +14,7 @@ router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
     const { courseId } = req.params;
 
     try {
-        console.log('Received courseId:', courseId); // Debug log
+        console.log('Received courseId:', courseId);
 
         const query = `
             SELECT s."firstName", s."lastName"
@@ -26,7 +24,7 @@ router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
         `;
         const result = await pool.query(query, [courseId]);
 
-        console.log('Query result:', result.rows); // Debug log
+        console.log('Query result:', result.rows);
 
         res.json(result.rows);
     } catch (err) {

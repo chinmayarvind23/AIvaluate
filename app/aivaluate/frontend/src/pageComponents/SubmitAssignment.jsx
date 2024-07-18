@@ -13,6 +13,7 @@ const SubmitAssignment = () => {
     const { courseId, assignmentId } = useParams();
     const [files, setFiles] = useState([]);
     const [isGraded, setIsGraded] = useState(false);
+    const [dragging, setDragging] = useState(false);
     const [assignmentDetails, setAssignmentDetails] = useState({
         assignmentName: '',
         rubricName: '',
@@ -28,20 +29,15 @@ const SubmitAssignment = () => {
 
     const fetchAssignmentDetails = useCallback(async () => {
         try {
-            const response = await fetch(`/stu-api/assignment/${courseId}/${assignmentId}`, {
-                method: 'GET',
+            const response = await axios.get(`/stu-api/assignment/${courseId}/${assignmentId}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include'
+                withCredentials: true
             });
-            const data = await response.json();
-            if (response.ok) {
-                setAssignmentDetails(data);
-                setIsGraded(data.InstructorAssignedFinalGrade !== "--");
-            } else {
-                console.error('Error fetching assignment details:', data.message);
-            }
+            const data = response.data;
+            setAssignmentDetails(data);
+            setIsGraded(data.InstructorAssignedFinalGrade !== "--");
         } catch (error) {
             console.error('Error fetching assignment details:', error);
         } finally {
@@ -77,19 +73,35 @@ const SubmitAssignment = () => {
         }
     };
 
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
+    };
+    
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+    
+    const handleDragLeave = () => {
+        setDragging(false);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (files.length === 0) {
             setErrorMessage('Please select files to upload.');
             return;
         }
-
+    
         const formData = new FormData();
         files.forEach(file => {
             formData.append('files', file);
         });
-
+    
         try {
             await axios.post(`/stu-api/upload/${courseId}/${assignmentId}`, formData, {
                 headers: {
@@ -103,7 +115,7 @@ const SubmitAssignment = () => {
             console.error('File upload failed:', err);
             setErrorMessage('File upload failed. Please try again.');
         }
-    };
+    };    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -138,7 +150,12 @@ const SubmitAssignment = () => {
                             </div>
                         </div>
                         <form onSubmit={handleSubmit}>
-                            <div className="file-upload">
+                            <div
+                                className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
                                 <label htmlFor="file-upload" className="file-upload-label">
                                     Drag files here or Click to browse files
                                 </label>
@@ -146,9 +163,9 @@ const SubmitAssignment = () => {
                                     type="file" 
                                     id="file-upload" 
                                     className="file-upload-input" 
+                                    name="files"
                                     onChange={handleFileChange}
                                     multiple 
-                                    required
                                 />
                             </div>
                             {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -161,22 +178,36 @@ const SubmitAssignment = () => {
                         <div className="assignment-details">
                             <pre className="details-content">{assignmentDetails.criteria}</pre>
                         </div>
-                        <h2>Recently Uploaded Files</h2>
+                        <h2>Files to be uploaded</h2>
                         <div className="uploaded-files-container">
-                            {uploadedFiles.length > 0 ? (
+                            {files.length > 0 ? (
                                 <ul>
-                                    {uploadedFiles.map(submission => (
-                                        submission.files.map((file, index) => (
-                                            <li key={index}>
-                                                <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{file.split('/').pop()}</a>
-                                            </li>
-                                        ))
+                                    {files.map((file, index) => (
+                                        <li key={index}>
+                                            <span>{file.name}</span>
+                                        </li>
                                     ))}
                                 </ul>
                             ) : (
-                                <p>No files uploaded yet.</p>
+                                <p>No files selected yet.</p>
                             )}
                         </div>
+                        <h2>Recently Uploaded Files</h2>
+                            <div className="uploaded-files-container">
+                                {uploadedFiles.length > 0 ? (
+                                    <ul>
+                                        {uploadedFiles.flatMap(submission => (
+                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
+                                                <li key={index}>
+                                                    <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
+                                                </li>
+                                            )) : null
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>No files uploaded yet.</p>
+                                )}
+                            </div>
                         <h2>Feedback</h2>
                         <div className="feedback-container">
                             {isGraded ? (

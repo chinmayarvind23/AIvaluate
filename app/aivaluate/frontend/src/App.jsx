@@ -51,6 +51,8 @@ import SubmitAssignment from './pageComponents/SubmitAssignment';
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
 import TestForComponents from './pageComponents/testForComponents';
 
+import AITest from './pageComponents/AITest';
+
 const App = () => {
   return (
     <Router>
@@ -72,7 +74,7 @@ const App = () => {
           <Route path="/admin/signup" element={<SignupAdmin />} /> {/* Done*/}
           <Route path="/test" element={<TestForComponents />} /> {/* Done*/}
 
-
+          <Route path="/ai-test" element={<AITest />} />
           {/* <Route path="/eval/rubric/rubricId" element={<EditRubric />} /> */}
 
           {/* <Route path="/stu/submit/assignementId" element={<SubmitAssignment />} /> */}
@@ -90,7 +92,7 @@ const App = () => {
           <Route path="/stu/submit/:courseId/:assignmentId" element={<PrivateRouteStu element={SubmitAssignment} />} /> {/*done*/}
           {/* Session validation routes for admin */}
           <Route path="/admin/evaluatormanager" element={<PrivateRouteAdmin element={EvaluatorManager} />} /> {/* Done*/}
-          <Route path="/admin/evalManagerInfo" element={<PrivateRouteAdmin element={EvalManagerInfo} />} /> {/* Done*/}
+          <Route path="/admin/evalManagerInfo/:instructorId" element={<PrivateRouteAdmin element={EvalManagerInfo} />} /> {/* Done*/}
           <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} /> {/* Done*/}
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} /> {/* Done*/}
           <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} /> {/* Done*/}

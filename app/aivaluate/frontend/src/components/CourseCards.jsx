@@ -17,7 +17,7 @@ const CourseCards = ({ navBarText, page }) => {
         useEffect(() => {
             const fetchCourses = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5173/stu-api/not-enrolled-courses', { withCredentials: true });
+                    const response = await axios.get('http://localhost:5173/stu-api/not-enrolled-courses/active', { withCredentials: true });
                     console.log('Fetched Courses:', response.data); // Log fetched courses to verify
                     setCourses(response.data);
                     setLoading(false);
@@ -66,6 +66,7 @@ const CourseCards = ({ navBarText, page }) => {
                             courseCode={course.courseCode} 
                             courseName={course.courseName} 
                             courseId={course.courseId}
+                            isArchived={course.isArchived}
                             user="joinCourse"
                         />
                     ))}
@@ -76,7 +77,7 @@ const CourseCards = ({ navBarText, page }) => {
         useEffect(() => {
             const fetchCourses = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5173/stu-api/enrolled-courses', { withCredentials: true });
+                    const response = await axios.get('http://localhost:5173/stu-api/enrolled-courses/active', { withCredentials: true });
                     console.log('Fetched Courses:', response.data); // Log fetched courses to verify
                     setCourses(response.data);
                     setLoading(false);
@@ -100,6 +101,7 @@ const CourseCards = ({ navBarText, page }) => {
                         courseCode={course.courseCode} 
                         courseName={course.courseName} 
                         courseId={course.courseId}
+                        isArchived={course.isArchived}
                         user = "stu"
                     />
                 ))}
@@ -133,6 +135,7 @@ const CourseCards = ({ navBarText, page }) => {
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
                         courseId={course.courseId}
+                        isArchived={course.isArchived}
                         user="prof" 
                     />
                 ))}

@@ -111,13 +111,14 @@ router.post('/reset/:token', async (req, res) => {
 router.get('/evaluators', checkAuthenticated, async (req, res) => {
     try {
         const query = `
-            SELECT "firstName", "lastName", "isTA"
+            SELECT "firstName", "lastName", "isTA", "instructorId"
             FROM "Instructor"
         `;
         const result = await pool.query(query);
         const evaluators = result.rows.map(row => ({
             name: `${row.firstName} ${row.lastName}`,
-            TA: row.isTA
+            TA: row.isTA,
+            instructorId: row.instructorId
         }));
         res.json(evaluators);
     } catch (err) {

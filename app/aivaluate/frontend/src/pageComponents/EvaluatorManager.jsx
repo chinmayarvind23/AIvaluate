@@ -1,6 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+import { FaSearch } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -8,6 +9,7 @@ import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
 const EvaluatorManager = () => {
+    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -20,6 +22,9 @@ const EvaluatorManager = () => {
                 const response = await fetch('http://localhost:5173/admin-api/evaluators', {
                     credentials: 'include'
                 });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
                 setFiles(data);
                 setFilteredFiles(data);
@@ -39,12 +44,9 @@ const EvaluatorManager = () => {
         setCurrentPage(1); // Reset to first page on new search
     }, [searchTerm, files]);
 
-    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // This calculates the total number of pages based on the max number of items per page
     const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -64,9 +66,13 @@ const EvaluatorManager = () => {
         setCurrentPage(1); // Reset to first page on new search
     };
 
+    const handleEvaluatorClick = (instructorId) => {
+        navigate(`/admin/evalManagerInfo/${instructorId}`);
+    };
+
     return (
         <div>
-            <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
+            <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <SideMenuBarAdmin tab="evalManager" />
             <div className="accented-outside rborder">
                 <div className="main-margin">
@@ -85,11 +91,15 @@ const EvaluatorManager = () => {
                                 </div>
                             </div>
                             <div className="empty"> </div>
-                            <button className="addEvalButton">Add Evaluator</button>
+                            <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
+                                <div 
+                                    className="file-item" 
+                                    key={index} 
+                                    onClick={() => handleEvaluatorClick(file.instructorId)}
+                                >
                                     <div className="file-name">{file.name}</div>
                                     {file.TA && <div className="file-status">*Teaching Assistant</div>}
                                     <div className="file-icon"><CircumIcon name="edit" /></div>

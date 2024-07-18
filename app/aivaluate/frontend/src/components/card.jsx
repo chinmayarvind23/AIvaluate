@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 
-const Card = ({courseId, courseCode, courseName, user="stu"}) => {
-  // console.log("Card props:", { courseId, courseCode, courseName, maxStudents, user });
+const Card = ({courseId, courseCode, courseName, isArchived, user="stu"}) => {
+  console.log("Card props:", { courseId, courseCode, courseName, isArchived });
   const navigate = useNavigate();
   const [enrolled, SetEnrolled] = useState(false);
 
@@ -63,7 +63,9 @@ const Card = ({courseId, courseCode, courseName, user="stu"}) => {
           </div>
         )}
         {/* <h2>COSC 499</h2> */}
-        <h2>{courseCode}</h2>
+        <h2>{courseCode}
+        {isArchived && <span className="archive-status"> - Archived</span>}
+        </h2>
         {/* <p>Software Engineering Capstone</p> */}
         <p>{courseName}</p>
         <div>

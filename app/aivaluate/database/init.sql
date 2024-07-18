@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS "Course" (
     "courseCode" VARCHAR(100),
     "maxStudents" INT CHECK ("maxStudents" > 0),
     "courseDescription" VARCHAR(1000),
-    "isApproved" BOOLEAN DEFAULT FALSE
+    "isArchived" BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS "Teaches"(
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS "CourseNotification"(
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
+CREATE TABLE IF NOT EXISTS "AssignmentSubmission" (
     "assignmentSubmissionId" SERIAL NOT NULL PRIMARY KEY,
     "studentId" INT NOT NULL,
     "courseId" INT NOT NULL,
@@ -194,14 +194,14 @@ VALUES ('John', 'Doe', 'john.doe@example.com', 'password1'),
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Instructor table
-INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA")
+INSERT INTO "Instructor" ("firstName", "lastName", "email", "password", "department", "isTA")
 VALUES 
-    (1, 'Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
-    (2, 'Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
-    (3, 'Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
-    (4, 'Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
-    (5, 'Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false),
-    (6, 'TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
+    ('Robert', 'Brown', 'robert.brown@example.com', 'password4', 'Computer Science', false),
+    ('Emily', 'Davis', 'emily.davis@example.com', 'password5', 'Mathematics', true),
+    ('Michael', 'Wilson', 'michael.wilson@example.com', 'password6', 'Physics', false),
+    ('Kevin', 'Zhang', 'kevin.zhang@example.com', 'password7', 'Computer Science', true),
+    ('Prof', 'Test', 'testprof@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', false),
+    ('TA', 'Test', 'testta@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.', 'Computer Science', true)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO "Course" ("courseId", "courseName", "courseCode", "courseDescription")
@@ -335,7 +335,7 @@ VALUES (1, 1, 10, 8, 8, true),
        (28, 4, 12, 12, 12, true),
        (29, 5, 12, 12, 12, true),
        (30, 6, 12, 0, 0, false)
-ON CONFLICT DO NOTHING;
+ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO NOTHING;
 
 -- Insert dummy data into StudentFeedback table
 INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
@@ -359,7 +359,8 @@ INSERT INTO "AssignmentRubric" ("criteria", "rubricName", "courseId")
 VALUES 
     ('Correctness, Efficiency, Documentation', 'Rubric 1', '1'),
     ('Problem Solving, Mathematical Reasoning', 'Rubric 2', '2'),
-    ('Experimental Design, Analysis', 'Rubric 3', '3');
+    ('Experimental Design, Analysis', 'Rubric 3', '3')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Prompt table
 INSERT INTO "Prompt" ("promptName", "promptText", "instructorId")

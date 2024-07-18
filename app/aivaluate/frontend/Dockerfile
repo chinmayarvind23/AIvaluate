@@ -13,7 +13,6 @@ RUN npm install axios
 RUN npm install react-datepicker
 RUN npm install date-fns
 
-RUN npm install react-markdown remark-gfm
 
 RUN npm run build
 

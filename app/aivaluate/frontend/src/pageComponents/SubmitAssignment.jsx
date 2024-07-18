@@ -1,146 +1,7 @@
-// import CircumIcon from "@klarr-agency/circum-icons-react";
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import '../GeneralStyling.css';
-// import '../SubmitAssignment.css';
-// import AIvaluateNavBar from '../components/AIvaluateNavBar';
-// import MarkdownRenderer from '../components/MarkdownRenderer';
-// import SideMenuBar from '../components/SideMenuBar';
-
-// const SubmitAssignment = () => {
-//     const navigate = useNavigate();
-//     const [file, setFile] = useState(null);
-//     const [assignmentTitle, setAssignmentTitle] = useState("Lab 3 - Build a Personal Portfolio Page");
-//     const [isGraded, setIsGraded] = useState(false);
-//     const assignmentName = "Lab 3";
-//     const rubricName = "Build a Personal Portfolio Page";
-//     const [dueDate, setDueDate] = useState("May 30 11:59 p.m.");
-//     const criteria = `Objective:
-//                     Create a personal portfolio webpage using HTML and CSS. The webpage should include sections for an introduction, skills, projects, and contact information.
-
-//                     Requirements:
-//                     1. HTML Structure:
-//                         - Use semantic HTML elements (e.g., <header>, <section>, <footer>).
-//                         - Include a navigation bar with links to different sections of the page.
-//                         - Create sections for Introduction, Skills, Projects, and Contact Information.
-
-//                     2. CSS Styling:
-//                         - Use an external CSS file to style the webpage.
-//                         - Apply styles to ensure a visually appealing and responsive design.
-//                         - Use CSS Flexbox or Grid for layout.
-//                         - Include styles for fonts, colors, and spacing.
-
-//                     3. Content:
-//                         - Introduction Section: Brief introduction about yourself with a heading and a paragraph.
-//                         - Skills Section: List of your skills in a visually appealing format (e.g., skill bars, icons).
-//                         - Projects Section: Showcase at least two projects with project titles, descriptions, and links (if available).`;
-
-//     const handleFileChange = (e) => {
-//         setFile(e.target.files[0]);
-//     };
-
-//     const handleSubmit = () => {
-//         // Logic for submitting the assignment
-//         console.log('File submitted:', file);
-//     };
-//     const Feedback = true;
-//     const maxObtainableGrade = 34;
-//     const InstructorAssignedFinalGrade = 32;
-//     const markdownText = `
-//         # Hello, World!
-
-//         This is a paragraph in **Markdown**.
-
-//         - Item 1
-//         - Item 2
-//         - Item 3
-
-//         [Link to Google](https://www.google.com)
-//         `;
-
-//     const navBarText = `${courseCode} - ${courseName}`;
-
-//     return (
-//         <div>
-//             <AIvaluateNavBar navBarText={navBarText} />
-//             <SideMenuBar tab="assignments"/>
-//             <div className="main-margin">
-//                 <div className="assignment-container secondary-colorbg">
-//                     <div className="top-bar">
-//                         <div className="drop-top">
-//                             <div className="button-box-div">
-//                                 <button className="main-back-button" onClick={() => navigate(-1)}>
-//                                     <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
-//                                 </button>
-//                             </div>
-//                             <div className="header-content">
-//                                 <h1 className="assignment-title primary-color-text">{assignmentName} - {rubricName}</h1>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     <div className="scrollable-div">
-//                         <div className="due-date-div">
-//                             <div className="due-date"><h3>Due: {dueDate}</h3></div>
-//                             <div className="empty"> </div>
-//                             <div className="score">
-//                                 <h3>Score: {InstructorAssignedFinalGrade}/{maxObtainableGrade}</h3>
-//                             </div>
-//                             {/* <button className="submit-button rborder" onClick={handleSubmit}>Submit</button> */}
-//                         </div>
-                        
-//                         <div className="file-upload">
-//                             <label htmlFor="file-upload" className="file-upload-label">
-//                                 Drag files here or Click to browse files
-//                             </label>
-//                             <input 
-//                                 type="file" 
-//                                 id="file-upload" 
-//                                 className="file-upload-input" 
-//                                 onChange={handleFileChange} 
-//                             />
-//                         </div>
-//                         <div className="submit-right">
-//                             <h2 className="assignment-text">Assignment Details</h2>
-//                             <div className="empty"> </div>
-//                             <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
-//                         </div>
-//                         <div className="assignment-details">
-//                             <pre className="details-content">{criteria}</pre>
-//                         </div>
-//                         <h2>Feedback</h2>
-//                         <div className="feedback-container">
-//                             {isGraded ? (
-//                                 <div className="feedback">
-//                                         <div className="score-class">
-//                                             <div className="empty"> </div>
-//                                         </div>
-//                                     <div className="both-feedback">
-//                                         <h3>AI Feedback</h3>
-//                                         <div className="feeback-text">
-//                                             <MarkdownRenderer markdownText={markdownText} />
-//                                         </div>
-//                                         <h3>Evaluator Feedback</h3>
-//                                         <div className="feeback-text">
-//                                             <MarkdownRenderer markdownText={markdownText} />
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             ) : (
-//                                 <h3>No feedback available yet...</h3>
-//                             )}
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default SubmitAssignment;
-
-import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -150,66 +11,122 @@ import SideMenuBar from '../components/SideMenuBar';
 const SubmitAssignment = () => {
     const navigate = useNavigate();
     const { courseId, assignmentId } = useParams();
-    const [file, setFile] = useState(null);
-    const [assignmentTitle, setAssignmentTitle] = useState('');
+    const [files, setFiles] = useState([]);
     const [isGraded, setIsGraded] = useState(false);
+    const [dragging, setDragging] = useState(false);
     const [assignmentDetails, setAssignmentDetails] = useState({
         assignmentName: '',
         rubricName: '',
         criteria: '',
         dueDate: '',
         maxObtainableGrade: '',
-        InstructorAssignedFinalGrade: ''
+        InstructorAssignedFinalGrade: '',
+        assignmentDescription: ''
     });
+    const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        const fetchAssignmentDetails = async () => {
-            try {
-                const response = await fetch(`/stu-api/assignment/${courseId}/${assignmentId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    setAssignmentDetails(data);
-                    setAssignmentTitle(`${data.assignmentName} - ${data.rubricName}`);
-                    setIsGraded(data.InstructorAssignedFinalGrade !== "--");
-                } else {
-                    console.error('Error fetching assignment details:', data.message);
-                }
-            } catch (error) {
-                console.error('Error fetching assignment details:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAssignmentDetails();
+    const fetchAssignmentDetails = useCallback(async () => {
+        try {
+            const response = await axios.get(`/stu-api/assignment/${courseId}/${assignmentId}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
+            const data = response.data;
+            setAssignmentDetails(data);
+            setIsGraded(data.InstructorAssignedFinalGrade !== "--");
+        } catch (error) {
+            console.error('Error fetching assignment details:', error);
+        } finally {
+            setLoading(false);
+        }
     }, [courseId, assignmentId]);
 
+    const fetchUploadedFiles = useCallback(async () => {
+        try {
+            const response = await axios.get(`/stu-api/submission/${courseId}/${assignmentId}`);
+            setUploadedFiles(response.data);
+        } catch (err) {
+            console.error('Error fetching uploaded files:', err);
+        }
+    }, [courseId, assignmentId]);
+
+    useEffect(() => {
+        fetchAssignmentDetails();
+        fetchUploadedFiles();
+    }, [fetchAssignmentDetails, fetchUploadedFiles]);
+
     const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
+        const selectedFiles = Array.from(e.target.files);
+        const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
+
+        const invalidFiles = selectedFiles.filter(file => !allowedExtensions.exec(file.name));
+        if (invalidFiles.length > 0) {
+            setErrorMessage('Please upload files with extensions .css, .html, .js, or .jsx only.');
+            setFiles([]);
+        } else {
+            setErrorMessage('');
+            setFiles(selectedFiles);
+        }
     };
 
-    const handleSubmit = () => {
-        // Logic for submitting the assignment
-        console.log('File submitted:', file);
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
     };
+    
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+    
+    const handleDragLeave = () => {
+        setDragging(false);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (files.length === 0) {
+            setErrorMessage('Please select files to upload.');
+            return;
+        }
+    
+        const formData = new FormData();
+        files.forEach(file => {
+            formData.append('files', file);
+        });
+    
+        try {
+            await axios.post(`/stu-api/upload/${courseId}/${assignmentId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            alert('Files uploaded successfully');
+            setFiles([]);
+            fetchUploadedFiles();
+        } catch (err) {
+            console.error('File upload failed:', err);
+            setErrorMessage('File upload failed. Please try again.');
+        }
+    };    
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    const navBarText = `Jerry please help`;
+    const navBarText = `${assignmentDetails.assignmentName} - ${assignmentDetails.assignmentDescription}`;
 
     return (
         <div>
             <AIvaluateNavBar navBarText={navBarText} />
-            <SideMenuBar tab="assignments"/>
+            <SideMenuBar tab="assignments" />
             <div className="main-margin">
                 <div className="assignment-container secondary-colorbg">
                     <div className="top-bar">
@@ -220,7 +137,7 @@ const SubmitAssignment = () => {
                                 </button>
                             </div>
                             <div className="header-content">
-                                <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName} - {assignmentDetails.rubricName}</h1>
+                                <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName} - {assignmentDetails.assignmentDescription}</h1>
                             </div>
                         </div>
                     </div>
@@ -232,41 +149,80 @@ const SubmitAssignment = () => {
                                 <h3>Score: {assignmentDetails.InstructorAssignedFinalGrade}/{assignmentDetails.maxObtainableGrade}</h3>
                             </div>
                         </div>
-                        
-                        <div className="file-upload">
-                            <label htmlFor="file-upload" className="file-upload-label">
-                                Drag files here or Click to browse files
-                            </label>
-                            <input 
-                                type="file" 
-                                id="file-upload" 
-                                className="file-upload-input" 
-                                onChange={handleFileChange} 
-                            />
-                        </div>
-                        <div className="submit-right">
-                            <h2 className="assignment-text">Assignment Details</h2>
-                            <div className="empty"> </div>
-                            <button className="submit-button rborder" onClick={handleSubmit}>Submit</button>
-                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div
+                                className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
+                                <label htmlFor="file-upload" className="file-upload-label">
+                                    Drag files here or Click to browse files
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="file-upload" 
+                                    className="file-upload-input" 
+                                    name="files"
+                                    onChange={handleFileChange}
+                                    multiple 
+                                />
+                            </div>
+                            {errorMessage && <p className="error-message">{errorMessage}</p>}
+                            <div className="submit-right">
+                                <h2 className="assignment-text">Assignment Details</h2>
+                                <div className="empty"> </div>
+                                <button className="submit-button rborder" type="submit">Submit</button>
+                            </div>
+                        </form>
                         <div className="assignment-details">
                             <pre className="details-content">{assignmentDetails.criteria}</pre>
                         </div>
+                        <h2>Files to be uploaded</h2>
+                        <div className="uploaded-files-container">
+                            {files.length > 0 ? (
+                                <ul>
+                                    {files.map((file, index) => (
+                                        <li key={index}>
+                                            <span>{file.name}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No files selected yet.</p>
+                            )}
+                        </div>
+                        <h2>Recently Uploaded Files</h2>
+                            <div className="uploaded-files-container">
+                                {uploadedFiles.length > 0 ? (
+                                    <ul>
+                                        {uploadedFiles.flatMap(submission => (
+                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
+                                                <li key={index}>
+                                                    <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
+                                                </li>
+                                            )) : null
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>No files uploaded yet.</p>
+                                )}
+                            </div>
                         <h2>Feedback</h2>
                         <div className="feedback-container">
                             {isGraded ? (
                                 <div className="feedback">
-                                        <div className="score-class">
-                                            <div className="empty"> </div>
-                                        </div>
+                                    <div className="score-class">
+                                        <div className="empty"> </div>
+                                    </div>
                                     <div className="both-feedback">
                                         <h3>AI Feedback</h3>
                                         <div className="feeback-text">
-                                            <MarkdownRenderer markdownText={markdownText} />
+                                            <MarkdownRenderer markdownText={assignmentDetails.aiFeedback || ''} />
                                         </div>
                                         <h3>Evaluator Feedback</h3>
                                         <div className="feeback-text">
-                                            <MarkdownRenderer markdownText={markdownText} />
+                                            <MarkdownRenderer markdownText={assignmentDetails.evaluatorFeedback || ''} />
                                         </div>
                                     </div>
                                 </div>
@@ -282,4 +238,3 @@ const SubmitAssignment = () => {
 };
 
 export default SubmitAssignment;
-

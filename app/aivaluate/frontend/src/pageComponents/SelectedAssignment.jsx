@@ -107,6 +107,9 @@ const SelectedAssignment = () => {
                             </div>
                             <div className="title-text"><h1>Assignment - Submissions</h1></div>
                             <div className="empty"> </div>
+                            <button className="grades-button">
+                                Grade With AI
+                            </button>
                             <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
                                 Hide Grades
                             </button>

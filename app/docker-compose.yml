@@ -63,6 +63,8 @@ services:
       - "4000:4000"
     depends_on:
       - db
+    volumes:
+      - assignment_submissions:/app/aivaluate/backend/assignmentSubmissions
     env_file:
       - ./aivaluate/backend/.env
     networks:
@@ -91,6 +93,8 @@ services:
       - "6000:6000"
     depends_on:
       - db
+    volumes:
+      - assignment_keys:/app/aivaluate/backend-eval/assignmentKeys
     env_file:
       - ./aivaluate/backend-eval/.env
     networks:
@@ -113,6 +117,22 @@ services:
     networks:
       - aivaluate-net
 
+  backend-ai:
+    build:
+      context: ./aivaluate/backend-ai
+      dockerfile: Dockerfile
+    container_name: backend-ai
+    ports:
+      - "9000:9000"
+    networks:
+      - aivaluate-net
+    env_file:
+      - ./aivaluate/backend-ai/.env
+      
 networks:
   aivaluate-net:
     driver: bridge
+
+volumes:
+  assignment_submissions:
+  assignment_keys:

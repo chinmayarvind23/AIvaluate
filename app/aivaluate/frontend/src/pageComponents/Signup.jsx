@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
@@ -23,8 +23,13 @@ const Signup = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
+  };
+
   const validatePassword = (password) => {
-    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // At least one letter and one number, minimum 6 characters
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return re.test(password);
   };
 
@@ -51,6 +56,11 @@ const Signup = () => {
       newErrors.password2 = 'Passwords do not match';
     }
 
+    if (!validateInput(firstName) || !validateInput(lastName) || !validateInput(email) || !validateInput(password) || !validateInput(password2) || !validateInput(major)) {
+      setErrors({ form: 'Invalid input detected.' });
+      return;
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -58,15 +68,15 @@ const Signup = () => {
 
     try {
       const response = await axios.post('http://localhost:5173/stu-api/signup', {
-        firstName,
-        lastName,
-        email,
-        password,
-        password2,
-        major
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        password2: password2.trim(),
+        major: major.trim()
       });
       console.log('Signup successful:', response.data);
-      navigate('/stu/login'); // Redirect to login after successful signup
+      navigate('/stu/login');
     } catch (error) {
       console.error('There was an error signing up:', error);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -145,9 +155,6 @@ const Signup = () => {
               onChange={(e) => setPassword2(e.target.value)}
               required 
             />
-
-            {/* Major is not required for now*/}
-
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
             <select 
               className="auth-input" 
@@ -159,7 +166,6 @@ const Signup = () => {
               <option value="Computer Science">Computer Science</option>
               <option value="Mathematics">Mathematics</option>
               <option value="Engineering">Engineering</option>
-
             </select>
             {errors.major && <p className="error-message">{errors.major}</p>}
             <button className="auth-submit primary-colorbg" type="submit">Create Account</button>

@@ -317,9 +317,12 @@ router.get('/instructors/:instructorId/rubrics', async (req, res) => {
 });
 
 // Fetch rubrics by courseId
-router.get('/rubrics/:courseId', async (req, res) => {
-    const { courseId } = req.params;
-
+router.get('/rubrics', async (req, res) => {
+    const courseId = req.session.courseId;
+    if (!courseId) {
+        return res.status(400).json({ message: 'Course ID not set in session' });
+    }
+    
     try {
         const result = await pool.query(
             'SELECT * FROM "AssignmentRubric" WHERE "courseId" = $1',

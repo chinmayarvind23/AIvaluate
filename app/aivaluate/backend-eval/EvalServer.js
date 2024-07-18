@@ -112,10 +112,23 @@ app.get('/eval-api/logout', (req, res, next) => {
 
 app.post('/eval-api/set-course', (req, res) => {
     const { courseId, instructorId } = req.body;
+    if (!courseId || !instructorId) {
+        return res.status(400).json({ message: 'Course ID and Instructor ID are required' });
+    }
     req.session.courseId = courseId;
     req.session.instructorId = instructorId;
     res.status(200).json({ message: 'Course ID and Instructor ID set in session', courseId, instructorId });
 });
+
+function ensureCourseAndInstructor(req, res, next) {
+    if (!req.session.courseId || !req.session.instructorId) {
+        return res.status(400).json({ message: 'Course ID and Instructor ID must be set in session' });
+    }
+    next();
+}
+
+app.use('/eval-api/rubrics', ensureCourseAndInstructor, courseRoutes);
+app.use('/eval-api/assignments', ensureCourseAndInstructor, assignmentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

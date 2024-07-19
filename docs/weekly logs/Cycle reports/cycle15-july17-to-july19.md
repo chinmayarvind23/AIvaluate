@@ -61,6 +61,12 @@
         </td>
     </tr>
     <tr>
+        <td> Rubric appending to AI prompt
+        </td>
+        <td> Jerry
+        </td>
+    </tr>
+    <tr>
         <td> Grading assignment page backend and frontend
         </td>
         <td> Colton

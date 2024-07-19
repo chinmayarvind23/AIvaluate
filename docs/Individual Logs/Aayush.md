@@ -1732,7 +1732,7 @@ I worked extensively on testing, fixed one of the errors we had been facing for 
   * Goal 4: Backend coding 
 
 
-# Timesheet (July 12 - July 17) - 13 hours
+# Timesheet (July 12 - July 17) - 33 hours
 
 ### Timesheet
 Clockify report
@@ -1777,7 +1777,7 @@ I put in a lot of effort to complete the backend testing for students, evaluator
 
 
 
-# Timesheet (July 17 - July 19) - 33 hours
+# Timesheet (July 17 - July 19) - 13 hours
 
 ### Timesheet
 Clockify report

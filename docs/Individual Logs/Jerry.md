@@ -8,7 +8,7 @@
 - Check frontend and fix any potential nav bar issues ( 0.5 hour)
 - Switch to OpenAI assistant API for AI grading, fetching prompts to be used by AI (5 hours) 
 
-## Monday July 17th
+## Wednesday July 17th
 ### 1 hour
 - Code Review and help teammates solve issues (0.5 hours)
 - Team meeting and deciding on task priorities (0.5 hours)

@@ -29,6 +29,7 @@
 - Tooltips for AI settings page
 - Dynamic nav bar fixes
 - CI-CD pipeline fix
+- Incorporating feedback from peer testing into app
 
 ### Burn-up chart (velocity)
 

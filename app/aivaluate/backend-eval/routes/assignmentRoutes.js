@@ -23,6 +23,22 @@ const storage = multer.diskStorage({
             return cb(new Error('Assignment ID not found in session'), false);
         }
 
+        try {
+            const dir = path.resolve(__dirname, `../assignmentKeys/${courseId}/${instructorId}/${assignmentId}`);
+            fs.mkdirSync(dir, { recursive: true });
+            cb(null, dir);
+        } catch (err) {
+            console.error('Error creating directory:', err);
+            cb(err);
+        }
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -45,8 +61,6 @@ function checkAuthenticated(req, res, next) {
 //         cb(null, file.originalname);
 //     },
 // });
-
-const upload = multer({ storage: storage });
 
 // Create a new assignment
 router.post('/assignments', upload.single('assignmentKey'), async (req, res) => {

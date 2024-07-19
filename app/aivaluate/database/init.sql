@@ -242,22 +242,22 @@ VALUES
     ('Admin', 'Test', 'admin@email.com', '$2a$10$/4wPUiyTEj/pMZn3P1Zvp.neJO/FQYknhz0D0xpaPRoH.jHKDFgW.')
 ON CONFLICT DO NOTHING;
 
-INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished")
-VALUES (3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css', true),
-       (3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css', true),
-       (3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css', true),
-       (4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation', true),
-       (4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation', true),
-       (4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions', true),
-       (2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css', true),
-       (2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads', true),
-       (2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css', true),
-       (5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html. This document should be well structured and should must have a header, body, and footer. You must also include an aside element such as a side menu.', true),
-       (5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html', true),
-       (5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript', true),
-       (1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag', true),
-       (1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag', true),
-       (1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag', true)
+INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription")
+VALUES (3, '2024-06-30', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css'),
+       (3, '2024-07-05', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css'),
+       (3, '2024-07-15', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css'),
+       (4, '2024-06-12', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation'),
+       (4, '2024-07-11', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation'),
+       (4, '2024-07-15', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions'),
+       (2, '2024-06-25', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css'),
+       (2, '2024-07-01', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads'),
+       (2, '2024-07-06', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css'),
+       (5, '2024-06-05', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html'),
+       (5, '2024-06-15', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html'),
+       (5, '2024-07-09', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript'),
+       (1, '2024-06-28', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag'),
+       (1, '2024-07-03', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag'),
+       (1, '2024-07-09', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table
@@ -268,47 +268,47 @@ VALUES
     (3, 1, 3, 'Physics lab scheduled for next week', false)
 ON CONFLICT DO NOTHING;
 
--- Insert dummy data into AssignmentSubmission table
-INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-VALUES (1, 1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
-       (2, 2, 2, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
-       (3, 3, 3, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false),
-       (4, 5, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', false),
-       (5, 5, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (6, 5, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (7, 6, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (8, 6, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (9, 6, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (10, 7, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (11, 7, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (12, 7, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (13, 4, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (14, 4, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (15, 4, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (16, 4, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
-       (17, 4, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
-       (18, 4, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
-       (19, 5, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
-       (20, 5, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
-       (21, 5, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
-       (22, 6, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
-       (23, 6, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
-       (24, 6, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
-       (25, 7, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
-       (26, 7, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
-       (27, 7, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
-       (28, 8, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
-       (29, 8, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
-       (30, 8, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false)
-ON CONFLICT DO NOTHING;
+-- Creating Tables (No changes needed here)
 
+-- Insert dummy data into AssignmentSubmission table with conflict handling
+INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+VALUES (1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
+       (2, 2, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
+       (3, 3, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false),
+       (5, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (5, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (5, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (6, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (6, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (6, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (7, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (7, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (7, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (4, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (4, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (4, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (4, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
+       (4, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
+       (4, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
+       (5, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
+       (5, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
+       (5, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
+       (6, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
+       (6, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
+       (6, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
+       (7, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
+       (7, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
+       (7, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
+       (8, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
+       (8, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
+       (8, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false);
 
--- Insert dummy data into AssignmentGrade table
+-- Insert dummy data into AssignmentGrade table with conflict handling
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
 VALUES (1, 1, 10, 8, 8, true),
        (2, 1, 10, 9, 9, true),
        (3, 2, 25, 0, 0, false),
-       (4, 10, 100, 89, 0, false),
+       (4, 10, 100, 67, 67, true),
        (5, 11, 88, 85, 85, true),
        (6, 12, 50, 0, 0, false),
        (7, 10, 100, 73, 73, true),
@@ -342,8 +342,7 @@ INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedb
 VALUES 
     (1, 1, 1, 'Great job!', 'Good effort, but could be improved'),
     (2, 2, 1, 'Well done!', 'Excellent work'),
-    (3, 3, 2, 'Needs improvement', 'Good attempt'),
-    (5, 10, 5, 'Your design plan document is overall very well done but you lost some points for a few things you have missing. You missed the header and the footer for the HTML document. (-11 pts)', 'Make sure to read over the rubric carefully so you dont miss anything next time!')
+    (3, 3, 2, 'Needs improvement', 'Good attempt')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into StudentFeedbackReport table
@@ -368,5 +367,4 @@ VALUES
     ('Prompt 1', 'Prompt 1 description', '5'),
     ('Prompt 2', 'Prompt 2 description', '5'),
     ('Prompt 3', 'Prompt 3 description', '5')
-
 ON CONFLICT DO NOTHING;

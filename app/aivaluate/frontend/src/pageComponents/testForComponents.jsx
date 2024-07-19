@@ -1,64 +1,70 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { FaSearch } from 'react-icons/fa';
+import '../EvalManagerInfo.css';
 import '../GeneralStyling.css';
-import '../SelectStudentAdmin.css';
-import AIvaluateNavBarAdmin from "../components/AIvaluateNavBarAdmin";
-import SideMenuBarAdmin from "../components/SideMenuBarAdmin";
+import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
+import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 
-const SelectStudentAdmin = () => {
-    const navigate = useNavigate();
-    const { studentId } = useParams();
-    const [student, setStudent] = useState({});
-    const [courses, setCourses] = useState([]);
-
-
+const EvalManagerInfo = () => {
     return (
-        <div>
-            <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
+        <div className="admin-container">
+            <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <div className="filler-div">
-                <SideMenuBarAdmin tab="studentManager" />
+                <SideMenuBarAdmin tab="evalManager" />
                 <div className="main-margin">
                     <div className="top-bar">
                         <div className="back-btn-div">
-                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                            <button className="main-back-button" ><CircumIcon name="circle_chev_left"/></button>
                         </div>
-                        <h1>Student Info</h1>
+                        <h1 className="eval-text">Evaluator Info</h1>
+                    
                     </div>
-                    <div className="center-it">
-                        <div>
-                            <div className="user-info2">
-                                <div className="user-name">
-                                    <span>Colton Palfrey</span>
-                                    <span>38885190</span>
-                                </div>
-                                <div className="major">Major: COSC</div>
-                                <div className="email">
-                                    <span>Email:</span>
-                                    <span>colton@emial.com</span>
-                                </div>
-                                <div className="password">
-                                    <span>Password:</span>
-                                    <span>********************</span>
-                                </div>
-                                <div className="courses">
-                                    <span>Courses:</span>
-                                    <ul>
-                                            <li>
-                                                COSC 499 
-                                                <button className="drop-button">Drop</button>
-                                            </li>
-                                    </ul>
-                                </div>
+                    <div className="user-info">
+                        <div className="user-details">
+                            <h2>Scott Faz</h2>
+                            <div className="align-check">
+                                <label className="checkbox-label2 ">
+                                    <input type="checkbox"  readOnly /> Teaching Assistant
+                                </label>
+                            </div>
+                            <div className="action-buttons">
                                 <button className="delete-button">Delete user</button>
                             </div>
                         </div>
+                        <div className="info-row">
+                            <span>Email:</span>
+                            <span>testprof@email.com</span>
+                        </div>
+                        <div className="info-row">
+                            <span>Password:</span>
+                            <span>**********</span>
+                        </div>
+                        <div className="info-row">
+                            <span>Department:</span>
+                            <span>Computer science</span>
+                        </div>
+                    </div>
+                    <div className="course-section">
+                        <div className="search-bar">
+                            <FaSearch className="search-icon" />
+                            <input 
+                                type="text" 
+                                placeholder="Search..." 
+                              
+                            />
+                        </div>
+                        
+                            <div className="course-item">
+                                <span>COSC 499 - Capstone</span>
+                                <button className="remove-button">Drop</button>
+                            </div>
+                        
                     </div>
                 </div>
             </div>
-            
         </div>
     );
 };
 
-export default SelectStudentAdmin;
+export default EvalManagerInfo;

@@ -58,22 +58,25 @@ const EvaluatorGrades = () => {
                 <SideMenuBarEval tab="grades"/>
                 <div className="main-margin">
                         <div className="top-bar">
-                        <div className="grade-summary-text"><h1>Grade Summary</h1></div>
-                            <div className="search-div">
-                                <div className="search-container">
-                                    <div className="search-box">
-                                        <FaSearch className="search-icon" />
-                                        <input
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchQuery}
-                                            onChange={handleSearch}
-                                        />
+                            <div className="float-left">
+                                <div className="grade-summary-text"><h1>Grade Summary</h1></div>
+                                <div className="search-div">
+                                    <div className="search-container">
+                                        <div className="search-box">
+                                            <FaSearch className="search-icon" />
+                                            <input
+                                                type="text"
+                                                placeholder="Search..."
+                                                value={searchQuery}
+                                                onChange={handleSearch}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="empty"> </div>
-                            <div className="class-avg"><h2>Class Average: {average}%</h2></div>
+                            <div className="float-right">
+                                <div className="class-avg"><h2>Class Average: {average}%</h2></div>
+                            </div>
                         </div>
                         <div className="scrollable-div">
                             <table className="grades-table secondary-colorbg">

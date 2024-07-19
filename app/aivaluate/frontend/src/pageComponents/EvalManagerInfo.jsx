@@ -100,7 +100,6 @@ const EvalManagerInfo = () => {
                             <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
                         </div>
                         <h1 className="eval-text">Evaluator Info</h1>
-                        <div className="empty"> </div>
                     </div>
                     <div className="user-info">
                         <div className="user-details">

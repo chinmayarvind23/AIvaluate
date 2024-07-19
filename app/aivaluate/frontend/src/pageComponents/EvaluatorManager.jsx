@@ -75,7 +75,6 @@ const EvaluatorManager = () => {
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <div className="filler-div">
                 <SideMenuBarAdmin tab="evalManager" />
-                <div className="accented-outside rborder">
                     <div className="main-margin">
                         <div className="portal-container">
                             <div className="top-bar">
@@ -116,7 +115,6 @@ const EvaluatorManager = () => {
                             </div>
                         </div>
                     </div> 
-                </div>
             </div>
         </div>
     );

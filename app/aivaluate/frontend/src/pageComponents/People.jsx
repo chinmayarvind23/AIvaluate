@@ -72,7 +72,6 @@ const People = () => {
             <AIvaluateNavBar navBarText={navBarText}/>
             <div className="filler-div">
                 <SideMenuBar tab="people" />
-                <div className="accented-outside rborder">
                     <div className="main-margin">
                         <div className="portal-container">
                             <div className="top-bar">
@@ -106,7 +105,6 @@ const People = () => {
                             </div>
                         </div>
                     </div> 
-                </div>
             </div>
         </div>
     );

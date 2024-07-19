@@ -83,7 +83,6 @@ const Students = () => {
             <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="students" />
-                <div className="accented-outside rborder">
                     <div className="main-margin">
                         <div className="portal-container">
                             <div className="top-bar">
@@ -117,7 +116,6 @@ const Students = () => {
                             </div>
                         </div>
                     </div> 
-                </div>
             </div>
         </div>
     );

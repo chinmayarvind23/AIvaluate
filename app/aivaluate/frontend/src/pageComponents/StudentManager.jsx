@@ -71,7 +71,6 @@ const StudentManager = () => {
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
             <div className="filler-div">
                 <SideMenuBarAdmin tab="studentManager" />
-                <div className="accented-outside rborder">
                     <div className="main-margin">
                         <div className="portal-container">
                             <div className="top-bar">
@@ -109,7 +108,6 @@ const StudentManager = () => {
                             </div>
                         </div>
                     </div> 
-                </div>
             </div>
         </div>
     );

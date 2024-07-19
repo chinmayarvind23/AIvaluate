@@ -89,7 +89,6 @@ const StudentViewSubmissions = () => {
             <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
             <div className="filler-div">
                 <SideMenuBar tab="submissions" />
-                <div className="accented-outside rborder">
                     <div className="main-margin">
                         <div className="portal-container">
                             <div className="top-bar">
@@ -124,7 +123,6 @@ const StudentViewSubmissions = () => {
                             </div>
                         </div>
                     </div> 
-                </div>
             </div>
         </div>
     );

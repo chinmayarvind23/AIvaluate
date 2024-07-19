@@ -124,7 +124,7 @@ const PublishAssignment = () => {
                                     onChange={handleDeadlineChange} 
                                 /> 
                                 <p className="click-to-edit">Click to edit</p>
-                                <div className="empty"> </div>
+                    
                                 <button className="assignment-button" onClick={handleViewSubmissions}>
                                     View Submissions
                                 </button>

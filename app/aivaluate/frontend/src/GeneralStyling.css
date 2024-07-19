@@ -105,7 +105,6 @@ body {
     padding-top: 20px;
     height:stretch;
     border: var(--primary-color) 2px solid;
-
   }
   .filler-div{
     display:flex;
@@ -113,6 +112,7 @@ body {
     margin-top:-40px;
     margin-right:40px;
     margin-left: 35px;
+    width: stretch;
   }
 
   .main-back-button {
@@ -142,6 +142,7 @@ body {
 }
 
 .top-bar{
+    /* width: stretch; */
     display: flex;
     margin-bottom: 10px;
     align-items: center;
@@ -154,16 +155,28 @@ body {
 .scrollable-div {
     overflow-y: auto;
     max-height: 600px;
-    /* margin-bottom:400px;  */
     padding: 10px;
     background: var(--secondary-color);
-    /* border-radius: 10px; */
-    /* border: red 2px solid;  */
-    /* padding-bottom: 200px; */
+    width: stretch;
 }
 
 .empty{
     width: stretch;
+    /* border: red 2px solid; */
+}
+
+.float-right{
+    float: right;
+    display: flex;
+    align-items: bottom;
+    
+}
+
+.float-left{
+    float: left;
+    display: flex;
+    align-items: baseline;
+    justify-content: bottom;
 }
 
 

@@ -117,7 +117,6 @@ const BrowseAllAssignmentsEval = () => {
             <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
-                <div className="accented-outside rborder">
                     <div className="main-margin">
                         <div className="portal-container">
                             <div className="top-bar">
@@ -136,7 +135,6 @@ const BrowseAllAssignmentsEval = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="empty"> </div>
                             </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
@@ -156,7 +154,6 @@ const BrowseAllAssignmentsEval = () => {
                             </div>
                         </div>
                     </div> 
-                </div>
             </div>
         </div>
     );

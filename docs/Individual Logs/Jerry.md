@@ -1,5 +1,35 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 17 - July 18) - 8 hours
+
+## Thursday July 18th
+### 7 hours
+- Append rubric to the Assistants API backend (1 hour)
+- Check frontend and fix any potential nav bar issues ( 0.5 hour)
+- Switch to OpenAI assistant API for AI grading, fetching prompts to be used by AI (5 hours) 
+
+## Wednesday July 17th
+### 1 hour
+- Code Review and help teammates solve issues (0.5 hours)
+- Team meeting and deciding on task priorities (0.5 hours)
+
+# Current Tasks
+- #1 Switch to OpenAi Assistant API for grading, fetching prompts #350
+- #2 Fix Navigation Bar Issues #321
+- #3 Append Rubric to the Assistants API backend #358
+
+# Progress Update (since July 10)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Ongoing  |
+
+# Cycle Goal Review
+During this cycle, I focused on the AI part, which is supposed to grade student assignments. I switched the AI from OpenAI Completion to Assistants. I made it to fetch the system default prompt and the professor's custom prompts when interacting with the AI.
+# Next Cycle 
+During the next cycle, I'll continue to work on AI grading; more specifically, I'll ensure the assignment rubric is passed to the AI. And also, I will improve based on any feedback we receive during Friday's testing session.
+
 # Timesheet (June 12 - July 16) - 16.5 hours
 
 ## Tuesday July 16th

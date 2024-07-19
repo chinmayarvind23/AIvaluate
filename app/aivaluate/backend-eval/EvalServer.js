@@ -64,7 +64,12 @@ function checkAuthenticated(req, res, next) {
 }
 
 app.get("/eval-api/dashboard", checkAuthenticated, (req, res) => {
-    res.json({ user: req.user });
+    if (req.isAuthenticated()) {
+        req.session.instructorId = req.user.instructorId;
+        res.json({ user: req.user });
+    } else {
+        res.redirect("/eval-api/login");
+    }
 });
 
 app.use('/eval-api', evalRoutes);

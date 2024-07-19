@@ -125,7 +125,7 @@ const CreateAssignment = () => {
                 console.error('Error response data:', error.response.data);
             }
         }
-    };                
+    };                  
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();

@@ -1773,6 +1773,51 @@ I put in a lot of effort to complete the backend testing for students, evaluator
   * Goal 1: Work on the failing test and fix them 
   * Goal 2: Training AI
   * Goal 3: Finalizing everything for  peer testing
+
+
+
+
+# Timesheet (July 17 - July 19) - 33 hours
+
+### Timesheet
+Clockify report
+
+<img width="913" alt="Screenshot 2024-07-19 at 2 28 02 AM" src="https://github.com/user-attachments/assets/2cc2eb0e-42b9-4937-bcd4-b8994ad81ac6">
+
+
+### Current Tasks 
+  * #1: Connect the backend tests
+  * #2: Fix some backend test errors
+  * #3: Frontend testing
+
+### Progress Update (since 7/17/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Connect the backend tests</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Fix some backend test errors</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Frontend testing</td>
+        <td>In Progress</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I invested considerable effort in connecting the backend tests, resolving several backend test errors, setting up frontend Selenium testing, and performing frontend testing. These tasks were essential for ensuring the reliability of our code
+
+### Next Cycle Goals 
+  * Goal 1: Work on some more backend testing 
+  * Goal 2: Work on frontend testing 
+  
+
  
 
 

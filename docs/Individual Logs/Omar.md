@@ -56,7 +56,7 @@ Timesheet
 - Backend of the Account page(issue 119)
 
 Progress Update: 
-# Progress Update (since June 7)
+# Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Issue #58  | Completed  |
@@ -86,7 +86,7 @@ Timesheet
 - #4: Issue 73 - Design create account for prof/TA page - admin portal (frontend)
 
 Progress Update: 
-### Progress Update (since June 14)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Issue #58  | Completed  |
@@ -122,7 +122,7 @@ Timesheet
 - #4: Issue 73 - Design create account for prof/TA page - admin portal (frontend)
 
 Progress Update: 
-### Progress Update (since June 19)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Issue #61  |Completed  |
@@ -155,7 +155,7 @@ Timesheet
 - #4: Issue 93 - Create an API endpoint for students to submit assignments
 
 Progress Update: 
-### Progress Update (since June 21)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Issue #1  |Completed  |
@@ -188,7 +188,7 @@ Timesheet
 - #3:Display all evals from database in eval manager(Backend) # 231
 
 Progress Update: 
-### Progress Update (since June 21)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Issue #1  |Completed  |
@@ -226,7 +226,7 @@ Timesheet
 - Frontend for Evaluator Manager
 
 Progress Update: 
-### Progress Update (since June 21)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Review PR's and merge them  |Completed  |
@@ -262,7 +262,7 @@ Timesheet
 - MVP
 
 Progress Update: 
-### Progress Update (since June 21)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Backend testing for eval  |Completed  |
@@ -302,7 +302,7 @@ Timesheet
 - Frontend (INSIDE ACTUAL EMAIL) for reset password
 
 Progress Update: 
-### Progress Update (since June 21)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 /Testing  |not-Completed  |
@@ -337,7 +337,7 @@ Timesheet
 
   
 Progress Update: 
-### Progress Update (since July 5th)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 /Testing  |not-Completed  |
@@ -372,7 +372,7 @@ Timesheet
 - Backend for assignment page student view
   
 Progress Update: 
-### Progress Update (since July 5th)
+### Progress Update 
 | Task/Iusse# | Status |
 | ----------- | --- |
 | Task #1 / Backend for signing up an eval | Completed |
@@ -384,5 +384,44 @@ Progress Update:
 This cycle I focused on the backend and made sure that both of the issues I had worked perfectly. It went well after I had some assistance from my partners I got it ready to be merged
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - Next cycle I will be working on the assignment backend for the student view, and I will also do a little frontend polish to my old issues.
+
+
+
+
+
+
+
+
+
+
+## Cycle 15 : Wednesday July 17 - Friday July 19
+Timesheet
+
+![Cycle 15](https://github.com/user-attachments/assets/3b1b1710-5d55-472a-844e-0d3ca32f2100)
+
+
+
+
+
+### Current Tasks
+
+- Backend for assignment page student view
+- More issues
+  
+Progress Update: 
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Eval-Manager-Info-Backend (FRONTEND) FIXES |Completed|
+| Task #2 / Backend for assignment page student view | Not-Completed |
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I focused on the backend assignment page student view, it was a little tricky to get done so I split the issue into two parts and have been working on them.
+
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Next cycle I will continue with the same issue I have and take a couple more issues that are available
+
+
 
 

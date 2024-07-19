@@ -834,3 +834,55 @@ I had a lot of problems with the Ollama API as I found the documentation was not
 - Fix date problem.
 - Fix a major design flaw in our frontend pages not lining up at the bottom.
 -----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+
+## Cycle 15: Wednesday July 17th - Friday July 19th
+
+### Current Tasks
+  * #1: Fix date problem.
+  * #2: Fix a major design flaw in our frontend pages not lining up at the bottom.
+  * #3: Peer testing documents and google forms survey.
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C14.png)
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Fix date problem.
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+    <tr>
+        <td> Fix a major design flaw in our frontend pages not lining up at the bottom.
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Peer testing documents and google forms survey
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+I had a lot of problems with the front end this cycle which made it very difficult to finish all of my tasks. However I got done everything that was important.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Fix date problem
+- Work on Course notifications.
+- Get AI working with student submissions.
+-----------------------------------------------------------------------------------

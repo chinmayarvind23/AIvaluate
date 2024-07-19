@@ -1732,7 +1732,7 @@ I worked extensively on testing, fixed one of the errors we had been facing for 
   * Goal 4: Backend coding 
 
 
-# Timesheet (July 12 - July 17) - 33 hours
+# Timesheet (July 12 - July 17) - 13 hours
 
 ### Timesheet
 Clockify report
@@ -1790,7 +1790,7 @@ Clockify report
   * #2: Fix some backend test errors
   * #3: Frontend testing
 
-### Progress Update (since 7/17/2024)
+### Progress Update (since 7/18/2024)
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong></td>

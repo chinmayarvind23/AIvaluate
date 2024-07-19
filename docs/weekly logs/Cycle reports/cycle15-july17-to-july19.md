@@ -112,11 +112,19 @@
         </td>
     </tr>
     <tr>
-        <td> Notifications
+        <td> Notifications system
         </td>
     </tr>
     <tr>
         <td> Backend for assignment page student view
+        </td>
+    </tr>
+    <tr>
+        <td> Frontend testing
+        </td>
+    </tr>
+    <tr>
+        <td> CI-CD pipeline fixing
         </td>
     </tr>
 </table>

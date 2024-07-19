@@ -704,3 +704,4 @@ Completed 70% of my tasks, the file submission for the AI will be completed in t
 - Goal 1: AI file submission and DB updates
 - Goal 2: File downloads and integration with new assignment grading UI
 - Goal 3: AI API details editing to match new model requirements
+- Goal 4: Downloading submissions on grading page & submissions page for a course/assignment

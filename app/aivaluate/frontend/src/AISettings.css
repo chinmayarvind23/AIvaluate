@@ -44,6 +44,7 @@
     padding: 20px;
     margin-right: 20px; /* Add margin to the right for spacing */
     cursor: text;
+    cursor: text;
 }
 
 .update-ai {
@@ -166,10 +167,3 @@
     border: 2px solid var(--primary-color);
 }
 
-
-.prompt-name-input-s{
-    width: 250px;
-    border-radius: 50px;
-    border:2px solid var(--primary-color);
-    padding: 10px;
-}

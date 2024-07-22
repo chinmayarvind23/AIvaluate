@@ -154,8 +154,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -164,9 +162,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import '../EvalManagerInfo.css';
-import '../GeneralStyling.css';
-import '../ToastStyles.css';
 
 const EvalManagerInfo = () => {
     const navigate = useNavigate();

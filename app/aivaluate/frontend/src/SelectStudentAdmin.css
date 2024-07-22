@@ -22,11 +22,13 @@
     cursor: default;
 }
 
+
 .select-student-admin-email, .select-student-admin-password, .select-student-admin-courses {
     background-color: #767676;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    cursor: default;
     cursor: default;
 }
 

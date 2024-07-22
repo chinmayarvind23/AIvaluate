@@ -149,101 +149,78 @@ const GradingAssignments = () => {
     <div>
       <ToastContainer />
       <AIvaluateNavBarEval navBarText={navBarText} />
-      <div className="filler-div">
-        <SideMenuBarEval tab="assignments" />
-        <div className="main-margin">
-          <div className="top-bar">
-            <div className="back-btn-div">
-              <button className="main-back-button" onClick={() => navigate(-1)}>
-                <CircumIcon name="circle_chev_left" />
-              </button>
-            </div>
-            <div className="assignment-text"><h1>{assignmentDetails.assignmentName}</h1></div>
+      <SideMenuBarEval tab="assignments" />
+      <div className="main-margin">
+        <div className="top-bar">
+          <div className="back-btn-div">
+            <button className="main-back-button" onClick={() => navigate(-1)}>
+              <CircumIcon name="circle_chev_left" />
+            </button>
           </div>
-          <div className="align-flex">
-            <h2 className="student-num">Student - {studentNumber}</h2>
-            <div className="empty"></div>
-            <div className="due-date-container">
-              {isEditing ? (
-                <>
-                  <DatePicker
-                    selected={dueDate}
-                    onChange={handleDueDateChange}
-                    showTimeSelect
-                    className="due-date-picker"
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                  />
-                  <button className="save-button" onClick={saveDueDate}>Save</button>
-                </>
-              ) : (
-                <>
-                  <p className="due-date">Due: {dueDate.toLocaleString()}</p>
-                  <div onClick={toggleEdit}>
-                    <CircumIcon name="edit" />
-                  </div>
-                </>
-              )}
-            </div>
+          <div className="assignment-text"><h1>{assignmentDetails.assignmentName}</h1></div>
+        </div>
+        <div className="align-flex">
+          <h2 className="student-num">Student - {studentNumber}</h2>
+          <div className="empty"></div>
+          <div className="due-date-container">
+            {isEditing ? (
+              <>
+                <DatePicker
+                  selected={dueDate}
+                  onChange={handleDueDateChange}
+                  showTimeSelect
+                  className="due-date-picker"
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                />
+                <button className="save-button" onClick={saveDueDate}>Save</button>
+              </>
+            ) : (
+              <>
+                <p className="due-date" cursor="pointer" onClick={toggleEdit} >Due: {dueDate.toLocaleString()}</p>
+                <div cursor="pointer" onClick={toggleEdit}>
+                  <CircumIcon className="edit-due-date" name="edit" />
+                </div>
+              </>
+            )}
           </div>
-          <div className="score-div">
-            <h2 className="aiscore">AIScore: {assignmentDetails.AIassignedGrade}/{assignmentDetails.maxObtainableGrade}</h2>
-            <div className="final-score">
-              <label htmlFor="final-score-input">Confirm Final Score:</label>
-              <input
-                id="final-score-input"
-                type="text"
-                value={finalScore}
-                onChange={handleScoreChange}
-                placeholder="--"
-              />
-              <h2 className="full-score">/ {assignmentDetails.maxObtainableGrade}</h2>
-            </div>
+        </div>
+        <div className="score-div">
+          <h2 className="aiscore">AIScore: {assignmentDetails.AIassignedGrade}/{assignmentDetails.maxObtainableGrade}</h2>
+          <div className="empty"></div>
+          <div className="final-score">
+            <label htmlFor="final-score-input">Confirm Final Score:</label>
+            <input
+              id="final-score-input"
+              type="text"
+              value={finalScore}
+              onChange={handleScoreChange}
+              placeholder="--"
+            />
+            <h2 className="full-score">/ {assignmentDetails.maxObtainableGrade}</h2>
           </div>
-          <div className="student-info">
-            <div className="feedback">
-              <h4>AI Feedback</h4>
-              <textarea
-                value={feedback}
-                onChange={handleFeedbackChange}
-                readOnly={!isEditingFeedback}
-                onClick={toggleEditFeedback}
-                onBlur={toggleEditFeedback}
-              />
-            </div>
-            <div className="evaluator-comments">
-              <h4>Evaluator Comments</h4>
-              <textarea
-                value={instructorFeedback}
-                onChange={handleInstructorFeedbackChange}
-                placeholder="Please fill-in instructor Feedback..."
-              ></textarea>
-            </div>
-            <div className="student-submission">
-                <h4>Student Submission</h4>
-                {fileName && (
-                    <div>
-                        <a 
-                            href={`http://localhost:5173/eval-api/file/${studentId}/${courseId}/${assignmentId}/${fileName}`} 
-                            download
-                        >
-                            {fileName}
-                        </a>
-                    </div>
-                )}
-                {submissionLink && (
-                    <div>
-                        <a 
-                            href={submissionLink.startsWith('http://') || submissionLink.startsWith('https://') ? submissionLink : `https://${submissionLink}`}
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                        >
-                            {submissionLink}
-                        </a>
-                    </div>
-                )}
-                {!fileName && !submissionLink && <p>No submissions uploaded yet.</p>}
-            </div>
-            <button className="mark-complete" onClick={handleMarkComplete}>Mark evaluation as complete</button>
+        </div>
+        <div className="student-info">
+          <div className="feedback">
+            <h4>AI Feedback</h4>
+            <textarea
+              value={feedback}
+              onChange={handleFeedbackChange}
+              readOnly={!isEditingFeedback}
+              onClick={toggleEditFeedback}
+              onBlur={toggleEditFeedback}
+            />
+          </div>
+          <div className="evaluator-comments">
+            <h4>Evaluator Comments</h4>
+            <textarea
+              value={instructorFeedback}
+              onChange={handleInstructorFeedbackChange}
+              placeholder="Please fill-in instructor Feedback..."
+            ></textarea>
+          </div>
+          <div className="student-submission">
+            <h4>Student Submission</h4>
+            <a href="#">index.html</a>
           </div>
         </div>
       </div>

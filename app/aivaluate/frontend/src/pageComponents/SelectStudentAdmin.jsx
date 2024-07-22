@@ -129,7 +129,6 @@ const SelectStudentAdmin = () => {
                                 <span>{student.firstName} {student.lastName}</span>
                                 <span>{student.studentId}</span>
                             </div>
-                            <div className="major">Major: {student.major}</div>
                             <div className="email">
                                 <span>Email:</span>
                                 <span>{student.email}</span>

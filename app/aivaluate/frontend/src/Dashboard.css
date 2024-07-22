@@ -14,6 +14,7 @@
     animation: growDown 1s ease-out 1s forwards;
     opacity: 0;
     animation-fill-mode: forwards;
+    cursor: default;
   }
   
 .notification-container {
@@ -21,6 +22,10 @@
     margin-top: 1px;
     float: right;
     font-weight: bold;
+    cursor: default;
+}
+.notification-container p{
+  cursor: default;
 }
 
 .notificationBubble{color: rgb(255, 183, 0);}

@@ -281,15 +281,14 @@ const GradingAssignments = () => {
                   showTimeSelect
                   className="due-date-picker"
                   dateFormat="MMMM d, yyyy h:mm aa"
-                  text={dueDate.toLocaleString()}
                 />
                 <button className="save-button" onClick={saveDueDate}>Save</button>
               </>
             ) : (
               <>
-                <p className="due-date">Due: {dueDate.toLocaleString()}</p>
-                <div onClick={toggleEdit}>
-                  <CircumIcon name="edit" />
+                <p className="due-date" cursor="pointer" onClick={toggleEdit} >Due: {dueDate.toLocaleString()}</p>
+                <div cursor="pointer" onClick={toggleEdit}>
+                  <CircumIcon className="edit-due-date" name="edit" />
                 </div>
               </>
             )}

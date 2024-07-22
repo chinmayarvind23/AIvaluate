@@ -101,9 +101,9 @@ const Students = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
-                                    <div className="file-name">{file}</div>
-                                    <div className="file-icon"></div>
+                                <div className="file-item-no-click" key={index}>
+                                    <div className="file-name-no-click">{file}</div>
+                                    <div className="file-icon-no-click"></div>
                                 </div>
                             ))}
                         </div>

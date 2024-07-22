@@ -51,18 +51,16 @@
     justify-content: space-between;
     font-size: 20px;
     margin-bottom: 10px;
+    cursor: default;
 }
 
-.major {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
 
 .email, .password, .courses {
     background-color: #767676;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    cursor: default;
 }
 
 .center-it{

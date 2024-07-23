@@ -5,7 +5,7 @@ const { formatDueDate } = require('../util');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-// const axios = require('axios');
+const axios = require('axios');
 
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
@@ -720,28 +720,29 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
     }
 });
 
-// router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res) => {
-//     const { assignmentId } = req.params;
-//     const instructorId = req.session.instructorId;
-//     const courseId = req.session.courseId;
+router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res) => {
+    const { assignmentId } = req.params;
+    const instructorId = req.session.instructorId;
+    const courseId = req.session.courseId;
 
-//     try {
-//         const response = await axios.post(`http://localhost:9000/ai/assignments/${assignmentId}/process-submissions`, {
-//             instructorId,
-//             courseId
-//         }, {
-//             withCredentials: true
-//         });
+    console.log(`Forwarding request to AI server to process submissions for assignment ${assignmentId}, course ${courseId}, instructor ${instructorId}`);
+    try {
+        const response = await axios.post(`http://localhost:9000/ai-api/ai/assignments/${assignmentId}/process-submissions`, {
+            instructorId,
+            courseId
+        }, {
+            withCredentials: true
+        });
 
-//         res.status(response.status).json(response.data);
-//     } catch (error) {
-//         console.error(`Error forwarding grading request: ${error.message}`);
-//         if (error.response) {
-//             res.status(error.response.status).json({ error: error.response.data });
-//         } else {
-//             res.status(500).json({ error: 'Failed to process submissions' });
-//         }
-//     }
-// });
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        console.error(`Error forwarding grading request: ${error.message}`);
+        if (error.response) {
+            res.status(error.response.status).json({ error: error.response.data });
+        } else {
+            res.status(500).json({ error: 'Failed to process submissions' });
+        }
+    }
+});
 
 module.exports = router;

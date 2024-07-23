@@ -27,15 +27,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use((req, res, next) => {
-  console.log('Session:', req.session);
-  console.log('Request Body:', req.body);
-  if (!req.session.courseId && req.body.courseId) {
-      req.session.courseId = req.body.courseId;
-  }
-  if (!req.session.instructorId && req.body.instructorId) {
-      req.session.instructorId = req.body.instructorId;
-  }
-  next();
+    console.log('Session:', req.session);
+    console.log('Request Body:', req.body);
+    if (!req.session.courseId && req.body.courseId) {
+        req.session.courseId = req.body.courseId;
+    }
+    if (!req.session.instructorId && req.body.instructorId) {
+        req.session.instructorId = req.body.instructorId;
+    }
+    next();
 });
 
 // app.post('/ai-api/set-session', (req, res) => {

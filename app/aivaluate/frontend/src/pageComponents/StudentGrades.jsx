@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../Grades.css';
 import '../HelpPage.css';
@@ -24,6 +24,7 @@ const StudentGrades = () => {
       try {
         const response = await axios.get(`http://localhost:5173/stu-api/student-grades/${courseId}`, { withCredentials: true });
         const data = response.data;
+        console.log(data); // Log data to ensure assignmentId is present
         setStudentName(data.studentName);
         setTotalGrade(data.totalGrade);
         setTotalMaxGrade(data.totalMaxGrade);
@@ -67,8 +68,11 @@ const StudentGrades = () => {
               <tbody>
                 {grades.map((grade, index) => (
                   <tr key={index}>
-                    <td>{grade.name}</td>
-                    {/* <td>{new Date(grade.due).toLocaleDateString()}</td> */}
+                    <td>
+                      <Link to={`/stu/submit/${courseId}/${grade.assignmentId}`} className="assignment-link">
+                        {grade.name}
+                      </Link>
+                    </td>
                     <td>{grade.due}</td>
                     <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                     <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>

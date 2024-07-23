@@ -93,6 +93,7 @@ services:
       - "6000:6000"
     depends_on:
       - db
+      - backend-ai
     volumes:
       - assignment_keys:/app/aivaluate/backend-eval/assignmentKeys
     env_file:
@@ -128,7 +129,7 @@ services:
       - aivaluate-net
     env_file:
       - ./aivaluate/backend-ai/.env
-      
+
 networks:
   aivaluate-net:
     driver: bridge

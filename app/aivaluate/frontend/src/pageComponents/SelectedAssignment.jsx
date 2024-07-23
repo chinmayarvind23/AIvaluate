@@ -1,6 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -13,7 +13,7 @@ const SelectedAssignment = () => {
     const courseId = sessionStorage.getItem('courseId');
     const navBarText = `${courseCode} - ${courseName}`;
     const navigate = useNavigate();
-    const { assignmentId } = useParams(); // Assuming assignmentId is passed as a URL parameter
+    const { assignmentId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,32 +22,34 @@ const SelectedAssignment = () => {
     const [error, setError] = useState(null);
     const [gradesVisible, setGradesVisible] = useState(true);
 
-    useEffect(() => {
-        const fetchSubmissions = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
-                    withCredentials: true
-                });
+    const fetchSubmissions = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
+                withCredentials: true
+            });
 
-                if (response.status === 200) {
-                    setSubmissions(response.data);
-                    setFilteredFiles(response.data);
-                } else {
-                    console.error('Expected an array but got:', response.data);
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    setError('No submissions found for this assignment.');
-                    setSubmissions([]);
-                    setFilteredFiles([]);
-                } else {
-                    console.error('Error fetching submissions:', error);
-                }
+            if (response.status === 200) {
+                setSubmissions(response.data);
+                setFilteredFiles(response.data);
+            } else {
+                console.error('Expected an array but got:', response.data);
+                setError('Unexpected response format.');
             }
-        };
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setError(`No submissions found for this assignment in course ${courseId}.`);
+                setSubmissions([]);
+                setFilteredFiles([]);
+            } else {
+                console.error(`Error fetching submissions for course ${courseId}:`, error);
+                setError(`Error fetching submissions for course ${courseId}.`);
+            }
+        }
+    }, [assignmentId, courseId]);
 
+    useEffect(() => {
         fetchSubmissions();
-    }, [assignmentId]);
+    }, [fetchSubmissions, assignmentId]);
 
     useEffect(() => {
         if (searchTerm) {
@@ -61,12 +63,9 @@ const SelectedAssignment = () => {
         }
     }, [searchTerm, submissions]);
 
-    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // This calculates the total number of pages based on the max number of items per page
     const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -83,7 +82,7 @@ const SelectedAssignment = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     };
 
     const toggleGradesVisibility = () => {
@@ -92,6 +91,25 @@ const SelectedAssignment = () => {
 
     const handleMarkAssignment = (studentId, assignmentId) => {
         navigate(`/eval/${studentId}/${assignmentId}/grading`);
+    };
+
+    const handleGradeWithAI = async () => {
+        try {
+            const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
+                withCredentials: true
+            });
+            if (response.status === 200) {
+                alert('Submissions graded successfully.');
+                fetchSubmissions();
+            } else {
+                console.error('Failed to grade submissions:', response.data);
+                setError(`Failed to grade submissions for course ${courseId}.`);
+            }
+        } catch (error) {
+            console.error(`Error grading submissions for course ${courseId}:`, error);
+            alert('Failed to grade submissions. Please try again.');
+            setError(`Error grading submissions for course ${courseId}.`);
+        }
     };
 
     return (
@@ -107,7 +125,7 @@ const SelectedAssignment = () => {
                             </div>
                             <div className="title-text"><h1>Assignment - Submissions</h1></div>
                             <div className="empty"> </div>
-                            <button className="grades-button">
+                            <button className="grades-button" onClick={handleGradeWithAI}>
                                 Grade With AI
                             </button>
                             <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
@@ -117,6 +135,13 @@ const SelectedAssignment = () => {
                                 Publish Grades
                             </button>
                         </div>
+                        <input
+                            type="text"
+                            placeholder="Search by student ID or file name"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className="search-input"
+                        />
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
@@ -126,6 +151,7 @@ const SelectedAssignment = () => {
                                 </div>
                             ))}
                         </div>
+                        {error && <div className="error-message">{error}</div>}
                     </div>
                     <div className="pagination-controls">
                         <span>Page {currentPage} of {totalPages}</span>

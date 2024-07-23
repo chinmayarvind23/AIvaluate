@@ -12,7 +12,6 @@ const gradeRoutes = require('./routes/gradeRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const promptRoutes = require('./routes/promptRoutes');
 const evalRoutes = require('./routes/evalRoutes');
-
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);

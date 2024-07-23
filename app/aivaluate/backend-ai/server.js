@@ -1,12 +1,17 @@
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
-const { log } = require('console');
+const session = require('express-session');
 
 const aiRoutes = require('./aiRoutes');
 
 const app = express();
 app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.use('/ai-api', aiRoutes);
 

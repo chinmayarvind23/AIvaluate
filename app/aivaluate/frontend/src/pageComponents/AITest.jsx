@@ -10,6 +10,7 @@ const AITest = () => {
   const [rubricId, setRubricId] = useState('');
   const [rubricText, setRubricText] = useState('');
   const [maxGrade, setMaxGrade] = useState('');
+  const [submissionFile, setSubmissionFile] = useState('');
 
   // Fetch instructorId
   useEffect(() => {
@@ -55,7 +56,7 @@ const AITest = () => {
 
   // Hardcoded submissionId
   // This should be passed in as a prop
-  const submissionId = '30';
+  const submissionId = '32';
   console.log("submissionId:", submissionId);
 
   // Fetch AssignmentID based on submissionId
@@ -79,6 +80,27 @@ const AITest = () => {
   }, [submissionId]);
 
   console.log("assignmentId:", assignmentId);
+
+  //Fetch submissionFile based on submissionId
+  useEffect(() => {
+    const fetchSubmissionFile = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5173/eval-api/submission/${submissionId}`, {
+          withCredentials: true
+        });
+        if (response.data.length > 0) {
+          setSubmissionFile(response.data[0].submissionFile);
+        } else {
+          console.error('No submission found for the given submissionId');
+        }
+      } catch (error) {
+        console.error('There was an error fetching the assignment data:', error);
+      }
+    };
+
+    fetchSubmissionFile();
+  }, [submissionId]);
+
 
   // Fetch Max Grade based on assignmentId
   useEffect(() => {
@@ -168,7 +190,8 @@ const AITest = () => {
 
     try {
       const response = await axios.post(`http://localhost:5173/ai-api/gpt/assistants`, { 
-        promptText: fullPromptText
+        promptText: fullPromptText,
+        fileNames : [submissionFile]
       });
       console.log("Response from server:", response.data);
       setAIResponse(`Assistant's feedback: ${response.data.response.map(msg => msg.text.value).join('\n')}`);
@@ -217,6 +240,10 @@ const AITest = () => {
           <tr>
             <td style={{ border: '1px solid black', padding: '8px' }}><strong>Full Prompt Text</strong></td>
             <td style={{ border: '1px solid black', padding: '8px', whiteSpace: 'pre-wrap' }}>{fullPromptText}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Submission File</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{submissionFile}</td>
           </tr>
           <tr>
             <td style={{ border: '1px solid black', padding: '8px' }}><strong>Message Sent to AI - hardcoded</strong></td>

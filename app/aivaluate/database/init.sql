@@ -368,3 +368,9 @@ VALUES
     ('Prompt 2', 'Prompt 2 description', '5'),
     ('Prompt 3', 'Prompt 3 description', '5')
 ON CONFLICT DO NOTHING;
+
+INSERT INTO "useRubric" ("assignmentId", "assignmentRubricId")
+VALUES (6, 1),
+       (5, 2),
+       (4, 3)
+ON CONFLICT DO NOTHING;

@@ -9,7 +9,7 @@ const AITest = () => {
   const [assignmentId, setAssignmentId] = useState('');
   const [rubricId, setRubricId] = useState('');
   const [rubricText, setRubricText] = useState('');
-  const [maxGrade, setMaxGrade] = useState(0);
+  const [maxGrade, setMaxGrade] = useState('');
 
   // Fetch instructorId
   useEffect(() => {
@@ -55,7 +55,7 @@ const AITest = () => {
 
   // Hardcoded submissionId
   // This should be passed in as a prop
-  const submissionId = '31';
+  const submissionId = '30';
   console.log("submissionId:", submissionId);
 
   // Fetch AssignmentID based on submissionId
@@ -85,7 +85,7 @@ const AITest = () => {
     const fetchMaxGrade = async () => {
       if (assignmentId) { // Ensure assignmentId is set
         try {
-          const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
+          const response = await axios.get(`http://localhost:5173/eval-api/assignment/${assignmentId}`, {
             withCredentials: true
           });
           console.log('Assignment data:', response.data); // Log the entire response
@@ -157,9 +157,7 @@ const AITest = () => {
 
   // Append rubricText to profPromptText
   useEffect(() => {
-    if (profPromptText && rubricText) {
       setFullPromptText(`Professor's Prompt: ${profPromptText}\n\n--- End of Professor's Prompt ---\n\nAssignment Rubric: ${rubricText}\n\n--- End of Assignment Rubric ---\n\nMax Obtainable Grade: ${maxGrade}\n\n--- End of Max Obtainable Grade ---`);
-    }
   }, [profPromptText, rubricText, maxGrade]);
 
   const handleSubmit = async (e) => {
@@ -186,43 +184,43 @@ const AITest = () => {
   return (
     <div>
       <h2>Assignment Details</h2>
-      <table>
+      <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
         <tbody>
           <tr>
-            <td><strong>Submission ID - hardcoded</strong></td>
-            <td>{submissionId}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Submission ID - hardcoded</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{submissionId}</td>
           </tr>
           <tr>
-            <td><strong>Professor's Prompt</strong></td>
-            <td>{profPromptText}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Professor's Prompt</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{profPromptText}</td>
           </tr>
           <tr>
-            <td><strong>Assignment Rubric</strong></td>
-            <td>{rubricText}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Assignment Rubric</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{rubricText}</td>
           </tr>
           <tr>
-            <td><strong>Assignment ID</strong></td>
-            <td>{assignmentId}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Assignment ID</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{assignmentId}</td>
           </tr>
           <tr>
-            <td><strong>Rubric ID</strong></td>
-            <td>{rubricId}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Rubric ID</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{rubricId}</td>
           </tr>
           <tr>
-            <td><strong>Instructor ID</strong></td>
-            <td>{instructorId}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Instructor ID</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{instructorId}</td>
           </tr>
           <tr>
-            <td><strong>Max Obtainable Grade</strong></td>
-            <td>{maxGrade}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Max Obtainable Grade</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{maxGrade}</td>
           </tr>
           <tr>
-            <td><strong>Full Prompt Text</strong></td>
-            <td>{fullPromptText}</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Full Prompt Text</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px', whiteSpace: 'pre-wrap' }}>{fullPromptText}</td>
           </tr>
           <tr>
-            <td><strong>Message Sent to AI - hardcoded</strong></td>
-            <td>Grade the student assignments.</td>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Message Sent to AI - hardcoded</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>Grade the student assignments.</td>
           </tr>
         </tbody>
       </table>

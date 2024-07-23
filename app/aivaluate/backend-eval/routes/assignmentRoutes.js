@@ -168,6 +168,24 @@ router.get('/assignments/:assignmentId', async (req, res) => {
     }
 });
 
+// Get assignment by assignment ID
+router.get('/assignment/:assignmentId', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query('SELECT * FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching assignment:', error);
+        res.status(500).json({ message: 'Error fetching assignment' });
+    }
+});
+
 // Get all assignments
 router.get('/assignments', async (req, res) => {
     try {

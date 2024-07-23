@@ -18,25 +18,13 @@ body {
     margin-left: 120px;
     margin-right: 120px;
     width: stretch;
-    position: relative; /* Added for positioning */
 }
 
 .user-details {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative; /* Added for positioning */
-}
-
-.user-details div input[type="email"], 
-.user-details div input[type="text"], 
-.user-details-input {
-    border: 2px solid var(--primary-color);
-    border-radius: 50px;
-    background-color: var(--secondary-color);
-    color: var(--third-color);
-    padding: 10px;
-    width: 300px;
+    
 }
 
 .user-details h2 {
@@ -124,6 +112,9 @@ body {
     margin-left: 120px;
     margin-right: 120px;
     width: stretch;
+    margin-left: 120px;
+    margin-right: 120px;
+    width: stretch;
 }
 
 .eval-text {
@@ -148,6 +139,7 @@ body {
 }
 
 .align-check {
+.align-check {
     display: flex;
     align-items: center;
 }
@@ -168,6 +160,7 @@ body {
     color: red;
 }
 
+
 .course-item {
     display: flex;
     justify-content: space-between;
@@ -187,6 +180,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
+
 
 .checkbox-label input[type="checkbox"] {
     display: flex;

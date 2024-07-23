@@ -154,6 +154,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -312,107 +314,58 @@ const EvalManagerInfo = () => {
             <ToastContainer />
             <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
-            <div className="filler-div">
-                <SideMenuBarAdmin tab="evalManager" />
-                <div className="main-margin">
-                    <div className="top-bar">
-                        <div className="back-btn-div">
-                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                        </div>
-                        <h1 className="eval-text">Evaluator Info</h1>
+            <SideMenuBarAdmin tab="evalManager" />
+            <div className="main-margin">
+                <div className="top-bar">
+                    <div className="back-btn-div">
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
                     </div>
-                    <div className="user-info">
-    <div className="user-details">
-        {isEditing ? (
-            <div>
-                <input 
-                    type="text" 
-                    value={editedFirstName} 
-                    onChange={(e) => setEditedFirstName(e.target.value)} 
-                    className="user-details-input"
-                />
-                <input 
-                    type="text" 
-                    value={editedLastName} 
-                    onChange={(e) => setEditedLastName(e.target.value)} 
-                    className="user-details-input"
-                />
-            </div>
-        ) : (
-            <h2>Name: {evaluator.firstName} {evaluator.lastName}</h2>
-        )}
-        <div className="action-buttons">
-            {isEditing ? (
-                <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
-            ) : (
-                <button className="edit-button" onClick={handleEditClick}>Edit</button>
-            )}
-            <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
-        </div>
-    </div>
-    <div className="info-row">
-        <span>Email: </span>
-        {isEditing ? (
-            <input 
-                type="email" 
-                value={editedEmail} 
-                onChange={(e) => setEditedEmail(e.target.value)} 
-                className="user-details-input"
-            />
-        ) : (
-            <span>{evaluator.email}</span>
-        )}
-    </div>
-    <div className="info-row">
-        <span>Password:</span>
-        <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
-    </div>
-    <div className="info-row">
-        <div className="align-check">
-            <div className="slider-container">
-                <label className="switch">
-                    <input 
-                        type="checkbox" 
-                        checked={isTeachingAssistant} 
-                        onChange={handleRoleChange} 
-                    />
-                    <span className="slider round">
-                        <span className="slider-text">{isTeachingAssistant ? 'TA' : 'Prof'}</span>
-                    </span>
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
-
-                    <div className="course-section">
-                        <div className="search-bar">
-                            <FaSearch className="search-icon" />
-                            <input 
-                                type="text"
-                                placeholder="Search..." 
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)} 
-                            />
+                    <h1 className="eval-text">Evaluator Info</h1>
+                    <div className="empty"> </div>
+                </div>
+                <div className="user-info">
+                    <div className="user-details">
+                        <h2>{evaluator.firstName} {evaluator.lastName}</h2>
+                        <div className="action-buttons">
+                            <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
                         </div>
-                        {filteredCourses.map((course, index) => (
-                            <div className="course-item" key={index}>
-                                <span>{course.courseCode} - {course.courseName}</span>
-                                <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode, course.courseName)}>Drop</button>
-                            </div>
-                        ))}
-                        {droppedCourses.map((course, index) => (
-                            <div className="dropped-course-item" key={index}>
-                                <span>{course.courseCode} - {course.courseName}</span>
-                                <button 
-                                    className="restore-button" 
-                                    onClick={() => handleRestoreCourse(course.courseCode, course.courseName)}
-                                >
-                                    Undo Drop
-                                </button>
-                            </div>
-                        ))}
                     </div>
+                    <div className="info-row">
+                        <span>Email:</span>
+                        <span>{evaluator.email}</span>
+                    </div>
+                    <div className="info-row">
+                        <span>Password:</span>
+                        <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
+                    </div>
+                    <div className="info-row">
+                        <div className="align-check">
+                            <label className="checkbox-label2">
+                                {isTeachingAssistant && (
+                                    <h3 className="ta-text">
+                                        *Teaching Assistant
+                                    </h3>
+                                )}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div className="course-section">
+                    <div className="search-bar">
+                        <FaSearch className="search-icon" />
+                        <input 
+                            type="text"
+                            placeholder="Search..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} 
+                        />
+                    </div>
+                    {filteredCourses.map((course, index) => (
+                        <div className="course-item" key={index}>
+                            <span>{course.courseCode} - {course.courseName}</span>
+                            <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Drop</button>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

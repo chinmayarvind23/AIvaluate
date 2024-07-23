@@ -1,13 +1,18 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import '../CreateAccPT.css';
+import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
+import '../CreateAccPT.css';
+import '../GeneralStyling.css';
+import '../ToastStyles.css';
 import '../CreateAccPT.css';
 import '../GeneralStyling.css';
 import '../ToastStyles.css';
@@ -51,14 +56,19 @@ const CreateAccPT = () => {
             });
             toast.success('User successfully registered!');
             console.log('User successfully registered!');
+            toast.success('User successfully registered!');
+            console.log('User successfully registered!');
             onClose();
           } catch (error) {
             console.error('Error registering evaluator:', error);
             setMessage('Failed to register evaluator');
             toast.error('Failed to register evaluator');
+            setMessage('Failed to register evaluator');
+            toast.error('Failed to register evaluator');
             onClose();
           }
         };
+
 
         return (
           <div className="custom-ui">
@@ -74,9 +84,11 @@ const CreateAccPT = () => {
       overlayClassName: "custom-overlay",
     });
   };
+  };
 
   return (
     <div className="admin-home-portal">
+      <ToastContainer />
       <ToastContainer />
       <ToastContainer />
       <AIvaluateNavBar navBarText="Admin Home Portal" />

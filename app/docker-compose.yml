@@ -128,11 +128,13 @@ services:
       - aivaluate-net
     env_file:
       - ./aivaluate/backend-ai/.env
-      
+    volumes:
+      - assignment_submissions:/app/aivaluate/backend/assignmentSubmissions
+        
 networks:
   aivaluate-net:
     driver: bridge
 
 volumes:
-  assignment_submissions:
+  assignment_submissions: 
   assignment_keys:

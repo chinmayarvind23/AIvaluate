@@ -130,6 +130,7 @@ services:
       - ./aivaluate/backend-ai/.env
     volumes:
       - assignment_submissions:/app/aivaluate/backend/assignmentSubmissions
+      - assignment_keys:/app/aivaluate/backend-eval/assignmentKeys
         
 networks:
   aivaluate-net:

@@ -41,6 +41,29 @@ router.post('/gpt/completions', async (req, res) => {
     }
 });
 
+// Endpoint to read file and return its content as a text string
+router.get('/get-file-content', async (req, res) => {
+    const { filePath } = req.query;
+    log(`Received filePath: ${filePath}`);
+
+    try {
+        // Define the base path for the mounted Docker volume
+
+        if (!fs.existsSync(filePath)) {
+            log(`File not found: ${filePath}`);
+            return res.status(404).json({ error: 'File not found.' });
+        }
+
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        log(`File content: ${fileContent}`);
+        res.json({ fileContent });
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        res.status(500).json({ error: 'Failed to read and return file content' });
+    }
+});
+
+
 // OpenAI Assistant, Thread, and Message creation endpoint
 router.post('/gpt/assistants', async (req, res) => {
     const { promptText, fileNames } = req.body;
@@ -153,7 +176,7 @@ router.post('/gpt/assistants', async (req, res) => {
         // Step 8: Send a message to the created thread
         const messageResponse = await axios.post(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
             role: "user",
-            content: "Grade the student assignments.",
+            content: "Grade the student assignments. Give the student a grade based on the rubric provided.Make sure the grade is displayed at the beginning of your repsonse.",
             attachments: fileIds.map((fileId) => ({
                 file_id: fileId,
                 tools: [{ type: "file_search" }]

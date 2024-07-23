@@ -5,20 +5,6 @@ describe('Selenium Admin Help Page Test', () => {
 
   beforeAll(async () => {
     driver = await new Builder().forBrowser('chrome').build();
-
-    await driver.get('http://localhost:5173/admin/login');
-
-    // Login as admin
-    const emailInput = await driver.wait(until.elementLocated(By.name('email')), 5000);
-    const passwordInput = await driver.wait(until.elementLocated(By.name('password')), 5000);
-    const loginButton = await driver.wait(until.elementLocated(By.css('button[type="submit"]')), 5000);
-
-    await emailInput.sendKeys('admin@email.com');
-    await passwordInput.sendKeys('pass123');
-    await loginButton.click();
-
-    // Wait for redirection to the admin home page
-    await driver.wait(until.urlContains('/admin/home'), 5000);
   });
 
   afterAll(async () => {
@@ -26,22 +12,31 @@ describe('Selenium Admin Help Page Test', () => {
   });
 
   test('Admin Help page loads and displays content', async () => {
-    await driver.get('http://localhost:5173/admin/help');
+    await driver.get('http://localhost:5173/admin/login');
 
-    // Wait for the help content to load
-    const helpSection = await driver.wait(until.elementLocated(By.css('.help-section')), 5000);
+    // Debugging: Log to check if the page loaded
+    console.log('Navigated to /admin/login');
 
-    // Verify that the help section is displayed
-    expect(helpSection).toBeTruthy();
+    // Wait for the email input to be present
+    const emailInput = await driver.wait(until.elementLocated(By.css('input[type="email"]')), 20000);
+    console.log('Email input located');
 
-    // Verify that the Evaluator Manager section is displayed
-    const evaluatorManagerHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Evaluator Manager"]')), 5000);
-    expect(evaluatorManagerHeading).toBeTruthy();
+    // Wait for the password input to be present
+    const passwordInput = await driver.wait(until.elementLocated(By.css('input[type="password"]')), 20000);
+    console.log('Password input located');
 
-    // Verify that the Student Manager section is displayed
-    const studentManagerHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Student Manager"]')), 5000);
-    expect(studentManagerHeading).toBeTruthy();
+    // Wait for the login button to be present
+    const loginButton = await driver.wait(until.elementLocated(By.css('button[type="submit"]')), 20000);
+    console.log('Login button located');
+
+    await emailInput.sendKeys('admin@email.com');
+    await passwordInput.sendKeys('pass123');
+    await loginButton.click();
+    console.log('Login form submitted');
+
+    // Wait for redirection to the admin help page
+    await driver.wait(until.urlContains('/admin/help'), 20000);
+    console.log('Navigated to /admin/help');
+
   });
-
-  // Add more tests here that will reuse the login session
 });

@@ -1,14 +1,19 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import SideMenuBarEval from '../components/SideMenuBarEval';
 import '../DatePicker.css';
 import '../GeneralStyling.css';
 import '../GradingAssignments.css';
-import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
-import SideMenuBarEval from '../components/SideMenuBarEval';
+import '../ToastStyles.css';
 
 const GradingAssignments = () => {
   const { studentId, assignmentId } = useParams();
@@ -83,32 +88,52 @@ const GradingAssignments = () => {
     setIsEditingFeedback(!isEditingFeedback);
   };
 
-  const handleMarkComplete = async () => {
-    try {
-      const response = await axios.put(`http://localhost:5173/eval-api/assignment/complete/${studentId}/${assignmentId}`, {
-        dueDate,
-        InstructorAssignedFinalGrade: finalScore,
-        AIFeedbackText: feedback,
-        InstructorFeedbackText: instructorFeedback
-      }, {
-        withCredentials: true
-      });
+  const handleMarkComplete = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        const handleConfirmComplete = async () => {
+          try {
+            const response = await axios.put(`http://localhost:5173/eval-api/assignment/complete/${studentId}/${assignmentId}`, {
+              dueDate,
+              InstructorAssignedFinalGrade: finalScore,
+              AIFeedbackText: feedback,
+              InstructorFeedbackText: instructorFeedback
+            }, {
+              withCredentials: true
+            });
 
-      if (response.status === 200) {
-        alert('Assignment marked as complete');
-      } else {
-        alert('Failed to mark assignment as complete');
-      }
-    } catch (error) {
-      console.error('Error marking assignment as complete:', error);
-      alert('Failed to mark assignment as complete');
-    }
+            if (response.status === 200) {
+              toast.success('Assignment marked as complete');
+            } else {
+              toast.error('Failed to mark assignment as complete');
+            }
+          } catch (error) {
+            console.error('Error marking assignment as complete:', error);
+            toast.error('Failed to mark assignment as complete');
+          }
+          onClose();
+        };
+
+        return (
+          <div className="custom-ui">
+            <h1>Confirm Completion</h1>
+            <p>Are you sure you want to mark this assignment as complete?</p>
+            <div className="button-group">
+              <button onClick={onClose} className="cancel-button">Cancel</button>
+              <button onClick={handleConfirmComplete} className="confirm-button">Confirm</button>
+            </div>
+          </div>
+        );
+      },
+      overlayClassName: "custom-overlay"
+    });
   };
 
   const navBarText = `${courseCode} - ${courseName}`;
 
   return (
     <div>
+      <ToastContainer />
       <AIvaluateNavBarEval navBarText={navBarText} />
       <div className="filler-div">
         <SideMenuBarEval tab="assignments" />

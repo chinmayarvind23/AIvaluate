@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+import { useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -49,7 +49,7 @@ const Students = () => {
             file.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }, [searchTerm, files]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -71,7 +71,7 @@ const Students = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     };
 
     if (error) {

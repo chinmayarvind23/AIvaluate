@@ -10,8 +10,11 @@ COPY . .
 
 RUN npm install axios
 
-RUN npm run build
+RUN npm install react-datepicker
+RUN npm install date-fns
 
+
+RUN npm run build
 
 RUN ls -la /app/dist
 

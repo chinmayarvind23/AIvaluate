@@ -90,6 +90,10 @@ const SelectedAssignment = () => {
         setGradesVisible(!gradesVisible);
     };
 
+    const handleMarkAssignment = (studentId, assignmentId) => {
+        navigate(`/eval/${studentId}/${assignmentId}/grading`);
+    };
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />

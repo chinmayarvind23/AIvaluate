@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS "CourseNotification"(
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS "AssignmentSubmission"(
+CREATE TABLE IF NOT EXISTS "AssignmentSubmission" (
     "assignmentSubmissionId" SERIAL NOT NULL PRIMARY KEY,
     "studentId" INT NOT NULL,
     "courseId" INT NOT NULL,
@@ -268,42 +268,42 @@ VALUES
     (3, 1, 3, 'Physics lab scheduled for next week', false)
 ON CONFLICT DO NOTHING;
 
--- Insert dummy data into AssignmentSubmission table
-INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-VALUES (1, 1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
-       (2, 2, 2, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
-       (3, 3, 3, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false),
-       (4, 5, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (5, 5, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (6, 5, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (7, 6, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (8, 6, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (9, 6, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (10, 7, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (11, 7, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (12, 7, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (13, 4, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
-       (14, 4, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
-       (15, 4, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
-       (16, 4, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
-       (17, 4, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
-       (18, 4, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
-       (19, 5, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
-       (20, 5, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
-       (21, 5, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
-       (22, 6, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
-       (23, 6, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
-       (24, 6, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
-       (25, 7, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
-       (26, 7, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
-       (27, 7, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
-       (28, 8, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
-       (29, 8, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
-       (30, 8, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false)
-ON CONFLICT DO NOTHING;
+-- Creating Tables (No changes needed here)
 
+-- Insert dummy data into AssignmentSubmission table with conflict handling
+INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+VALUES (1, 1, 1, '2022-01-14', 'submission1.zip', true, '2022-01-14', true),
+       (2, 2, 1, '2022-01-15', 'submission2.zip', true, '2022-01-15', true),
+       (3, 3, 2, '2022-02-10', 'submission3.zip', true, '2022-02-10', false),
+       (5, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (5, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (5, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (6, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (6, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (6, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (7, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (7, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (7, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (4, 5, 10, '2024-06-04', 'assignment-1-files', true, '2024-06-04', true),
+       (4, 5, 11, '2024-06-14', 'assignment-2-files', true, '2024-06-14', true),
+       (4, 5, 12, '2024-07-08', 'assignment-3-files', true, '2024-07-08', false),
+       (4, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
+       (4, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
+       (4, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
+       (5, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
+       (5, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
+       (5, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
+       (6, 2, 7, '2024-06-25', 'assignment-1-files', true, '2024-06-25', true),
+       (6, 2, 8, '2024-07-01', 'lab-1-files', true, '2024-07-01', false),
+       (6, 2, 9, '2024-07-06', 'assignment-2-files', true, '2024-07-06', false),
+       (7, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
+       (7, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
+       (7, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false),
+       (8, 4, 4, '2024-06-12', 'lab-1-files', true, '2024-06-12', true),
+       (8, 4, 5, '2024-07-11', 'lab-2-files', true, '2024-07-11', false),
+       (8, 4, 6, '2024-07-15', 'lab-3-files', true, '2024-07-15', false);
 
--- Insert dummy data into AssignmentGrade table
+-- Insert dummy data into AssignmentGrade table with conflict handling
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
 VALUES (1, 1, 10, 8, 8, true),
        (2, 1, 10, 9, 9, true),
@@ -335,7 +335,7 @@ VALUES (1, 1, 10, 8, 8, true),
        (28, 4, 12, 12, 12, true),
        (29, 5, 12, 12, 12, true),
        (30, 6, 12, 0, 0, false)
-ON CONFLICT DO NOTHING;
+ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO NOTHING;
 
 -- Insert dummy data into StudentFeedback table
 INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
@@ -358,7 +358,8 @@ INSERT INTO "AssignmentRubric" ("criteria", "rubricName", "courseId")
 VALUES 
     ('Correctness, Efficiency, Documentation', 'Rubric 1', '1'),
     ('Problem Solving, Mathematical Reasoning', 'Rubric 2', '2'),
-    ('Experimental Design, Analysis', 'Rubric 3', '3');
+    ('Experimental Design, Analysis', 'Rubric 3', '3')
+ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into Prompt table
 INSERT INTO "Prompt" ("promptName", "promptText", "instructorId")
@@ -366,5 +367,4 @@ VALUES
     ('Prompt 1', 'Prompt 1 description', '5'),
     ('Prompt 2', 'Prompt 2 description', '5'),
     ('Prompt 3', 'Prompt 3 description', '5')
-
 ON CONFLICT DO NOTHING;

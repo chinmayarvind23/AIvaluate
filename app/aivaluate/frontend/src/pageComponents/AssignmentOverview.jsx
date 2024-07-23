@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaFile, FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import '../AssignmentOverview.css';
-// import '../CourseHome.css';
 import axios from 'axios';
+import '../AssignmentOverview.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -17,13 +16,7 @@ const AssignmentOverview = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [assignments, setAssignments] = useState([]);
   const [filteredAssignments, setFilteredAssignments] = useState([]);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [error, setError] = useState(null);
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-    console.log(`menu open - ${!menuOpen}`);
-  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -32,7 +25,7 @@ const AssignmentOverview = () => {
   useEffect(() => {
     const fetchAssignments = async () => {
       if (!courseId) {
-        console.error('Course ID is not set in session storage');
+        setError('Course ID is not set in session storage');
         return;
       }
 
@@ -48,16 +41,18 @@ const AssignmentOverview = () => {
             setError(null);
           } else {
             console.error('Expected an array but got:', response.data);
+            setError('Unexpected response format');
           }
         }
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setError('No assignments found for this course.');
-          setAssignments([]);
-          setFilteredAssignments([]);
         } else {
+          setError('Error fetching assignments.');
           console.error('Error fetching assignments:', error);
         }
+        setAssignments([]);
+        setFilteredAssignments([]);
       }
     };
 
@@ -66,22 +61,16 @@ const AssignmentOverview = () => {
 
   const handleNavigate = (assignmentId) => {
     navigate(`/stu/submit/${courseId}/${assignmentId}`);
-
   };
-  
+
   useEffect(() => {
-    try {
-      if (searchTerm) {
-        const results = assignments.filter(assignment =>
-          assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredAssignments(results);
-      } else {
-        setFilteredAssignments(assignments);
-      }
-    } catch (error) {
-      // Handle the error or do nothing
-      console.error('An error occurred while filtering assignments:', error);
+    if (searchTerm) {
+      const results = assignments.filter(assignment =>
+        assignment.assignmentName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredAssignments(results);
+    } else {
+      setFilteredAssignments(assignments);
     }
   }, [searchTerm, assignments]);
 
@@ -120,6 +109,23 @@ const AssignmentOverview = () => {
                         <th>Name</th>
                         <th>Due Date</th>
                         <th>Obtainable Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredAssignments.map((assignment, index) => (
+                      <tr key={index}>
+                        <td>
+                          <button className="icon-button" onClick={() => handleNavigate(assignment.assignmentId)}>
+                            <FaFile className="file-icon" />
+                          </button>
+                        </td>
+                        <td>
+                          <button className="link-button" onClick={() => handleNavigate(assignment.assignmentId)}>
+                            {assignment.assignmentName}
+                          </button>
+                        </td>
+                        <td>{assignment.dueDate}</td>
+                        <td>{assignment.maxObtainableGrade}</td>
                       </tr>
                     </thead>
                     <tbody>

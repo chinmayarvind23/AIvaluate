@@ -1,6 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../PublishAssignment.css';
@@ -10,6 +10,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 const PublishAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
+    const courseId = sessionStorage.getItem('courseId');
     const navBarText = `${courseCode} - ${courseName}`;
     const { assignmentId } = useParams();
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ const PublishAssignment = () => {
     const [isEdited, setIsEdited] = useState(false);
     const [isPublished, setIsPublished] = useState(null);
 
-    const fetchAssignment = async () => {
+    const fetchAssignment = useCallback(async () => {
         try {
             const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
                 withCredentials: true
@@ -37,11 +38,11 @@ const PublishAssignment = () => {
         } catch (error) {
             console.error('Error fetching assignment:', error);
         }
-    };
+    }, [assignmentId]);
 
     useEffect(() => {
         fetchAssignment();
-    }, [assignmentId]);
+    }, [fetchAssignment]);
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -68,7 +69,6 @@ const PublishAssignment = () => {
                 withCredentials: true
             });
             if (response.status === 200) {
-                // Fetch the latest state from the database after toggling
                 fetchAssignment();
                 console.log(`Assignment ${isPublished ? 'unpublished' : 'published'} successfully`);
             } else {
@@ -84,7 +84,8 @@ const PublishAssignment = () => {
             await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
                 assignmentName: title,
                 dueDate: deadline,
-                criteria: rubricContent
+                criteria: rubricContent,
+                courseId: courseId
             }, {
                 withCredentials: true
             });

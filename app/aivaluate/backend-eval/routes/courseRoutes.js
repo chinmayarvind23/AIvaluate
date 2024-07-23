@@ -61,8 +61,8 @@ router.get('/courses/active', async (req, res) => {
 });
 
 router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
-    const instructorId = req.user.instructorId; // Access the instructorId from the session
-    console.log('instructor ID:', instructorId); // Log instructor ID to verify
+    const instructorId = req.user.instructorId;
+    console.log('instructor ID:', instructorId);
 
     pool.query(
         `SELECT "Course"."courseId", "Course"."courseCode", "Course"."courseName" 
@@ -75,7 +75,7 @@ router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
                 console.error('Error executing query:', err);
                 return res.status(500).json({ error: 'Database error' });
             }
-            console.log('Courses:', results.rows); // Log query results to verify
+            console.log('Courses:', results.rows);
             res.json(results.rows);
         }
     );
@@ -176,25 +176,34 @@ router.get('/courses/:courseId', async (req, res) => {
 });
 
 // Fetch all submissions for a course
-router.get('/courses/:courseId/submissions', checkAuthenticated, async (req, res) => {
-    const courseId = parseInt(req.params.courseId, 10);
+router.get('/courses/:courseId/submissions', async (req, res) => {
+    const { courseId } = req.params;
+
+    if (!courseId) {
+        return res.status(400).json({ message: 'Invalid course ID' });
+    }
 
     try {
-        const result = await pool.query(
-            `SELECT 
+        const query = `
+            SELECT 
                 "AssignmentSubmission"."assignmentSubmissionId",
                 "AssignmentSubmission"."studentId",
                 "Student"."firstName",
                 "Student"."lastName",
                 "Assignment"."assignmentKey",
-                "AssignmentSubmission"."isGraded"
+                "AssignmentSubmission"."isGraded",
+                "AssignmentSubmission"."submissionFile"
             FROM "AssignmentSubmission"
             JOIN "Assignment" ON "AssignmentSubmission"."assignmentId" = "Assignment"."assignmentId"
             JOIN "Student" ON "AssignmentSubmission"."studentId" = "Student"."studentId"
-            WHERE "AssignmentSubmission"."courseId" = $1`,
-            [courseId]
-        );
-        console.log("Submissions Query Result:", result.rows);  // Debugging
+            WHERE "AssignmentSubmission"."courseId" = $1
+        `;
+        const result = await pool.query(query, [courseId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No submissions found for this course' });
+        }
+
         res.status(200).json(result.rows);
     } catch (error) {
         console.error('Error fetching submissions:', error);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
@@ -8,10 +8,15 @@ const EvalLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  
   const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
+  };
+
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
   };
 
   const handleSubmit = async (e) => {
@@ -25,6 +30,11 @@ const EvalLogin = () => {
       newErrors.email = 'Invalid email address';
     }
 
+    if (!validateInput(email) || !validateInput(password)) {
+      setError('Invalid input detected.');
+      return;
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors.email || newErrors.password);
       return;
@@ -32,8 +42,8 @@ const EvalLogin = () => {
 
     try {
       const response = await axios.post('http://localhost:5173/eval-api/login', {
-        email,
-        password
+        email: email.trim(),
+        password: password.trim()
       }, { withCredentials: true });
       console.log('Login successful:', response.data);
       navigate('/eval/dashboard');
@@ -53,8 +63,8 @@ const EvalLogin = () => {
       </div>
       <div className="auth-container">
         <div className="auth-form secondary-colorbg">
-        <h2 className="auth-title third-color-text">Login</h2>
-        <form onSubmit={handleSubmit}>
+          <h2 className="auth-title third-color-text">Login</h2>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <input 
                 type="email" 

@@ -1,11 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
-// import e from 'express';
 
 const AdminLogin = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,6 +18,11 @@ const AdminLogin = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -31,6 +34,11 @@ const AdminLogin = () => {
       newErrors.email = 'Invalid email address';
     }
 
+    if (!validateInput(email) || !validateInput(password)) {
+      setError('Invalid input detected.');
+      return;
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors.email || newErrors.password);
       return;
@@ -38,16 +46,15 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post('http://localhost:5173/admin-api/login', {
-        email,
-        password
-      }, { withCredentials: true }); // Ensure cookies are sent/received
+        email: email.trim(),
+        password: password.trim()
+      }, { withCredentials: true });
       console.log('Login successful:', response.data);
       navigate('/admin/evaluatormanager');
-    }catch (error) {
+    } catch (error) {
       console.error('There was an error logging in:', error);
       setError('Invalid email or password. Please try again.');
     }
-
   };
 
   return (
@@ -77,7 +84,6 @@ const AdminLogin = () => {
                 required 
               />
             </div>
-            {error && <p className="error-message">{error}</p>}
             <div className="form-group">
               <input 
                 type="password" 

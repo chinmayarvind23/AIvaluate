@@ -130,6 +130,10 @@ const CourseHome = () => {
             });
     }
 
+    const handleAiTest = () => {
+        navigate('/eval/ai-test');
+    };
+
     const navBarText = `${courseCode} - ${courseName}`;
 
     if (loading) {

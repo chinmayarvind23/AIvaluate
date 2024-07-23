@@ -1,4 +1,3 @@
-import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
@@ -12,46 +11,30 @@ import SideMenuBar from '../components/SideMenuBar';
 const StudentViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const navBarText = `${courseCode} - ${courseName}`;
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
-    const [setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
     useEffect(() => {
-        const fetchCourseDetails = async () => {
-            try {
-                const response = await fetch(`/stu-api/courses/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setCourseDetails(data);
-                } else {
-                    console.error('Error fetching course details:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching course details:', error);
-            }
-        };
-    
         const fetchSubmissions = async () => {
             try {
                 const response = await fetch(`/stu-api/courses/${courseId}/submissions`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                if (response.ok) {
+                    const data = await response.json();
+                    setFiles(data);
+                } else {
+                    console.error('Error fetching submissions:', response.statusText);
                 }
-                const data = await response.json();
-                setFiles(data);
             } catch (error) {
                 console.error('Error fetching submissions:', error);
             }
         };
-    
-        fetchCourseDetails();
+
         fetchSubmissions();
-    });
+    }, [courseId]);
 
     useEffect(() => {
         const filtered = files.filter(file =>
@@ -59,7 +42,7 @@ const StudentViewSubmissions = () => {
             file.studentId.toString().includes(searchTerm)
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1); 
+        setCurrentPage(1);
     }, [searchTerm, files]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -84,6 +67,8 @@ const StudentViewSubmissions = () => {
         setCurrentPage(1);
     };
 
+    const navBarText = `${courseCode} - ${courseName}`;
+
     return (
         <div>
             <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
@@ -107,20 +92,26 @@ const StudentViewSubmissions = () => {
                             </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index}>
-                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                        <div className="file-name">{file.assignmentKey} Submission</div>
-                                        {file.isGraded && <div className="file-status">Marked as graded</div>}
-                                    </div>
-                                ))}
+                                <div className="file-item" key={index}>
+                                    {console.log('File:', file)}
+                                    {console.log('Assignment ID:', file.assignmentId)}
+                                    <a 
+                                        className="file-name" 
+                                        href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
+                                        download
+                                    >
+                                        {file.submissionFile.split('/').pop()} Submission
+                                    </a>
+                                    {file.isGraded && <div className="file-status">Marked as graded</div>}
+                                </div>
+                            ))}
                             </div>
                         </div>
-                        <div className="pagination-controls">
-                            <span>Page {currentPage} of {totalPages}</span>
-                            <div className="pagination-buttons">
-                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                            </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
                     </div> 
             </div>

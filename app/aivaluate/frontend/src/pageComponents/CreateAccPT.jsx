@@ -1,11 +1,16 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../CreateAccPT.css';
-import '../GeneralStyling.css';
+import React, { useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
+import '../CreateAccPT.css';
+import '../GeneralStyling.css';
+import '../ToastStyles.css';
 
 const CreateAccPT = () => {
   const navigate = useNavigate();
@@ -33,22 +38,43 @@ const CreateAccPT = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { ...formData, isTA: isTeachingAssistant }; // Use isTA directly from state
-    try {
-      const response = await axios.post('http://localhost:5173/admin-api/evaluatorRegister', data, {
-        withCredentials: true
-      });
-      window.alert('User successfully registered!');
-      console.log('User successfully registered!');
-      
-    } catch (error) {
-      console.error('Error registering evaluator:', error);
-      setMessage('Failed to register evaluator');
-    }
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        const handleRegister = async () => {
+          const data = { ...formData, isTA: isTeachingAssistant };
+          try {
+            const response = await axios.post('http://localhost:5173/admin-api/evaluatorRegister', data, {
+              withCredentials: true
+            });
+            toast.success('User successfully registered!');
+            console.log('User successfully registered!');
+            onClose();
+          } catch (error) {
+            console.error('Error registering evaluator:', error);
+            setMessage('Failed to register evaluator');
+            toast.error('Failed to register evaluator');
+            onClose();
+          }
+        };
+
+        return (
+          <div className="custom-ui">
+            <h1>Confirm Registration</h1>
+            <p>Are you sure you want to register this evaluator?</p>
+            <div className="button-group">
+              <button onClick={onClose} className="cancel-button">Cancel</button>
+              <button onClick={handleRegister} className="confirm-button">Confirm</button>
+            </div>
+          </div>
+        );
+      },
+      overlayClassName: "custom-overlay",
+    });
   };
 
   return (
     <div className="admin-home-portal">
+      <ToastContainer />
       <AIvaluateNavBar navBarText="Admin Home Portal" />
       <SideMenuBarAdmin tab="evalManager"/>
       <div className="main-margin">

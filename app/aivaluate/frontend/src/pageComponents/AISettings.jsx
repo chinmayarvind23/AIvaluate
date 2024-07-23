@@ -1,9 +1,14 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState, useEffect } from 'react';
-import '../AISettings.css';
-import '../GeneralStyling.css';
-import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import the package
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../AISettings.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import '../GeneralStyling.css';
+import '../ToastStyles.css';
 
 const AISettings = () => {
     const [answerType, setAnswerType] = useState('');
@@ -14,7 +19,6 @@ const AISettings = () => {
     const [selectedPromptId, setSelectedPromptId] = useState('');
     const [isEditable, setIsEditable] = useState(false);
 
-    // Fetch instructorId
     useEffect(() => {
         const fetchInstructorData = async () => {
             try {
@@ -30,7 +34,6 @@ const AISettings = () => {
         fetchInstructorData();
     }, []);
 
-    // Fetch all prompts of the instructor
     useEffect(() => {
         const fetchPromptsData = async () => {
             if (instructorId) {
@@ -47,10 +50,9 @@ const AISettings = () => {
         fetchPromptsData();
     }, [instructorId]);
 
-    // Fetch current selected prompt of the instructor
     useEffect(() => {
         const fetchPromptData = async () => {
-            if (instructorId) { // Ensure instructorId is set
+            if (instructorId) { 
                 try {
                     const response = await axios.get(`http://localhost:5173/eval-api/prompt/${instructorId}`, {
                         withCredentials: true
@@ -66,7 +68,6 @@ const AISettings = () => {
                     }
                 } catch (error) {
                     if (error.response && error.response.status === 404) {
-                        // Handle 404 error gracefully
                         setSelectedPromptId('clear');
                         setPromptText('No Prompt Selected');
                         setIsEditable(false);
@@ -93,7 +94,6 @@ const AISettings = () => {
 
     const handlePromptSelect = async (event) => {
         const selectedId = event.target.value;
-        console.log("selectedId is: ", selectedId);
 
         if (selectedId === 'clear') {
             try {
@@ -119,12 +119,39 @@ const AISettings = () => {
         }
     };
 
-    const handleEditPrompt = async (promptId) => {
+    const handleEditPrompt = (promptId) => {
         const prompt = prompts.find(p => p.promptId === promptId);
-        const newName = window.prompt("Enter new name for the prompt:", prompt.promptName); // Show current name in prompt window
-        if (newName) {
-            updatePromptName(promptId, newName);
-        }
+
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleSave = async () => {
+                    const newName = document.getElementById('prompt-name-input').value;
+                    if (newName) {
+                        await updatePromptName(promptId, newName);
+                        toast.success('Prompt name updated successfully');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Edit Prompt Name</h1>
+                        <p>Enter new name for the prompt:</p>
+                        <input
+                            type="text"
+                            id="prompt-name-input"
+                            defaultValue={prompt.promptName}
+                            className="prompt-name-input"
+                        />
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleSave} className="confirm-button">Save</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
+        });
     };
 
     const updatePromptName = async (promptId, newName) => {
@@ -135,8 +162,10 @@ const AISettings = () => {
             setPrompts(prompts.map(prompt => 
                 prompt.promptId === promptId ? { ...prompt, promptName: response.data.promptName } : prompt
             ));
+            toast.success('Prompt name updated successfully');
         } catch (error) {
             console.error('There was an error updating the prompt name:', error);
+            toast.error('Error updating prompt name');
         }
     };
 
@@ -159,10 +188,35 @@ const AISettings = () => {
     };
 
     const handleCreatePrompt = () => {
-        const newPromptName = window.prompt("Enter name for the new prompt:");
-        if (newPromptName) {
-            createNewPrompt(newPromptName);
-        }
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleSave = async () => {
+                    const newPromptName = document.getElementById('new-prompt-name-input').value;
+                    if (newPromptName) {
+                        await createNewPrompt(newPromptName);
+                        toast.success('Prompt created successfully');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Create New Prompt</h1>
+                        <p>Enter name for the new prompt:</p>
+                        <input
+                            type="text"
+                            id="new-prompt-name-input"
+                            className="prompt-name-input"
+                        />
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleSave} className="confirm-button">Save</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
+        });
     };
 
     const createNewPrompt = async (promptName) => {
@@ -177,9 +231,10 @@ const AISettings = () => {
             setSelectedPromptId(newPrompt.promptId.toString());
             setPromptText('');
             setIsEditable(true);
-            await handlePromptSelect({ target: { value: newPrompt.promptId.toString() } }); // Auto-select the new prompt
+            await handlePromptSelect({ target: { value: newPrompt.promptId.toString() } });
         } catch (error) {
             console.error('There was an error creating the new prompt:', error);
+            toast.error('Error creating new prompt');
         }
     };
 
@@ -193,15 +248,17 @@ const AISettings = () => {
                     prompt.promptId.toString() === selectedPromptId ? { ...prompt, promptText } : prompt
                 );
                 setPrompts(updatedPrompts);
-                alert("Prompt has been saved successfully");
+                toast.success("Prompt has been saved successfully");
             } catch (error) {
                 console.error('There was an error updating the prompt text:', error);
+                toast.error('Error updating prompt text');
             }
         }
     };
 
     return (
         <div>
+            <ToastContainer />
             <AIvaluateNavBarEval tab="ai" navBarText="AI Settings" />
             <div className='secondary-colorbg ai-section'>
                 <div className="ai-settings-div">

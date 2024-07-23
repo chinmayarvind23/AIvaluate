@@ -1,10 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import '../CourseHome.css';
-import '../GeneralStyling.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
+import '../CourseHome.css';
+import '../GeneralStyling.css';
+import '../ToastStyles.css';
 import AssignTaModal from './AssignTaModal';
 import CourseEditModal from './CourseEditModal';
 
@@ -24,19 +29,19 @@ const CourseHome = () => {
         axios.get(`http://localhost:5173/eval-api/courses/${courseId}`)
             .then(response => {
                 setCourse(response.data);
-                setIsArchived(response.data.isArchived); // Set the archived status
+                setIsArchived(response.data.isArchived);
                 setLoading(false);
             })
             .catch(error => {
                 console.error('Failed to fetch course details', error);
-                navigate('/eval/dashboard'); // redirect if the course is not found or error occurs
+                navigate('/eval/dashboard');
             });
     }, [courseId, navigate]);
 
     const handleEditCourse = () => {
         setIsEditModalOpen(true);
     };
-    
+
     const closeEditModal = () => {
         setIsEditModalOpen(false);
     };
@@ -52,83 +57,100 @@ const CourseHome = () => {
     const saveCourseEdits = (editedCourse) => {
         axios.put(`http://localhost:5173/eval-api/courses/${courseId}`, editedCourse)
             .then(response => {
-                console.log('Course updated:', response.data);
-                setCourse(response.data); // Update the course details displayed      
+                setCourse(response.data);
                 closeEditModal();
+                toast.success('Course updated successfully');
             })
             .catch(error => {
                 console.error('Failed to update course', error);
-                // Optionally show an error message here
+                toast.error('Failed to update course');
             });
     };
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
-        console.log(`menu open - ${!menuOpen}`); // Logging state change
-    };
-
-    const clickedMenu = {
-        color: 'white',
-        background: '#4d24d4',
-        float: 'right',
-        marginBottom: '10px'
-    };
-
-    const boostFromTop = {
-        marginTop: '120px',
-        color: '#4d24d4',
+        console.log(`menu open - ${!menuOpen}`);
     };
 
     const handleArchiveCourse = () => {
-        if (!isArchived) {
-            const confirmArchive = window.confirm("Are you sure you want to archive this course? Archiving this course will remove it from the active courses list.");
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleArchive = async () => {
+                    try {
+                        const response = await axios.put(`http://localhost:5173/eval-api/courses/${courseId}/archive`);
+                        setIsArchived(true);
+                        toast.success('Course archived successfully');
+                    } catch (error) {
+                        console.error('Failed to archive course', error);
+                        toast.error('Failed to archive course');
+                    }
+                    onClose();
+                };
 
-            if (!confirmArchive) {
-                return;
-            }
-            axios.put(`http://localhost:5173/eval-api/courses/${courseId}/archive`)
-                .then(response => {
-                    console.log(response.data);
-                    alert('Course archived successfully');
-                    setIsArchived(true); // Update the archived status
-                })
-                .catch(error => {
-                    console.error('Failed to archive course', error);
-                });
-        } else {
-            const confirmUnarchive = window.confirm("Are you sure you want to unarchive this course? Unarchiving this course will add it back to the active courses list.");
+                const handleUnarchive = async () => {
+                    try {
+                        const response = await axios.put(`http://localhost:5173/eval-api/courses/${courseId}/unarchive`);
+                        setIsArchived(false);
+                        toast.success('Course unarchived successfully');
+                    } catch (error) {
+                        console.error('Failed to unarchive course', error);
+                        toast.error('Failed to unarchive course');
+                    }
+                    onClose();
+                };
 
-            if (!confirmUnarchive) {
-                return;
-            }
-            axios.put(`http://localhost:5173/eval-api/courses/${courseId}/unarchive`)
-                .then(response => {
-                    console.log(response.data);
-                    alert('Course unarchived successfully');
-                    setIsArchived(false); // Update the archived status
-                })
-                .catch(error => {
-                    console.error('Failed to unarchive course', error);
-                });
-        }
+                return (
+                    <div className="custom-ui">
+                        <h1>{isArchived ? 'Unarchive Course' : 'Archive Course'}</h1>
+                        <p>
+                            {isArchived
+                                ? 'Are you sure you want to unarchive this course? Unarchiving this course will add it back to the active courses list.'
+                                : 'Are you sure you want to archive this course? Archiving this course will remove it from the active courses list.'}
+                        </p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={isArchived ? handleUnarchive : handleArchive} className="confirm-button">
+                                {isArchived ? 'Unarchive' : 'Archive'}
+                            </button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
+        });
     };
 
     const handleDeleteCourse = () => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this course? Deleting this course will remove all associated assignments, rubrics, and student grades permanently.");
-        
-        if (!confirmDelete) {
-            return;
-        }
-        axios.delete(`http://localhost:5173/eval-api/courses/${courseId}`)
-            .then(response => {
-                console.log(response.data);
-                alert('Course deleted successfully');
-                navigate('/eval/dashboard');
-            })
-            .catch(error => {
-                console.error('Failed to delete course', error);
-            });
-    }
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleDelete = async () => {
+                    try {
+                        const response = await axios.delete(`http://localhost:5173/eval-api/courses/${courseId}`);
+                        toast.success('Course deleted successfully');
+                        navigate('/eval/dashboard');
+                    } catch (error) {
+                        console.error('Failed to delete course', error);
+                        toast.error('Failed to delete course');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Delete Course</h1>
+                        <p>
+                            Are you sure you want to delete this course? Deleting this course will remove all associated assignments, rubrics, and student grades permanently.
+                        </p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleDelete} className="confirm-button">Delete</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
+        });
+    };
 
     const handleAiTest = () => {
         navigate('/eval/ai-test');
@@ -142,6 +164,7 @@ const CourseHome = () => {
 
     return (
         <div>
+            <ToastContainer />
             <AIvaluateNavBarEval navBarText={navBarText} />
             <SideMenuBarEval tab='management' />
             <div className="main-margin">

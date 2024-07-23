@@ -5,8 +5,16 @@ import { confirmAlert } from 'react-confirm-alert'; // Import the package
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import the package
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../AISettings.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import '../GeneralStyling.css';
+import '../ToastStyles.css';
 import '../GeneralStyling.css';
 import '../ToastStyles.css';
 
@@ -52,6 +60,7 @@ const AISettings = () => {
 
     useEffect(() => {
         const fetchPromptData = async () => {
+            if (instructorId) { 
             if (instructorId) { 
                 try {
                     const response = await axios.get(`http://localhost:5173/eval-api/prompt/${instructorId}`, {
@@ -120,6 +129,7 @@ const AISettings = () => {
     };
 
     const handleEditPrompt = (promptId) => {
+    const handleEditPrompt = (promptId) => {
         const prompt = prompts.find(p => p.promptId === promptId);
 
         confirmAlert({
@@ -141,7 +151,7 @@ const AISettings = () => {
                             type="text"
                             id="prompt-name-input"
                             defaultValue={prompt.promptName}
-                            className="prompt-name-input-s"
+                            className="prompt-name-input"
                         />
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
@@ -163,8 +173,10 @@ const AISettings = () => {
                 prompt.promptId === promptId ? { ...prompt, promptName: response.data.promptName } : prompt
             ));
             toast.success('Prompt name updated successfully');
+            toast.success('Prompt name updated successfully');
         } catch (error) {
             console.error('There was an error updating the prompt name:', error);
+            toast.error('Error updating prompt name');
             toast.error('Error updating prompt name');
         }
     };
@@ -206,7 +218,7 @@ const AISettings = () => {
                         <input
                             type="text"
                             id="new-prompt-name-input"
-                            className="prompt-name-input-s"
+                            className="prompt-name-input"
                         />
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
@@ -232,8 +244,10 @@ const AISettings = () => {
             setPromptText('');
             setIsEditable(true);
             await handlePromptSelect({ target: { value: newPrompt.promptId.toString() } });
+            await handlePromptSelect({ target: { value: newPrompt.promptId.toString() } });
         } catch (error) {
             console.error('There was an error creating the new prompt:', error);
+            toast.error('Error creating new prompt');
             toast.error('Error creating new prompt');
         }
     };
@@ -249,8 +263,10 @@ const AISettings = () => {
                 );
                 setPrompts(updatedPrompts);
                 toast.success("Prompt has been saved successfully");
+                toast.success("Prompt has been saved successfully");
             } catch (error) {
                 console.error('There was an error updating the prompt text:', error);
+                toast.error('Error updating prompt text');
                 toast.error('Error updating prompt text');
             }
         }
@@ -258,6 +274,7 @@ const AISettings = () => {
 
     return (
         <div>
+            <ToastContainer />
             <ToastContainer />
             <AIvaluateNavBarEval tab="ai" navBarText="AI Settings" />
             <div className='secondary-colorbg ai-section'>

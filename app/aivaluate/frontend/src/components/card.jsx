@@ -3,12 +3,18 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert'; // Import the package
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert'; // Import the package
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../CourseCards.css';
 import '../ToastStyles.css';
+import '../ToastStyles.css';
 
+const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
 const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
   console.log("Card props:", { courseId, courseCode, courseName, isArchived });
   const navigate = useNavigate();
@@ -18,6 +24,7 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
     if (courseCode === 'Create Course') {
       navigate('/eval/createcourse');
     } else if (user === 'prof') {
+    } else if (user === 'prof') {
       navigate(`/eval/grades/${courseId}`);
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');
@@ -26,6 +33,7 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
       sessionStorage.setItem('courseName', courseName);
       sessionStorage.setItem('courseId', courseId);
       navigate(`/eval/grades/${courseId}`);
+    } else if (user === 'stu') {
     } else if (user === 'stu') {
       sessionStorage.clear('courseId');
       sessionStorage.clear('courseCode');
@@ -70,8 +78,46 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
     } catch (error) {
       console.error('Error enrolling in course:', error);
       toast.error('Error enrolling in course');
+      navigate(`/stu/grades/${courseId}`);
+    } else if (user === 'joinCourse') {
+      confirmAlert({
+        customUI: ({ onClose }) => {
+          const handleButtonClick = async (label) => {
+            if (label === 'Yes') {
+              await handleConfirmEnroll();
+            }
+            onClose();
+          };
+
+          return (
+            <div className="custom-ui">
+              <h1>Confirm Enrollment</h1>
+              <p>Are you sure you want to enroll in the course: {courseName} ({courseCode})?</p>
+              <div className="button-group">
+                <button onClick={() => handleButtonClick('No')} className="cancel-button">No</button>
+                <button onClick={() => handleButtonClick('Yes')} className="confirm-button">Yes</button>
+              </div>
+            </div>
+          );
+        },
+        overlayClassName: "custom-overlay", // Custom class for overlay
+      });
     }
   };
+
+  const handleConfirmEnroll = async () => {
+    try {
+      const response = await axios.post('http://localhost:5173/stu-api/enroll-course', { courseId }, { withCredentials: true });
+      if (response.status === 200) {
+        toast.success('Successfully enrolled in course!');
+        SetEnrolled(true);
+      }
+    } catch (error) {
+      console.error('Error enrolling in course:', error);
+      toast.error('Error enrolling in course');
+    }
+  };
+
 
   return (
     <div className={courseCode === 'Create Course' ? "add-course-card course-card" : "course-card"} onClick={handleClick}>
@@ -84,8 +130,18 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
           <img src="../../public/prof-course-image.svg" alt="Professor Course Image" />
         )
       )}
+      {enrolled && (
+        <div className="check-overlay">
+          <CircumIcon name="circle_check" className="check-icon" />
+        </div>
+      )}
       <h2>{courseCode}
         {isArchived && <span className="archive-status"> - Archived</span>}
+      </h2>
+      <p>{courseName}</p>
+      <div>
+        {(courseCode === 'Create Course' || user === 'joinCourse') && <CircumIcon name="circle_plus" />}
+      </div>
       </h2>
       <p>{courseName}</p>
       <div>
@@ -96,3 +152,4 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
 };
 
 export default Card;
+

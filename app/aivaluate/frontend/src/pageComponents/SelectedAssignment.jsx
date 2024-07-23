@@ -156,26 +156,23 @@ const SelectedAssignment = () => {
     const handleGradeWithAI = async () => {
         const courseId = sessionStorage.getItem('courseId');
         const instructorId = sessionStorage.getItem('instructorId');
-
+    
         if (!instructorId || !courseId) {
             console.error('Instructor ID or Course ID is missing.');
             setError('Instructor ID or Course ID is missing.');
             return;
         }
-
+    
         try {
-            console.log('Sending request to grade with AI:', {
-                instructorId,
-                courseId
-            });
-
+            console.log('Sending request to grade with AI:', { instructorId, courseId });
+    
             const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
                 instructorId,
                 courseId
             }, {
                 withCredentials: true
             });
-
+    
             if (response.status === 200) {
                 toast.success('Submissions graded successfully.');
                 fetchSubmissions();

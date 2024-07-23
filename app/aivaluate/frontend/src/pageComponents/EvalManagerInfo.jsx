@@ -1,12 +1,12 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../EvalManagerInfo.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import axios from 'axios';
 
 const EvalManagerInfo = () => {
     const navigate = useNavigate();
@@ -104,11 +104,6 @@ const EvalManagerInfo = () => {
                 <div className="user-info">
                     <div className="user-details">
                         <h2>{evaluator.firstName} {evaluator.lastName}</h2>
-                        <div className="align-check">
-                            <label className="checkbox-label2 ">
-                                <input type="checkbox" checked={isTeachingAssistant} readOnly /> Teaching Assistant
-                            </label>
-                        </div>
                         <div className="action-buttons">
                             <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
                         </div>
@@ -122,15 +117,22 @@ const EvalManagerInfo = () => {
                         <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
                     </div>
                     <div className="info-row">
-                        <span>Department:</span>
-                        <span>{evaluator.department}</span>
+                        <div className="align-check">
+                            <label className="checkbox-label2">
+                                {isTeachingAssistant && (
+                                    <h3 className="ta-text">
+                                        *Teaching Assistant
+                                    </h3>
+                                )}
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div className="course-section">
                     <div className="search-bar">
                         <FaSearch className="search-icon" />
                         <input 
-                            type="text" 
+                            type="text"
                             placeholder="Search..." 
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)} 

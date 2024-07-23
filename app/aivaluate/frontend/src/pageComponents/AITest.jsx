@@ -11,6 +11,7 @@ const AITest = () => {
   const [rubricText, setRubricText] = useState('');
   const [maxGrade, setMaxGrade] = useState('');
   const [submissionFile, setSubmissionFile] = useState('');
+  const [assignmentKey, setAssignmentKey] = useState('');
 
   // Fetch instructorId
   useEffect(() => {
@@ -56,7 +57,7 @@ const AITest = () => {
 
   // Hardcoded submissionId
   // This should be passed in as a prop
-  const submissionId = '32';
+  const submissionId = '33';
   console.log("submissionId:", submissionId);
 
   // Fetch AssignmentID based on submissionId
@@ -101,6 +102,30 @@ const AITest = () => {
     fetchSubmissionFile();
   }, [submissionId]);
 
+  //Fetch assignment Key based on assignmentId
+  useEffect(() => {
+    const fetchAssignmentKey = async () => {
+      if (assignmentId) { // Ensure assignmentId is set
+        try {
+          const response = await axios.get(`http://localhost:5173/eval-api/assignment/${assignmentId}`, {
+            withCredentials: true
+          });
+          const assignmentKey = response.data.assignmentKey;
+          if (assignmentKey !== undefined && assignmentKey !== null) {
+            setAssignmentKey(assignmentKey);
+          } else {
+            console.error('No assignment key found for the given assignmentId');
+          }
+        } catch (error) {
+          console.error('There was an error fetching the assignment key data:', error);
+        }
+      }
+    };
+
+    fetchAssignmentKey();
+  }, [assignmentId]);
+
+  console.log("Assignment Key:", assignmentKey);
 
   // Fetch Max Grade based on assignmentId
   useEffect(() => {
@@ -179,8 +204,20 @@ const AITest = () => {
 
   // Append rubricText to profPromptText
   useEffect(() => {
-      setFullPromptText(`Professor's Prompt: ${profPromptText}\n\n--- End of Professor's Prompt ---\n\nAssignment Rubric: ${rubricText}\n\n--- End of Assignment Rubric ---\n\nMax Obtainable Grade: ${maxGrade}\n\n--- End of Max Obtainable Grade ---`);
-  }, [profPromptText, rubricText, maxGrade]);
+    const createFullPrompt = async () => {
+      const initialPrompt = `Professor's Prompt: ${profPromptText}\n\n--- End of Professor's Prompt ---\n\nAssignment Rubric: ${rubricText}\n\n--- End of Assignment Rubric ---\n\nMax Obtainable Grade: ${maxGrade}\n\n--- End of Max Obtainable Grade ---`;
+      try {
+        const response = await axios.get('http://localhost:5173/get-file-content', {
+          params: { filePath: assignmentKey },
+        });
+        const assignmentKeyContent = response.data.fileContent;
+        setFullPromptText(`${initialPrompt}\n\n${assignmentKeyContent}\n\n--- End of Answer Key ---`);
+      } catch (error) {
+        console.error('Error fetching assignment key content:', error);
+      }
+    };
+    createFullPrompt();
+  }, [profPromptText, rubricText, maxGrade, assignmentKey]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -191,7 +228,7 @@ const AITest = () => {
     try {
       const response = await axios.post(`http://localhost:5173/ai-api/gpt/assistants`, { 
         promptText: fullPromptText,
-        fileNames : [submissionFile]
+        fileNames: [submissionFile],
       });
       console.log("Response from server:", response.data);
       setAIResponse(`Assistant's feedback: ${response.data.response.map(msg => msg.text.value).join('\n')}`);
@@ -203,7 +240,6 @@ const AITest = () => {
       setAIResponse('Error communicating with AI backend');
     }
   };
-
   return (
     <div>
       <h2>Assignment Details</h2>
@@ -244,6 +280,10 @@ const AITest = () => {
           <tr>
             <td style={{ border: '1px solid black', padding: '8px' }}><strong>Submission File</strong></td>
             <td style={{ border: '1px solid black', padding: '8px' }}>{submissionFile}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid black', padding: '8px' }}><strong>Assignment Key</strong></td>
+            <td style={{ border: '1px solid black', padding: '8px' }}>{assignmentKey}</td>
           </tr>
           <tr>
             <td style={{ border: '1px solid black', padding: '8px' }}><strong>Message Sent to AI - hardcoded</strong></td>

@@ -43,7 +43,7 @@ router.post('/forgotpassword', async (req, res) => {
     const instructor = result.rows[0];
     const { default: cryptoRandomString } = await import('crypto-random-string');
     const token = cryptoRandomString({ length: 20, type: 'url-safe' });
-    const tokenExpiration = new Date(Date.now() + 3600000); // 1 hour
+    const tokenExpiration = new Date(Date.now() + 3600100); // 1 hour
 
     await pool.query('UPDATE "Instructor" SET "resetPasswordToken" = $1, "resetPasswordExpires" = $2 WHERE "instructorId" = $3', [token, tokenExpiration, instructor.instructorId]);
 

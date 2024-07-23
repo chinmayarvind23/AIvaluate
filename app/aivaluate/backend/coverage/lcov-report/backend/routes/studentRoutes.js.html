@@ -1268,7 +1268,7 @@ router.post('/stu/forgotpassword', <span class="fstat-no" title="function not co
   
       const student = <span class="cstat-no" title="statement not covered" >result.rows[0];</span>
       const token = <span class="cstat-no" title="statement not covered" >cryptoRandomString({ length: 20, type: 'url-safe' });</span>
-      const tokenExpiration = <span class="cstat-no" title="statement not covered" >new Date(Date.now() + 3600000);</span> // 1 hour
+      const tokenExpiration = <span class="cstat-no" title="statement not covered" >new Date(Date.now() + 3600100);</span> // 1 hour
   
 <span class="cstat-no" title="statement not covered" >      await pool.query('UPDATE "Student" SET "resetPasswordToken" = $1, "resetPasswordExpires" = $2 WHERE "studentId" = $3', [token, tokenExpiration, student.studentId]);</span>
   

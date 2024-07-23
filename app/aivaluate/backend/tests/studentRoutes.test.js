@@ -194,7 +194,7 @@ app.get('/student/:studentId/password', async (req, res) => {
 //       }
   
 //       const student = result.rows[0];
-//       const tokenExpiration = new Date(Date.now() + 3600000); // 1 hour
+//       const tokenExpiration = new Date(Date.now() + 3600100); // 1 hour
   
 //       await pool.query('UPDATE "Student" SET "resetPasswordToken" = $1, "resetPasswordExpires" = $2 WHERE "studentId" = $3', [token, tokenExpiration, student.studentId]);
   

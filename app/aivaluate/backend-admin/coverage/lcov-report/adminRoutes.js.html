@@ -598,7 +598,7 @@ router.post('/forgotpassword', async (req, res) =&gt; {
     const admin = <span class="cstat-no" title="statement not covered" >result.rows[0];</span>
     const { default: cryptoRandomString } = <span class="cstat-no" title="statement not covered" >await import('crypto-random-string');</span>
     const token = <span class="cstat-no" title="statement not covered" >cryptoRandomString({ length: 20, type: 'url-safe' });</span>
-    const tokenExpiration = <span class="cstat-no" title="statement not covered" >new Date(Date.now() + 3600000);</span> // 1 hour
+    const tokenExpiration = <span class="cstat-no" title="statement not covered" >new Date(Date.now() + 3600100);</span> // 1 hour
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    await pool.query('UPDATE "SystemAdministrator" SET "resetPasswordToken" = $1, "resetPasswordExpires" = $2 WHERE "adminId" = $3', [token, tokenExpiration, admin.adminId]);</span>
 &nbsp;

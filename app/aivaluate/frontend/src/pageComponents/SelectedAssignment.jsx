@@ -10,7 +10,6 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 const SelectedAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const courseId = sessionStorage.getItem('courseId');
     const navBarText = `${courseCode} - ${courseName}`;
     const navigate = useNavigate();
     const { assignmentId } = useParams();
@@ -22,7 +21,57 @@ const SelectedAssignment = () => {
     const [error, setError] = useState(null);
     const [gradesVisible, setGradesVisible] = useState(true);
 
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            console.log('Setting session data:', { instructorId, courseId });
+            await axios.post('http://localhost:5173/eval-api/set-session', {
+                instructorId,
+                courseId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+            setError('Failed to set session data.');
+        }
+    }, []);
+
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                setError('Failed to fetch instructor details.');
+                return;
+            }
+        }
+
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            setError('Course ID must be set in session storage.');
+            return;
+        }
+
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);
+
     const fetchSubmissions = useCallback(async () => {
+        const courseId = sessionStorage.getItem('courseId');
+
         try {
             const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
                 withCredentials: true
@@ -45,11 +94,18 @@ const SelectedAssignment = () => {
                 setError(`Error fetching submissions for course ${courseId}.`);
             }
         }
-    }, [assignmentId, courseId]);
+    }, [assignmentId]);
 
     useEffect(() => {
         fetchSubmissions();
     }, [fetchSubmissions, assignmentId]);
+
+    useEffect(() => {
+        const courseId = sessionStorage.getItem('courseId');
+        const instructorId = sessionStorage.getItem('instructorId');
+        console.log('Course ID from session storage:', courseId);
+        console.log('Instructor ID from session storage:', instructorId);
+    }, []);
 
     useEffect(() => {
         if (searchTerm) {
@@ -94,10 +150,28 @@ const SelectedAssignment = () => {
     };
 
     const handleGradeWithAI = async () => {
+        const courseId = sessionStorage.getItem('courseId');
+        const instructorId = sessionStorage.getItem('instructorId');
+
+        if (!instructorId || !courseId) {
+            console.error('Instructor ID or Course ID is missing.');
+            setError('Instructor ID or Course ID is missing.');
+            return;
+        }
+
         try {
+            console.log('Sending request to grade with AI:', {
+                instructorId,
+                courseId
+            });
+
             const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
+                instructorId,
+                courseId
+            }, {
                 withCredentials: true
             });
+
             if (response.status === 200) {
                 alert('Submissions graded successfully.');
                 fetchSubmissions();
@@ -160,7 +234,7 @@ const SelectedAssignment = () => {
                             <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     );

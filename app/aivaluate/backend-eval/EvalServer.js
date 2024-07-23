@@ -16,7 +16,7 @@ const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
 
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 6001;
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
@@ -54,10 +54,30 @@ app.use((req, res, next) => {
     next();
 });
 
-// Function to check if user is authenticated (can be used for protected routes)
+app.post('/eval-api/set-session', (req, res) => {
+    const { instructorId, courseId } = req.body;
+    if (!instructorId || !courseId) {
+        return res.status(400).json({ message: 'Instructor ID and Course ID are required' });
+    }
+    req.session.instructorId = instructorId;
+    req.session.courseId = courseId;
+    res.status(200).json({ message: 'Session variables set successfully' });
+});
+
+app.get('/eval-api/session-details', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({
+            instructorId: req.user.instructorId,
+            courseId: req.session.courseId
+        });
+    } else {
+        res.status(401).json({ error: 'Not authenticated' });
+    }
+});
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        return next(); // User is authenticated, continue to the next middleware
+        return next();
     }
     res.redirect('/eval-api/login');
 }

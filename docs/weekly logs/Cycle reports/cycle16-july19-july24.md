@@ -27,15 +27,16 @@
 - Notifications
 - Finish AI with file submissions
 - Fix Date/Time issues
+- Fixing any remaining broken features
 
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-  
+  <img width="1013" alt="Screenshot 2024-07-24 at 7 32 29 AM" src="https://github.com/user-attachments/assets/082a7dcf-ccc0-4ef5-8f32-3eae7b27a3f8">
 
 ### Times for team/individual
 
-
+<img width="1920" alt="Screenshot 2024-07-24 at 7 33 14 AM" src="https://github.com/user-attachments/assets/ba8ace50-c758-489b-8b0f-d8a9ba2ac2b4">
 
 - ### Table view of completed tasks on project board
 

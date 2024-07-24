@@ -1,5 +1,41 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 19 - July 23) - 13 hours
+
+## Tuesday July 23rd
+### 6.5 hours
+- Make sure file submissions and answer key file uploads can be accessed by AI (6.5 hours) Issues #389 and #390
+
+## Monday July 22nd
+### 4.5 hour
+- Append Assignment Rubrics to the OpenAI assistants API instruction (4.5 hours) Issue #374
+
+## Sunday July 21st
+### 2 hours
+- Team meeting and assigning tasks (2 hours)
+
+# Current Tasks
+- #1 Append Assignment Rubric to Assistant API Instructions #374
+- #2 Pass in Assignment Key Files to the AI as instructions #389
+- #3 Pass in Assignment Submission File to AI #390
+- #4 Revise frontend UI and fix various bugs based on test session feedback #375
+
+# Progress Update (since July 10)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Complete  |
+| Task #3 | Incomplete  |
+
+# Cycle Goal Review
+During this cycle, I focused on the AI part, I successfully attached the assignment rubric, submission file and answer key file to the AI grading assistant. Now if we provide a submission ID, the AI will return a grade and feedback based on all the relevant information.
+
+# Next Cycle 
+During the next cycle, I'll continue to work on AI grading; I'll make sure that the AI feedback and AI grades are stored in the database, and can be accessed and modified by the users.
+Also, I'll fix various bugs and any frontend issues that were brought up in the testing session last week. 
+
+
 # Timesheet (June 17 - July 18) - 8 hours
 
 ## Thursday July 18th

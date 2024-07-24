@@ -1,12 +1,12 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../EvalManagerInfo.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import axios from 'axios';
 
 const EvalManagerInfo = () => {
     const navigate = useNavigate();
@@ -92,56 +92,57 @@ const EvalManagerInfo = () => {
     return (
         <div className="admin-container">
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
-            <SideMenuBarAdmin tab="evalManager" />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                    </div>
-                    <h1 className="eval-text">Evaluator Info</h1>
-                    <div className="empty"> </div>
-                </div>
-                <div className="user-info">
-                    <div className="user-details">
-                        <h2>{evaluator.firstName} {evaluator.lastName}</h2>
-                        <div className="align-check">
-                            <label className="checkbox-label2 ">
-                                <input type="checkbox" checked={isTeachingAssistant} readOnly /> Teaching Assistant
-                            </label>
+            <div className="filler-div">
+                <SideMenuBarAdmin tab="evalManager" />
+                <div className="main-margin">
+                    <div className="top-bar">
+                        <div className="back-btn-div">
+                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
                         </div>
-                        <div className="action-buttons">
-                            <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
+                        <h1 className="eval-text">Evaluator Info</h1>
+                    </div>
+                    <div className="user-info">
+                        <div className="user-details">
+                            <h2>{evaluator.firstName} {evaluator.lastName}</h2>
+                            <div className="align-check">
+                                <label className="checkbox-label2 ">
+                                    <input type="checkbox" checked={isTeachingAssistant} readOnly /> Teaching Assistant
+                                </label>
+                            </div>
+                            <div className="action-buttons">
+                                <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
+                            </div>
+                        </div>
+                        <div className="info-row">
+                            <span>Email:</span>
+                            <span>{evaluator.email}</span>
+                        </div>
+                        <div className="info-row">
+                            <span>Password:</span>
+                            <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
+                        </div>
+                        <div className="info-row">
+                            <span>Department:</span>
+                            <span>{evaluator.department}</span>
                         </div>
                     </div>
-                    <div className="info-row">
-                        <span>Email:</span>
-                        <span>{evaluator.email}</span>
-                    </div>
-                    <div className="info-row">
-                        <span>Password:</span>
-                        <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
-                    </div>
-                    <div className="info-row">
-                        <span>Department:</span>
-                        <span>{evaluator.department}</span>
-                    </div>
-                </div>
-                <div className="course-section">
-                    <div className="search-bar">
-                        <FaSearch className="search-icon" />
-                        <input 
-                            type="text" 
-                            placeholder="Search..." 
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)} 
-                        />
-                    </div>
-                    {filteredCourses.map((course, index) => (
-                        <div className="course-item" key={index}>
-                            <span>{course.courseCode} - {course.courseName}</span>
-                            <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Drop</button>
+                    <div className="course-section">
+                        <div className="search-bar">
+                            <FaSearch className="search-icon" />
+                            <input 
+                                type="text" 
+                                placeholder="Search..." 
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)} 
+                            />
                         </div>
-                    ))}
+                        {filteredCourses.map((course, index) => (
+                            <div className="course-item" key={index}>
+                                <span>{course.courseCode} - {course.courseName}</span>
+                                <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Drop</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

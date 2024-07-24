@@ -143,25 +143,25 @@ const CourseHome = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab='management' />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <h1>Course Management</h1>
-                </div>
-                <div>
-                    <button className="course-button" onClick={handleAiTest}>AI Test</button>
-                    <br />
-                    <button className="course-button" onClick={handleEditCourse}>Edit Course</button>
-                    <CourseEditModal isOpen={isEditModalOpen} onClose={closeEditModal} course={course} onSave={saveCourseEdits} />
-                    <br />
-                    <button className="course-button" onClick={handleTaModal}>Assign TA</button>
-                    <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
-                    <br />
-                    <button className="course-button" onClick={handleArchiveCourse}>
-                        {isArchived ? 'Unarchive Course' : 'Archive Course'}
-                    </button>
-                    <br />
-                    <button className="course-button" onClick={handleDeleteCourse}>Delete Course</button>
+            <div className="filler-div">
+                <SideMenuBarEval tab='management' />
+                <div className="main-margin">
+                    <div className="top-bar">
+                        <h1>Course Management</h1>
+                    </div>
+                    <div>
+                        <button className="course-button" onClick={handleEditCourse}>Edit Course</button>
+                        <CourseEditModal isOpen={isEditModalOpen} onClose={closeEditModal} course={course} onSave={saveCourseEdits} />
+                        <br />
+                        <button className="course-button" onClick={handleTaModal}>Assign TA</button>
+                        <AssignTaModal isOpen={isTaModalOpen} onClose={closeTaModal} courseId={courseId} />
+                        <br />
+                        <button className="course-button" onClick={handleArchiveCourse}>
+                            {isArchived ? 'Unarchive Course' : 'Archive Course'}
+                        </button>
+                        <br />
+                        <button className="course-button" onClick={handleDeleteCourse}>Delete Course</button>
+                    </div>
                 </div>
             </div>
         </div>

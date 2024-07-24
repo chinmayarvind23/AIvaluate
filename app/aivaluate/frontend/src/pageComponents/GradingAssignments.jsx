@@ -223,8 +223,6 @@ const GradingAssignments = () => {
             <a href="#">index.html</a>
           </div>
         </div>
-      </div>
-      <ToastContainer />
     </div>
   );
 };

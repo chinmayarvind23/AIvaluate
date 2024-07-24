@@ -230,7 +230,6 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
 
         const threadResponse = await openai.beta.threads.create();
         console.log('Thread created:', threadResponse.id);
-
         const thread = threadResponse.id;
         const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. The file with ID ${assignmentKeyFileId} is the assignment key. The following files are the student's submissions: ${submissionFileIds.join(', ')}. Additional Instructions: ${instructorPrompt}`;
 
@@ -270,7 +269,11 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             let result;
             if (latestAssistantMessage) {
                 try {
-                    result = JSON.parse(latestAssistantMessage.content);
+                    if (typeof latestAssistantMessage.content === 'string') {
+                        result = JSON.parse(latestAssistantMessage.content);
+                    } else {
+                        result = latestAssistantMessage.content;
+                    }
                 } catch (error) {
                     console.error('Error parsing JSON content:', error);
                     result = latestAssistantMessage.content;
@@ -279,6 +282,30 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 result = null;
             }
             console.log('Final assistant response:', result);
+            if (result) {
+                const grade = result.grade;
+                const feedback = result.feedback;
+
+                try {
+                    await pool.query(
+                        'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded") VALUES ($1, $2, $3, $4, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade", "InstructorAssignedFinalGrade" = EXCLUDED."InstructorAssignedFinalGrade", "isGraded" = EXCLUDED."isGraded"',
+                        [submissions[0].assignmentSubmissionId, submissions[0].assignmentId, maxPoints, grade]
+                    );
+                    console.log(`Grade recorded for student: ${studentId}`);
+                } catch (error) {
+                    console.error(`Error recording grade for student ${studentId}:`, error);
+                }
+
+                try {
+                    await pool.query(
+                        'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId", "courseId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
+                        [studentId, submissions[0].assignmentId, submissions[0].courseId, feedback]
+                    );
+                    console.log(`Feedback recorded for student: ${studentId}`);
+                } catch (error) {
+                    console.error(`Error recording feedback for student ${studentId}:`, error);
+                }
+            }
         } catch (error) {
             console.error('Error processing student submissions:', error);
             throw error;
@@ -337,24 +364,7 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
 
         for (const studentId in studentSubmissions) {
             console.log(`Processing submissions for student: ${studentId}`);
-            const aiResponse = await processStudentSubmissions(studentId, studentSubmissions[studentId], assistantId, selectedPrompt, assignmentRubric, maxPoints, assignmentKeyPath);
-
-            if (aiResponse) {
-                const grade = aiResponse.grade;
-                const feedback = aiResponse.feedback;
-
-                await pool.query(
-                    'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "AIassignedGrade") VALUES ($1, $2, $3) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade"',
-                    [studentSubmissions[studentId][0].assignmentSubmissionId, assignmentId, grade]
-                );                
-                console.log(`Grade recorded for student: ${studentId}`);
-
-                await pool.query(
-                    'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
-                    [studentId, assignmentId, studentSubmissions[studentId][0].courseId, feedback]
-                );                
-                console.log(`Feedback recorded for student: ${studentId}`);
-            }
+            await processStudentSubmissions(studentId, studentSubmissions[studentId], assistantId, selectedPrompt, assignmentRubric, maxPoints, assignmentKeyPath);
         }
 
         console.log('All submissions processed successfully.');

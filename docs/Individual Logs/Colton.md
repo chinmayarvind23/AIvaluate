@@ -834,7 +834,6 @@ I had a lot of problems with the Ollama API as I found the documentation was not
 - Fix date problem.
 - Fix a major design flaw in our frontend pages not lining up at the bottom.
 -----------------------------------------------------------------------------------
------------------------------------------------------------------------------------
 
 ## Cycle 15: Wednesday July 17th - Friday July 19th
 
@@ -885,4 +884,79 @@ I had a lot of problems with the front end this cycle which made it very difficu
 - Fix date problem
 - Work on Course notifications.
 - Get AI working with student submissions.
+-----------------------------------------------------------------------------------
+
+## Cycle 16: Friday July 19th - Wednesday July 24th
+
+### Current Tasks
+  * #1: Tooltips for AI settings page and cursor interaction
+  * #2: Newly designed toast and alert messages
+  * #3: Append Assignment Rubric to Assistant API Instructions
+  * #4: Replace Checkbox with Icon for TA Eval user
+  * #5: Add character limits and remove Max students from course
+  * #6: Fix date/time problem in DB
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C16.png)
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Tooltips for AI settings page and cursor interaction
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Newly designed toast and alert messages
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Append Assignment Rubric to Assistant API Instructions
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Replace Checkbox with Icon for TA Eval user
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Add character limits and remove Max students from course
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fix date/time problem in DB
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+My biggest challenge this cycle was trying to dealt with some of the merge conflicts that came along witht merging code into the development branch. I think my newly designed toast messages went really well and are a fantastic addition to the website!
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Fix date problem
+- Work on Course notifications.
+- Finish off AI to have to fully working with student submissions.
 -----------------------------------------------------------------------------------

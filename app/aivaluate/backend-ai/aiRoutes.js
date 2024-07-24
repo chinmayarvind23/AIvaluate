@@ -175,7 +175,7 @@ router.post('/gpt/assistants', async (req, res) => {
         // Step 8: Send a message to the created thread
         const messageResponse = await axios.post(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
             role: "user",
-            content: "Grade the student assignments. Give the student a grade based on the rubric provided.Make sure the grade is displayed at the beginning of your repsonse.",
+            content: "Grade the student assignments. Start with giving a grade to each student submission.",
             attachments: fileIds.map((fileId) => ({
                 file_id: fileId,
                 tools: [{ type: "file_search" }]

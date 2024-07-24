@@ -210,7 +210,6 @@ const GradingAssignments = () => {
           </div>
           <button className="mark-complete" onClick={handleMarkComplete}>Mark evaluation as complete</button>
         </div>
-      </div>
     </div>
   );
 };

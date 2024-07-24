@@ -57,7 +57,7 @@ const AITest = () => {
 
   // Hardcoded submissionId
   // This should be passed in as a prop
-  const submissionId = '33';
+  const submissionId = '31';
   console.log("submissionId:", submissionId);
 
   // Fetch AssignmentID based on submissionId
@@ -245,56 +245,56 @@ const AITest = () => {
 
   return (
     <div style={{ maxWidth: '800px', margin: 'auto', fontFamily: 'Arial, sans-serif' }}>
-      <h2 style={{ textAlign: 'center' }}>Assignment Details</h2>
-      <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '100%', marginBottom: '20px' }}>
+      <h2 style={{ textAlign: 'center' }}>AI Grading Testing Page</h2>
+      <table style={{ border: '1px solid white', borderCollapse: 'collapse', width: '100%', marginBottom: '20px' }}>
         <tbody>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Submission ID</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{submissionId}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Submission ID</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{submissionId}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Professor's Prompt</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{profPromptText}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Professor's Prompt</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{profPromptText}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Assignment Rubric</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{rubricText}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Assignment Rubric</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{rubricText}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Assignment ID</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{assignmentId}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Assignment ID</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{assignmentId}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Rubric ID</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{rubricId}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Rubric ID</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{rubricId}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Instructor ID</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{instructorId}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Instructor ID</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{instructorId}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Max Obtainable Grade</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{maxGrade}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Max Obtainable Grade</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{maxGrade}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Full Prompt Text</td>
-            <td style={{ border: '1px solid black', padding: '8px', whiteSpace: 'pre-wrap' }}>{fullPromptText}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Full Prompt Text</td>
+            <td style={{ border: '1px solid white', padding: '8px', whiteSpace: 'pre-wrap' }}>{fullPromptText}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Submission File</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{submissionFile}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Submission File</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{submissionFile}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Assignment Key</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>{assignmentKey}</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Assignment Key</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>{assignmentKey}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>Message Sent to AI</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>Grade the student assignments based on provided rubric and answer key. Start your reponse with 'AI Grade: ' followed by the grade / maxObtainableGrade.</td>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>Message Sent to AI</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>Grade the student assignments based on provided rubric and answer key. Start your reponse with 'AI Grade: ' followed by the grade / maxObtainableGrade.</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid black', padding: '8px', fontWeight: 'bold' }}>AI Response</td>
-            <td style={{ border: '1px solid black', padding: '8px' }}>
+            <td style={{ border: '1px solid white', padding: '8px', fontWeight: 'bold' }}>AI Response</td>
+            <td style={{ border: '1px solid white', padding: '8px' }}>
               <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontSize: '14px', lineHeight: '1.5' }}>{AIResponse}</pre>
             </td>
           </tr>

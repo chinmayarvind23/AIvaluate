@@ -127,7 +127,7 @@ services:
       - "9000:9000"
     volumes:
       - assignment_submissions:/app/aivaluate/backend/assignmentSubmissions
-      - assignment_keys:/app/aivaluate/backend/assignmentKeys
+      - assignment_keys:/app/aivaluate/backend-eval/assignmentKeys
     networks:
       - aivaluate-net
     env_file:

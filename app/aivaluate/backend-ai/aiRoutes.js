@@ -9,7 +9,7 @@ const OpenAI = require('openai');
 const cors = require('cors');
 
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
-const baseDirKeys = path.resolve('/app/aivaluate/backend/assignmentKeys');
+const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
 
 router.use(bodyParser.json());
 const openaiApiKey = process.env.OPENAI_API_KEY;
@@ -27,8 +27,7 @@ router.use(cors({
 
 router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res) => {
     const { assignmentId } = req.params;
-    const instructorId = req.body.instructorId;
-    const courseId = req.body.courseId;
+    const { instructorId, courseId } = req.body;
 
     console.log(`Received request to process submissions for assignment ${assignmentId}, course ${courseId}, instructor ${instructorId}`);
 
@@ -101,12 +100,11 @@ router.post('/gpt/assistants', async (req, res) => {
         });
 
         log(`Run created: ${JSON.stringify(runResponse)}`);
-        let response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
-
+        let response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
         while (response.status === "in_progress" || response.status === "queued") {
-            log("Waiting for assistant's response...");
+            console.log("Waiting for assistant's response...");
             await new Promise(resolve => setTimeout(resolve, 5000));
-            response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
+            response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
         }
 
         const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
@@ -166,10 +164,39 @@ const getMaxPoints = async (assignmentId) => {
 const getAssignmentKey = async (assignmentId) => {
     try {
         const result = await pool.query('SELECT "assignmentKey" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
-        return result.rows.length > 0 ? result.rows[0].assignmentKey : '';
+        if (result.rows.length > 0) {
+            const assignmentKey = result.rows[0].assignmentKey;
+            console.log(`Original assignmentKey from DB: ${assignmentKey}`);
+            
+            const keyPath = path.resolve(baseDirKeys, assignmentKey);
+            console.log(`Resolved assignment key path: ${keyPath}`);
+            
+            if (fs.existsSync(keyPath)) {
+                console.log(`Assignment key found at path: ${keyPath}`);
+                return keyPath;
+            } else {
+                throw new Error(`Assignment key file not found: ${keyPath}`);
+            }
+        } else {
+            throw new Error(`Assignment key not found in database for assignmentId: ${assignmentId}`);
+        }
     } catch (error) {
         console.error('Error fetching assignment key:', error);
-        return '';
+        throw error;
+    }
+};
+
+const uploadFileToOpenAI = async (filePath, purpose, label) => {
+    try {
+        const fileStream = fs.createReadStream(filePath);
+        const response = await openai.files.create({
+            file: fileStream,
+            purpose: purpose
+        });
+        return response.id;
+    } catch (error) {
+        console.error(`Error uploading file to OpenAI: ${error.message}`);
+        throw error;
     }
 };
 
@@ -182,54 +209,46 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
     console.log('Assignment Key Path:', assignmentKeyPath);
 
     try {
-        const submissionFileStreams = submissions.map(file => {
+        console.log('Checking if assignment key file exists at path:', assignmentKeyPath);
+        if (!fs.existsSync(assignmentKeyPath)) {
+            throw new Error(`Assignment key file not found: ${assignmentKeyPath}`);
+        }
+
+        const assignmentKeyFileId = await uploadFileToOpenAI(assignmentKeyPath, 'assistants');
+        console.log('Assignment key file ID created:', assignmentKeyFileId);
+
+        const submissionFileIds = [];
+        for (const file of submissions) {
             const filePath = path.resolve(baseDirSubmissions, file.submissionFile.replace('assignmentSubmissions/', ''));
             console.log('Resolved file path:', filePath);
-            return fs.createReadStream(filePath);
-        });
-
-        console.log('Submission file streams created:', submissionFileStreams);
-
-        let submissionVectorStore = await openai.beta.vectorStores.create({
-            name: `Student ${studentId} Submissions`,
-        });
-        console.log('Submission Vector Store created:', submissionVectorStore.id);
-
-        await openai.beta.vectorStores.fileBatches.uploadAndPoll(submissionVectorStore.id, submissionFileStreams);
-        console.log('Submission files uploaded and processed.');
-
-        let assignmentKeyVectorStore = await openai.beta.vectorStores.create({
-            name: `Assignment ${studentId} Key`,
-        });
-        console.log('Assignment Key Vector Store created:', assignmentKeyVectorStore.id);
-
-        await openai.beta.vectorStores.fileBatches.uploadAndPoll(assignmentKeyVectorStore.id, [fs.createReadStream(assignmentKeyPath)]);
-        console.log('Assignment key file uploaded and processed.');
-
-        await openai.beta.assistants.update(assistantId, {
-            tool_resources: {
-                file_search: {
-                    vector_store_ids: [submissionVectorStore.id, assignmentKeyVectorStore.id]
-                }
-            },
-        });
-        console.log('Assistant updated with vector stores.');
+            if (!fs.existsSync(filePath)) {
+                throw new Error(`File not found: ${filePath}`);
+            }
+            const fileId = await uploadFileToOpenAI(filePath, 'assistants');
+            submissionFileIds.push(fileId);
+        }
+        console.log('Submission file IDs created:', submissionFileIds);
 
         const threadResponse = await openai.beta.threads.create();
         console.log('Thread created:', threadResponse.id);
 
         const thread = threadResponse;
 
-        const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. Additional Instructions: ${instructorPrompt}`;
+        const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. The file with ID ${assignmentKeyFileId} is the assignment key. The following files are the student's submissions: ${submissionFileIds.join(', ')}. Additional Instructions: ${instructorPrompt}`;
 
-        const messageResponse = await openai.beta.threads.messages.create(thread.id, {
-            role: "user",
-            content: messageContent
-        });
-        console.log('Message posted to thread:', messageResponse.id);
-
-        if (!messageResponse || messageResponse.status !== 200) {
-            throw new Error('Failed to post message to the thread');
+        try {
+            const messageResponse = await openai.beta.threads.messages.create(thread.id, {
+                role: "user",
+                content: messageContent,
+                attachments: [
+                    { file_id: assignmentKeyFileId, tools: [{ type: 'file_search' }] },
+                    ...submissionFileIds.map(file_id => ({ file_id, tools: [{ type: 'file_search' }] }))
+                ]
+            });            
+            console.log('Message posted to thread:', messageResponse.id);
+        } catch (error) {
+            console.error(`Error posting message to thread: ${error.message}`);
+            throw error;
         }
 
         const runResponse = await openai.beta.threads.runs.create(thread.id, {
@@ -237,12 +256,12 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         });
         console.log('Run created:', runResponse.id);
 
-        let response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
+        let response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
 
         while (response.status === "in_progress" || response.status === "queued") {
             console.log("Waiting for assistant's response...");
             await new Promise(resolve => setTimeout(resolve, 5000));
-            response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
+            response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
         }
 
         const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);

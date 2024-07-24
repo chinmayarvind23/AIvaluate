@@ -15,7 +15,7 @@ COPY . .
 ENV NODE_ENV=development
 ENV PATH /app/node_modules/.bin:$PATH
 
-VOLUME ["/app/aivaluate/backend/assignmentSubmissions", "/app/aivaluate/backend/assignmentKeys"]
+VOLUME ["/app/aivaluate/backend/assignmentSubmissions", "/app/aivaluate/backend-eval/assignmentKeys"]
 
 EXPOSE 9000
 

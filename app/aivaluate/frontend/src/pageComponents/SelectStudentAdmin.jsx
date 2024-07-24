@@ -74,41 +74,44 @@ const SelectStudentAdmin = () => {
     return (
         <div>
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
-            <SideMenuBarAdmin tab="studentManager" />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+            <div className="filler-div">
+                <SideMenuBarAdmin tab="studentManager" />
+                <div className="main-margin">
+                    <div className="top-bar">
+                        <div className="back-btn-div">
+                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                        </div>
+                        <h1>Student Info</h1>
                     </div>
-                    <h1>Student Info</h1>
-                </div>
-                <div className="center-it">
-                    <div>
-                        <div className="user-info2">
-                            <div className="user-name">
-                                <span>{student.firstName} {student.lastName}</span>
-                                <span>{student.studentId}</span>
+                    <div className="center-it">
+                        <div>
+                            <div className="user-info2">
+                                <div className="user-name">
+                                    <span>{student.firstName} {student.lastName}</span>
+                                    <span>{student.studentId}</span>
+                                </div>
+                                <div className="major">Major: {student.major}</div>
+                                <div className="email">
+                                    <span>Email:</span>
+                                    <span>{student.email}</span>
+                                </div>
+                                <div className="password">
+                                    <span>Password:</span>
+                                    <span>{maskedPassword}</span>
+                                </div>
+                                <div className="courses">
+                                    <span>Courses:</span>
+                                    <ul>
+                                        {courses.map((course, index) => (
+                                            <li key={index}>
+                                                {course.courseCode} 
+                                                <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
                             </div>
-                            <div className="email">
-                                <span>Email:</span>
-                                <span>{student.email}</span>
-                            </div>
-                            <div className="password">
-                                <span>Password:</span>
-                                <span>{maskedPassword}</span>
-                            </div>
-                            <div className="courses">
-                                <span>Courses:</span>
-                                <ul>
-                                    {courses.map((course, index) => (
-                                        <li key={index}>
-                                            {course.courseCode} 
-                                            <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <button className="delete-button" onClick={handleDelete}>Delete user</button>
                         </div>
                     </div>
                 </div>

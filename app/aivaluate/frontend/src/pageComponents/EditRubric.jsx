@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../EditRubric.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -89,38 +89,40 @@ const EditRubric = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="rubrics" />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+            <div className="filler-div">
+                <SideMenuBarEval tab="rubrics" />
+                <div className="main-margin">
+                    <div className="top-bar">
+                        <div className="back-btn-div">
+                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                        </div>
+                        <h1>Rubric:</h1>
+                        <input 
+                            type="text" 
+                            className="title-rubric" 
+                            value={title} 
+                            onChange={handleTitleChange} 
+                        /> 
+                        <h3 className="edit-text">Click to edit</h3>
                     </div>
-                    <h1>Rubric:</h1>
-                    <input 
-                        type="text" 
-                        className="title-rubric" 
-                        value={title} 
-                        onChange={handleTitleChange} 
-                    /> 
-                    <h3 className="edit-text">Click to edit</h3>
-                </div>
-                <div className="main-text2">
-                    <textarea
-                        className="rubric-text2"
-                        value={rubricContent}
-                        onChange={handleContentChange}
-                    />
-                    <h3 className="edit-textt">Click to edit</h3>
-                </div>
-                <div className="bottom-bar">
-                    <div className="empty"></div>
-                    <button 
-                        className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
-                        onClick={handleSaveChanges}
-                        disabled={!isEdited}
-                    >
-                        CLICK TO CONFIRM CHANGES
-                    </button>
+                    <div className="main-text2">
+                        <textarea
+                            className="rubric-text2"
+                            value={rubricContent}
+                            onChange={handleContentChange}
+                        />
+                        <h3 className="edit-textt">Click to edit</h3>
+                    </div>
+                    <div className="bottom-bar">
+                        <div className="empty"></div>
+                        <button 
+                            className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
+                            onClick={handleSaveChanges}
+                            disabled={!isEdited}
+                        >
+                            CLICK TO CONFIRM CHANGES
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

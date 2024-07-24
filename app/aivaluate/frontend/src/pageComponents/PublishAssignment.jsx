@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import '../GeneralStyling.css';
 import '../PublishAssignment.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -99,55 +99,53 @@ const PublishAssignment = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="rubrics"/>
-            <div className="main-margin">
-                <div className="rubric-div">
-                    <div className="top-bar">
-                        <div className="back-btn-div">
-                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                        </div>
-                        <input 
-                            type="text" 
-                            className="title-input" 
-                            value={title} 
-                            onChange={handleTitleChange} 
-                        /> 
-                        <p className="click-to-edit">Click to edit</p>
-                    </div>
-                    <div >
-                        <div className="deadline">
-                            <h2>Due:</h2>
+            <div className="filler-div">
+                <SideMenuBarEval tab="rubrics"/>
+                <div className="main-margin">
+                    <div className="rubric-div">
+                        <div className="top-bar">
+                            <div className="back-btn-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                            </div>
                             <input 
                                 type="text" 
-                                className="deadline-input" 
-                                value={deadline} 
-                                onChange={handleDeadlineChange} 
+                                className="title-input" 
+                                value={title} 
+                                onChange={handleTitleChange} 
                             /> 
                             <p className="click-to-edit">Click to edit</p>
-                            <div className="empty"> </div>
-                            <button className="assignment-button" onClick={handleViewSubmissions}>
-                                View Submissions
-                            </button>
-                            <button className="assignment-button" onClick={handlePublishToggle}>
-                                {isPublished ? 'Unpublish Assignment' : 'Publish Assignment'}
-                            </button>
                         </div>
-                        <div className="main-text">
-                            <textarea
-                                className="rubric-text"
-                                value={rubricContent}
-                                onChange={handleContentChange}
-                            />
-                        </div>
-                        <p className="click-to-edit2">Click to edit</p>
-                        <div className="center-button">
-                            <button 
-                                className="assignment-button2" 
-                                onClick={handleSubmitChanges}
-                                disabled={!isEdited}
-                            >
-                                Submit Changes
-                            </button>
+                        <div >
+                            <div className="deadline">
+                                <h2>Due:</h2>
+                                <input 
+                                    type="text" 
+                                    className="deadline-input" 
+                                    value={deadline} 
+                                    onChange={handleDeadlineChange} 
+                                /> 
+                                <p className="click-to-edit">Click to edit</p>
+                    
+                                <button className="assignment-button" onClick={handleViewSubmissions}>
+                                    View Submissions
+                                </button>
+                                <button className="assignment-button" onClick={handlePublishToggle}>
+                                    {isPublished ? 'Unpublish Assignment' : 'Publish Assignment'}
+                                </button>
+                            </div>
+                            <div className="main-text">
+                                <textarea
+                                    className="rubric-text"
+                                    value={rubricContent}
+                                    onChange={handleContentChange}
+                                />
+                            </div>
+                            <p className="click-to-edit2">Click to edit</p>
+                            <div className="center-button">
+                                <button className="assignment-button2" onClick={handleSubmitChanges}>
+                                    Submit Changes
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

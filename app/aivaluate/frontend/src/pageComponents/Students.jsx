@@ -81,41 +81,41 @@ const Students = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="students" />
-            <div className="accented-outside rborder">
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <h1>Students</h1>
-                            <div className="search-container">
-                                <div className="search-box">
-                                    <FaSearch className="search-icon" />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
+            <div className="filler-div">
+                <SideMenuBarEval tab="students" />
+                    <div className="main-margin">
+                        <div className="portal-container">
+                            <div className="top-bar">
+                                <h1>Students</h1>
+                                <div className="search-container">
+                                    <div className="search-box">
+                                        <FaSearch className="search-icon" />
+                                        <input 
+                                            type="text" 
+                                            placeholder="Search..." 
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                        />
+                                    </div>
                                 </div>
                             </div>
+                            <div className="filetab">
+                                {currentFiles.map((file, index) => (
+                                    <div className="file-item" key={index}>
+                                        <div className="file-name">{file}</div>
+                                        <div className="file-icon"></div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
-                                    <div className="file-name">{file}</div>
-                                    <div className="file-icon"></div>
-                                </div>
-                            ))}
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                        </div>
-                    </div>
-                </div> 
+                    </div> 
             </div>
         </div>
     );

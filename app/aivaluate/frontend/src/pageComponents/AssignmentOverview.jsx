@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FaFile, FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import '../AssignmentOverview.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -112,23 +112,6 @@ const AssignmentOverview = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredAssignments.map((assignment, index) => (
-                      <tr key={index}>
-                        <td>
-                          <button className="icon-button" onClick={() => handleNavigate(assignment.assignmentId)}>
-                            <FaFile className="file-icon" />
-                          </button>
-                        </td>
-                        <td>
-                          <button className="link-button" onClick={() => handleNavigate(assignment.assignmentId)}>
-                            {assignment.assignmentName}
-                          </button>
-                        </td>
-                        <td>{assignment.dueDate}</td>
-                        <td>{assignment.maxObtainableGrade}</td>
-                      </tr>
-                    </thead>
-                    <tbody>
                       {filteredAssignments.map((assignment, index) => (
                         <tr key={index}>
                           <td>

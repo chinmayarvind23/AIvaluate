@@ -1,9 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
-import '../GeneralStyling.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
@@ -215,9 +214,13 @@ const CreateAssignment = () => {
                                     />
                                     <span>Drag files here or Click to browse files</span>
                                 </div>
-                            {assignmentKey && (
+                                {assignmentKey && (
                                 <div className="file-preview">
                                     <p>Uploaded File: {assignmentKey.name}</p>
+                                </div>
+                                )}
+                                <div className="form-footer">
+                                    <button type="submit" className="post-button">Post</button>
                                 </div>
                             </form>
                             <div className="available-rubrics" ref={availableRubricsRef}>

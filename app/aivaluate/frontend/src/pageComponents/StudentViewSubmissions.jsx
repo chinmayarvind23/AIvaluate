@@ -73,40 +73,40 @@ const StudentViewSubmissions = () => {
         <div>
             <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
             <div className="filler-div">
-                <SideMenuBar tab="submissions" />
-                    <div className="main-margin">
-                        <div className="portal-container">
-                            <div className="top-bar">
-                                <h1>Submissions</h1>
-                                <div className="search-container">
-                                    <div className="search-box">
-                                        <FaSearch className="search-icon" />
-                                        <input 
-                                            type="text" 
-                                            placeholder="Search..." 
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                        />
-                                    </div>
+            <SideMenuBar tab="submissions" />
+                <div className="main-margin">
+                    <div className="portal-container">
+                        <div className="top-bar">
+                            <h1>Submissions</h1>
+                            <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search..." 
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
                                 </div>
-                            </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
-                                    {console.log('File:', file)}
-                                    {console.log('Assignment ID:', file.assignmentId)}
-                                    <a 
-                                        className="file-name" 
-                                        href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
-                                        download
-                                    >
-                                        {file.submissionFile.split('/').pop()} Submission
-                                    </a>
-                                    {file.isGraded && <div className="file-status">Marked as graded</div>}
-                                </div>
-                            ))}
                             </div>
                         </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                            <div className="file-item" key={index}>
+                                {console.log('File:', file)}
+                                {console.log('Assignment ID:', file.assignmentId)}
+                                <a 
+                                    className="file-name" 
+                                    href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
+                                    download
+                                >
+                                    {file.submissionFile.split('/').pop()} Submission
+                                </a>
+                                {file.isGraded && <div className="file-status">Marked as graded</div>}
+                            </div>
+                        ))}
+                        </div>
+                    </div>
                     <div className="pagination-controls">
                         <span>Page {currentPage} of {totalPages}</span>
                         <div className="pagination-buttons">
@@ -114,6 +114,7 @@ const StudentViewSubmissions = () => {
                             <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
                     </div> 
+                </div>
             </div>
         </div>
     );

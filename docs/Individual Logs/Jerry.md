@@ -26,7 +26,7 @@
 | Task #1  | Completed  |
 | Task #2 | Completed  |
 | Task #3 | Complete  |
-| Task #3 | Incomplete  |
+| Task #4 | Incomplete  |
 
 # Cycle Goal Review
 During this cycle, I focused on the AI part, I successfully attached the assignment rubric, submission file and answer key file to the AI grading assistant. Now if we provide a submission ID, the AI will return a grade and feedback based on all the relevant information.

@@ -177,7 +177,6 @@ const GradingAssignments = () => {
               </div>
               </div>
         </div>
-      </div>
     </div>
   );
 };

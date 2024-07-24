@@ -12,7 +12,6 @@ const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmis
 const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
 
 router.use(bodyParser.json());
-
 const openaiApiKey = process.env.OPENAI_API_KEY;
 
 const openai = new OpenAI({ apiKey: openaiApiKey });
@@ -164,83 +163,43 @@ router.post('/gpt/assistants', async (req, res) => {
     log(`Received promptText: ${promptText}`);
 
     try {
-        const assistantResponse = await axios.post('https://api.openai.com/v1/assistants', {
-            instructions: promptText,
+        const assistantResponse = await openai.beta.assistants.create({
             name: "Grading Assistant",
+            instructions: promptText,
             tools: [{ type: "code_interpreter" }, { type: "file_search" }],
-            model: 'gpt-4o-mini',
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+            model: 'gpt-4o'
         });
 
-        const assistant = assistantResponse.data;
+        const assistant = assistantResponse;
         log(`Assistant created: ${JSON.stringify(assistant)}`);
-        const threadResponse = await axios.post('https://api.openai.com/v1/threads', {}, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
-        });
+        const threadResponse = await openai.beta.threads.create();
 
-        const thread = threadResponse.data;
+        const thread = threadResponse;
         log(`Thread created: ${JSON.stringify(thread)}`);
-        const messageResponse = await axios.post(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
+        const messageContent = "Grade the student assignments.";
+
+        const messageResponse = await openai.beta.threads.messages.create(thread.id, {
             role: "user",
-            content: "Grade the student assignments."
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+            content: messageContent
         });
 
-        log(`Message sent to thread: ${JSON.stringify(messageResponse.data)}`);
-        const runResponse = await axios.post(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
-            assistant_id: assistant.id,
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+        log(`Message sent to thread: ${JSON.stringify(messageResponse)}`);
+        const runResponse = await openai.beta.threads.runs.create(thread.id, {
+            assistant_id: assistant.id
         });
 
-        log(`Run created: ${JSON.stringify(runResponse.data)}`);
-        let response = await axios.get(`https://api.openai.com/v1/threads/${thread.id}/runs/${runResponse.data.id}`, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
-        });
+        log(`Run created: ${JSON.stringify(runResponse)}`);
+        let response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
 
-        while (response.data.status === "in_progress" || response.data.status === "queued") {
+        while (response.status === "in_progress" || response.status === "queued") {
             log("Waiting for assistant's response...");
             await new Promise(resolve => setTimeout(resolve, 5000));
-            response = await axios.get(`https://api.openai.com/v1/threads/${thread.id}/runs/${runResponse.data.id}`, {
-                headers: {
-                    'Authorization': `Bearer ${openaiApiKey}`,
-                    'Content-Type': 'application/json',
-                    'OpenAI-Beta': 'assistants=v2'
-                }
-            });
+            response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
         }
 
-        const threadMessagesResponse = await axios.get(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
-        });
+        const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
 
-        const messages = threadMessagesResponse.data.data;
+        const messages = threadMessagesResponse.data;
         log(`Messages received: ${JSON.stringify(messages)}`);
         const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 

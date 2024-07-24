@@ -1816,7 +1816,44 @@ I invested considerable effort in connecting the backend tests, resolving severa
 ### Next Cycle Goals 
   * Goal 1: Work on some more backend testing 
   * Goal 2: Work on frontend testing 
+
+
+
+  # Timesheet (July 19 - July 24) - 32 hours
+
+### Timesheet
+Clockify report
+
+<img width="898" alt="Screenshot 2024-07-24 at 12 58 25 AM" src="https://github.com/user-attachments/assets/770c67a2-5be5-48ea-abd1-7b68bd3ade66">
+
+
+### Current Tasks 
+  * #1: CI/CD pipeline fix
+  * #2: Frontend testing
+
+### Progress Update (since 7/19/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>CI/CD pipeline fix</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Frontend testing</td>
+        <td>In Progress</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I dedicated significant effort to fixing the CI/CD pipeline and enhancing the frontend testing. Additionally, I set up and updated frontend Selenium testing and added more tests. These tasks were crucial for ensuring the reliability of our code.
+
+### Next Cycle Goals 
+  * Goal 1: Finalize frontend testing
   
+
 
  
 

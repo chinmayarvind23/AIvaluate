@@ -109,7 +109,7 @@ router.post('/gpt/assistants', async (req, res) => {
 
         const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
 
-        const messages = threadMessagesResponse.data;
+        const messages = threadMessagesResponse.data || [];
         log(`Messages received: ${JSON.stringify(messages)}`);
         const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 
@@ -209,7 +209,6 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
     console.log('Assignment Key Path:', assignmentKeyPath);
 
     try {
-        console.log('Checking if assignment key file exists at path:', assignmentKeyPath);
         if (!fs.existsSync(assignmentKeyPath)) {
             throw new Error(`Assignment key file not found: ${assignmentKeyPath}`);
         }
@@ -232,49 +231,60 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         const threadResponse = await openai.beta.threads.create();
         console.log('Thread created:', threadResponse.id);
 
-        const thread = threadResponse;
-
+        const thread = threadResponse.id;
         const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. The file with ID ${assignmentKeyFileId} is the assignment key. The following files are the student's submissions: ${submissionFileIds.join(', ')}. Additional Instructions: ${instructorPrompt}`;
 
         try {
-            const messageResponse = await openai.beta.threads.messages.create(thread.id, {
+            const messageResponse = await openai.beta.threads.messages.create(thread, {
                 role: "user",
                 content: messageContent,
                 attachments: [
                     { file_id: assignmentKeyFileId, tools: [{ type: 'file_search' }] },
                     ...submissionFileIds.map(file_id => ({ file_id, tools: [{ type: 'file_search' }] }))
                 ]
-            });            
+            });
             console.log('Message posted to thread:', messageResponse.id);
         } catch (error) {
             console.error(`Error posting message to thread: ${error.message}`);
             throw error;
         }
 
-        const runResponse = await openai.beta.threads.runs.create(thread.id, {
+        const runResponse = await openai.beta.threads.runs.create(thread, {
             assistant_id: assistantId,
         });
         console.log('Run created:', runResponse.id);
 
-        let response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
+        let response;
+        try {
+            response = await openai.beta.threads.runs.retrieve(thread, runResponse.id);
+            while (response.status === "in_progress" || response.status === "queued") {
+                console.log("Waiting for assistant's response...");
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                response = await openai.beta.threads.runs.retrieve(thread, runResponse.id);
+            }
 
-        while (response.status === "in_progress" || response.status === "queued") {
-            console.log("Waiting for assistant's response...");
-            await new Promise(resolve => setTimeout(resolve, 5000));
-            response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
+            const threadMessagesResponse = await openai.beta.threads.messages.list(thread);
+            const messages = threadMessagesResponse.data || [];
+            const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+
+            let result;
+            if (latestAssistantMessage) {
+                try {
+                    result = JSON.parse(latestAssistantMessage.content);
+                } catch (error) {
+                    console.error('Error parsing JSON content:', error);
+                    result = latestAssistantMessage.content;
+                }
+            } else {
+                result = null;
+            }
+            console.log('Final assistant response:', result);
+        } catch (error) {
+            console.error('Error processing student submissions:', error);
+            throw error;
         }
-
-        const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
-        console.log('Thread messages received:', threadMessagesResponse.data);
-
-        const messages = threadMessagesResponse.data;
-        const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
-        const result = latestAssistantMessage ? JSON.parse(latestAssistantMessage.content) : null;
-        console.log('Final assistant response:', result);
-
-        return result;
     } catch (error) {
-        console.error('Error processing student submissions:', error);
+        console.error('Error in processStudentSubmissions:', error);
         throw error;
     }
 };
@@ -336,13 +346,13 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
                 await pool.query(
                     'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "AIassignedGrade") VALUES ($1, $2, $3) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade"',
                     [studentSubmissions[studentId][0].assignmentSubmissionId, assignmentId, grade]
-                );
+                );                
                 console.log(`Grade recorded for student: ${studentId}`);
 
                 await pool.query(
                     'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
                     [studentId, assignmentId, studentSubmissions[studentId][0].courseId, feedback]
-                );
+                );                
                 console.log(`Feedback recorded for student: ${studentId}`);
             }
         }

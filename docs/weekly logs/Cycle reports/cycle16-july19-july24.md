@@ -59,13 +59,6 @@
         </td>
     </tr>
     <tr>
-        <td> Append Assignment Rubric to Assistant API Instructions
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
         <td> Replace Checkbox with Icon for TA Eval user
         </td>
         <!-- Status -->
@@ -79,8 +72,28 @@
         <td> Colton
         </td>
     </tr>
+     <tr>
+        <td> Append Assignment Rubric to Assistant API Instructions
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+      <tr>
+        <td> Pass in Assignment Key Files to the AI as instructions
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+       <tr>
+        <td> Pass in Assignment Submission File to AI
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
 </table>
-
 
 - ### Table view of in progress tasks on project board
 <table border="1">
@@ -93,6 +106,13 @@
         </td>
         <!-- Status -->
         <td> Colton
+        </td>
+    </tr>
+     <tr>
+        <td> Revise frontend UI and fix various bugs based on test session feedback
+        </td>
+        <!-- Status -->
+        <td> Jerry
         </td>
     </tr>
 </table>

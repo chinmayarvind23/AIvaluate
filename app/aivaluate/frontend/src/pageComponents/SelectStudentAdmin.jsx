@@ -148,8 +148,9 @@ const SelectStudentAdmin = () => {
                                         </li>
                                     ))}
                                 </ul>
+                                </div>
+                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
                             </div>
-                            <button className="delete-button" onClick={handleDelete}>Delete user</button>
                         </div>
                     </div>
                 </div>

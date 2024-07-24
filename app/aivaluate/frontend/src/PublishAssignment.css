@@ -11,15 +11,14 @@
     font-size: 10px;
     margin-top: 45px;
     margin-left: 5px;
-    width: 400px;
+    width: 200px;
 }
 
 .title-input {
-    margin-top: 20px;
+    margin-top: 40px;
     margin-left: 20px;
     width: 45%;
     padding: 10px;
-    /* border: 2px solid var(--primary-color); */
     border-radius: 10px;
     font-size: 1.5rem;
     color: var(--primary-color);
@@ -63,17 +62,19 @@
     font-size: 10px;
     margin-left: 50px;
     margin-top:-5px;
-    width: 400px;
+    width: 200px;
 }
 
 .deadline{
     display: flex;
 }
 
-    
+/* .abutton1{
+    margin-left: -200px;
+} */
 .assignment-button{
     display:flex;
-    width: 1200px;
+    width: 200px;
     padding: 10px;
     margin-left: 40px;
     justify-content: center;
@@ -124,7 +125,7 @@
 
 .deadline-input {
     margin-left: 20px;
-    width: 300px;
+    width: 200px;
     padding: 10px;
     border: 2px solid RED;
     border-radius: 10px;

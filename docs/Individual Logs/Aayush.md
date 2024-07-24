@@ -1852,6 +1852,7 @@ I dedicated significant effort to fixing the CI/CD pipeline and enhancing the fr
 
 ### Next Cycle Goals 
   * Goal 1: Finalize frontend testing
+  * Goal 2: Do the testing for AI
   
 
 

@@ -425,3 +425,52 @@ This cycle I focused on the backend assignment page student view, it was a littl
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+## Cycle 16 : Friday July 19 - Wednesday July 24
+Timesheet
+
+
+![Cycle 16](https://github.com/user-attachments/assets/fd40e058-2483-4525-80e6-e6b7ce6d1eda)
+
+
+
+
+### Current Tasks
+
+- Backend for assignment page student view
+- Assignment Redirect
+- Notification messages through email
+  
+Progress Update: 
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Backend for assignment page student view | Not-Completed |
+| Task #2 / Assignment Redirect |Completed|
+| Task #3 / Notification messages through email |Not - Completed|
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+- In this cycle I worked on the redirect button for the assignment page, I also had a meeting with my team to discuss further stuff and split the issues that need to be done since we are almost 2 weeks out
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Next cycle I will finish the issues that I haven't finished from the cycle before since the AI wasn't ready and I will meetup with my team to discuss further things and make sure to keep the team on track
+
+
+
+
+
+
+
+
+

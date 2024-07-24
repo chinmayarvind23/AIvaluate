@@ -58,6 +58,8 @@ describe('Selenium Publish Assignment Page Test', () => {
       console.log('Rubric text area displayed');
       expect(rubricTextArea).toBeTruthy();
 
+      
+
       // Verify that the "View Submissions" button is displayed
       const viewSubmissionsButton = await driver.wait(until.elementLocated(By.css('.assignment-button')), 20000);
       console.log('View Submissions button displayed');

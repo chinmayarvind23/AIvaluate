@@ -1,18 +1,20 @@
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
 const { log } = require('console');
 const router = express.Router();
-const pool = require('./dbConfig');
+const { pool } = require('./dbConfig');
 const fs = require('fs');
 const path = require('path');
-const openai = require('openai');
+const OpenAI = require('openai');
 const cors = require('cors');
+
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 const baseDirKeys = path.resolve('/app/aivaluate/backend/assignmentKeys');
-router.use(bodyParser.json());
 
+router.use(bodyParser.json());
 const openaiApiKey = process.env.OPENAI_API_KEY;
+
+const openai = new OpenAI({ apiKey: openaiApiKey });
 
 router.post('/ai/assignments/:assignmentId/test', (req, res) => {
     res.send('AI service endpoint is working');
@@ -28,11 +30,7 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
     const instructorId = req.body.instructorId;
     const courseId = req.body.courseId;
 
-    console.log('Received request to process submissions:', {
-        assignmentId,
-        instructorId,
-        courseId
-    });
+    console.log(`Received request to process submissions for assignment ${assignmentId}, course ${courseId}, instructor ${instructorId}`);
 
     if (!instructorId || !courseId) {
         console.error('Instructor ID and Course ID are required');
@@ -42,30 +40,24 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
     try {
         const result = await processSubmissions(assignmentId, instructorId, courseId);
         return res.status(result.status).json({ message: result.message });
-    } catch (localError) {
-        console.error(`Error processing submissions locally: ${localError.message}`);
+    } catch (error) {
+        console.error(`Error processing submissions: ${error.message}`);
         return res.status(500).json({ error: 'Failed to process submissions' });
     }
 });
 
-// OpenAI Completions endpoint
 router.post('/gpt/completions', async (req, res) => {
     const { prompt } = req.body;
     log(`Received prompt: ${prompt}`);
   
     try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        const response = await openai.chat.completions.create({
             model: 'gpt-3.5-turbo',
             messages: [{ role: 'user', content: prompt }],
             max_tokens: 100
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json'
-            }
         });
   
-        res.json({ response: response.data.choices[0].message.content.trim() });
+        res.json({ response: response.choices[0].message.content.trim() });
     } catch (error) {
         console.error(`Error: ${error.message}`);
         if (error.response) {
@@ -83,83 +75,43 @@ router.post('/gpt/assistants', async (req, res) => {
     log(`Received promptText: ${promptText}`);
 
     try {
-        const assistantResponse = await axios.post('https://api.openai.com/v1/assistants', {
-            instructions: promptText,
+        const assistantResponse = await openai.beta.assistants.create({
             name: "Grading Assistant",
+            instructions: promptText,
             tools: [{ type: "code_interpreter" }, { type: "file_search" }],
-            model: 'gpt-4o-mini',
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+            model: 'gpt-4o'
         });
 
-        const assistant = assistantResponse.data;
+        const assistant = assistantResponse;
         log(`Assistant created: ${JSON.stringify(assistant)}`);
-        const threadResponse = await axios.post('https://api.openai.com/v1/threads', {}, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
-        });
+        const threadResponse = await openai.beta.threads.create();
 
-        const thread = threadResponse.data;
+        const thread = threadResponse;
         log(`Thread created: ${JSON.stringify(thread)}`);
-        const messageResponse = await axios.post(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
+        const messageContent = "Grade the student assignments.";
+
+        const messageResponse = await openai.beta.threads.messages.create(thread.id, {
             role: "user",
-            content: "Grade the student assignments."
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+            content: messageContent
         });
 
-        log(`Message sent to thread: ${JSON.stringify(messageResponse.data)}`);
-        const runResponse = await axios.post(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
-            assistant_id: assistant.id,
-        }, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+        log(`Message sent to thread: ${JSON.stringify(messageResponse)}`);
+        const runResponse = await openai.beta.threads.runs.create(thread.id, {
+            assistant_id: assistant.id
         });
 
-        log(`Run created: ${JSON.stringify(runResponse.data)}`);
-        let response = await axios.get(`https://api.openai.com/v1/threads/${thread.id}/runs/${runResponse.data.id}`, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
-        });
+        log(`Run created: ${JSON.stringify(runResponse)}`);
+        let response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
 
-        while (response.data.status === "in_progress" || response.data.status === "queued") {
+        while (response.status === "in_progress" || response.status === "queued") {
             log("Waiting for assistant's response...");
             await new Promise(resolve => setTimeout(resolve, 5000));
-            response = await axios.get(`https://api.openai.com/v1/threads/${thread.id}/runs/${runResponse.data.id}`, {
-                headers: {
-                    'Authorization': `Bearer ${openaiApiKey}`,
-                    'Content-Type': 'application/json',
-                    'OpenAI-Beta': 'assistants=v2'
-                }
-            });
+            response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
         }
 
-        const threadMessagesResponse = await axios.get(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
-        });
+        const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
 
-        const messages = threadMessagesResponse.data.data;
+        const messages = threadMessagesResponse.data;
         log(`Messages received: ${JSON.stringify(messages)}`);
         const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 
@@ -183,7 +135,7 @@ router.post('/gpt/assistants', async (req, res) => {
 
 const getSelectedPrompt = async (instructorId) => {
     try {
-        const result = await pool.query('SELECT promptText FROM "Prompt" WHERE "instructorId" = $1 AND "isSelected" = true', [instructorId]);
+        const result = await pool.query('SELECT "promptText" FROM "Prompt" WHERE "instructorId" = $1 AND "isSelected" = true', [instructorId]);
         return result.rows.length > 0 ? result.rows[0].promptText : '';
     } catch (error) {
         console.error('Error fetching selected prompt:', error);
@@ -193,7 +145,7 @@ const getSelectedPrompt = async (instructorId) => {
 
 const getAssignmentRubric = async (assignmentId) => {
     try {
-        const result = await pool.query('SELECT criteria FROM "AssignmentRubric" ar JOIN "useRubric" ur ON ar."assignmentRubricId" = ur."assignmentRubricId" WHERE ur."assignmentId" = $1', [assignmentId]);
+        const result = await pool.query('SELECT "criteria" FROM "AssignmentRubric" ar JOIN "useRubric" ur ON ar."assignmentRubricId" = ur."assignmentRubricId" WHERE ur."assignmentId" = $1', [assignmentId]);
         return result.rows.length > 0 ? result.rows[0].criteria : '';
     } catch (error) {
         console.error('Error fetching assignment rubric:', error);
@@ -203,7 +155,7 @@ const getAssignmentRubric = async (assignmentId) => {
 
 const getMaxPoints = async (assignmentId) => {
     try {
-        const result = await pool.query('SELECT maxObtainableGrade FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+        const result = await pool.query('SELECT "maxObtainableGrade" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
         return result.rows.length > 0 ? result.rows[0].maxObtainableGrade : 100;
     } catch (error) {
         console.error('Error fetching max points:', error);
@@ -213,7 +165,7 @@ const getMaxPoints = async (assignmentId) => {
 
 const getAssignmentKey = async (assignmentId) => {
     try {
-        const result = await pool.query('SELECT assignmentKey FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+        const result = await pool.query('SELECT "assignmentKey" FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
         return result.rows.length > 0 ? result.rows[0].assignmentKey : '';
     } catch (error) {
         console.error('Error fetching assignment key:', error);
@@ -229,91 +181,83 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
     console.log('Max Points:', maxPoints);
     console.log('Assignment Key Path:', assignmentKeyPath);
 
-    const submissionFileStreams = submissions.map(file => fs.createReadStream(path.resolve(baseDirSubmissions, studentId, file.submissionFile)));
-    let submissionVectorStore = await openai.beta.vectorStores.create({
-        name: `Student ${studentId} Submissions`,
-    });
-    await openai.beta.vectorStores.fileBatches.uploadAndPoll(submissionVectorStore.id, submissionFileStreams);
-    let assignmentKeyVectorStore = await openai.beta.vectorStores.create({
-        name: `Assignment ${studentId} Key`,
-    });
-    await openai.beta.vectorStores.fileBatches.uploadAndPoll(assignmentKeyVectorStore.id, [fs.createReadStream(assignmentKeyPath)]);
-    await openai.beta.assistants.update(assistantId, {
-        tool_resources: {
-            file_search: {
-                vector_store_ids: [submissionVectorStore.id, assignmentKeyVectorStore.id]
-            }
-        },
-    });
-
-    const threadResponse = await axios.post('http://localhost:9000/ai-api/gpt/completions', {}, {
-        headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json',
-            'OpenAI-Beta': 'assistants=v2'
-        }
-    });
-
-    const thread = threadResponse.data;
-
-    const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. Additional Instructions: ${instructorPrompt}`;
-
-    const messageResponse = await axios.post(`http://localhost:9000/ai-api/gpt/completions/${thread.id}/messages`, {
-        role: "user",
-        content: messageContent
-    }, {
-        headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json',
-            'OpenAI-Beta': 'assistants=v2'
-        }
-    });
-
-    if (!messageResponse.data || messageResponse.status !== 200) {
-        throw new Error('Failed to post message to the thread');
-    }
-
-    const runResponse = await axios.post(`http://localhost:9000/ai-api/gpt/completions/${thread.id}/runs`, {
-        assistant_id: assistantId,
-    }, {
-        headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json',
-            'OpenAI-Beta': 'assistants=v2'
-        }
-    });
-
-    let response = await axios.get(`http://localhost:9000/ai-api/gpt/completions/${thread.id}/runs/${runResponse.data.id}`, {
-        headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json',
-            'OpenAI-Beta': 'assistants=v2'
-        }
-    });
-
-    while (response.data.status === "in_progress" || response.data.status === "queued") {
-        console.log("Waiting for assistant's response...");
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        response = await axios.get(`http://localhost:9000/ai-api/gpt/completions/${thread.id}/runs/${runResponse.data.id}`, {
-            headers: {
-                'Authorization': `Bearer ${openaiApiKey}`,
-                'Content-Type': 'application/json',
-                'OpenAI-Beta': 'assistants=v2'
-            }
+    try {
+        const submissionFileStreams = submissions.map(file => {
+            const filePath = path.resolve(baseDirSubmissions, file.submissionFile.replace('assignmentSubmissions/', ''));
+            console.log('Resolved file path:', filePath);
+            return fs.createReadStream(filePath);
         });
-    }
 
-    const threadMessagesResponse = await axios.get(`http://localhost:9000/ai-api/gpt/completions/${thread.id}/messages`, {
-        headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json',
-            'OpenAI-Beta': 'assistants=v2'
+        console.log('Submission file streams created:', submissionFileStreams);
+
+        let submissionVectorStore = await openai.beta.vectorStores.create({
+            name: `Student ${studentId} Submissions`,
+        });
+        console.log('Submission Vector Store created:', submissionVectorStore.id);
+
+        await openai.beta.vectorStores.fileBatches.uploadAndPoll(submissionVectorStore.id, submissionFileStreams);
+        console.log('Submission files uploaded and processed.');
+
+        let assignmentKeyVectorStore = await openai.beta.vectorStores.create({
+            name: `Assignment ${studentId} Key`,
+        });
+        console.log('Assignment Key Vector Store created:', assignmentKeyVectorStore.id);
+
+        await openai.beta.vectorStores.fileBatches.uploadAndPoll(assignmentKeyVectorStore.id, [fs.createReadStream(assignmentKeyPath)]);
+        console.log('Assignment key file uploaded and processed.');
+
+        await openai.beta.assistants.update(assistantId, {
+            tool_resources: {
+                file_search: {
+                    vector_store_ids: [submissionVectorStore.id, assignmentKeyVectorStore.id]
+                }
+            },
+        });
+        console.log('Assistant updated with vector stores.');
+
+        const threadResponse = await openai.beta.threads.create();
+        console.log('Thread created:', threadResponse.id);
+
+        const thread = threadResponse;
+
+        const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. Additional Instructions: ${instructorPrompt}`;
+
+        const messageResponse = await openai.beta.threads.messages.create(thread.id, {
+            role: "user",
+            content: messageContent
+        });
+        console.log('Message posted to thread:', messageResponse.id);
+
+        if (!messageResponse || messageResponse.status !== 200) {
+            throw new Error('Failed to post message to the thread');
         }
-    });
 
-    const messages = threadMessagesResponse.data.data;
-    const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
-    return latestAssistantMessage ? JSON.parse(latestAssistantMessage.content) : null;
+        const runResponse = await openai.beta.threads.runs.create(thread.id, {
+            assistant_id: assistantId,
+        });
+        console.log('Run created:', runResponse.id);
+
+        let response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
+
+        while (response.status === "in_progress" || response.status === "queued") {
+            console.log("Waiting for assistant's response...");
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
+        }
+
+        const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
+        console.log('Thread messages received:', threadMessagesResponse.data);
+
+        const messages = threadMessagesResponse.data;
+        const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+        const result = latestAssistantMessage ? JSON.parse(latestAssistantMessage.content) : null;
+        console.log('Final assistant response:', result);
+
+        return result;
+    } catch (error) {
+        console.error('Error processing student submissions:', error);
+        throw error;
+    }
 };
 
 const processSubmissions = async (assignmentId, instructorId, courseId) => {
@@ -326,8 +270,10 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
             'SELECT * FROM "AssignmentSubmission" WHERE "assignmentId" = $1 AND "isSubmitted" = true',
             [assignmentId]
         );
+        console.log('Submissions fetched:', submissions.rows.length);
 
         if (submissions.rows.length === 0) {
+            console.log('No submissions found for this assignment.');
             return { status: 404, message: 'No submissions found for this assignment.' };
         }
 
@@ -337,18 +283,20 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
         const assignmentKeyResult = await getAssignmentKey(assignmentId);
 
         if (!assignmentKeyResult) {
+            console.log('Assignment key not found.');
             return { status: 404, message: 'Assignment key not found.' };
         }
 
-        const assignmentKeyPath = path.resolve(baseDirKeys, instructorId, courseId, assignmentId, assignmentKeyResult);
+        const assignmentKeyPath = path.resolve(baseDirKeys, assignmentKeyResult);
         const assistantResponse = await openai.beta.assistants.create({
             name: "AIValuate Grading Assistant",
             instructions: 'You are a web development expert. Your task is to grade student assignments based on the provided rubric and additional instructions. Provide constructive feedback for each submission, and a grade based on the maximum points available.',
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });
+        console.log('Assistant created:', assistantResponse.id);
 
-        const assistant = assistantResponse.data;
+        const assistant = assistantResponse;
         const assistantId = assistant.id;
         const studentSubmissions = submissions.rows.reduce((acc, submission) => {
             if (!acc[submission.studentId]) {
@@ -359,6 +307,7 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
         }, {});
 
         for (const studentId in studentSubmissions) {
+            console.log(`Processing submissions for student: ${studentId}`);
             const aiResponse = await processStudentSubmissions(studentId, studentSubmissions[studentId], assistantId, selectedPrompt, assignmentRubric, maxPoints, assignmentKeyPath);
 
             if (aiResponse) {
@@ -369,14 +318,17 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
                     'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "AIassignedGrade") VALUES ($1, $2, $3) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade"',
                     [studentSubmissions[studentId][0].assignmentSubmissionId, assignmentId, grade]
                 );
+                console.log(`Grade recorded for student: ${studentId}`);
 
                 await pool.query(
                     'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
                     [studentId, assignmentId, studentSubmissions[studentId][0].courseId, feedback]
                 );
+                console.log(`Feedback recorded for student: ${studentId}`);
             }
         }
 
+        console.log('All submissions processed successfully.');
         return { status: 200, message: 'Submissions processed successfully' };
     } catch (error) {
         console.error('Error processing submissions:', error);

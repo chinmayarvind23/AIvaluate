@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '/app/aivaluate/backend-eval/.env' });
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -13,14 +14,21 @@ const studentRoutes = require('./routes/studentRoutes');
 const promptRoutes = require('./routes/promptRoutes');
 const evalRoutes = require('./routes/evalRoutes');
 const initializePassport = require("./passportConfig");
-
 initializePassport(passport);
 
 const PORT = process.env.PORT || 6001;
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_PORT:', process.env.DB_PORT);
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -32,13 +40,6 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24,
     }
 }));
-
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    credentials: true
-};
-
-app.use(cors(corsOptions));
 
 app.use(passport.initialize());
 app.use(passport.session());

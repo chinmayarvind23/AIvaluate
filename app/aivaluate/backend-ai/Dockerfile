@@ -1,20 +1,22 @@
-# Use an official Node.js runtime as a parent image
 FROM node:20.14.0-buster
 
-# Set the working directory
 WORKDIR /app/aivaluate/backend-ai
 
-# Copy package.json and package-lock.json
+RUN apt-get update && \
+    apt-get install -y netcat-openbsd postgresql-client && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application
 COPY . .
 
-# Expose the port the app runs on
+ENV NODE_ENV=development
+ENV PATH /app/node_modules/.bin:$PATH
+
+VOLUME ["/app/aivaluate/backend/assignmentSubmissions", "/app/aivaluate/backend/assignmentKeys"]
+
 EXPOSE 9000
 
-# Run the app
 CMD ["node", "server.js"]

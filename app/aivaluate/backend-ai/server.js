@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '/app/aivaluate/backend-ai/.env' });
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
@@ -6,6 +7,8 @@ const aiRoutes = require('./aiRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 9000;
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_PORT:', process.env.DB_PORT);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

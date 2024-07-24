@@ -125,6 +125,9 @@ services:
     container_name: backend-ai
     ports:
       - "9000:9000"
+    volumes:
+      - assignment_submissions:/app/aivaluate/backend/assignmentSubmissions
+      - assignment_keys:/app/aivaluate/backend/assignmentKeys
     networks:
       - aivaluate-net
     env_file:

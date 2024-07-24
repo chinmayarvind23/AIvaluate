@@ -727,7 +727,7 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
 
     console.log(`Forwarding request to AI server to process submissions for assignment ${assignmentId}, course ${courseId}, instructor ${instructorId}`);
     try {
-        const response = await axios.post(`http://localhost:9000/ai-api/ai/assignments/${assignmentId}/process-submissions`, {
+        const response = await axios.post(`http://backend-ai:9000/ai-api/ai/assignments/${assignmentId}/process-submissions`, {
             instructorId,
             courseId
         }, {

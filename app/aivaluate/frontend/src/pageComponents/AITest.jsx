@@ -202,15 +202,17 @@ const AITest = () => {
 
   console.log("rubricText:", rubricText);
 
-  // Append rubricText to profPromptText
+  // Append rubricText and to profPromptText
   useEffect(() => {
     const createFullPrompt = async () => {
       const initialPrompt = `Professor's Prompt: ${profPromptText}\n\n--- End of Professor's Prompt ---\n\nAssignment Rubric: ${rubricText}\n\n--- End of Assignment Rubric ---\n\nMax Obtainable Grade: ${maxGrade}\n\n--- End of Max Obtainable Grade ---`;
+      // Fetch assignment key content
       try {
-        const response = await axios.get('http://localhost:5173/get-file-content', {
+        const response = await axios.get('http://localhost:5173/ai-api/get-file-content', {
           params: { filePath: assignmentKey },
         });
         const assignmentKeyContent = response.data.fileContent;
+        // Append assignment key content to the full prompt text
         setFullPromptText(`${initialPrompt}\n\n${assignmentKeyContent}\n\n--- End of Answer Key ---`);
       } catch (error) {
         console.error('Error fetching assignment key content:', error);

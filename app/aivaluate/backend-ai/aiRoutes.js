@@ -47,8 +47,6 @@ router.get('/get-file-content', async (req, res) => {
     log(`Received filePath: ${filePath}`);
 
     try {
-        // Define the base path for the mounted Docker volume
-
         if (!fs.existsSync(filePath)) {
             log(`File not found: ${filePath}`);
             return res.status(404).json({ error: 'File not found.' });
@@ -62,6 +60,7 @@ router.get('/get-file-content', async (req, res) => {
         res.status(500).json({ error: 'Failed to read and return file content' });
     }
 });
+
 
 
 // OpenAI Assistant, Thread, and Message creation endpoint

@@ -1,6 +1,6 @@
-# Cycle 14 Weekly Log
+# Cycle 16 Weekly Log
 
-- ## Date range: July 12 - July 17, 2024
+- ## Date range: July 19 - July 24, 2024
 
  ### Which features were in the project plan cycle?
 - File Storage for submitted assignment for multiple files
@@ -76,21 +76,21 @@
         <td> Append Assignment Rubric to Assistant API Instructions
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
       <tr>
         <td> Pass in Assignment Key Files to the AI as instructions
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
        <tr>
         <td> Pass in Assignment Submission File to AI
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
 </table>
@@ -113,6 +113,13 @@
         </td>
         <!-- Status -->
         <td> Jerry
+        </td>
+    </tr>
+    <tr>
+        <td> Complete AI grading
+        </td>
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
 </table>

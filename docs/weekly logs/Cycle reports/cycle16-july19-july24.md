@@ -1,6 +1,6 @@
-# Cycle 14 Weekly Log
+# Cycle 16 Weekly Log
 
-- ## Date range: July 12 - July 17, 2024
+- ## Date range: July 19 - July 24, 2024
 
  ### Which features were in the project plan cycle?
 - File Storage for submitted assignment for multiple files
@@ -27,15 +27,16 @@
 - Notifications
 - Finish AI with file submissions
 - Fix Date/Time issues
+- Fixing any remaining broken features
 
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-  
+  <img width="1013" alt="Screenshot 2024-07-24 at 7 32 29 AM" src="https://github.com/user-attachments/assets/082a7dcf-ccc0-4ef5-8f32-3eae7b27a3f8">
 
 ### Times for team/individual
 
-
+<img width="1920" alt="Screenshot 2024-07-24 at 7 33 14 AM" src="https://github.com/user-attachments/assets/ba8ace50-c758-489b-8b0f-d8a9ba2ac2b4">
 
 - ### Table view of completed tasks on project board
 
@@ -76,21 +77,21 @@
         <td> Append Assignment Rubric to Assistant API Instructions
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
       <tr>
         <td> Pass in Assignment Key Files to the AI as instructions
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
        <tr>
         <td> Pass in Assignment Submission File to AI
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
 </table>
@@ -113,6 +114,13 @@
         </td>
         <!-- Status -->
         <td> Jerry
+        </td>
+    </tr>
+    <tr>
+        <td> Complete AI grading
+        </td>
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
 </table>

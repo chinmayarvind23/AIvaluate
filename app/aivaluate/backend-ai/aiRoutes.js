@@ -198,7 +198,7 @@ router.post('/gpt/assistants', async (req, res) => {
 
         const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
 
-        const messages = threadMessagesResponse.data;
+        const messages = threadMessagesResponse.data || [];
         log(`Messages received: ${JSON.stringify(messages)}`);
         const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 

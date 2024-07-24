@@ -189,12 +189,11 @@ router.post('/gpt/assistants', async (req, res) => {
         });
 
         log(`Run created: ${JSON.stringify(runResponse)}`);
-        let response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
-
+        let response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
         while (response.status === "in_progress" || response.status === "queued") {
-            log("Waiting for assistant's response...");
+            console.log("Waiting for assistant's response...");
             await new Promise(resolve => setTimeout(resolve, 5000));
-            response = await openai.beta.threads.runs.get(thread.id, runResponse.id);
+            response = await openai.beta.threads.runs.retrieve(thread.id, runResponse.id);
         }
 
         const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);

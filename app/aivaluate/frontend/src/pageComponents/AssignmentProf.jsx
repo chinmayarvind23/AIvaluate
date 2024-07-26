@@ -213,3 +213,4 @@ const AssignmentProf = () => {
 };
 
 export default AssignmentProf;
+

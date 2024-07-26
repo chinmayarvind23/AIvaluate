@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { FaFile, FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -76,6 +77,11 @@ const AssignmentOverview = () => {
 
   const navBarText = `${courseCode} - ${courseName}`;
 
+  const formatDueDate = (dueDate) => {
+    const date = parseISO(dueDate);
+    return format(date, "MMMM do 'at' h:mmaaa");
+  };
+
   return (
     <div>
       <AIvaluateNavBar navBarText={navBarText} />
@@ -124,7 +130,7 @@ const AssignmentOverview = () => {
                               {assignment.assignmentName}
                             </button>
                           </td>
-                          <td>{assignment.dueDate}</td>
+                          <td>{formatDueDate(assignment.dueDate)}</td>
                           <td>{assignment.maxObtainableGrade}</td>
                         </tr>
                       ))}

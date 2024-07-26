@@ -1,11 +1,16 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState, useCallback } from 'react';
+import { format, parseISO } from 'date-fns';
+import React, { useCallback, useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import '../GeneralStyling.css';
-import '../PublishAssignment.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
+import '../GeneralStyling.css';
+import '../PublishAssignment.css';
 
 const PublishAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -15,7 +20,7 @@ const PublishAssignment = () => {
     const { assignmentId } = useParams();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
-    const [deadline, setDeadline] = useState("");
+    const [deadline, setDeadline] = useState(new Date());
     const [rubricContent, setRubricContent] = useState("");
     const [isEdited, setIsEdited] = useState(false);
     const [isPublished, setIsPublished] = useState(null);
@@ -28,7 +33,7 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(dueDate);
+                setDeadline(parseISO(dueDate)); // Convert ISO string to Date object
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
                 console.log("Fetched assignment:", response.data);
@@ -49,8 +54,8 @@ const PublishAssignment = () => {
         setIsEdited(true);
     };
 
-    const handleDeadlineChange = (e) => {
-        setDeadline(e.target.value);
+    const handleDeadlineChange = (date) => {
+        setDeadline(date);
         setIsEdited(true);
     };
 
@@ -83,17 +88,23 @@ const PublishAssignment = () => {
         try {
             await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
                 assignmentName: title,
-                dueDate: deadline,
+                dueDate: deadline.toISOString(), // Convert Date object to ISO string
                 criteria: rubricContent,
                 courseId: courseId
             }, {
                 withCredentials: true
             });
             setIsEdited(false);
-            console.log('Assignment updated successfully');
+            toast.success('Assignment updated successfully');
         } catch (error) {
             console.error('Error updating assignment:', error);
+            toast.error('Failed to update assignment');
         }
+    };
+
+    const formatDueDate = (dueDate) => {
+        const date = parseISO(dueDate);
+        return format(date, "MMMM do 'at' h:mmaaa");
     };
 
     return (
@@ -115,17 +126,25 @@ const PublishAssignment = () => {
                             /> 
                             <p className="click-to-edit">Click to edit</p>
                         </div>
-                        <div >
+                        <div>
                             <div className="deadline">
                                 <h2>Due:</h2>
-                                <input 
-                                    type="text" 
-                                    className="deadline-input" 
-                                    value={deadline} 
-                                    onChange={handleDeadlineChange} 
-                                /> 
+                                <DatePicker
+                                    selected={deadline}
+                                    onChange={handleDeadlineChange}
+                                    showTimeSelect
+                                    dateFormat="MMMM do 'at' h:mmaaa"
+                                    className="deadline-input"
+                                    customInput={
+                                        <input 
+                                            type="text" 
+                                            className="deadline-input" 
+                                            value={formatDueDate(deadline.toISOString())}
+                                            readOnly
+                                        />
+                                    }
+                                />
                                 <p className="click-to-edit">Click to edit</p>
-                    
                                 <button className="assignment-button" onClick={handleViewSubmissions}>
                                     View Submissions
                                 </button>
@@ -150,6 +169,7 @@ const PublishAssignment = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

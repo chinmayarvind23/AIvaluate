@@ -5,8 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import MarkdownRenderer from '../components/MarkdownRenderer';
 import SideMenuBar from '../components/SideMenuBar';
+import ReactMarkdown from 'react-markdown';
 
 const SubmitAssignment = () => {
     const navigate = useNavigate();
@@ -21,7 +21,9 @@ const SubmitAssignment = () => {
         dueDate: '',
         maxObtainableGrade: '',
         InstructorAssignedFinalGrade: '',
-        assignmentDescription: ''
+        assignmentDescription: '',
+        aiFeedback: '',
+        evaluatorFeedback: ''
     });
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -215,6 +217,18 @@ const SubmitAssignment = () => {
                                         <p>No files uploaded yet.</p>
                                     )}
                                 </div>
+                                <h2>Rubric</h2>
+                                <div className="rubric-container">
+                                    <ReactMarkdown>{assignmentDetails.criteria}</ReactMarkdown>
+                                </div>
+                                <h2>AI Feedback</h2>
+                                <div className="feedback-container">
+                                    <ReactMarkdown>{assignmentDetails.aiFeedback}</ReactMarkdown>
+                                </div>
+                                <h2>Evaluator Feedback</h2>
+                                <div className="feedback-container">
+                                    <ReactMarkdown>{assignmentDetails.evaluatorFeedback}</ReactMarkdown>
+                                </div>
                                 <h2>Feedback</h2>
                                 <div className="feedback-container">
                                     {isGraded ? (
@@ -224,12 +238,12 @@ const SubmitAssignment = () => {
                                             </div>
                                             <div className="both-feedback">
                                                 <h3>AI Feedback</h3>
-                                                <div className="feeback-text">
-                                                    <MarkdownRenderer markdownText={assignmentDetails.aiFeedback || ''} />
+                                                <div className="feedback-text">
+                                                    <ReactMarkdown>{assignmentDetails.aiFeedback || ''}</ReactMarkdown>
                                                 </div>
                                                 <h3>Evaluator Feedback</h3>
-                                                <div className="feeback-text">
-                                                    <MarkdownRenderer markdownText={assignmentDetails.evaluatorFeedback || ''} />
+                                                <div className="feedback-text">
+                                                    <ReactMarkdown>{assignmentDetails.evaluatorFeedback || ''}</ReactMarkdown>
                                                 </div>
                                             </div>
                                         </div>

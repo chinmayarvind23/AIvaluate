@@ -455,7 +455,9 @@ router.get('/stu-api/assignment/:courseId/:assignmentId', async (req, res) => {
                 a."dueDate",
                 a."maxObtainableGrade",
                 a."assignmentDescription",
-                ag."InstructorAssignedFinalGrade"
+                ag."InstructorAssignedFinalGrade",
+                ag."aiFeedback",
+                ag."evaluatorFeedback"
             FROM "Assignment" a
             LEFT JOIN "AssignmentGrade" ag
             ON a."assignmentId" = ag."assignmentId"

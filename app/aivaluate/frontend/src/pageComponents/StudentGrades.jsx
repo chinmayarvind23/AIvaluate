@@ -175,7 +175,7 @@ console.log("FirstName:", firstName);
         <div className="main-margin">
           <div className="grades-section">
             <div className="top-bar">
-              <h1 className="primary-color-text">Grades for {studentName}</h1>
+              <h1 className="primary-color-text">{`Grades For ${firstName}`} </h1>
             </div>
             <div className="scrollable-div">
               <table className="grades-table secondary-colorbg">

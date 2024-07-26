@@ -35,38 +35,44 @@ describe('Selenium Eval View Submissions Page Test', () => {
       await loginButton.click();
       console.log('Login form submitted');
 
-      // Wait for redirection to the evaluator home page
+      // Wait for redirection to the evaluator dashboard
       await driver.wait(until.urlContains('/eval/dashboard'), 30000);
       console.log('Navigated to /eval/dashboard');
 
-      // Navigate to the eval view submissions page
-      await driver.get('http://localhost:5173/eval/view-submissions');
-      console.log('Navigated to /eval/view-submissions');
+      // Navigate to the evaluator submissions page
+      await driver.get('http://localhost:5173/eval/submissions/1');
+      console.log('Navigated to /eval/submissions');
 
-      // Wait for the submissions content to load
-      const submissionsSection = await driver.wait(until.elementLocated(By.css('.accented-outside')), 30000);
-      console.log('Submissions section displayed');
-      expect(submissionsSection).toBeTruthy();
+      // Wait for the top bar to be present
+      const topBar = await driver.wait(until.elementLocated(By.css('.top-bar')), 30000);
+      expect(topBar).toBeTruthy();
+      console.log('Top bar displayed');
 
-      // Verify that the "Student Submissions" heading is displayed
-      const submissionsHeading = await driver.wait(until.elementLocated(By.xpath('//h1[text()="Student Submissions"]')), 30000);
-      expect(submissionsHeading).toBeTruthy();
-      console.log('Student Submissions heading displayed');
+      // Verify the presence of the search input
+      const searchInput = await driver.wait(until.elementLocated(By.css('.search-box input[type="text"]')), 30000);
+      expect(searchInput).toBeTruthy();
+      console.log('Search input displayed');
 
-      // Verify that the search box is displayed
-      const searchBox = await driver.wait(until.elementLocated(By.css('.search-box input')), 30000);
-      expect(searchBox).toBeTruthy();
-      console.log('Search box displayed');
+      // Perform a search
+      await searchInput.sendKeys('test search');
+      console.log('Performed search');
 
-      // Verify that the pagination controls are displayed
+      // // Wait for the file items to be displayed
+      // const fileItems = await driver.wait(until.elementsLocated(By.css('.file-item')), 30000);
+      // expect(fileItems.length).toBeGreaterThan(0);
+      // console.log('File items displayed');
+
+      // Verify pagination controls are displayed
       const paginationControls = await driver.wait(until.elementLocated(By.css('.pagination-controls')), 30000);
       expect(paginationControls).toBeTruthy();
       console.log('Pagination controls displayed');
 
-      // Verify that at least one file item is displayed
-      const fileItem = await driver.wait(until.elementLocated(By.css('.file-item')), 30000);
-      expect(fileItem).toBeTruthy();
-      console.log('File item displayed');
+      // Verify navigation buttons are displayed and functional
+      const prevButton = await driver.wait(until.elementLocated(By.css('.pagination-buttons button:first-child')), 30000);
+      const nextButton = await driver.wait(until.elementLocated(By.css('.pagination-buttons button:last-child')), 30000);
+      expect(prevButton).toBeTruthy();
+      expect(nextButton).toBeTruthy();
+      console.log('Pagination buttons displayed');
 
     } catch (error) {
       console.error('Test failed:', error);

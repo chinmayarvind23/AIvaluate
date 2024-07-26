@@ -170,43 +170,41 @@ console.log("FirstName:", firstName);
   return (
     <div>
       <AIvaluateNavBar navBarText={navBarText} />
-      <SideMenuBar tab="grades"/>
-      <div className="main-margin">
-        <div className="grades-section">
-          <div className="top-bar">
-            <h1 className="primary-color-text">Grades for {studentName}</h1>
-          </div>
-          <div className="scrollable-div">
-            <table className="grades-table secondary-colorbg">
-              <thead>
-                <tr>
-                  <th className="fourth-colorbg">Name</th>
-                  <th className="fourth-colorbg">Due</th>
-                  <th className="fourth-colorbg">Submitted</th>
-                  <th className="fourth-colorbg">Marked</th>
-                  <th className="fourth-colorbg">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {grades.map((grade, index) => (
-                  <tr key={index}>
-                    <td>
-                      <Link to={`/stu/submit/${courseId}/${grade.assignmentId}`} className="assignment-link">
-                        {grade.name}
-                      </Link>
-                    </td>
-                    <td>{grade.due}</td>
-                    <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
-                    <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
-                    <td>{grade.score.toFixed(1)}/{grade.total}</td>
+      <div className="filler-div">
+        <SideMenuBar tab="grades"/>
+        <div className="main-margin">
+          <div className="grades-section">
+            <div className="top-bar">
+              <h1 className="primary-color-text">Grades for {studentName}</h1>
+            </div>
+            <div className="scrollable-div">
+              <table className="grades-table secondary-colorbg">
+                <thead>
+                  <tr>
+                    <th className="fourth-colorbg">Name</th>
+                    <th className="fourth-colorbg">Due</th>
+                    <th className="fourth-colorbg">Submitted</th>
+                    <th className="fourth-colorbg">Marked</th>
+                    <th className="fourth-colorbg">Score</th>
                   </tr>
-                ))}
-                <tr>
-                  <td colSpan="4" className="total fourth-colorbg">Total</td>
-                  <td className="total fourth-colorbg">{total}%</td>
-                </tr>
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {grades.map((grade, index) => (
+                    <tr key={index}>
+                      <td>{grade.name}</td>
+                      <td>{new Date(grade.due).toLocaleDateString()}</td>
+                      <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
+                      <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
+                      <td>{grade.score.toFixed(1)}/{grade.total}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="4" className="total fourth-colorbg">Total</td>
+                    <td className="total fourth-colorbg">{total}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

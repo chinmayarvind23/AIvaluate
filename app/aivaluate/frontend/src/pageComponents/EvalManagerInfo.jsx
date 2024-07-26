@@ -101,40 +101,42 @@ const EvalManagerInfo = () => {
                         </div>
                         <h1 className="eval-text">Evaluator Info</h1>
                     </div>
-                    <div className="user-info">
-                        <div className="user-details">
-                            <h2>{evaluator.firstName} {evaluator.lastName}</h2>
-                            <div className="align-check">
-                                <label className="checkbox-label2 ">
-                                    <input type="checkbox" checked={isTeachingAssistant} readOnly /> Teaching Assistant
-                                </label>
-                            </div>
-                            <div className="action-buttons">
-                                <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
-                            </div>
-                        </div>
-                        <div className="info-row">
-                            <span>Email:</span>
-                            <span>{evaluator.email}</span>
-                        </div>
-                        <div className="info-row">
-                            <span>Password:</span>
-                            <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
-                        </div>
-                        <div className="info-row">
-                            <span>Department:</span>
-                            <span>{evaluator.department}</span>
+                <div className="user-info">
+                    <div className="user-details">
+                        <h2>{evaluator.firstName} {evaluator.lastName}</h2>
+                        <div className="action-buttons">
+                            <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
                         </div>
                     </div>
-                    <div className="course-section">
-                        <div className="search-bar">
-                            <FaSearch className="search-icon" />
-                            <input 
-                                type="text" 
-                                placeholder="Search..." 
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)} 
-                            />
+                    <div className="info-row">
+                        <span>Email:</span>
+                        <span>{evaluator.email}</span>
+                    </div>
+                    <div className="info-row">
+                        <span>Password:</span>
+                        <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
+                    </div>
+                    <div className="info-row">
+                        <div className="align-check">
+                            <label className="checkbox-label2">
+                                {isTeachingAssistant && (
+                                    <h3 className="ta-text">
+                                        *Teaching Assistant
+                                    </h3>
+                                )}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div className="course-section">
+                    <div className="search-bar">
+                        <FaSearch className="search-icon" />
+                        <input 
+                            type="text"
+                            placeholder="Search..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)} 
+                        />
                         </div>
                         {filteredCourses.map((course, index) => (
                             <div className="course-item" key={index}>

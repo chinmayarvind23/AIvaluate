@@ -15,14 +15,16 @@ body {
     padding: 35px;
     border-radius: 10px;
     margin-bottom: 20px;
-    margin-left: 20px;
-    width: 900px;
+    margin-left: 120px;
+    margin-right: 120px;
+    width: stretch;
 }
 
 .user-details {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 .user-details h2 {
@@ -56,6 +58,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
+    cursor: default;
 }
 
 .create-eval{
@@ -89,8 +92,9 @@ body {
     background-color: #3b3b3b;
     padding: 20px;
     border-radius: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 120px;
+    margin-right: 120px;
+    width: stretch;
 }
 
 .eval-text{
@@ -114,10 +118,27 @@ body {
     border-radius: 50px;
 }
 
-.align-check{
+.align-check {
     display: flex;
     align-items: center;
 }
+
+.checkbox-label2 {
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-top: 5px;
+    margin-right: 70px;
+    border: none;
+}
+
+.ta-text {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: red;
+}
+
 
 .course-item {
     display: flex;
@@ -127,6 +148,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    cursor: default;
 }
 
 .remove-button {
@@ -137,12 +159,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-.checkbox-label2 {
-    display: flex;
-    color: white;
-    margin-top: 5px;
-    margin-right: 70px;
-}
+
 
 .checkbox-label input[type="checkbox"] {
     /* margin-right: 10px; */

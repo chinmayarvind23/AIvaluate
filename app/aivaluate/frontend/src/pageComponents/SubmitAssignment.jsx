@@ -257,8 +257,12 @@ import MarkdownRenderer from '../components/MarkdownRenderer';
 import SideMenuBar from '../components/SideMenuBar';
 
 const SubmitAssignment = () => {
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+
     const navigate = useNavigate();
     const { courseId, assignmentId } = useParams();
+    const navBarText = `${courseCode} - ${courseName}`;
     const [files, setFiles] = useState([]);
     const [isGraded, setIsGraded] = useState(false);
     const [dragging, setDragging] = useState(false);
@@ -369,7 +373,7 @@ const SubmitAssignment = () => {
         return <div>Loading...</div>;
     }
 
-    const navBarText = `${assignmentDetails.assignmentName} - ${assignmentDetails.assignmentDescription}`;
+    // const navBarText = `${assignmentDetails.assignmentName} - ${assignmentDetails.assignmentDescription}`;
 
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
@@ -391,7 +395,7 @@ const SubmitAssignment = () => {
                                     </button>
                                 </div>
                                 <div className="header-content">
-                                    <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName} - {assignmentDetails.rubricName}</h1>
+                                    <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName}</h1>
                                 </div>
                             </div>
                         </div>

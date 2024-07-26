@@ -13,7 +13,7 @@ describe('Selenium Forgot Password Page Test', () => {
 
   test('Forgot Password page loads and submits form', async () => {
     try {
-      await driver.get('http://localhost:5173/stu/forgotpassword');
+      await driver.get('http://localhost:5173/forgotpassword');
 
       // Debugging: Log to check if the page loaded
       console.log('Navigated to /stu/forgotpassword');

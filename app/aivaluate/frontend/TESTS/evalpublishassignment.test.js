@@ -40,7 +40,7 @@ describe('Selenium Publish Assignment Page Test', () => {
       console.log('Navigated to /eval/dashboard');
 
       // Navigate to the publish assignment page
-      await driver.get('http://localhost:5173/eval/assignments/1'); // Adjust the URL to match your route
+      await driver.get('hhttp://localhost:5173/eval/published/13'); // Adjust the URL to match your route
       console.log('Navigated to /eval/assignments/1');
 
       // Wait for the assignment content to load

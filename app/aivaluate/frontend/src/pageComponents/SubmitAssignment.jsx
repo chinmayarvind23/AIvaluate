@@ -142,7 +142,7 @@ const SubmitAssignment = () => {
                                     </button>
                                 </div>
                                 <div className="header-content">
-                                    <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName} - {assignmentDetails.rubricName}</h1>
+                                    <h1 className="assignment-title primary-color-text">{assignmentDetails.assignmentName}</h1>
                                 </div>
                             </div>
                         </div>

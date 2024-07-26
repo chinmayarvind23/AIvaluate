@@ -26,17 +26,13 @@
   border: 2px solid var(--primary-color);
 }
 
-.topBar {
-  display: flex;
-  width: fill-parent;
-  height: 100px;
-  align-items: center;
-}
 
-.portal-all {
+.portal-all{
   justify-content: center;
   align-items: center;
-  margin-left: 350px;
+  /* margin-left:30px; */
+  /* margin-left: 350px; */
+  width: stretch;
 }
 
 .portal-container {
@@ -81,6 +77,23 @@
   border-radius: 5px;
   font-size: 2rem;
   text-align: left;
+  cursor: pointer;
+}
+
+.file-item-no-click {
+  display: flex;
+  align-items: center;
+  width: 92%;
+  height: 80px;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #dfcbcb84;
+  color: black;
+  border-radius: 5px;
+  font-size: 2rem;
+  text-align: left;
 }
 
 .file-item:hover {
@@ -88,40 +101,57 @@
   transform: scale(1.01);
 }
 
-.file-name {
+.file-name{
   width: stretch;
   overflow: none;
+  cursor: pointer;
 }
 
-.file-status {
+.file-name-no-click{
+  width: stretch;
+  overflow: none;
+  cursor: default;
+}
+
+.file-status{
   font-size: small;
   margin-left: 20px;
-  width: 150px;
+  width:150px;
   opacity: 0.5;
+  /* cursor: pointer; */
 }
-
 .file-icon {
   display: inline-flex;
   margin: 10px;
-  position: relative;
+  position:relative;
   margin-left: 10px;
   margin-right: 10px;
+  cursor: pointer;
 }
 
-.folder-icon {
+.file-icon-no-click {
+  display: inline-flex;
+  margin: 10px;
+  position:relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: default;
+}
+
+.folder-icon{
   margin-right: 20px;
 }
 
-.file-icon:hover {
+.file-icon:hover{
   transform: scale(1.1);
 }
 
-.file-item:nth-child(odd) {
+.file-item:nth-child(odd), .file-item-no-click:nth-child(odd) {
   background-color: #bbb6b6;
   border-radius: -50% 0px 0px 0px;
 }
 
-.file-item:nth-child(even) {
+.file-item:nth-child(even), .file-item-no-click:nth-child(even){
   background-color: rgb(220, 215, 215);
 }
 
@@ -155,8 +185,12 @@
   cursor: not-allowed;
 }
 
-.grades-button {
-  width: 800px;
+/* .pagination-buttons button:hover:enabled {
+  background-color: darken(var(--primary-color), 1%);
+} */
+
+.grades-button{
+  width: 130px;
   height: 50px;
   border-radius: 60px;
   margin-right: 20px;
@@ -171,13 +205,18 @@
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.grades-button:hover {
+.grades-button:hover{
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
 }
 
-.title-text {
-  display: flex;
-  width: 5300px;
+.title-text{
+display: flex;
+width: 450px; 
+} 
+
+.title-text-selected-assign{
+display: flex;
+width: 600px; 
 }

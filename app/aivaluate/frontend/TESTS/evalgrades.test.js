@@ -40,7 +40,7 @@ describe('Selenium Evaluator Grades Page Test', () => {
       console.log('Navigated to /eval/dashboard');
 
       // Navigate to the evaluator grades page
-      await driver.get('http://localhost:5173/eval/grades');
+      await driver.get('http://localhost:5173/eval/grades/2');
       console.log('Navigated to /eval/grades');
 
       // Wait for the grades content to load

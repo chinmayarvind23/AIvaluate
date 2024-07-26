@@ -35,8 +35,12 @@ describe('Selenium Eval Account Page Test', () => {
       await loginButton.click();
       console.log('Login form submitted');
 
+   // Wait for redirection to the evaluator dashboard
+   await driver.wait(until.urlContains('/eval/dashboard'), 30000);
+   console.log('Navigated to /eval/dashboard');
+
       // Wait for redirection to the evaluator account page
-      await driver.wait(until.urlContains('/eval/account'), 30000);
+      await driver.get('http://localhost:5173/eval/account');
       console.log('Navigated to /eval/account');
 
       // Verify that the account details are displayed

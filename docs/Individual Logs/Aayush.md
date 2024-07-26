@@ -1855,6 +1855,37 @@ I dedicated significant effort to fixing the CI/CD pipeline and enhancing the fr
   * Goal 2: Do the testing for AI
   
 
+# Timesheet (July 24 - July 26) - 11 hours
+
+### Timesheet
+Clockify report
+
+<img width="916" alt="Screenshot 2024-07-26 at 1 05 34 AM" src="https://github.com/user-attachments/assets/f1a0728a-e470-4e76-ba72-d26890174f0c">
+
+
+### Current Tasks 
+  * #1: Frontend Selenium testing
+
+### Progress Update (since 7/26/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Frontend Selenium testing</td>
+        <td>In Progress</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I invested considerable effort into conducting and improving front-end Selenium testing. I successfully resolved issues with the 10 failing tests, ensuring they now pass, and I added 5 additional tests to further enhance coverage. These activities were vital for confirming the reliability of our code.
+
+### Next Cycle Goals 
+  * Goal 1: Work on the failing tests and add more test
+  * Goal 2: Make changes in tests overall according to the final changes
+  * Goal 3: Add coverage for frontend testing 
+
 
  
 

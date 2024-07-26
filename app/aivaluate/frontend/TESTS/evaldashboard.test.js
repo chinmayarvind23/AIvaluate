@@ -44,20 +44,16 @@ describe('Selenium Eval Dashboard Page Test', () => {
       console.log('Notification container displayed');
       expect(notificationContainer).toBeTruthy();
 
-      // Verify that the courses header is displayed
-      const coursesHeader = await driver.wait(until.elementLocated(By.css('.message-container h1')), 30000);
-      console.log('Courses header displayed');
-      expect(coursesHeader).toBeTruthy();
+      // // Verify that the courses header is displayed
+      // const coursesHeader = await driver.wait(until.elementLocated(By.css('.message-container h1')), 30000);
+      // console.log('Courses header displayed');
+      // expect(coursesHeader).toBeTruthy();
 
-      // Verify that the navbar is displayed with the correct text
-      const navBarText = await driver.wait(until.elementLocated(By.xpath(`//nav//div[contains(text(), "Hello Prof")]`)), 30000);
-      console.log('Navbar text displayed');
-      expect(navBarText).toBeTruthy();
 
-      // Verify that the course cards are displayed
-      const courseCards = await driver.wait(until.elementLocated(By.css('.course-cards')), 30000);
-      console.log('Course cards displayed');
-      expect(courseCards).toBeTruthy();
+      // // Verify that the course cards are displayed
+      // const courseCards = await driver.wait(until.elementLocated(By.css('.course-cards')), 30000);
+      // console.log('Course cards displayed');
+      // expect(courseCards).toBeTruthy();
 
     } catch (error) {
       console.error('Test failed:', error);

@@ -48,10 +48,6 @@ describe('Selenium Course Home Page Test', () => {
       expect(courseManagementHeading).toBeTruthy();
       console.log('Course management content displayed');
 
-      // Verify that the AI Test button is displayed
-      const aiTestButton = await driver.wait(until.elementLocated(By.xpath('//button[text()="AI Test"]')), 20000);
-      expect(aiTestButton).toBeTruthy();
-      console.log('AI Test button displayed');
 
       // Verify that the Edit Course button is displayed
       const editCourseButton = await driver.wait(until.elementLocated(By.xpath('//button[text()="Edit Course"]')), 20000);

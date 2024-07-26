@@ -474,3 +474,45 @@ Progress Update:
 
 
 
+
+
+
+
+
+
+
+
+
+
+## Cycle 17 : Wednesday July 24 - Friday July 26
+Timesheet
+
+
+
+<img width="618" alt="Cycle 17" src="https://github.com/user-attachments/assets/088db300-c8fb-4bbd-afd2-0ac58939272b">
+
+
+
+
+### Current Tasks
+
+- Backend for assignment page student view (1)
+- Backend for assignment page student view (2)
+- Assignment Redirect
+- Notification messages through email
+  
+Progress Update: 
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Backend for assignment page student view(1) | Completed |
+| Task #2 / Backend for assignment page student view(2) | Completed |
+| Task #3 / Assignment Redirect |Completed|
+| Task #4 / Notification messages through email |Not - Completed|
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+- In this cycle, I finished the backend for the submissions page for the student view. It went well but I faced some issues that were happening from before and will work with the team tomorrow to finalize it!
+- 
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Next cycle I will focus on issue #4 and take more issues if available and help out with AI implementation
+

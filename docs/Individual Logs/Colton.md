@@ -960,3 +960,47 @@ My biggest challenge this cycle was trying to dealt with some of the merge confl
 - Work on Course notifications.
 - Finish off AI to have to fully working with student submissions.
 -----------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------
+
+## Cycle 16: Friday July 19th - Wednesday July 24th
+
+### Current Tasks
+  * #1: Fix date problem
+  * #2: Work on Course notifications.
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C16.png)
+
+### Progress Update (since June 14th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Fix date problem
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Work on Course notifications.
+        </td>
+        <!-- Status -->
+        <td> In progress
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+I ran into alot of problems with the date not working because all of our backend code was different but I managed to work this out.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Fix up all small errors.
+- Work on Course notifications.
+-----------------------------------------------------------------------------------

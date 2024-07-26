@@ -1,5 +1,31 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 24 - July 26 Morning) - 8 hours
+
+## Friday July 26th
+### 2 hours
+- Add a feature that allows admins to undo evaluator deletion #405/#375
+
+## Thursday July 25th
+### 6 hours
+- Add a feature that allows admins to undo evaluator deletion #405/#375
+
+# Current Tasks
+- #1 Revise frontend UI and fix various bugs based on test session feedback #375
+- #2 Revert evaluator deletion #405
+
+# Progress Update
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | In Progress  |
+| Task #2 | Completed  |
+
+# Cycle Goal Review
+During this cycle, I implemented a feature which allows the admin to revert a recent evaluator deletion. This is implemented because of the feedback collected during user testing. Minor fixes and manual testing are also completed based on the feedbacks.
+
+# Next Cycle 
+During the next cycle, I'll continue to work on the administrator undo feature, allowing the admin to undo student deletion, as well as undo dropping a course. Also, I think the development branch might be corrupted at this moment; I'll spend some time to fix the dev branch.
+
 # Timesheet (June 19 - July 23) - 13 hours
 
 ## Tuesday July 23rd

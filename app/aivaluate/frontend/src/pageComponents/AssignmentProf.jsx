@@ -1,4 +1,5 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../AssignmentProf.css';
@@ -6,7 +7,6 @@ import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
-import axios from 'axios';
 
 const AssignmentProf = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -165,48 +165,48 @@ const AssignmentProf = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
+            <div className="filler-div">
             <SideMenuBarEval tab="assignments" />
-            <div className="accented-outside rborder">
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <h1>Assignments</h1>
-                            <div className="empty"> </div>
-                            {!isLoading && !isTA && (
-                                <div className="left-button">
-                                    <button className="assignButton" onClick={() => handleAssignmentCreation()}>
-                                        <CircumIcon name="circle_plus" />
-                                        Create New Assignment
+                    <div className="main-margin">
+                        <div className="portal-container">
+                            <div className="top-bar">
+                                <h1>Assignments</h1>
+                                <div className="empty"> </div>
+                                {!isLoading && !isTA && (
+                                    <div className="left-button">
+                                        <button className="assignButton" onClick={() => handleAssignmentCreation()}>
+                                            <CircumIcon name="circle_plus" />
+                                            Create New Assignment
+                                        </button>
+                                    </div>
+                                )}
+                                {!isLoading && !isTA && (
+                                <div className="right-button">
+                                    <button className="assignButton" onClick={() => handleAssignmentBrowse()}>
+                                        <div className="file-icon"><CircumIcon name="folder_on" /></div>
+                                        Browse My Assignments
                                     </button>
                                 </div>
-                            )}
-                            {!isLoading && !isTA && (
-                            <div className="right-button">
-                                <button className="assignButton" onClick={() => handleAssignmentBrowse()}>
-                                    <div className="file-icon"><CircumIcon name="folder_on" /></div>
-                                    Browse My Assignments
-                                </button>
+                                )}
                             </div>
-                            )}
+                            <div className="filetab">
+                                {currentFiles.map((assignment, index) => (
+                                    <div className="file-item" key={index} onClick={() => handleAssignmentSelect(assignment.assignmentId)}>
+                                        <div className="file-name">{assignment.assignmentName}</div>
+                                        <div className="file-status">{assignment.isGraded ? '*Grading Posted' : ''}</div>
+                                        <div className="file-icon"><CircumIcon name="circle_more" /></div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className="filetab">
-                            {currentFiles.map((assignment, index) => (
-                                <div className="file-item" key={index} onClick={() => handleAssignmentSelect(assignment.assignmentId)}>
-                                    <div className="file-name">{assignment.assignmentName}</div>
-                                    <div className="file-status">{assignment.isGraded ? '*Grading Posted' : ''}</div>
-                                    <div className="file-icon"><CircumIcon name="circle_more" /></div>
-                                </div>
-                            ))}
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
                     </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );

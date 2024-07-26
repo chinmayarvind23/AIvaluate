@@ -42,6 +42,7 @@
     border: var(--primary-color) 2px solid;
     padding: 20px;
     margin-right: 20px; /* Add margin to the right for spacing */
+    cursor: text;
 }
 
 .update-ai {
@@ -160,3 +161,4 @@
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
 }
+

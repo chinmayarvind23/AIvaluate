@@ -58,28 +58,7 @@
         </td>
     </tr>
     <tr>
-        <td> Tooltips for AI settings page and cursor interaction
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Newly designed toast and alert messages
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Replace Checkbox with Icon for TA Eval user
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Add character limits and remove Max students from course
+        <td> Frontend fixes + broken page fixes for backend
         </td>
         <!-- Status -->
         <td> Colton
@@ -137,5 +116,4 @@
     </tr>
 </table>
 
-- All backend tests are passing with 100% coverage. We are working on frontend tests using selenium.
-
+- All backend tests are passing with 100% coverage. We are working on frontend tests using selenium and have made some progress with some of the tests being merged into dev.

@@ -164,11 +164,16 @@ router.post('/gpt/assistants', async (req, res) => {
 
     try {
         const assistantResponse = await openai.beta.assistants.create({
-            name: "Grading Assistant",
-            instructions: promptText,
-            tools: [{ type: "code_interpreter" }, { type: "file_search" }],
-            model: 'gpt-4o'
-        });
+            name: "AIValuate Grading Assistant",
+            instructions: `You are a web development expert. Your task is to grade student assignments based on the provided rubric and additional instructions. Provide constructive feedback for each submission, and a grade based on the maximum points available. 
+            Provide your response in the following JSON format:
+            {
+                "feedback": "Your detailed feedback here",
+                "grade": "Your grade here"
+            }`,
+            model: "gpt-4o",
+            tools: [{ type: "code_interpreter" }, { type: "file_search" }]
+        });              
 
         const assistant = assistantResponse;
         log(`Assistant created: ${JSON.stringify(assistant)}`);

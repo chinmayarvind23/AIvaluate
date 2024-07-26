@@ -736,3 +736,33 @@ Completed 85% of my tasks, the file submission is done, only the grading and pop
 - Goal 1: AI response extraction + DB updates
 - Goal 2: File downloads and integration with new assignment grading UI, fixing broken components
 - Goal 3: Downloading submissions on grading page & submissions page for a course/assignment
+
+## July 24th - July 26th
+
+## Timesheet
+
+Clockify report: Total hours - 24 hours
+<img width="1920" alt="Screenshot 2024-07-26 at 8 12 20 AM" src="https://github.com/user-attachments/assets/7ff7e176-50bf-4cb3-8694-62794bcca05f">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** AI parsing logic + DB entries and responses from AI with retry logic (14 hours) (XL Task)
+- **#2:** AI File submission, smaller fixes on assignment submissions page for evaluator (10 hours) (XL Task)
+
+## Progress Update (since 7/24/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Close to completed, just need to add in some more logic to ensure a response from the AI is guaranteed |
+| Task 2       | Completed |
+
+## Cycle Goal Review
+
+Completed 90% of my tasks, the file submission is done, the DB is being populated sometimes and I will add in logic to take care of that within the next cycle.
+
+## Next Cycle Goals
+
+- Goal 1: AI response extraction + DB updates completion
+- Goal 2: Fixing broken components on students and grades page
+- Goal 3: Fixing broken admin page components
+- Goal 4: Customizing file downloads for instructors and students

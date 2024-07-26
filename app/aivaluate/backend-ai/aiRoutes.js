@@ -134,7 +134,7 @@ router.post('/gpt/assistants', async (req, res) => {
 const getSelectedPrompt = async (instructorId) => {
     try {
         const result = await pool.query('SELECT "promptText" FROM "Prompt" WHERE "instructorId" = $1 AND "isSelected" = true', [instructorId]);
-        return result.rows.length > 0 ? result.rows[0].promptText : '';
+        return result.rows.length > 0 ? result.rows[0].promptText : ''; 
     } catch (error) {
         console.error('Error fetching selected prompt:', error);
         return '';
@@ -167,22 +167,23 @@ const getAssignmentKey = async (assignmentId) => {
         if (result.rows.length > 0) {
             const assignmentKey = result.rows[0].assignmentKey;
             console.log(`Original assignmentKey from DB: ${assignmentKey}`);
-            
-            const keyPath = path.resolve(baseDirKeys, assignmentKey);
-            console.log(`Resolved assignment key path: ${keyPath}`);
-            
-            if (fs.existsSync(keyPath)) {
-                console.log(`Assignment key found at path: ${keyPath}`);
-                return keyPath;
-            } else {
-                throw new Error(`Assignment key file not found: ${keyPath}`);
+            if (assignmentKey) {
+                const keyPath = path.resolve(baseDirKeys, assignmentKey);
+                console.log(`Resolved assignment key path: ${keyPath}`);
+                if (fs.existsSync(keyPath)) {
+                    console.log(`Assignment key found at path: ${keyPath}`);
+                    return keyPath;
+                } else {
+                    console.error(`Assignment key file not found: ${keyPath}`);
+                    return null;
+                }
             }
-        } else {
-            throw new Error(`Assignment key not found in database for assignmentId: ${assignmentId}`);
         }
+        console.error(`Assignment key not found in database for assignmentId: ${assignmentId}`);
+        return null;        
     } catch (error) {
         console.error('Error fetching assignment key:', error);
-        throw error;
+        return null;
     }
 };
 
@@ -209,12 +210,13 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
     console.log('Assignment Key Path:', assignmentKeyPath);
 
     try {
-        if (!fs.existsSync(assignmentKeyPath)) {
-            throw new Error(`Assignment key file not found: ${assignmentKeyPath}`);
+        let assignmentKeyFileId = null;
+        if (assignmentKeyPath && fs.existsSync(assignmentKeyPath)) {
+            assignmentKeyFileId = await uploadFileToOpenAI(assignmentKeyPath, 'assistants');
+            console.log('Assignment key file ID created:', assignmentKeyFileId);
+        } else {
+            console.log('No assignment key provided.');
         }
-
-        const assignmentKeyFileId = await uploadFileToOpenAI(assignmentKeyPath, 'assistants');
-        console.log('Assignment key file ID created:', assignmentKeyFileId);
 
         const submissionFileIds = [];
         for (const file of submissions) {
@@ -231,16 +233,25 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         const threadResponse = await openai.beta.threads.create();
         console.log('Thread created:', threadResponse.id);
         const thread = threadResponse.id;
-        const messageContent = `Grade the student assignment using the following rubric: ${assignmentRubric} and the assignment key provided. The maximum points available for this assignment is ${maxPoints}. The file with ID ${assignmentKeyFileId} is the assignment key. The following files are the student's submissions: ${submissionFileIds.join(', ')}. Additional Instructions: ${instructorPrompt}`;
+        let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Please assign a grade as the last part of your response after giving thorough feedback on the student's submissions.`;
+        if (assignmentKeyFileId) {
+            messageContent += ` The file with ID ${assignmentKeyFileId} is the assignment key to be used to grade the students' submissions.`;
+        }
+        messageContent += ` The following files are the student's submissions: ${submissionFileIds.join(', ')}.`;
+        if (instructorPrompt) {
+            messageContent += ` Additional Instructions: ${instructorPrompt}`;
+        }
+
+        const attachments = submissionFileIds.map(file_id => ({ file_id, tools: [{ type: 'file_search' }] }));
+        if (assignmentKeyFileId) {
+            attachments.unshift({ file_id: assignmentKeyFileId, tools: [{ type: 'file_search' }] });
+        }
 
         try {
             const messageResponse = await openai.beta.threads.messages.create(thread, {
                 role: "user",
                 content: messageContent,
-                attachments: [
-                    { file_id: assignmentKeyFileId, tools: [{ type: 'file_search' }] },
-                    ...submissionFileIds.map(file_id => ({ file_id, tools: [{ type: 'file_search' }] }))
-                ]
+                attachments: attachments
             });
             console.log('Message posted to thread:', messageResponse.id);
         } catch (error) {
@@ -333,17 +344,11 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
             return { status: 404, message: 'No submissions found for this assignment.' };
         }
 
-        const selectedPrompt = await getSelectedPrompt(instructorId);
+        const selectedPrompt = await getSelectedPrompt(instructorId) || '';
         const assignmentRubric = await getAssignmentRubric(assignmentId);
         const maxPoints = await getMaxPoints(assignmentId);
         const assignmentKeyResult = await getAssignmentKey(assignmentId);
-
-        if (!assignmentKeyResult) {
-            console.log('Assignment key not found.');
-            return { status: 404, message: 'Assignment key not found.' };
-        }
-
-        const assignmentKeyPath = path.resolve(baseDirKeys, assignmentKeyResult);
+        const assignmentKeyPath = assignmentKeyResult ? path.resolve(baseDirKeys, assignmentKeyResult) : null;
         const assistantResponse = await openai.beta.assistants.create({
             name: "AIValuate Grading Assistant",
             instructions: 'You are a web development expert. Your task is to grade student assignments based on the provided rubric and additional instructions. Provide constructive feedback for each submission, and a grade based on the maximum points available.',

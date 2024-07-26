@@ -19,7 +19,24 @@ const EvaluatorManager = () => {
     const [files, setFiles] = useState([]);
     const [deletedEvaluators, setDeletedEvaluators] = useState([]);
     const [loading, setLoading] = useState(true); // Loading state to manage initial data fetch
+    const [deletedEvaluators, setDeletedEvaluators] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state to manage initial data fetch
 
+    const fetchEvaluators = async () => {
+        try {
+            const response = await fetch('http://localhost:5173/admin-api/evaluators', {
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setFiles(data);
+            setFilteredFiles(data);
+        } catch (error) {
+            console.error('Error fetching evaluators:', error);
+        }
+    };
     const fetchEvaluators = async () => {
         try {
             const response = await fetch('http://localhost:5173/admin-api/evaluators', {
@@ -58,6 +75,28 @@ const EvaluatorManager = () => {
         };
 
         fetchData();
+    const fetchDeletedEvaluators = async () => {
+        try {
+            const response = await fetch('http://localhost:5173/admin-api/deleted-evaluators', {
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setDeletedEvaluators(data);
+        } catch (error) {
+            console.error('Error fetching deleted evaluators:', error);
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await Promise.all([fetchEvaluators(), fetchDeletedEvaluators()]);
+            setLoading(false); // Set loading to false after data is fetched
+        };
+
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -67,6 +106,12 @@ const EvaluatorManager = () => {
         setFilteredFiles(filtered);
         setCurrentPage(1); // Reset to first page on new search
     }, [searchTerm, files]);
+
+    useEffect(() => {
+        // Re-fetch evaluators and deleted evaluators whenever currentPage or searchTerm changes
+        fetchEvaluators();
+        fetchDeletedEvaluators();
+    }, [currentPage, searchTerm]);
 
     useEffect(() => {
         // Re-fetch evaluators and deleted evaluators whenever currentPage or searchTerm changes
@@ -112,10 +157,8 @@ const EvaluatorManager = () => {
             // Refresh the deleted evaluators list
             await fetchDeletedEvaluators();
             await fetchEvaluators();
-            toast.success('Evaluator restored successfully');
         } catch (error) {
             console.error('Error reverting evaluator:', error);
-            toast.error('Failed to restore evaluator');
         }
     };
 
@@ -123,6 +166,8 @@ const EvaluatorManager = () => {
         <div>
             <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
+            <div className="filler-div">
+                <SideMenuBarAdmin tab="evalManager" />
             <div className="filler-div">
                 <SideMenuBarAdmin tab="evalManager" />
                 <div className="main-margin">
@@ -142,6 +187,14 @@ const EvaluatorManager = () => {
                             </div>
                             <div className="empty"> </div>
                             <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
+                            {!loading && deletedEvaluators.length > 0 && (
+                                <button 
+                                    className="revertEvalButton" 
+                                    onClick={() => handleRevertAction(deletedEvaluators[0].instructorId)}
+                                >
+                                    Undo Delete
+                                </button>
+                            )}
                             {!loading && deletedEvaluators.length > 0 && (
                                 <button 
                                     className="revertEvalButton" 

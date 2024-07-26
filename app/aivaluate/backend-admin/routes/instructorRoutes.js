@@ -3,18 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { pool } = require('../dbConfig');
 
-// Fetch all instructors (TAs and non-TAs)
-router.get('/instructors', async (req, res) => {
-    try {
-        const instructors = await pool.query('SELECT * FROM "Instructor"');
-        res.status(200).json(instructors.rows);
-    } catch (error) {
-        console.error('Error fetching instructors:', error);
-        res.status(500).json({ message: 'Error fetching instructors' });
-    }
-});
-
-
+router.get('/tas', async (req, res) => {
 router.get('/tas', async (req, res) => {
     try {
         const tas = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = TRUE');
@@ -93,6 +82,7 @@ router.get('/evaluator/:instructorId/courses', checkAuthenticated, async (req, r
     const { instructorId } = req.params;
     try {
         const result = await pool.query('SELECT "Course"."courseName","Course"."courseCode" FROM "Course" JOIN "Teaches" ON "Course"."courseId" = "Teaches"."courseId" WHERE "Teaches"."instructorId" = $1;', [instructorId]);
+        const result = await pool.query('SELECT "Course"."courseName","Course"."courseCode" FROM "Course" JOIN "Teaches" ON "Course"."courseId" = "Teaches"."courseId" WHERE "Teaches"."instructorId" = $1;', [instructorId]);
         res.json(result.rows);
     } catch (error) {
         console.error('Error fetching courses:', error);
@@ -138,8 +128,21 @@ router.get('/deleted-evaluators', checkAuthenticated, async (req, res) => {
 });
 
 // Delete evaluator (soft delete)
+// Fetch all deleted evaluators
+router.get('/deleted-evaluators', checkAuthenticated, async (req, res) => {
+    try {
+        const result = await pool.query('SELECT "instructorId", "firstName", "lastName", "email", "department", "isTA", "deleted_at" FROM "BackupInstructor"');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error fetching deleted evaluators:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
+// Delete evaluator (soft delete)
 router.delete('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
     const { instructorId } = req.params;
+    const client = await pool.connect();
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -208,8 +211,75 @@ router.delete('/evaluator/:instructorId', checkAuthenticated, async (req, res) =
         console.log('Instructor deleted from main table'); // Debug log
 
         await client.query('COMMIT');
+        await client.query('BEGIN');
+
+        // Fetch the instructor to be deleted
+        const selectQuery = 'SELECT * FROM "Instructor" WHERE "instructorId" = $1';
+        const result = await client.query(selectQuery, [instructorId]);
+        if (result.rows.length === 0) {
+            await client.query('ROLLBACK');
+            console.log('Evaluator not found, rolling back');
+            return res.status(404).json({ error: 'Evaluator not found' });
+        }
+        const instructor = result.rows[0];
+
+        console.log('Instructor to be deleted:', instructor); // Debug log
+
+        // Backup the instructor
+        const insertBackupQuery = `
+            INSERT INTO "BackupInstructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA", "resetPasswordToken", "resetPasswordExpires", "deleted_at")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW())
+        `;
+        await client.query(insertBackupQuery, [
+            instructor.instructorId,
+            instructor.firstName,
+            instructor.lastName,
+            instructor.email,
+            instructor.password,
+            instructor.department,
+            instructor.isTA,
+            instructor.resetPasswordToken,
+            instructor.resetPasswordExpires
+        ]);
+
+        console.log('Instructor backed up successfully'); // Debug log
+
+        // Backup related courses
+        const coursesResult = await client.query('SELECT * FROM "Teaches" WHERE "instructorId" = $1', [instructorId]);
+        for (const course of coursesResult.rows) {
+            await client.query(`
+                INSERT INTO "BackupTeaches" ("instructorId", "courseId", "deleted_at")
+                VALUES ($1, $2, NOW())
+            `, [course.instructorId, course.courseId]);
+        }
+        console.log('Related courses backed up successfully'); // Debug log
+
+        // Backup related prompts
+        const promptsResult = await client.query('SELECT * FROM "Prompt" WHERE "instructorId" = $1', [instructorId]);
+        for (const prompt of promptsResult.rows) {
+            await client.query(`
+                INSERT INTO "BackupPrompt" ("promptId", "promptName", "promptText", "instructorId", "isSelected", "deleted_at")
+                VALUES ($1, $2, $3, $4, $5, NOW())
+            `, [
+                prompt.promptId,
+                prompt.promptName,
+                prompt.promptText,
+                prompt.instructorId,
+                prompt.isSelected
+            ]);
+        }
+        console.log('Related prompts backed up successfully'); // Debug log
+
+        // Delete the instructor from the main table
+        const deleteQuery = 'DELETE FROM "Instructor" WHERE "instructorId" = $1';
+        await client.query(deleteQuery, [instructorId]);
+
+        console.log('Instructor deleted from main table'); // Debug log
+
+        await client.query('COMMIT');
         res.status(200).json({ message: 'Evaluator deleted successfully' });
     } catch (error) {
+        await client.query('ROLLBACK');
         await client.query('ROLLBACK');
         console.error('Error deleting evaluator:', error);
         res.status(500).json({ error: 'Database error' });
@@ -302,44 +372,11 @@ router.post('/evaluator/restore/:instructorId', checkAuthenticated, async (req, 
 });
 
 // Remove course from evaluator
-// router.delete('/evaluator/:instructorId/drop/:courseCode', checkAuthenticated, async (req, res) => {
-//     const { instructorId, courseCode } = req.params;
-//     try {
-//         const dropQuery = `DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
-//         await pool.query(dropQuery, [instructorId, courseCode]);
-//         res.status(200).json({ message: 'Course removed from instructor successfully' });
-//     } catch (error) {
-//         console.error('Error removing course from evaluator:', error);
-//         res.status(500).json({ error: 'Database error' });
-//     }
-// });
-
-// Remove course from evaluator
 router.delete('/evaluator/:instructorId/drop/:courseCode', checkAuthenticated, async (req, res) => {
     const { instructorId, courseCode } = req.params;
-    const client = await pool.connect();
     try {
-        await client.query('BEGIN');
-
-        // Fetch the courseId from courseCode
-        const courseResult = await client.query('SELECT "courseId" FROM "Course" WHERE "courseCode" = $1', [courseCode]);
-        if (courseResult.rows.length === 0) {
-            await client.query('ROLLBACK');
-            return res.status(404).json({ error: 'Course not found' });
-        }
-        const courseId = courseResult.rows[0].courseId;
-
-        // Backup the teaches relationship
-        await client.query(
-            'INSERT INTO "BackupTeaches" ("instructorId", "courseId", "deleted_at") VALUES ($1, $2, NOW())',
-            [instructorId, courseId]
-        );
-
-        // Delete the teaches relationship
-        const dropQuery = 'DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = $2';
-        await client.query(dropQuery, [instructorId, courseId]);
-
-        await client.query('COMMIT');
+        const dropQuery = `DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
+        await pool.query(dropQuery, [instructorId, courseCode]);
         res.status(200).json({ message: 'Course removed from instructor successfully' });
     } catch (error) {
         await client.query('ROLLBACK');

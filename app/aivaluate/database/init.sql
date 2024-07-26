@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "maxObtainableGrade" FLOAT,
     "assignmentDescription" VARCHAR(1000),
     "isPublished" BOOLEAN DEFAULT true,
+    "isPublished" BOOLEAN DEFAULT true,
     "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
@@ -399,14 +400,3 @@ ALTER TABLE "BackupUseRubric" ADD COLUMN "deleted_at" TIMESTAMP;
 
 CREATE TABLE IF NOT EXISTS "BackupCourseNotification" AS TABLE "CourseNotification" WITH NO DATA;
 ALTER TABLE "BackupCourseNotification" ADD COLUMN "deleted_at" TIMESTAMP;
-
--- Reset sequences for tables with SERIAL primary keys
-SELECT setval(pg_get_serial_sequence('"Student"', 'studentId'), COALESCE(MAX("studentId"), 1) + 1, false) FROM "Student";
-SELECT setval(pg_get_serial_sequence('"Instructor"', 'instructorId'), COALESCE(MAX("instructorId"), 1) + 1, false) FROM "Instructor";
-SELECT setval(pg_get_serial_sequence('"Course"', 'courseId'), COALESCE(MAX("courseId"), 1) + 1, false) FROM "Course";
-SELECT setval(pg_get_serial_sequence('"Assignment"', 'assignmentId'), COALESCE(MAX("assignmentId"), 1) + 1, false) FROM "Assignment";
-SELECT setval(pg_get_serial_sequence('"AssignmentSubmission"', 'assignmentSubmissionId'), COALESCE(MAX("assignmentSubmissionId"), 1) + 1, false) FROM "AssignmentSubmission";
-SELECT setval(pg_get_serial_sequence('"AssignmentRubric"', 'assignmentRubricId'), COALESCE(MAX("assignmentRubricId"), 1) + 1, false) FROM "AssignmentRubric";
-SELECT setval(pg_get_serial_sequence('"Prompt"', 'promptId'), COALESCE(MAX("promptId"), 1) + 1, false) FROM "Prompt";
-SELECT setval(pg_get_serial_sequence('"StudentFeedback"', 'studentFeedbackId'), COALESCE(MAX("studentFeedbackId"), 1) + 1, false) FROM "StudentFeedback";
-SELECT setval(pg_get_serial_sequence('"StudentFeedbackReport"', 'studentFeedbackReportId'), COALESCE(MAX("studentFeedbackReportId"), 1) + 1, false) FROM "StudentFeedbackReport";

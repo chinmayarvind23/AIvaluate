@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const OpenAI = require('openai');
 const cors = require('cors');
+const parseSafe = require('json-parse-safe');
 
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
@@ -75,11 +76,16 @@ router.post('/gpt/assistants', async (req, res) => {
 
     try {
         const assistantResponse = await openai.beta.assistants.create({
-            name: "Grading Assistant",
-            instructions: promptText,
-            tools: [{ type: "code_interpreter" }, { type: "file_search" }],
-            model: 'gpt-4o'
-        });
+            name: "AIValuate Grading Assistant",
+            instructions: `You are a web development expert. Your task is to grade student assignments based on the provided rubric and additional instructions. Provide constructive feedback for each submission, and a grade based on the maximum points available. 
+            Provide your response in the following JSON format:
+            {
+                "feedback": "Your detailed feedback here",
+                "grade": "Your grade here"
+            }`,
+            model: "gpt-4o",
+            tools: [{ type: "code_interpreter" }, { type: "file_search" }]
+        });              
 
         const assistant = assistantResponse;
         log(`Assistant created: ${JSON.stringify(assistant)}`);
@@ -201,6 +207,55 @@ const uploadFileToOpenAI = async (filePath, purpose, label) => {
     }
 };
 
+// Parses AI response with regex patterns to extract grades and feedback
+const parseAIResponse = (aiResponse) => {
+    const response = {
+        grade: 0,
+        feedback: 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.'
+    };
+
+    try {
+        const aiResponseString = typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse);
+        console.log("AI Response String:", aiResponseString);
+        const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m);
+        if (!jsonStringMatch) {
+            throw new Error('Invalid AI response format');
+        }
+
+        let jsonString = jsonStringMatch[1];
+        jsonString = jsonString.replace(/\\n/g, ' ')
+                               .replace(/\\'/g, "'")
+                               .replace(/\\"/g, '"')
+                               .replace(/\\t/g, ' ')
+                               .replace(/\\r/g, ' ')
+                               .replace(/\s+/g, ' ')
+                               .trim();
+
+        const parsed = parseSafe(jsonString);
+        if (parsed.error) {
+            throw new Error('Error parsing AI response JSON');
+        }
+
+        const feedbackMatch = parsed.value.feedback || parsed.value.Feedback;
+        const gradeMatch = parsed.value.grade || parsed.value.Grade;
+
+        if (feedbackMatch) {
+            response.feedback = feedbackMatch.substring(0, 20000);
+        }
+
+        if (gradeMatch) {
+            const gradeValue = parseFloat(gradeMatch.match(/[\d.]+/)[0]);
+            response.grade = gradeValue;
+        }
+    } catch (error) {
+        console.error('Error parsing AI response:', error);
+    }
+
+    console.log("Parsed Response:", response);
+    return response;
+};
+
+// Processes student submissions as a whole and creates the setup for the individual students' submissions to be processed
 const processStudentSubmissions = async (studentId, submissions, assistantId, instructorPrompt, assignmentRubric, maxPoints, assignmentKeyPath) => {
     console.log('Processing student submissions for student:', studentId);
     console.log('Submissions:', submissions);
@@ -233,7 +288,11 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         const threadResponse = await openai.beta.threads.create();
         console.log('Thread created:', threadResponse.id);
         const thread = threadResponse.id;
-        let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Please assign a grade as the last part of your response after giving thorough feedback on the student's submissions.`;
+        let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Provide your response in the following JSON format:
+        {
+            "feedback": "Your detailed feedback here",
+            "grade": "Your grade here"
+        }`;
         if (assignmentKeyFileId) {
             messageContent += ` The file with ID ${assignmentKeyFileId} is the assignment key to be used to grade the students' submissions.`;
         }
@@ -269,7 +328,7 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             response = await openai.beta.threads.runs.retrieve(thread, runResponse.id);
             while (response.status === "in_progress" || response.status === "queued") {
                 console.log("Waiting for assistant's response...");
-                await new Promise(resolve => setTimeout(resolve, 5000));
+                await new Promise(resolve => setTimeout(resolve, 20000000));
                 response = await openai.beta.threads.runs.retrieve(thread, runResponse.id);
             }
 
@@ -292,30 +351,40 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             } else {
                 result = null;
             }
+
             console.log('Final assistant response:', result);
             if (result) {
-                const grade = result.grade;
-                const feedback = result.feedback;
+                const parsedResponse = parseAIResponse(result);
 
-                try {
-                    await pool.query(
-                        'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded") VALUES ($1, $2, $3, $4, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade", "InstructorAssignedFinalGrade" = EXCLUDED."InstructorAssignedFinalGrade", "isGraded" = EXCLUDED."isGraded"',
-                        [submissions[0].assignmentSubmissionId, submissions[0].assignmentId, maxPoints, grade]
-                    );
-                    console.log(`Grade recorded for student: ${studentId}`);
-                } catch (error) {
-                    console.error(`Error recording grade for student ${studentId}:`, error);
+                if (parsedResponse.grade !== 0) {
+                    try {
+                        await pool.query(
+                            'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "isGraded") VALUES ($1, $2, $3, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade","isGraded" = EXCLUDED."isGraded";',
+                            [submissions[0].assignmentSubmissionId, submissions[0].assignmentId, maxPoints, parsedResponse.grade]
+                        );
+                        console.log(`Grade recorded for student: ${studentId}`);
+                    } catch (error) {
+                        console.error(`Error recording grade for student ${studentId}:`, error);
+                    }
+                } else {
+                    console.error(`Parsed grade is 0 for student: ${studentId}. Response: ${JSON.stringify(result)}`);
                 }
 
-                try {
-                    await pool.query(
-                        'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId", "courseId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
-                        [studentId, submissions[0].assignmentId, submissions[0].courseId, feedback]
-                    );
-                    console.log(`Feedback recorded for student: ${studentId}`);
-                } catch (error) {
-                    console.error(`Error recording feedback for student ${studentId}:`, error);
+                if (parsedResponse.feedback) {
+                    try {
+                        await pool.query(
+                            'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId", "courseId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
+                            [studentId, submissions[0].assignmentId, submissions[0].courseId, parsedResponse.feedback]
+                        );
+                        console.log(`Feedback recorded for student: ${studentId}`);
+                    } catch (error) {
+                        console.error(`Error recording feedback for student ${studentId}:`, error);
+                    }
+                } else {
+                    console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(result)}`);
                 }
+            } else {
+                console.error(`No valid response from AI for student: ${studentId}. Response: ${JSON.stringify(result)}`);
             }
         } catch (error) {
             console.error('Error processing student submissions:', error);
@@ -327,6 +396,7 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
     }
 };
 
+// Process individual student submissions
 const processSubmissions = async (assignmentId, instructorId, courseId) => {
     console.log('Processing submissions for assignment:', assignmentId);
     console.log('Instructor ID:', instructorId);
@@ -351,10 +421,15 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
         const assignmentKeyPath = assignmentKeyResult ? path.resolve(baseDirKeys, assignmentKeyResult) : null;
         const assistantResponse = await openai.beta.assistants.create({
             name: "AIValuate Grading Assistant",
-            instructions: 'You are a web development expert. Your task is to grade student assignments based on the provided rubric and additional instructions. Provide constructive feedback for each submission, and a grade based on the maximum points available.',
+            instructions: `You are a web development expert. Your task is to grade student assignments based on the provided rubric and additional instructions. Provide constructive feedback for each submission, and a grade based on the maximum points available. 
+            Provide your response in the following JSON format:
+            {
+                "feedback": "Your detailed feedback here",
+                "grade": "Your grade here"
+            }`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
-        });
+        });                          
         console.log('Assistant created:', assistantResponse.id);
 
         const assistant = assistantResponse;

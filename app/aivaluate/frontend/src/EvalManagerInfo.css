@@ -56,6 +56,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
+    cursor: default;
 }
 
 .create-eval{
@@ -94,7 +95,7 @@ body {
 }
 
 .eval-text{
-    width: 1500px;
+    width: 400px;
 }
 
 .search-bar {
@@ -127,6 +128,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    cursor: default;
 }
 
 .remove-button {

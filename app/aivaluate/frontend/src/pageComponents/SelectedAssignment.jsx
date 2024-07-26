@@ -97,44 +97,47 @@ const SelectedAssignment = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="assignments" />
-            <div className="accented-outside rborder">
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <div className="back-btn-div">
-                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                            </div>
-                            <div className="title-text"><h1>Assignment - Submissions</h1></div>
-                            <div className="empty"> </div>
-                            <button className="grades-button">
-                                Grade With AI
-                            </button>
-                            <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
-                                Hide Grades
-                            </button>
-                            <button className="grades-button" disabled={!gradesVisible} onClick={toggleGradesVisibility}>
-                                Publish Grades
-                            </button>
-                        </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
-                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
-                                    {file.isGraded && <div className="file-status">*Marked as graded</div>}
+            <div className="filler-div">
+                <SideMenuBarEval tab="assignments" />
+                    <div className="main-margin">
+                        <div className="portal-container">
+                            <div className="top-bar">
+                                <div className="back-btn-div">
+                                    <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
                                 </div>
-                            ))}
+                                <div className="float-left">
+                                    <div className="title-text"><h1>Assignment - Submissions</h1></div>
+                                </div>
+                                <div className="float-right">
+                                    <button className="grades-button">
+                                        Grade With AI
+                                    </button>
+                                    <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
+                                        Hide Grades
+                                    </button>
+                                    <button className="grades-button" disabled={!gradesVisible} onClick={toggleGradesVisibility}>
+                                        Publish Grades
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="filetab">
+                                {currentFiles.map((file, index) => (
+                                    <div className="file-item" key={index}>
+                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
+                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                </div> 
+                    </div> 
             </div>
         </div>
     );

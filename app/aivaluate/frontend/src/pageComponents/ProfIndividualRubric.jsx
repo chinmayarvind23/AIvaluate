@@ -1,8 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../ProfIndividualRubric.css';
 import '../GeneralStyling.css';
+import '../ProfIndividualRubric.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -38,51 +38,53 @@ const ProfIndividualRubric = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText="Course number - Course Name" />
-            <SideMenuBarEval tab="rubrics"/>
-            <div className="rubric-container rborder secondary-colorbg">
-                <div className="line-up-title">
-                    <button className="back-button" onClick={() => navigate(-1)}>
-                        <CircumIcon name="circle_chev_left" className="icon-size" />
-                    </button>
-                    <input 
-                        type="text" 
-                        className="title-input primary-color-text" 
-                        value={title} 
-                        onChange={handleTitleChange} 
-                    /> 
-                    <h3 className="edit-text">Click to edit</h3>
-                </div>
-                <div className="line-up-deadline">
-                    <input 
-                        type="text" 
-                        className="deadline-input primary-color-text" 
-                        value={deadline} 
-                        onChange={handleDeadlineChange} 
-                    /> 
-                    <h3 className="edit-text">Assignment not active</h3>
-                </div>
-                <div className="line-main-text">
-                    <textarea
-                        className="rubric-textarea"
-                        value={rubricContent}
-                        onChange={handleContentChange}
-                    />
-                    <h3 className="edit-text-2">Click to edit</h3>
-                </div>
-                <div className="bottom-bar">
-                    <div className="empty-space"></div>
-                    {/* <button 
-                        className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
-                        disabled={!isEdited}
-                    >
-                        CLICK TO CONFIRM CHANGES
-                    </button> */}
-                    <button 
-                        className="confirm-button secondary-button rborder"
-                        onClick={handlePublish}
-                    >
-                        Publish assignment
-                    </button>
+            <div className="filler-div">
+                <SideMenuBarEval tab="rubrics"/>
+                <div className="rubric-container rborder secondary-colorbg">
+                    <div className="line-up-title">
+                        <button className="back-button" onClick={() => navigate(-1)}>
+                            <CircumIcon name="circle_chev_left" className="icon-size" />
+                        </button>
+                        <input 
+                            type="text" 
+                            className="title-input primary-color-text" 
+                            value={title} 
+                            onChange={handleTitleChange} 
+                        /> 
+                        <h3 className="edit-text">Click to edit</h3>
+                    </div>
+                    <div className="line-up-deadline">
+                        <input 
+                            type="text" 
+                            className="deadline-input primary-color-text" 
+                            value={deadline} 
+                            onChange={handleDeadlineChange} 
+                        /> 
+                        <h3 className="edit-text">Assignment not active</h3>
+                    </div>
+                    <div className="line-main-text">
+                        <textarea
+                            className="rubric-textarea"
+                            value={rubricContent}
+                            onChange={handleContentChange}
+                        />
+                        <h3 className="edit-text-2">Click to edit</h3>
+                    </div>
+                    <div className="bottom-bar">
+                        <div className="empty-space"></div>
+                        {/* <button 
+                            className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
+                            disabled={!isEdited}
+                        >
+                            CLICK TO CONFIRM CHANGES
+                        </button> */}
+                        <button 
+                            className="confirm-button secondary-button rborder"
+                            onClick={handlePublish}
+                        >
+                            Publish assignment
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

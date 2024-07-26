@@ -1,13 +1,11 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../CreateAccPT.css';
-import '../GeneralStyling.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 import '../CreateAccPT.css';
@@ -92,57 +90,55 @@ const CreateAccPT = () => {
       <ToastContainer />
       <ToastContainer />
       <AIvaluateNavBar navBarText="Admin Home Portal" />
-      <div className="filler-div">
-        <SideMenuBarAdmin tab="evalManager"/>
-        <div className="main-margin">
-          <div className="top-bar">
-            <div className="back-btn-div">
-              <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+      <SideMenuBarAdmin tab="evalManager"/>
+      <div className="main-margin">
+        <div className="top-bar">
+          <div className="back-btn-div">
+            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+          </div>
+          <h1 className="eval-text">Register Evaluator</h1>
+          <div className="empty"> </div>
+        </div>
+        <div className="content">
+          <form className="user-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <div className="box">
+                <label className="primary-text">
+                  First Name:
+                  <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                </label>
+                <label>
+                  Last Name:
+                  <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                </label>
+              </div>
+              <div className="box">
+                <h2>Is this a T.A.?</h2>
+                <label className="checkbox-label">
+                  <div>
+                    <input type="checkbox" className="checkbox-input" checked={isTeachingAssistant} onChange={handleCheckboxChange} />
+                  </div>
+                  <div>
+                    <span className="checkbox-text">Teaching Assistant</span>
+                  </div>
+                </label>
+              </div>
             </div>
-            <h1 className="eval-text">Register Evaluator</h1>
-            <div className="empty"> </div>
-          </div>
-          <div className="content">
-            <form className="user-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <div className="box">
-                  <label className="primary-text">
-                    First Name:
-                    <input type="text" className="main-text-space" name="firstName" value={formData.firstName} onChange={handleChange} required />
-                  </label>
-                  <label>
-                    Last Name:
-                    <input type="text" className="main-text-space" name="lastName" value={formData.lastName} onChange={handleChange} required />
-                  </label>
-                </div>
-                <div className="box">
-                  <h2>Is this a T.A.?</h2>
-                  <label className="checkbox-label">
-                    <div>
-                      <input type="checkbox" className="checkbox-input" checked={isTeachingAssistant} onChange={handleCheckboxChange} />
-                    </div>
-                    <div>
-                      <span className="checkbox-text">Teaching Assistant</span>
-                    </div>
-                  </label>
-                </div>
+            <div className="form-group">
+              <div className="box">
+                <label>
+                  Email:
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                </label>
+                <label>
+                  Password:
+                  <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+                </label>
               </div>
-              <div className="form-group">
-                <div className="box">
-                  <label>
-                    Email:
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                  </label>
-                  <label>
-                    Password:
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-                  </label>
-                </div>
-                <button type="submit" className="create-user-button">Create user</button>
-              </div>
-            </form>
-            {message && <p>{message}</p>}
-          </div>
+              <button type="submit" className="create-user-button">Create user</button>
+            </div>
+          </form>
+          {message && <p>{message}</p>}
         </div>
       </div>
     </div>

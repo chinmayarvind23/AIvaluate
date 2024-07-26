@@ -1,6 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,7 +12,6 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 import '../GeneralStyling.css';
 import '../PublishAssignment.css';
-import '../ToastStyles.css';
 
 const PublishAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -21,6 +21,7 @@ const PublishAssignment = () => {
     const { assignmentId } = useParams();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
+    const [deadline, setDeadline] = useState(new Date());
     const [deadline, setDeadline] = useState(new Date());
     const [rubricContent, setRubricContent] = useState("");
     const [isEdited, setIsEdited] = useState(false);
@@ -126,7 +127,7 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(new Date(dueDate));
+                setDeadline(parseISO(dueDate)); // Convert ISO string to Date object
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
             } else {
@@ -146,6 +147,8 @@ const PublishAssignment = () => {
         setIsEdited(true);
     };
 
+    const handleDeadlineChange = (date) => {
+        setDeadline(date);
     const handleDeadlineChange = (date) => {
         setDeadline(date);
         setIsEdited(true);
@@ -201,35 +204,25 @@ const PublishAssignment = () => {
     };
 
     const handleSubmitChanges = async () => {
-        const formData = new FormData();
-        formData.append('assignmentName', title);
-        formData.append('dueDate', deadline.toISOString());
-        formData.append('criteria', rubricContent || "");
-        formData.append('courseId', courseId);
-        formData.append('assignmentId', assignmentId);
-        if (file) {
-            formData.append('assignmentKey', file);
-        }
-    
-        console.log('Submitting the following form data:');
-        formData.forEach((value, key) => {
-            console.log(`${key}: ${value}`);
-        });
-    
         try {
-            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, formData, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
+                assignmentName: title,
+                dueDate: deadline.toISOString(), // Convert Date object to ISO string
+                dueDate: deadline.toISOString(), // Convert Date object to ISO string
+                criteria: rubricContent,
+                courseId: courseId
+            }, {
+                withCredentials: true
             });
             setIsEdited(false);
+            toast.success('Assignment updated successfully');
             toast.success('Assignment updated successfully');
         } catch (error) {
             console.error('Error updating assignment:', error);
             toast.error('Failed to update assignment');
+            toast.error('Failed to update assignment');
         }
-    };    
+    };
 
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
@@ -257,6 +250,7 @@ const PublishAssignment = () => {
                             <p className="click-to-edit">Click to edit</p>
                         </div>
                         <div>
+                        <div>
                             <div className="deadline">
                                 <h2>Due:</h2>
                                 <DatePicker
@@ -273,13 +267,6 @@ const PublishAssignment = () => {
                                             readOnly
                                         />
                                     }
-                                />
-                                <DatePicker
-                                    selected={deadline}
-                                    onChange={handleDeadlineChange}
-                                    showTimeSelect
-                                    dateFormat="MMMM do 'at' h:mmaaa"
-                                    className="deadline-input"
                                     customInput={
                                         <input 
                                             type="text" 
@@ -352,8 +339,10 @@ const PublishAssignment = () => {
                 </div>
             </div>
             <ToastContainer />
+            <ToastContainer />
         </div>
     );
 };
 
 export default PublishAssignment;
+

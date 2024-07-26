@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs')
-const { pool } = require('../dbConfig'); 
+const bcrypt = require('bcryptjs');
+const { pool } = require('../dbConfig');
 
-
-router.get('/tas', async (req, res) => {   
+router.get('/tas', async (req, res) => {
     try {
         const tas = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = TRUE');
         res.status(200).send(tas.rows);
@@ -25,10 +24,6 @@ router.delete('/teaches/:courseId/:instructorId', async (req, res) => {
     }
 });
 
-
-
-
-
 // Check if authenticated middleware
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -36,17 +31,6 @@ function checkAuthenticated(req, res, next) {
     }
     res.redirect('/admin-api/login');
 }
-
-// // Get all evaluators
-// router.get('/evaluators', checkAuthenticated, async (req, res) => {
-//     try {
-//         const result = await pool.query('SELECT "instructorId", "firstName", "lastName", "hasFullAccess" FROM "Instructor"');
-//         res.json(result.rows);
-//     } catch (error) {
-//         console.error('Error fetching evaluators:', error);
-//         res.status(500).json({ error: 'Database error' });
-//     }
-// });
 
 // Get evaluator details
 router.get('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
@@ -67,7 +51,7 @@ router.get('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
 router.get('/evaluator/:instructorId/courses', checkAuthenticated, async (req, res) => {
     const { instructorId } = req.params;
     try {
-        const result = await pool.query('SELECT "Course"."courseName","Course"."courseCode" FROM "Course"JOIN "Teaches" ON "Course"."courseId" = "Teaches"."courseId"WHERE "Teaches"."instructorId" = $1;', [instructorId]);
+        const result = await pool.query('SELECT "Course"."courseName","Course"."courseCode" FROM "Course" JOIN "Teaches" ON "Course"."courseId" = "Teaches"."courseId" WHERE "Teaches"."instructorId" = $1;', [instructorId]);
         res.json(result.rows);
     } catch (error) {
         console.error('Error fetching courses:', error);
@@ -96,77 +80,178 @@ router.post('/evaluatorRegister', checkAuthenticated, async (req, res) => {
     }
 });
 
+// Fetch all deleted evaluators
+router.get('/deleted-evaluators', checkAuthenticated, async (req, res) => {
+    try {
+        const result = await pool.query('SELECT "instructorId", "firstName", "lastName", "email", "department", "isTA", "deleted_at" FROM "BackupInstructor"');
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error fetching deleted evaluators:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
 
-// app.post("/stu-api/signup", async (req, res) => {
-//     let { firstName, lastName, email, password, password2 } = req.body;
-
-//     let errors = [];
-
-//     if (!firstName || !lastName || !email || !password || !password2) {
-//         errors.push({ message: "Please enter all fields" });
-//     }
-
-//     if (password.length < 6) {
-//         errors.push({ message: "Password should be at least 6 characters long" });
-//     }
-
-//     if (password != password2) {
-//         errors.push({ message: "Passwords do not match" });
-//     }
-
-//     if (errors.length > 0) {
-//         return res.status(400).json({ errors });
-//     } else {
-//         let hashedPassword = await bcrypt.hash(password, 10);
-
-//         pool.query(
-//             'SELECT * FROM "Student" WHERE email = $1',
-//             [email],
-//             (err, results) => {
-//                 if (err) {
-//                     console.error('Error during SELECT:', err);
-//                     return res.status(500).json({ errors: [{ message: "Database error" }] });
-//                 }
-
-//                 if (results.rows.length > 0) {
-//                     errors.push({ message: "Email already registered" });
-//                     return res.status(400).json({ errors });
-//                 } else {
-//                     pool.query(
-//                         'INSERT INTO "Student" ("firstName", "lastName", email, password) VALUES ($1, $2, $3, $4) RETURNING "studentId", password',
-//                         [firstName, lastName, email, hashedPassword],
-//                         (err, results) => {
-//                             if (err) {
-//                                 console.error('Error during INSERT:', err);
-//                                 return res.status(500).json({ errors: [{ message: "Database error" }] });
-//                             }
-//                             res.status(201).json({ message: "You are now registered. Please log in" });
-//                         }
-//                     );
-//                 }
-//             }
-//         );
-//     }
-// });
-
-
-
-
-
-
-
-
-
-
-// Delete evaluator
+// Delete evaluator (soft delete)
 router.delete('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
     const { instructorId } = req.params;
+    const client = await pool.connect();
     try {
-        await pool.query('DELETE FROM "Instructor" WHERE "instructorId" = $1', [instructorId]);
+        await client.query('BEGIN');
+
+        // Fetch the instructor to be deleted
+        const selectQuery = 'SELECT * FROM "Instructor" WHERE "instructorId" = $1';
+        const result = await client.query(selectQuery, [instructorId]);
+        if (result.rows.length === 0) {
+            await client.query('ROLLBACK');
+            console.log('Evaluator not found, rolling back');
+            return res.status(404).json({ error: 'Evaluator not found' });
+        }
+        const instructor = result.rows[0];
+
+        console.log('Instructor to be deleted:', instructor); // Debug log
+
+        // Backup the instructor
+        const insertBackupQuery = `
+            INSERT INTO "BackupInstructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA", "resetPasswordToken", "resetPasswordExpires", "deleted_at")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW())
+        `;
+        await client.query(insertBackupQuery, [
+            instructor.instructorId,
+            instructor.firstName,
+            instructor.lastName,
+            instructor.email,
+            instructor.password,
+            instructor.department,
+            instructor.isTA,
+            instructor.resetPasswordToken,
+            instructor.resetPasswordExpires
+        ]);
+
+        console.log('Instructor backed up successfully'); // Debug log
+
+        // Backup related courses
+        const coursesResult = await client.query('SELECT * FROM "Teaches" WHERE "instructorId" = $1', [instructorId]);
+        for (const course of coursesResult.rows) {
+            await client.query(`
+                INSERT INTO "BackupTeaches" ("instructorId", "courseId", "deleted_at")
+                VALUES ($1, $2, NOW())
+            `, [course.instructorId, course.courseId]);
+        }
+        console.log('Related courses backed up successfully'); // Debug log
+
+        // Backup related prompts
+        const promptsResult = await client.query('SELECT * FROM "Prompt" WHERE "instructorId" = $1', [instructorId]);
+        for (const prompt of promptsResult.rows) {
+            await client.query(`
+                INSERT INTO "BackupPrompt" ("promptId", "promptName", "promptText", "instructorId", "isSelected", "deleted_at")
+                VALUES ($1, $2, $3, $4, $5, NOW())
+            `, [
+                prompt.promptId,
+                prompt.promptName,
+                prompt.promptText,
+                prompt.instructorId,
+                prompt.isSelected
+            ]);
+        }
+        console.log('Related prompts backed up successfully'); // Debug log
+
+        // Delete the instructor from the main table
+        const deleteQuery = 'DELETE FROM "Instructor" WHERE "instructorId" = $1';
+        await client.query(deleteQuery, [instructorId]);
+
+        console.log('Instructor deleted from main table'); // Debug log
+
+        await client.query('COMMIT');
         res.status(200).json({ message: 'Evaluator deleted successfully' });
     } catch (error) {
+        await client.query('ROLLBACK');
         console.error('Error deleting evaluator:', error);
         res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
+    }
+});
+
+// Restore evaluator
+router.post('/evaluator/restore/:instructorId', checkAuthenticated, async (req, res) => {
+    const { instructorId } = req.params;
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Fetch the instructor from the backup table
+        const selectQuery = 'SELECT * FROM "BackupInstructor" WHERE "instructorId" = $1';
+        const result = await client.query(selectQuery, [instructorId]);
+        if (result.rows.length === 0) {
+            await client.query('ROLLBACK');
+            console.log('Evaluator not found in backup, rolling back');
+            return res.status(404).json({ error: 'Evaluator not found in backup' });
+        }
+        const instructor = result.rows[0];
+
+        console.log('Instructor to be restored:', instructor); // Debug log
+
+        // Restore the instructor to the main table
+        const insertMainQuery = `
+            INSERT INTO "Instructor" ("instructorId", "firstName", "lastName", "email", "password", "department", "isTA", "resetPasswordToken", "resetPasswordExpires")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            ON CONFLICT DO NOTHING
+        `;
+        await client.query(insertMainQuery, [
+            instructor.instructorId,
+            instructor.firstName,
+            instructor.lastName,
+            instructor.email,
+            instructor.password,
+            instructor.department,
+            instructor.isTA,
+            instructor.resetPasswordToken,
+            instructor.resetPasswordExpires
+        ]);
+
+        console.log('Instructor restored to main table'); // Debug log
+
+        // Restore related courses
+        const backupCoursesResult = await client.query('SELECT * FROM "BackupTeaches" WHERE "instructorId" = $1', [instructorId]);
+        for (const backupCourse of backupCoursesResult.rows) {
+            await client.query(`
+                INSERT INTO "Teaches" ("instructorId", "courseId")
+                VALUES ($1, $2)
+                ON CONFLICT DO NOTHING
+            `, [backupCourse.instructorId, backupCourse.courseId]);
+        }
+        console.log('Related courses restored successfully'); // Debug log
+
+        // Restore related prompts
+        const backupPromptsResult = await client.query('SELECT * FROM "BackupPrompt" WHERE "instructorId" = $1', [instructorId]);
+        for (const backupPrompt of backupPromptsResult.rows) {
+            await client.query(`
+                INSERT INTO "Prompt" ("promptId", "promptName", "promptText", "instructorId", "isSelected")
+                VALUES ($1, $2, $3, $4, $5)
+                ON CONFLICT DO NOTHING
+            `, [
+                backupPrompt.promptId,
+                backupPrompt.promptName,
+                backupPrompt.promptText,
+                backupPrompt.instructorId,
+                backupPrompt.isSelected
+            ]);
+        }
+        console.log('Related prompts restored successfully'); // Debug log
+
+        // Delete the backup entries for the restored instructor
+        await client.query('DELETE FROM "BackupInstructor" WHERE "instructorId" = $1', [instructorId]);
+        await client.query('DELETE FROM "BackupTeaches" WHERE "instructorId" = $1', [instructorId]);
+        await client.query('DELETE FROM "BackupPrompt" WHERE "instructorId" = $1', [instructorId]);
+
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'Evaluator restored successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error restoring evaluator:', error);
+        res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
     }
 });
 
@@ -174,9 +259,8 @@ router.delete('/evaluator/:instructorId', checkAuthenticated, async (req, res) =
 router.delete('/evaluator/:instructorId/drop/:courseCode', checkAuthenticated, async (req, res) => {
     const { instructorId, courseCode } = req.params;
     try {
-        const dropQuery = ` DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = ( SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
-
-            await pool.query(dropQuery, [instructorId,courseCode]);
+        const dropQuery = `DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
+        await pool.query(dropQuery, [instructorId, courseCode]);
         res.status(200).json({ message: 'Course removed from instructor successfully' });
     } catch (error) {
         console.error('Error removing course from evaluator:', error);

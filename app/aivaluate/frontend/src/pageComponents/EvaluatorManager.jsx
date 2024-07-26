@@ -15,25 +15,47 @@ const EvaluatorManager = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
+    const [deletedEvaluators, setDeletedEvaluators] = useState([]);
+    const [loading, setLoading] = useState(true); // Loading state to manage initial data fetch
+
+    const fetchEvaluators = async () => {
+        try {
+            const response = await fetch('http://localhost:5173/admin-api/evaluators', {
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setFiles(data);
+            setFilteredFiles(data);
+        } catch (error) {
+            console.error('Error fetching evaluators:', error);
+        }
+    };
+
+    const fetchDeletedEvaluators = async () => {
+        try {
+            const response = await fetch('http://localhost:5173/admin-api/deleted-evaluators', {
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setDeletedEvaluators(data);
+        } catch (error) {
+            console.error('Error fetching deleted evaluators:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchEvaluators = async () => {
-            try {
-                const response = await fetch('http://localhost:5173/admin-api/evaluators', {
-                    credentials: 'include'
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setFiles(data);
-                setFilteredFiles(data);
-            } catch (error) {
-                console.error('Error fetching evaluators:', error);
-            }
+        const fetchData = async () => {
+            await Promise.all([fetchEvaluators(), fetchDeletedEvaluators()]);
+            setLoading(false); // Set loading to false after data is fetched
         };
 
-        fetchEvaluators();
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -43,6 +65,12 @@ const EvaluatorManager = () => {
         setFilteredFiles(filtered);
         setCurrentPage(1); // Reset to first page on new search
     }, [searchTerm, files]);
+
+    useEffect(() => {
+        // Re-fetch evaluators and deleted evaluators whenever currentPage or searchTerm changes
+        fetchEvaluators();
+        fetchDeletedEvaluators();
+    }, [currentPage, searchTerm]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -70,51 +98,76 @@ const EvaluatorManager = () => {
         navigate(`/admin/evalManagerInfo/${instructorId}`);
     };
 
+    const handleRevertAction = async (instructorId) => {
+        try {
+            const response = await fetch(`http://localhost:5173/admin-api/evaluator/restore/${instructorId}`, {
+                method: 'POST',
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            // Refresh the deleted evaluators list
+            await fetchDeletedEvaluators();
+            await fetchEvaluators();
+        } catch (error) {
+            console.error('Error reverting evaluator:', error);
+        }
+    };
+
     return (
         <div>
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <div className="filler-div">
                 <SideMenuBarAdmin tab="evalManager" />
-                    <div className="main-margin">
-                        <div className="portal-container">
-                            <div className="top-bar">
-                                <h1>Professors</h1>
-                                <div className="search-container">
-                                    <div className="search-box">
-                                        <FaSearch className="search-icon" />
-                                        <input 
-                                            type="text" 
-                                            placeholder="Search..." 
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                        />
-                                    </div>
+                <div className="main-margin">
+                    <div className="portal-container">
+                        <div className="top-bar">
+                            <h1>Professors</h1>
+                            <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search..." 
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
                                 </div>
-                                <div className="empty"> </div>
-                                <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
                             </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
-                                    <div 
-                                        className="file-item" 
-                                        key={index} 
-                                        onClick={() => handleEvaluatorClick(file.instructorId)}
-                                    >
-                                        <div className="file-name">{file.name}</div>
-                                        {file.TA && <div className="file-status">*Teaching Assistant</div>}
-                                        <div className="file-icon"><CircumIcon name="edit" /></div>
-                                    </div>
-                                ))}
-                            </div>
+                            <div className="empty"> </div>
+                            <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
+                            {!loading && deletedEvaluators.length > 0 && (
+                                <button 
+                                    className="revertEvalButton" 
+                                    onClick={() => handleRevertAction(deletedEvaluators[0].instructorId)}
+                                >
+                                    Undo Delete
+                                </button>
+                            )}
                         </div>
-                        <div className="pagination-controls">
-                            <span>Page {currentPage} of {totalPages}</span>
-                            <div className="pagination-buttons">
-                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                            </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                <div 
+                                    className="file-item" 
+                                    key={index} 
+                                    onClick={() => handleEvaluatorClick(file.instructorId)}
+                                >
+                                    <div className="file-name">{file.name}</div>
+                                    {file.TA && <div className="file-status">*Teaching Assistant</div>}
+                                    <div className="file-icon"><CircumIcon name="edit" /></div>
+                                </div>
+                            ))}
                         </div>
-                    </div> 
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        </div>
+                    </div>
+                </div> 
             </div>
         </div>
     );

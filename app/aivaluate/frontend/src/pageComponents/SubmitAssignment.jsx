@@ -115,7 +115,12 @@ const SubmitAssignment = () => {
             console.error('File upload failed:', err);
             setErrorMessage('File upload failed. Please try again.');
         }
-    };    
+    };
+
+    const formatDueDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true });
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -144,7 +149,7 @@ const SubmitAssignment = () => {
                         </div>
                         <div className="scrollable-div">
                             <div className="due-date-div">
-                                <div className="due-date"><h3>Due: {assignmentDetails.dueDate}</h3></div>
+                                <div className="due-date"><h3>Due: {formatDueDate(assignmentDetails.dueDate)}</h3></div>
                                 <div className="empty"> </div>
                                 <div className="score">
                                     <h3>Score: {assignmentDetails.InstructorAssignedFinalGrade}/{assignmentDetails.maxObtainableGrade}</h3>
@@ -200,12 +205,10 @@ const SubmitAssignment = () => {
                                 <div className="uploaded-files-container">
                                     {uploadedFiles.length > 0 ? (
                                         <ul>
-                                            {uploadedFiles.flatMap(submission => (
-                                                Array.isArray(submission.files) ? submission.files.map((file, index) => (
-                                                    <li key={index}>
-                                                        <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
-                                                    </li>
-                                                )) : null
+                                            {uploadedFiles.map((file, index) => (
+                                                <li key={index}>
+                                                    <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
+                                                </li>
                                             ))}
                                         </ul>
                                     ) : (

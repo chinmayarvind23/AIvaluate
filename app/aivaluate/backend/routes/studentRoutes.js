@@ -438,4 +438,64 @@ router.get('/stu/submissions/:courseId/:studentId', async (req, res) => {
     }
 });
 
+
+
+
+
+
+// Endpoint to fetch assignment details
+router.get('/stu-api/assignment/:courseId/:assignmentId', async (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    try {
+        const assignmentQuery = `
+            SELECT 
+                a."assignmentName",
+                a."rubricName",
+                a."criteria",
+                a."dueDate",
+                a."maxObtainableGrade",
+                a."assignmentDescription",
+                ag."InstructorAssignedFinalGrade"
+            FROM "Assignment" a
+            LEFT JOIN "AssignmentGrade" ag
+            ON a."assignmentId" = ag."assignmentId"
+            WHERE a."courseId" = $1 AND a."assignmentId" = $2
+        `;
+        const assignmentResult = await pool.query(assignmentQuery, [courseId, assignmentId]);
+
+        if (assignmentResult.rows.length === 0) {
+            return res.status(404).json({ error: 'Assignment not found' });
+        }
+
+        const assignmentDetails = assignmentResult.rows[0];
+        res.json(assignmentDetails);
+    } catch (error) {
+        console.error('Error fetching assignment details:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Endpoint to fetch uploaded files
+router.get('/stu-api/submission/:courseId/:assignmentId', async (req, res) => {
+    const { courseId, assignmentId } = req.params;
+    try {
+        const submissionQuery = `
+            SELECT "submissionFile"
+            FROM "AssignmentSubmission"
+            WHERE "courseId" = $1 AND "assignmentId" = $2
+        `;
+        const submissionResult = await pool.query(submissionQuery, [courseId, assignmentId]);
+
+        if (submissionResult.rows.length === 0) {
+            return res.status(404).json({ error: 'No submissions found' });
+        }
+
+        const uploadedFiles = submissionResult.rows.map(row => row.submissionFile);
+        res.json(uploadedFiles);
+    } catch (error) {
+        console.error('Error fetching uploaded files:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router;

@@ -54,10 +54,6 @@
     color: var(--third-color);
 }
 
-.title-text{
-    
-}
-
 .create-assignment-content input[type="text"],
 .create-assignment-content input[type="number"]{
     padding: 10px;

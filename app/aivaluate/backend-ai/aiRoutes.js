@@ -8,7 +8,6 @@ const path = require('path');
 const OpenAI = require('openai');
 const cors = require('cors');
 const parseSafe = require('json-parse-safe');
-
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
 
@@ -26,6 +25,24 @@ router.use(cors({
     credentials: true
 }));
 
+async function retryRequest(fn, retries = 3, delay = 1000) {
+    let attempt = 0;
+    const delayPromise = (delay) => new Promise(resolve => setTimeout(resolve, delay));
+
+    while (attempt < retries) {
+        try {
+            return await fn();
+        } catch (error) {
+            attempt++;
+            if (attempt >= retries) {
+                throw error;
+            }
+            await delayPromise(delay);
+            delay *= 2;
+        }
+    }
+}
+
 router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res) => {
     const { assignmentId } = req.params;
     const { instructorId, courseId } = req.body;
@@ -38,7 +55,9 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
     }
 
     try {
+        console.log('Starting submission processing...');
         const result = await processSubmissions(assignmentId, instructorId, courseId);
+        console.log('Submission processing completed');
         return res.status(result.status).json({ message: result.message });
     } catch (error) {
         console.error(`Error processing submissions: ${error.message}`);
@@ -285,7 +304,7 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         }
         console.log('Submission file IDs created:', submissionFileIds);
 
-        const threadResponse = await openai.beta.threads.create();
+        const threadResponse = await retryRequest(() => openai.beta.threads.create());
         console.log('Thread created:', threadResponse.id);
         const thread = threadResponse.id;
         let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Provide your response in the following JSON format:
@@ -307,32 +326,32 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         }
 
         try {
-            const messageResponse = await openai.beta.threads.messages.create(thread, {
+            const messageResponse = await retryRequest(() => openai.beta.threads.messages.create(thread, {
                 role: "user",
                 content: messageContent,
                 attachments: attachments
-            });
+            }));
             console.log('Message posted to thread:', messageResponse.id);
         } catch (error) {
             console.error(`Error posting message to thread: ${error.message}`);
             throw error;
         }
 
-        const runResponse = await openai.beta.threads.runs.create(thread, {
+        const runResponse = await retryRequest(() => openai.beta.threads.runs.create(thread, {
             assistant_id: assistantId,
-        });
+        }));
         console.log('Run created:', runResponse.id);
 
         let response;
         try {
-            response = await openai.beta.threads.runs.retrieve(thread, runResponse.id);
+            response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
             while (response.status === "in_progress" || response.status === "queued") {
                 console.log("Waiting for assistant's response...");
-                await new Promise(resolve => setTimeout(resolve, 20000000));
-                response = await openai.beta.threads.runs.retrieve(thread, runResponse.id);
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
             }
 
-            const threadMessagesResponse = await openai.beta.threads.messages.list(thread);
+            const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
             const messages = threadMessagesResponse.data || [];
             const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 

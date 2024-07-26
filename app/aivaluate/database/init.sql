@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS "Student" (
     "password" VARCHAR(300),
     "resetPasswordToken" VARCHAR(300),
     "resetPasswordExpires" TIMESTAMPTZ
+    "resetPasswordExpires" TIMESTAMPTZ
 );
 
 CREATE TABLE IF NOT EXISTS "Instructor"(
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS "Instructor"(
     "department" VARCHAR(100), 
     "isTA" BOOLEAN DEFAULT FALSE,
     "resetPasswordToken" VARCHAR(300),
+    "resetPasswordExpires" TIMESTAMPTZ
     "resetPasswordExpires" TIMESTAMPTZ
 );
 
@@ -56,12 +58,14 @@ CREATE TABLE IF NOT EXISTS "SystemAdministrator"(
     "password" VARCHAR(300),
     "resetPasswordToken" VARCHAR(300),
     "resetPasswordExpires" TIMESTAMPTZ
+    "resetPasswordExpires" TIMESTAMPTZ
 );
 
 CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentId" SERIAL NOT NULL PRIMARY KEY,
     "assignmentName" VARCHAR(100),
     "courseId" INT,
+    "dueDate" TIMESTAMPTZ,
     "dueDate" TIMESTAMPTZ,
     "assignmentKey" VARCHAR(500),
     "maxObtainableGrade" FLOAT,
@@ -88,9 +92,11 @@ CREATE TABLE IF NOT EXISTS "AssignmentSubmission" (
     "courseId" INT NOT NULL,
     "assignmentId" INT NOT NULL,
     "submittedAt" TIMESTAMPTZ,
+    "submittedAt" TIMESTAMPTZ,
     "submissionFile" VARCHAR(500),
     "submissionLink" VARCHAR(1000),
     "isSubmitted" BOOLEAN,
+    "updatedAt" TIMESTAMPTZ,
     "updatedAt" TIMESTAMPTZ,
     "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
@@ -241,6 +247,22 @@ VALUES (3, '2024-06-30 12:00:00', 'Assignment 1', 'Assignment-1-key.zip',  10, '
        (1, '2024-06-28 12:00:00', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag', true),
        (1, '2024-07-03 12:00:00', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag', true),
        (1, '2024-07-09 12:00:00', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag', false)
+INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished")
+VALUES (3, '2024-06-30 12:00:00', 'Assignment 1', 'Assignment-1-key.zip',  10, 'Design a login page with html and css', true),
+       (3, '2024-07-05 12:00:00', 'Assignment 2', 'Assignment-2-key.zip',  25, 'Design an account page with html and css', true),
+       (3, '2024-07-15 12:00:00', 'Assignment 3', 'Assignment-3-key.zip',  12, 'Design a home page with html and css', false),
+       (4, '2024-06-12 12:00:00', 'Lab 1', 'Lab-1-key.zip',  12, 'Create a login page with JavaScript validation', true),
+       (4, '2024-07-11 12:00:00', 'Lab 2', 'Lab-2-key.zip',  12, 'Create a sign up page with JavaScript validation', true),
+       (4, '2024-07-15 12:00:00', 'Lab 3', 'Lab-3-key.zip',  12, 'Create a dashboard page with JavaScript variables and functions', false),
+       (2, '2024-06-25 12:00:00', 'Assignment 1', 'Assignment-1-key.zip',  20, 'Design a interactive page with html and css', true),
+       (2, '2024-07-01 12:00:00', 'Lab 1', 'Lab-1-key.zip',  35, 'Design a menu that pops down from the nav bar when the html loads', true),
+       (2, '2024-07-06 12:00:00', 'Assignment 2', 'Assignment-2-key.zip',  65, 'Make a moving background with html and css', false),
+       (5, '2024-06-05 12:00:00', 'Assignment 1', 'Assignment-1-key.zip',  100, 'Create design plan document with html', true),
+       (5, '2024-06-15 12:00:00', 'Assignment 2', 'Assignment-2-key.zip',  88, 'Create project plan document with html', true),
+       (5, '2024-07-09 12:00:00', 'Assignment 3', 'Assignment-3-key.zip',  50, 'Design you sign in page with html, css, and javascript', false),
+       (1, '2024-06-28 12:00:00', 'Assignment 1', 'Assignment-1-key.zip',  5, 'Create a html page that says hello world in a heading tag', true),
+       (1, '2024-07-03 12:00:00', 'Assignment 2', 'Assignment-2-key.zip',  10, 'Create a html page that has a list of your favorite things in a list tag', true),
+       (1, '2024-07-09 12:00:00', 'Lab 1', 'Lab-1-key.zip',  10, 'Create a html page that has a table of your favorite things in a table tag', false)
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into CourseNotification table
@@ -254,38 +276,37 @@ ON CONFLICT DO NOTHING;
 -- Creating Tables (No changes needed here)
 
 -- Insert dummy data into AssignmentSubmission table with conflict handling
-INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "submissionLink", "isSubmitted", "updatedAt", "isGraded")
-VALUES (1, 1, 1, '2022-01-14 12:00:00', 'submission1.zip', 'http://example.com/submission1', true, '2022-01-14 12:00:00', true),
-       (2, 2, 1, '2022-01-15 12:00:00', 'submission2.zip','http://example.com/submission2', true, '2022-01-15 12:00:00', true),
-       (3, 3, 2, '2022-02-10 12:00:00', 'submission3.zip','http://example.com/submission3', true, '2022-02-10 12:00:00', false),
-       (5, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files','http://example.com/submission3', true, '2024-06-04 12:00:00', true),
-       (5, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files','http://example.com/submission2', true, '2024-06-14 12:00:00', true),
-       (5, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files','http://example.com/submission1', true, '2024-07-08 12:00:00', false),
-       (6, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files','http://example.com/submission1', true, '2024-06-04 12:00:00', true),
-       (6, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files','http://example.com/submission2', true, '2024-06-14 12:00:00', true),
-       (6, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files','http://example.com/submission3', true, '2024-07-08 12:00:00', false),
-       (7, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files','http://example.com/submission3', true, '2024-06-04 12:00:00', true),
-       (7, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files','http://example.com/submission2', true, '2024-06-14 12:00:00', true),
-       (7, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files','http://example.com/submission1', true, '2024-07-08 12:00:00', false),
-       (4, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files','http://example.com/submission2', true, '2024-06-04 12:00:00', true),
-       (4, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files','http://example.com/submission3', true, '2024-06-14 12:00:00', true),
-       (4, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files','http://example.com/submission1', true, '2024-07-08 12:00:00', false),
-       (4, 4, 5, '2024-07-11 12:00:00', 'lab-2-files','http://example.com/submission2', true, '2024-07-11 12:00:00', false),
-       (4, 4, 6, '2024-07-15 12:00:00', 'lab-3-files','http://example.com/submission3', true, '2024-07-15 12:00:00', false),
-       (4, 4, 4, '2024-06-12 12:00:00', 'lab-1-files','http://example.com/submission1', true, '2024-06-12 12:00:00', true),
-       (5, 2, 7, '2024-06-25 12:00:00', 'assignment-1-files','http://example.com/submission2', true, '2024-06-25 12:00:00', true),
-       (5, 2, 8, '2024-07-01 12:00:00', 'lab-1-files','http://example.com/submission3', true, '2024-07-01 12:00:00', false),
-       (5, 2, 9, '2024-07-06 12:00:00', 'assignment-2-files','http://example.com/submission4', true, '2024-07-06 12:00:00', false),
-       (6, 2, 7, '2024-06-25 12:00:00', 'assignment-1-files','http://example.com/submission5', true, '2024-06-25 12:00:00', true),
-       (6, 2, 8, '2024-07-01 12:00:00', 'lab-1-files','http://example.com/submission6', true, '2024-07-01 12:00:00', false),
-       (6, 2, 9, '2024-07-06 12:00:00', 'assignment-2-files','http://example.com/submission1', true, '2024-07-06 12:00:00', false),
-       (7, 4, 4, '2024-06-12 12:00:00', 'lab-1-files','http://example.com/submission2', true, '2024-06-12 12:00:00', true),
-       (7, 4, 5, '2024-07-11 12:00:00', 'lab-2-files','http://example.com/submission3', true, '2024-07-11 12:00:00', false),
-       (7, 4, 6, '2024-07-15 12:00:00', 'lab-3-files','http://example.com/submission4', true, '2024-07-15 12:00:00', false),
-       (8, 4, 4, '2024-06-12 12:00:00', 'lab-1-files','http://example.com/submission5', true, '2024-06-12 12:00:00', true),
-       (8, 4, 5, '2024-07-11 12:00:00', 'lab-2-files','http://example.com/submission6', true, '2024-07-11 12:00:00', false),
-       (8, 4, 6, '2024-07-15 12:00:00', 'lab-3-files','http://example.com/submission7', true, '2024-07-15 12:00:00', false)
-       ON CONFLICT DO NOTHING;
+INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+VALUES (1, 1, 1, '2022-01-14 12:00:00', 'submission1.zip', true, '2022-01-14 12:00:00', true),
+       (2, 2, 1, '2022-01-15 12:00:00', 'submission2.zip', true, '2022-01-15 12:00:00', true),
+       (3, 3, 2, '2022-02-10 12:00:00', 'submission3.zip', true, '2022-02-10 12:00:00', false),
+       (5, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files', true, '2024-06-04 12:00:00', true),
+       (5, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files', true, '2024-06-14 12:00:00', true),
+       (5, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files', true, '2024-07-08 12:00:00', false),
+       (6, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files', true, '2024-06-04 12:00:00', true),
+       (6, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files', true, '2024-06-14 12:00:00', true),
+       (6, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files', true, '2024-07-08 12:00:00', false),
+       (7, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files', true, '2024-06-04 12:00:00', true),
+       (7, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files', true, '2024-06-14 12:00:00', true),
+       (7, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files', true, '2024-07-08 12:00:00', false),
+       (4, 5, 10, '2024-06-04 12:00:00', 'assignment-1-files', true, '2024-06-04 12:00:00', true),
+       (4, 5, 11, '2024-06-14 12:00:00', 'assignment-2-files', true, '2024-06-14 12:00:00', true),
+       (4, 5, 12, '2024-07-08 12:00:00', 'assignment-3-files', true, '2024-07-08 12:00:00', false),
+       (4, 4, 5, '2024-07-11 12:00:00', 'lab-2-files', true, '2024-07-11 12:00:00', false),
+       (4, 4, 6, '2024-07-15 12:00:00', 'lab-3-files', true, '2024-07-15 12:00:00', false),
+       (4, 4, 4, '2024-06-12 12:00:00', 'lab-1-files', true, '2024-06-12 12:00:00', true),
+       (5, 2, 7, '2024-06-25 12:00:00', 'assignment-1-files', true, '2024-06-25 12:00:00', true),
+       (5, 2, 8, '2024-07-01 12:00:00', 'lab-1-files', true, '2024-07-01 12:00:00', false),
+       (5, 2, 9, '2024-07-06 12:00:00', 'assignment-2-files', true, '2024-07-06 12:00:00', false),
+       (6, 2, 7, '2024-06-25 12:00:00', 'assignment-1-files', true, '2024-06-25 12:00:00', true),
+       (6, 2, 8, '2024-07-01 12:00:00', 'lab-1-files', true, '2024-07-01 12:00:00', false),
+       (6, 2, 9, '2024-07-06 12:00:00', 'assignment-2-files', true, '2024-07-06 12:00:00', false),
+       (7, 4, 4, '2024-06-12 12:00:00', 'lab-1-files', true, '2024-06-12 12:00:00', true),
+       (7, 4, 5, '2024-07-11 12:00:00', 'lab-2-files', true, '2024-07-11 12:00:00', false),
+       (7, 4, 6, '2024-07-15 12:00:00', 'lab-3-files', true, '2024-07-15 12:00:00', false),
+       (8, 4, 4, '2024-06-12 12:00:00', 'lab-1-files', true, '2024-06-12 12:00:00', true),
+       (8, 4, 5, '2024-07-11 12:00:00', 'lab-2-files', true, '2024-07-11 12:00:00', false),
+       (8, 4, 6, '2024-07-15 12:00:00', 'lab-3-files', true, '2024-07-15 12:00:00', false);
 
 -- Insert dummy data into AssignmentGrade table with conflict handling
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
@@ -352,51 +373,3 @@ VALUES
     ('Prompt 2', 'Prompt 2 description', '5'),
     ('Prompt 3', 'Prompt 3 description', '5')
 ON CONFLICT DO NOTHING;
-
-INSERT INTO "useRubric" ("assignmentId", "assignmentRubricId")
-VALUES (6, 1),
-       (5, 2),
-       (4, 3)
-ON CONFLICT DO NOTHING;
-
-CREATE TABLE IF NOT EXISTS "BackupStudent" AS TABLE "Student" WITH NO DATA;
-ALTER TABLE "BackupStudent" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupInstructor" AS TABLE "Instructor" WITH NO DATA;
-ALTER TABLE "BackupInstructor" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupCourse" AS TABLE "Course" WITH NO DATA;
-ALTER TABLE "BackupCourse" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupEnrolledIn" AS TABLE "EnrolledIn" WITH NO DATA;
-ALTER TABLE "BackupEnrolledIn" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupTeaches" AS TABLE "Teaches" WITH NO DATA;
-ALTER TABLE "BackupTeaches" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupAssignment" AS TABLE "Assignment" WITH NO DATA;
-ALTER TABLE "BackupAssignment" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupAssignmentSubmission" AS TABLE "AssignmentSubmission" WITH NO DATA;
-ALTER TABLE "BackupAssignmentSubmission" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupAssignmentGrade" AS TABLE "AssignmentGrade" WITH NO DATA;
-ALTER TABLE "BackupAssignmentGrade" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupStudentFeedback" AS TABLE "StudentFeedback" WITH NO DATA;
-ALTER TABLE "BackupStudentFeedback" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupStudentFeedbackReport" AS TABLE "StudentFeedbackReport" WITH NO DATA;
-ALTER TABLE "BackupStudentFeedbackReport" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupAssignmentRubric" AS TABLE "AssignmentRubric" WITH NO DATA;
-ALTER TABLE "BackupAssignmentRubric" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupPrompt" AS TABLE "Prompt" WITH NO DATA;
-ALTER TABLE "BackupPrompt" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupUseRubric" AS TABLE "useRubric" WITH NO DATA;
-ALTER TABLE "BackupUseRubric" ADD COLUMN "deleted_at" TIMESTAMP;
-
-CREATE TABLE IF NOT EXISTS "BackupCourseNotification" AS TABLE "CourseNotification" WITH NO DATA;
-ALTER TABLE "BackupCourseNotification" ADD COLUMN "deleted_at" TIMESTAMP;

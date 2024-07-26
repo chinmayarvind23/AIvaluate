@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../Grades.css';
 import '../HelpPage.css';
@@ -53,7 +53,7 @@ const StudentGrades = () => {
         <div className="main-margin">
           <div className="grades-section">
             <div className="top-bar">
-              <h1 className="primary-color-text">Grades for {studentName}</h1>
+              <h1 className="primary-color-text">Grades for {studentName} </h1>
             </div>
             <div className="scrollable-div">
               <table className="grades-table secondary-colorbg">
@@ -68,13 +68,17 @@ const StudentGrades = () => {
                 </thead>
                 <tbody>
                   {grades.map((grade, index) => (
-                    <tr key={index}>
-                      <td>{grade.name}</td>
+                    <tr key={index} >
+                      <td>
+                      <Link to={`/stu/submit/${courseId}/${grade.assignmentId}`} className="assignment-link">
+                        {grade.name}
+                      </Link>
+                    </td>
                       <td>{new Date(grade.due).toLocaleDateString()}</td>
                       <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                       <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                       <td>{grade.score.toFixed(1)}/{grade.total}</td>
-                    </tr>
+                    </tr>               
                   ))}
                   <tr>
                     <td colSpan="4" className="total fourth-colorbg">Total</td>

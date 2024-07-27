@@ -44,6 +44,12 @@ const CreateCourse = () => {
       return;
     }
 
+    if (courseName.length > 50 || courseCode.length > 10) {
+      setErrorMessage('Course name must be less than 50 characters and course code must be less than 10 characters.');
+      return;
+    }
+
+    // Check if instructor is selected
     if (!instructorId) {
       setErrorMessage('Instructor selection is required.');
       toast.error('Instructor selection is required.');
@@ -95,6 +101,7 @@ const CreateCourse = () => {
                   name="courseName"
                   value={courseName}
                   onChange={(e) => setCourseName(e.target.value)}
+                  maxLength="50" // Limit the course name to 50 characters
                 />
               </div>
               <div className="form-group">
@@ -104,6 +111,7 @@ const CreateCourse = () => {
                   name="courseCode"
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
+                  maxLength="10" // Limit the course code to 10 characters
                 />
               </div>
 
@@ -118,7 +126,6 @@ const CreateCourse = () => {
                   ))}
                 </select>
               </div>
-
               <div className="form-group">
                 <h3>Teaching Assistant</h3>
                 <select className="drop-down-menu"value={taId} onChange={(e) => setTaId(e.target.value)}>

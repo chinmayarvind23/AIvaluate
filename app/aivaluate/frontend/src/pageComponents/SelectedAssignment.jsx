@@ -165,7 +165,8 @@ const SelectedAssignment = () => {
     
         try {
             console.log('Sending request to grade with AI:', { instructorId, courseId });
-    
+            setIsLoading(true);
+
             const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
                 instructorId,
                 courseId

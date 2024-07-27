@@ -533,6 +533,10 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 console.log(`Feedback recorded for student: ${studentId}`);
             } catch (error) {
                 console.error(`Error recording feedback for student ${studentId}:`, error);
+                    parsedResponse = {
+                        grade: 0,
+                        feedback: 'The AI server is currently down or not responding. Please manually review and grade this submission.'
+                };                
             }
         } else {
             console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);

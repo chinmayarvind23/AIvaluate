@@ -495,9 +495,9 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 }
             }
 
-            const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
-            const messages = threadMessagesResponse.data || [];
-            const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+                const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
+                const messages = threadMessagesResponse.data || [];
+                const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 
             if (latestAssistantMessage) {
                 parsedResponse = await parseAIResponse(latestAssistantMessage.content);

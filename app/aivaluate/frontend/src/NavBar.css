@@ -21,6 +21,7 @@
   .header h1 {
     margin: 0;
     font-size: 44px;
+    cursor: default;
   }
 
   .menu {
@@ -28,6 +29,7 @@
     top: 20px;
     right: 20px;
     z-index: 10;
+    cursor: pointer;
   }
   
   .menu button {
@@ -63,6 +65,7 @@
     width: 300px; 
     z-index: 1;
     border: var(--primary-color) 2px solid;
+    cursor:pointer;
   }
   
   .menu .dropdown a {
@@ -71,6 +74,7 @@
     text-decoration: none;
     font-size: 30px;
     font-weight: bold;
+    cursor:pointer;
   }
 
   .menu .dropdown a::before {
@@ -101,6 +105,7 @@
     background: none;
     text-align:left;
     color:black;
+    cursor:pointer;
   }
 
   .menu .dropdown .logout::before {

@@ -97,6 +97,7 @@ const People = () => {
                                 ))}
                             </div>
                         </div>
+
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>
                             <div className="pagination-buttons">

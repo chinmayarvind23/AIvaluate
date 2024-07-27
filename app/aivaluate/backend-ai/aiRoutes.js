@@ -302,6 +302,8 @@ const parseAIResponse = async (aiResponse) => {
     };
 
     let aiResponseString = '';
+
+    let aiResponseString = '';
     const maxRetries = 10;
     let attempt = 0;
 

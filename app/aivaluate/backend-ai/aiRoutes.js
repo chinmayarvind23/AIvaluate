@@ -412,7 +412,7 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 console.log('Final assistant response:', result);
                 if (result) {
                     parsedResponse = parseAIResponse(result);
-                    if (parsedResponse.grade !== 0 && parsedResponse.feedback !== 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.') {
+                    if (parsedResponse.feedback !== 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.') {
                         break;
                     }
                 }
@@ -424,7 +424,7 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             console.log(`Retrying... Attempt ${retryCount + 1}/${maxRetries}`);
         }
 
-        if (parsedResponse && parsedResponse.grade !== 0) {
+        if (parsedResponse) {
             try {
                 await pool.query(
                     'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "isGraded") VALUES ($1, $2, $3, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade","isGraded" = EXCLUDED."isGraded";',

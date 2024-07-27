@@ -145,8 +145,6 @@ const CreateCourse = () => {
                   name="courseCode"
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
-                  maxLength="10" // Limit the course code to 10 characters
-                  className="drop-down-menu"
                 />
               </div>
 

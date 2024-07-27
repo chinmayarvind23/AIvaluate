@@ -233,7 +233,7 @@ const SelectedAssignment = () => {
                     {isLoading && (
                         <div className="spinner-container">
                             <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                            <p className="loading-text">AI Grading in Progress...</p>
+                            <p className="loading-text" style={{ color: '#4B0082' }}>AI Grading in Progress...</p>
                         </div>
                     )}
                     <div className="pagination-controls">

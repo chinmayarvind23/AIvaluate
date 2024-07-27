@@ -13,7 +13,9 @@ axios.defaults.withCredentials = true;
 const CreateAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const { courseId } = sessionStorage.getItem('courseId');
+    const courseId = sessionStorage.getItem('courseId');
+    const instructorId = sessionStorage.getItem('instructorId');
+    console.log('Session Storage:', { courseCode, courseName, courseId, instructorId });
     const navBarText = `${courseCode} - ${courseName}`;
     const navigate = useNavigate();
     const availableRubricsRef = useRef(null);
@@ -43,6 +45,7 @@ const CreateAssignment = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(`${name}: ${value}`);
         setAssignment(prevAssignment => ({
             ...prevAssignment,
             [name]: value
@@ -83,6 +86,7 @@ const CreateAssignment = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Assignment before submission:', assignment);
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
             alert('Please fill in all fields.');
             return;

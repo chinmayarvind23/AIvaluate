@@ -226,16 +226,27 @@ const uploadFileToOpenAI = async (filePath, purpose, label) => {
     }
 };
 
-// Parses AI response with regex patterns to extract grades and feedback
 const parseAIResponse = (aiResponse) => {
     const response = {
         grade: 0,
         feedback: 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.'
     };
 
+    let aiResponseString = '';
+
     try {
-        const aiResponseString = typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse);
+        aiResponseString = typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse);
         console.log("AI Response String:", aiResponseString);
+        const feedbackIndex = aiResponseString.indexOf('feedback:');
+        const gradeIndex = aiResponseString.indexOf('grade:');
+
+        if (feedbackIndex !== -1 && gradeIndex !== -1) {
+            response.feedback = aiResponseString.substring(feedbackIndex + 9, gradeIndex).trim();
+            const gradeEndIndex = aiResponseString.indexOf('\n', gradeIndex);
+            response.grade = parseFloat(aiResponseString.substring(gradeIndex + 6, gradeEndIndex).trim());
+            return response;
+        }
+        
         const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m);
         if (!jsonStringMatch) {
             throw new Error('Invalid AI response format');
@@ -300,6 +311,20 @@ const parseAIResponse = (aiResponse) => {
         }
     } catch (error) {
         console.error('Error parsing AI response:', error);
+        try {
+            if (aiResponseString.includes('feedback:') && aiResponseString.includes('grade:')) {
+                const feedbackIndex = aiResponseString.indexOf('feedback:') + 9;
+                const gradeIndex = aiResponseString.indexOf('grade:') + 6;
+
+                const feedbackEnd = aiResponseString.indexOf('grade:');
+                response.feedback = aiResponseString.substring(feedbackIndex, feedbackEnd).trim();
+
+                const gradeEnd = aiResponseString.indexOf('\n', gradeIndex);
+                response.grade = parseFloat(aiResponseString.substring(gradeIndex, gradeEnd).trim());
+            }
+        } catch (fallbackError) {
+            console.error('Error in fallback parsing:', fallbackError);
+        }
     }
 
     console.log("Parsed Response:", response);

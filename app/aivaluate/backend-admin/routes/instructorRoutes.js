@@ -482,4 +482,45 @@ router.delete('/clear-backup/instructor', checkAuthenticated, async (req, res) =
     }
 });
 
+
+
+
+
+router.put('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
+    const { instructorId } = req.params;
+    const { firstName, lastName, email } = req.body;
+
+    console.log('Updating evaluator with ID:', instructorId); // Debugging line
+    console.log('Received data:', req.body); // Debugging line
+
+    try {
+        const result = await pool.query(
+            'UPDATE "Instructor" SET "firstName" = $1, "lastName" = $2, "email" = $3 WHERE "instructorId" = $4',
+            [firstName, lastName, email, instructorId]
+        );
+        console.log('Update result:', result); // Debugging line
+        res.status(200).json({ message: 'Evaluator updated successfully' });
+    } catch (error) {
+        console.error('Error updating evaluator:', error); // Detailed error logging
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// In your routes file
+
+router.put('/evaluator/:id/role', async (req, res) => {
+    const { id } = req.params;
+    const { isTA } = req.body;
+
+    try {
+        await pool.query('UPDATE "Instructor" SET "isTA" = $1 WHERE "instructorId" = $2', [isTA, id]);
+        res.status(200).json({ message: 'Role updated successfully' });
+    } catch (error) {
+        console.error('Error updating role:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
+
 module.exports = router;

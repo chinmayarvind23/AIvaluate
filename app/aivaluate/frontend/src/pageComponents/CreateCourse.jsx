@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import '../ToastStyles.css';
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
@@ -35,27 +38,26 @@ const CreateCourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!courseName || !courseCode || !maxStudents) {
+    if (!courseName || !courseCode) {
       setErrorMessage('All fields are required.');
+      toast.error('All fields are required.');
       return;
     }
 
-    // Check if instructor is selected
     if (!instructorId) {
       setErrorMessage('Instructor selection is required.');
+      toast.error('Instructor selection is required.');
       return;
     }
 
     try {
       const response = await axios.post('http://localhost:5173/eval-api/courses', {
         courseName,
-        courseCode,
-        maxStudents,
+        courseCode
       });
 
       const courseId = response.data.courseId;
 
-      // Add instructor to the Teaches table
       if (instructorId) {
         await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
@@ -63,7 +65,6 @@ const CreateCourse = () => {
         });
       }
 
-      // Add TA to the Teaches table if selected
       if (taId) {
         await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
@@ -72,9 +73,11 @@ const CreateCourse = () => {
       }
 
       console.log('Course created successfully:', response.data);
-      navigate('/eval/dashboard'); // Redirect to dashboard after successful creation
+      toast.success('Course created successfully.');
+      navigate('/eval/dashboard');
     } catch (error) {
       console.error('There was an error creating the course:', error);
+      toast.error('There was an error creating the course.');
     }
   };
 
@@ -103,18 +106,7 @@ const CreateCourse = () => {
                   onChange={(e) => setCourseCode(e.target.value)}
                 />
               </div>
-              <div className="form-group">
-                <h3>Maximum Number of Students</h3>
-                <input 
-                  type="text" 
-                  name="maxStudents"
-                  value={maxStudents}
-                  onChange={(e) => setMaxStudents(e.target.value)}
-                />
-              </div>
 
-              {/* Display a dropdown of instructors */}
-              {/* Select the instructor for the course */}
               <div className="form-group">
                 <h3>Instructor</h3>
                 <select className="drop-down-menu" value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
@@ -127,8 +119,6 @@ const CreateCourse = () => {
                 </select>
               </div>
 
-              {/* Display a dropdown of instructors */}
-              {/* Select the TA for the course */}
               <div className="form-group">
                 <h3>Teaching Assistant</h3>
                 <select className="drop-down-menu"value={taId} onChange={(e) => setTaId(e.target.value)}>
@@ -146,6 +136,7 @@ const CreateCourse = () => {
           </div>
         </section>
       </div>
+      <ToastContainer />
     </>
   );
 };

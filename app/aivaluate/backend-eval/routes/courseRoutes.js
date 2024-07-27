@@ -17,8 +17,8 @@ router.post('/courses', async (req, res) => {
 
     try {
         const result = await pool.query(
-            'INSERT INTO "Course" ("courseName", "courseCode", "maxStudents") VALUES ($1, $2, $3) RETURNING "courseId"',
-            [courseName, courseCode, maxStudents]
+            'INSERT INTO "Course" ("courseName", "courseCode") VALUES ($1, $2) RETURNING "courseId"',
+            [courseName, courseCode]
         );
         res.status(201).send({ courseId: result.rows[0].courseId, message: 'Course created successfully' });
     } catch (error) {

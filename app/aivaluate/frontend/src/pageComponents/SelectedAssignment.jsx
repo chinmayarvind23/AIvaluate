@@ -174,12 +174,12 @@ const SelectedAssignment = () => {
                 fetchSubmissions();
             } else {
                 console.error('Failed to grade submissions:', response.data);
-                setError(`Failed to grade submissions for course ${courseId}.`);
+                //setError(`Failed to grade submissions for course ${courseId}.`);
             }
         } catch (error) {
             console.error(`Error grading submissions for course ${courseId}:`, error);
             alert('Failed to grade submissions. Please try again.');
-            setError(`Error grading submissions for course ${courseId}.`);
+            //setError(`Error grading submissions for course ${courseId}.`);
         }
     };    
 

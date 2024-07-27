@@ -266,6 +266,39 @@ const parseAIResponse = (aiResponse) => {
             const gradeValue = parseFloat(gradeMatch.match(/[\d.]+/)[0]);
             response.grade = gradeValue;
         }
+
+        if (!feedbackMatch || !gradeMatch) {
+            const plainFeedbackMatch = aiResponseString.match(/feedback":\s*"([^"]+)"/i);
+            const plainGradeMatch = aiResponseString.match(/grade":\s*"([^"]+)"/i);
+
+            if (plainFeedbackMatch) {
+                response.feedback = plainFeedbackMatch[1].substring(0, 20000);
+            }
+
+            if (plainGradeMatch) {
+                const gradeValue = parseFloat(plainGradeMatch[1].match(/[\d.]+/)[0]);
+                response.grade = gradeValue;
+            }
+
+            if (!plainFeedbackMatch) {
+                const feedbackStart = aiResponseString.toLowerCase().indexOf('feedback');
+                const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
+                if (feedbackStart !== -1) {
+                    const feedbackEnd = gradeStart !== -1 ? gradeStart : aiResponseString.length;
+                    response.feedback = aiResponseString.substring(feedbackStart + 9, feedbackEnd).trim();
+                }
+            }
+
+            if (!plainGradeMatch) {
+                const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
+                if (gradeStart !== -1) {
+                    const gradeSubstring = aiResponseString.substring(gradeStart + 6).match(/[\d.]+/);
+                    if (gradeSubstring) {
+                        response.grade = parseFloat(gradeSubstring[0]);
+                    }
+                }
+            }
+        }
     } catch (error) {
         console.error('Error parsing AI response:', error);
     }
@@ -304,110 +337,119 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         }
         console.log('Submission file IDs created:', submissionFileIds);
 
-        const threadResponse = await retryRequest(() => openai.beta.threads.create());
-        console.log('Thread created:', threadResponse.id);
-        const thread = threadResponse.id;
-        let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Provide your response in the following JSON format:
-        {
-            "feedback": "Your detailed feedback here",
-            "grade": "Your grade here"
-        }`;
-        if (assignmentKeyFileId) {
-            messageContent += ` The file with ID ${assignmentKeyFileId} is the assignment key to be used to grade the students' submissions.`;
-        }
-        messageContent += ` The following files are the student's submissions: ${submissionFileIds.join(', ')}.`;
-        if (instructorPrompt) {
-            messageContent += ` Additional Instructions: ${instructorPrompt}`;
-        }
+        let parsedResponse;
+        let retryCount = 0;
+        const maxRetries = 10;
 
-        const attachments = submissionFileIds.map(file_id => ({ file_id, tools: [{ type: 'file_search' }] }));
-        if (assignmentKeyFileId) {
-            attachments.unshift({ file_id: assignmentKeyFileId, tools: [{ type: 'file_search' }] });
-        }
+        while (retryCount < maxRetries) {
+            const threadResponse = await retryRequest(() => openai.beta.threads.create());
+            console.log('Thread created:', threadResponse.id);
+            const thread = threadResponse.id;
 
-        try {
-            const messageResponse = await retryRequest(() => openai.beta.threads.messages.create(thread, {
-                role: "user",
-                content: messageContent,
-                attachments: attachments
-            }));
-            console.log('Message posted to thread:', messageResponse.id);
-        } catch (error) {
-            console.error(`Error posting message to thread: ${error.message}`);
-            throw error;
-        }
-
-        const runResponse = await retryRequest(() => openai.beta.threads.runs.create(thread, {
-            assistant_id: assistantId,
-        }));
-        console.log('Run created:', runResponse.id);
-
-        let response;
-        try {
-            response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
-            while (response.status === "in_progress" || response.status === "queued") {
-                console.log("Waiting for assistant's response...");
-                await new Promise(resolve => setTimeout(resolve, 5000));
-                response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
+            let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Provide your response in the following JSON format:
+            {
+                "feedback": "Your detailed feedback here",
+                "grade": "Your grade here"
+            }`;
+            if (assignmentKeyFileId) {
+                messageContent += ` The file with ID ${assignmentKeyFileId} is the assignment key to be used to grade the students' submissions.`;
+            }
+            messageContent += ` The following files are the student's submissions: ${submissionFileIds.join(', ')}.`;
+            if (instructorPrompt) {
+                messageContent += ` Additional Instructions: ${instructorPrompt}`;
             }
 
-            const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
-            const messages = threadMessagesResponse.data || [];
-            const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+            const attachments = submissionFileIds.map(file_id => ({ file_id, tools: [{ type: 'file_search' }] }));
+            if (assignmentKeyFileId) {
+                attachments.unshift({ file_id: assignmentKeyFileId, tools: [{ type: 'file_search' }] });
+            }
 
-            let result;
-            if (latestAssistantMessage) {
-                try {
-                    if (typeof latestAssistantMessage.content === 'string') {
-                        result = JSON.parse(latestAssistantMessage.content);
-                    } else {
+            try {
+                const messageResponse = await retryRequest(() => openai.beta.threads.messages.create(thread, {
+                    role: "user",
+                    content: messageContent,
+                    attachments: attachments
+                }));
+                console.log('Message posted to thread:', messageResponse.id);
+            } catch (error) {
+                console.error(`Error posting message to thread: ${error.message}`);
+                throw error;
+            }
+
+            const runResponse = await retryRequest(() => openai.beta.threads.runs.create(thread, {
+                assistant_id: assistantId,
+            }));
+            console.log('Run created:', runResponse.id);
+
+            try {
+                let response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
+                while (response.status === "in_progress" || response.status === "queued") {
+                    console.log("Waiting for assistant's response...");
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
+                }
+
+                const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
+                const messages = threadMessagesResponse.data || [];
+                const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+
+                let result;
+                if (latestAssistantMessage) {
+                    try {
+                        if (typeof latestAssistantMessage.content === 'string') {
+                            result = JSON.parse(latestAssistantMessage.content);
+                        } else {
+                            result = latestAssistantMessage.content;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing JSON content:', error);
                         result = latestAssistantMessage.content;
                     }
-                } catch (error) {
-                    console.error('Error parsing JSON content:', error);
-                    result = latestAssistantMessage.content;
+                } else {
+                    result = null;
                 }
-            } else {
-                result = null;
+
+                console.log('Final assistant response:', result);
+                if (result) {
+                    parsedResponse = parseAIResponse(result);
+                    if (parsedResponse.grade !== 0 && parsedResponse.feedback !== 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.') {
+                        break;
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching or parsing AI response:', error);
             }
 
-            console.log('Final assistant response:', result);
-            if (result) {
-                const parsedResponse = parseAIResponse(result);
+            retryCount++;
+            console.log(`Retrying... Attempt ${retryCount + 1}/${maxRetries}`);
+        }
 
-                if (parsedResponse.grade !== 0) {
-                    try {
-                        await pool.query(
-                            'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "isGraded") VALUES ($1, $2, $3, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade","isGraded" = EXCLUDED."isGraded";',
-                            [submissions[0].assignmentSubmissionId, submissions[0].assignmentId, maxPoints, parsedResponse.grade]
-                        );
-                        console.log(`Grade recorded for student: ${studentId}`);
-                    } catch (error) {
-                        console.error(`Error recording grade for student ${studentId}:`, error);
-                    }
-                } else {
-                    console.error(`Parsed grade is 0 for student: ${studentId}. Response: ${JSON.stringify(result)}`);
-                }
-
-                if (parsedResponse.feedback) {
-                    try {
-                        await pool.query(
-                            'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId", "courseId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
-                            [studentId, submissions[0].assignmentId, submissions[0].courseId, parsedResponse.feedback]
-                        );
-                        console.log(`Feedback recorded for student: ${studentId}`);
-                    } catch (error) {
-                        console.error(`Error recording feedback for student ${studentId}:`, error);
-                    }
-                } else {
-                    console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(result)}`);
-                }
-            } else {
-                console.error(`No valid response from AI for student: ${studentId}. Response: ${JSON.stringify(result)}`);
+        if (parsedResponse && parsedResponse.grade !== 0) {
+            try {
+                await pool.query(
+                    'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "isGraded") VALUES ($1, $2, $3, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade","isGraded" = EXCLUDED."isGraded";',
+                    [submissions[0].assignmentSubmissionId, submissions[0].assignmentId, maxPoints, parsedResponse.grade]
+                );
+                console.log(`Grade recorded for student: ${studentId}`);
+            } catch (error) {
+                console.error(`Error recording grade for student ${studentId}:`, error);
             }
-        } catch (error) {
-            console.error('Error processing student submissions:', error);
-            throw error;
+        } else {
+            console.error(`Parsed grade is 0 for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);
+        }
+
+        if (parsedResponse && parsedResponse.feedback) {
+            try {
+                await pool.query(
+                    'INSERT INTO "StudentFeedback" ("studentId", "assignmentId", "courseId", "AIFeedbackText") VALUES ($1, $2, $3, $4) ON CONFLICT ("studentId", "assignmentId", "courseId") DO UPDATE SET "AIFeedbackText" = EXCLUDED."AIFeedbackText"',
+                    [studentId, submissions[0].assignmentId, submissions[0].courseId, parsedResponse.feedback]
+                );
+                console.log(`Feedback recorded for student: ${studentId}`);
+            } catch (error) {
+                console.error(`Error recording feedback for student ${studentId}:`, error);
+            }
+        } else {
+            console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);
         }
     } catch (error) {
         console.error('Error in processStudentSubmissions:', error);

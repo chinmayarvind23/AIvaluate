@@ -4,8 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
+import '../ToastStyles.css';
 import '../ToastStyles.css';
 
 const CreateCourse = () => {
@@ -63,7 +67,9 @@ const CreateCourse = () => {
     e.preventDefault();
 
     if (!courseName || !courseCode) {
+    if (!courseName || !courseCode) {
       setErrorMessage('All fields are required.');
+      toast.error('All fields are required.');
       toast.error('All fields are required.');
       return;
     }
@@ -71,12 +77,14 @@ const CreateCourse = () => {
     if (!instructorId) {
       setErrorMessage('Instructor selection is required.');
       toast.error('Instructor selection is required.');
+      toast.error('Instructor selection is required.');
       return;
     }
 
     try {
       const response = await axios.post('http://localhost:5173/eval-api/courses', {
         courseName,
+        courseCode
         courseCode
       });
 
@@ -102,8 +110,11 @@ const CreateCourse = () => {
       console.log('Course created successfully:', response.data);
       toast.success('Course created successfully.');
       navigate('/eval/dashboard');
+      toast.success('Course created successfully.');
+      navigate('/eval/dashboard');
     } catch (error) {
       console.error('There was an error creating the course:', error);
+      toast.error('There was an error creating the course.');
       toast.error('There was an error creating the course.');
     }
   };
@@ -134,8 +145,6 @@ const CreateCourse = () => {
                   name="courseCode"
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
-                  maxLength="10" // Limit the course code to 10 characters
-                  className="drop-down-menu"
                 />
               </div>
 
@@ -168,6 +177,7 @@ const CreateCourse = () => {
           </div>
         </section>
       </div>
+      <ToastContainer />
     </>
   );
 };

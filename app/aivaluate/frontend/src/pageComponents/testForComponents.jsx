@@ -61,6 +61,23 @@ const EvalManagerInfo = () => {
                             </div>
                         
                     </div>
+                    <div className="info-row">
+                        <span>Email:</span>
+                        <span>prof@email.com</span>
+                    </div>
+                    <div className="info-row">
+                        <span>Password:</span>
+                        <span>**************</span>
+                    </div>
+                </div>
+                <div className="course-section">
+                    <div className="search-bar">
+                        <FaSearch className="search-icon" />
+                        <input 
+                            type="text"
+                            placeholder="Search..." 
+                        />
+                    </div>
                 </div>
             </div>
         </div>

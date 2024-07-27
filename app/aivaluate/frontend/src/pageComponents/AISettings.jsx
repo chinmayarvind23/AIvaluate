@@ -273,9 +273,10 @@ const AISettings = () => {
                                 cols="50"
                                 className="ai-settings-textarea"
                                 readOnly={!isEditable}
+                                title="This prompt should specifically explain to the AI how it should generally mark all of your assignments across all of your classes. Some example includes: 'Please mark all assignments based on the rubric provided and provide feedback on each criterion', 'Please provide feedback on each criterion with a detailed explanation', 'Please tell the students exactly how they lost each point', 'Be very strict on grading the use of Camel case notion. Students should always lose 2 point's for using a different variable naming notion'"
                             />
                             <div className="button-group">
-                                <button type="button" className="create-prompt" onClick={handleCreatePrompt}>
+                                <button type="button" className="create-prompt" onClick={handleCreatePrompt} title="Click to create a new mini prompt. These are the prompts located to the right of the text area.">
                                     <CircumIcon name="circle_plus" /> Create Prompt
                                 </button>
                                 <button type="submit" className="update-ai" onClick={handleSavePromptText}>

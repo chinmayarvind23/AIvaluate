@@ -20,7 +20,9 @@
     "json-parse-safe": "^2.0.0",
     "openai": "^4.53.0",
     "passport": "^0.7.0",
-    "pg": "^8.11.1"
+    "pg": "^8.11.1",
+    "react-spinners": "^0.14.1",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/express-session": "^1.18.0",

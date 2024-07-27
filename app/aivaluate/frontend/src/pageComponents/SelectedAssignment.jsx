@@ -1,6 +1,9 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ClipLoader } from 'react-spinners';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -20,6 +23,7 @@ const SelectedAssignment = () => {
     const [submissions, setSubmissions] = useState([]);
     const [error, setError] = useState(null);
     const [gradesVisible, setGradesVisible] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const setSessionData = useCallback(async (courseId, instructorId) => {
         try {
@@ -161,7 +165,8 @@ const SelectedAssignment = () => {
     
         try {
             console.log('Sending request to grade with AI:', { instructorId, courseId });
-    
+            setIsLoading(true);
+
             const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
                 instructorId,
                 courseId
@@ -170,16 +175,17 @@ const SelectedAssignment = () => {
             });
     
             if (response.status === 200) {
-                alert('Submissions graded successfully.');
+                toast.success('Submissions graded successfully.');
                 fetchSubmissions();
             } else {
                 console.error('Failed to grade submissions:', response.data);
-                //setError(`Failed to grade submissions for course ${courseId}.`);
+                toast.error('Failed to grade submissions.');
             }
         } catch (error) {
             console.error(`Error grading submissions for course ${courseId}:`, error);
-            alert('Failed to grade submissions. Please try again.');
-            //setError(`Error grading submissions for course ${courseId}.`);
+            toast.error('Failed to grade submissions. Please try again.');
+        } finally {
+            setIsLoading(false);
         }
     };    
 
@@ -224,6 +230,12 @@ const SelectedAssignment = () => {
                         </div>
                         {error && <div className="error-message">{error}</div>}
                     </div>
+                    {isLoading && (
+                        <div className="spinner-container">
+                            <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                            <p className="loading-text">AI Grading in Progress...</p>
+                        </div>
+                    )}
                     <div className="pagination-controls">
                         <span>Page {currentPage} of {totalPages}</span>
                         <div className="pagination-buttons">
@@ -233,6 +245,7 @@ const SelectedAssignment = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

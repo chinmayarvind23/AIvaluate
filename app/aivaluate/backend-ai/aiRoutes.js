@@ -35,7 +35,7 @@ async function retryRequest(fn, retries = 3, delay = 1000) {
         } catch (error) {
             attempt++;
             if (attempt >= retries) {
-                throw error;
+                return error("The AI server doesn't seem to be responding. Attempting to reconnect...");
             }
             await delayPromise(delay);
             delay *= 2;
@@ -260,27 +260,14 @@ const parseAIResponse = (aiResponse) => {
 
         if (feedbackMatch) {
             response.feedback = feedbackMatch.substring(0, 20000);
-        }
-
-        if (gradeMatch) {
-            const gradeValue = parseFloat(gradeMatch.match(/[\d.]+/)[0]);
-            response.grade = gradeValue;
-        }
-
-        if (!feedbackMatch || !gradeMatch) {
-            const plainFeedbackMatch = aiResponseString.match(/feedback":\s*"([^"]+)"/i);
-            const plainGradeMatch = aiResponseString.match(/grade":\s*"([^"]+)"/i);
+        } else {
+            const plainFeedbackMatch = aiResponseString.match(/feedback":\s*"([^"]+)"/i) ||
+                                       aiResponseString.match(/Feedback":\s*"([^"]+)"/i) ||
+                                       aiResponseString.match(/"feedback":\s*"([^"]+)"/i);
 
             if (plainFeedbackMatch) {
                 response.feedback = plainFeedbackMatch[1].substring(0, 20000);
-            }
-
-            if (plainGradeMatch) {
-                const gradeValue = parseFloat(plainGradeMatch[1].match(/[\d.]+/)[0]);
-                response.grade = gradeValue;
-            }
-
-            if (!plainFeedbackMatch) {
+            } else {
                 const feedbackStart = aiResponseString.toLowerCase().indexOf('feedback');
                 const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
                 if (feedbackStart !== -1) {
@@ -288,8 +275,20 @@ const parseAIResponse = (aiResponse) => {
                     response.feedback = aiResponseString.substring(feedbackStart + 9, feedbackEnd).trim();
                 }
             }
+        }
 
-            if (!plainGradeMatch) {
+        if (gradeMatch) {
+            const gradeValue = parseFloat(gradeMatch.match(/[\d.]+/)[0]);
+            response.grade = gradeValue;
+        } else {
+            const plainGradeMatch = aiResponseString.match(/grade":\s*"([^"]+)"/i) ||
+                                    aiResponseString.match(/Grade":\s*"([^"]+)"/i) ||
+                                    aiResponseString.match(/"grade":\s*"([^"]+)"/i);
+
+            if (plainGradeMatch) {
+                const gradeValue = parseFloat(plainGradeMatch[1].match(/[\d.]+/)[0]);
+                response.grade = gradeValue;
+            } else {
                 const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
                 if (gradeStart !== -1) {
                     const gradeSubstring = aiResponseString.substring(gradeStart + 6).match(/[\d.]+/);
@@ -447,6 +446,10 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 console.log(`Feedback recorded for student: ${studentId}`);
             } catch (error) {
                 console.error(`Error recording feedback for student ${studentId}:`, error);
+                    parsedResponse = {
+                        grade: 0,
+                        feedback: 'The AI server is currently down or not responding. Please manually review and grade this submission.'
+                };                
             }
         } else {
             console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);

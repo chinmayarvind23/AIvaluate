@@ -42,7 +42,6 @@ const Signup = () => {
     if (!email) newErrors.email = 'Email is required';
     if (!password) newErrors.password = 'Password is required';
     if (!password2) newErrors.password2 = 'Confirm Password is required';
-    if (!major) newErrors.major = 'Major is required';
 
     if (!validateEmail(email)) {
       newErrors.email = 'Invalid email address';
@@ -56,7 +55,7 @@ const Signup = () => {
       newErrors.password2 = 'Passwords do not match';
     }
 
-    if (!validateInput(firstName) || !validateInput(lastName) || !validateInput(email) || !validateInput(password) || !validateInput(password2) || !validateInput(major)) {
+    if (!validateInput(firstName) || !validateInput(lastName) || !validateInput(email) || !validateInput(password) || !validateInput(password2)) {
       setErrors({ form: 'Invalid input detected.' });
       return;
     }
@@ -72,8 +71,7 @@ const Signup = () => {
         lastName: lastName.trim(),
         email: email.trim(),
         password: password.trim(),
-        password2: password2.trim(),
-        major: major.trim()
+        password2: password2.trim()
       });
       console.log('Signup successful:', response.data);
       navigate('/stu/login');
@@ -99,7 +97,7 @@ const Signup = () => {
     <div className="background">
       <div className="logo">
         <div className="logoText">
-          <h1 className="primary-color-text">AI</h1><h1 className="secondary-color-bg">valuate</h1>
+          <h1 className="primary-color-text">AI</h1><h1 className="third-color-text">valuate</h1>
         </div>
       </div>
       <div className="auth-container">
@@ -156,18 +154,6 @@ const Signup = () => {
               required 
             />
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
-            <select 
-              className="auth-input" 
-              value={major}
-              onChange={(e) => setMajor(e.target.value)}
-              required
-            >
-              <option value="">Select Major</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Engineering">Engineering</option>
-            </select>
-            {errors.major && <p className="error-message">{errors.major}</p>}
             <button className="auth-submit primary-colorbg" type="submit">Create Account</button>
           </form>
         </div>

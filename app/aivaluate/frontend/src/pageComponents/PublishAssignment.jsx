@@ -1,9 +1,14 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../GeneralStyling.css';
 import '../PublishAssignment.css';
+import '../ToastStyles.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -15,10 +20,12 @@ const PublishAssignment = () => {
     const { assignmentId } = useParams();
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
-    const [deadline, setDeadline] = useState("");
+    const [deadline, setDeadline] = useState(new Date());
     const [rubricContent, setRubricContent] = useState("");
     const [isEdited, setIsEdited] = useState(false);
     const [isPublished, setIsPublished] = useState(null);
+    const [dragging, setDragging] = useState(false);
+    const [files, setFiles] = useState([]);
 
     const fetchAssignment = useCallback(async () => {
         try {
@@ -28,7 +35,7 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(dueDate);
+                setDeadline(new Date(dueDate)); // Convert the dueDate to Date object
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
                 console.log("Fetched assignment:", response.data);
@@ -49,8 +56,8 @@ const PublishAssignment = () => {
         setIsEdited(true);
     };
 
-    const handleDeadlineChange = (e) => {
-        setDeadline(e.target.value);
+    const handleDeadlineChange = (date) => {
+        setDeadline(date);
         setIsEdited(true);
     };
 
@@ -79,20 +86,42 @@ const PublishAssignment = () => {
         }
     };
 
+    const handleFileChange = (e) => {
+        const selectedFiles = Array.from(e.target.files);
+        setFiles(selectedFiles);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+
+    const handleDragLeave = () => {
+        setDragging(false);
+    };
+
     const handleSubmitChanges = async () => {
         try {
             await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
                 assignmentName: title,
-                dueDate: deadline,
+                dueDate: deadline.toISOString(), // Convert Date object to ISO string
                 criteria: rubricContent,
                 courseId: courseId
             }, {
                 withCredentials: true
             });
             setIsEdited(false);
-            console.log('Assignment updated successfully');
+            toast.success('Assignment updated successfully');
         } catch (error) {
             console.error('Error updating assignment:', error);
+            toast.error('Failed to update assignment');
         }
     };
 
@@ -115,17 +144,17 @@ const PublishAssignment = () => {
                             /> 
                             <p className="click-to-edit">Click to edit</p>
                         </div>
-                        <div >
+                        <div>
                             <div className="deadline">
                                 <h2>Due:</h2>
-                                <input 
-                                    type="text" 
-                                    className="deadline-input" 
-                                    value={deadline} 
-                                    onChange={handleDeadlineChange} 
-                                /> 
+                                <DatePicker
+                                    selected={deadline}
+                                    onChange={handleDeadlineChange}
+                                    showTimeSelect
+                                    dateFormat="MMMM d, yyyy h:mm aa"
+                                    className="deadline-input"
+                                />
                                 <p className="click-to-edit">Click to edit</p>
-                    
                                 <button className="assignment-button" onClick={handleViewSubmissions}>
                                     View Submissions
                                 </button>
@@ -141,6 +170,33 @@ const PublishAssignment = () => {
                                 />
                             </div>
                             <p className="click-to-edit2">Click to edit</p>
+                            <div className="submitFile">
+                                <div
+                                    className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                    onDragOver={handleDragOver}
+                                    onDragLeave={handleDragLeave}
+                                    onDrop={handleDrop}
+                                >
+                                    <input 
+                                        type="file" 
+                                        id="file-upload" 
+                                        className="file-upload-input" 
+                                        onChange={handleFileChange}
+                                        multiple 
+                                    />
+                                    <span>Click to add a file or drag your file here</span>
+                                </div>
+                                {files.length > 0 && (
+                                    <div className="file-preview">
+                                        <h3>Selected Files:</h3>
+                                        <ul>
+                                            {files.map((file, index) => (
+                                                <li key={index}>{file.name}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
                             <div className="center-button">
                                 <button className="assignment-button2" onClick={handleSubmitChanges}>
                                     Submit Changes
@@ -150,6 +206,7 @@ const PublishAssignment = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

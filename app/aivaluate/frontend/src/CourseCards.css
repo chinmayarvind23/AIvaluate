@@ -23,6 +23,7 @@
     border: 4px dashed var(--third-color);
     opacity: 0.7;
     cursor: pointer;
+    
   }
 
 
@@ -39,13 +40,14 @@
     background: rgb(255, 255, 255);
     color: black;
     border-radius: 60px;
-    width: 300px;
-    height: 440px;
+    width: 260px;
+    height: 400px;
     margin: 20px;
     text-align: left;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.5s ease-in-out;
     cursor: pointer;
+    border: 3px solid var(--primary-color);
   }
 
   .course-card div{
@@ -81,7 +83,7 @@
     border-bottom: 1px solid #ddd;
     margin-bottom: 5px;
     padding:0px;
-    border-radius: 60px 60px 0px 0px;
+    border-radius: 55px 55px 0px 0px;
     cursor: pointer;
   }
 

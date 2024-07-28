@@ -114,6 +114,7 @@ const SelectStudentAdmin = () => {
         <div>
             <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
+            <div className="filler-div">
             <SideMenuBarAdmin tab="studentManager" />
             <div className="main-margin">
                 <div className="top-bar">
@@ -153,6 +154,7 @@ const SelectStudentAdmin = () => {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );

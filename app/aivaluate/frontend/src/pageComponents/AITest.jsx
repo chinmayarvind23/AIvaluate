@@ -208,7 +208,7 @@ const AITest = () => {
       const initialPrompt = `Professor's Prompt: ${profPromptText}\n\n--- End of Professor's Prompt ---\n\nAssignment Rubric: ${rubricText}\n\n--- End of Assignment Rubric ---\n\nMax Obtainable Grade: ${maxGrade}\n\n--- End of Max Obtainable Grade ---`;
       // Fetch assignment key content
       try {
-        const response = await axios.get('http://localhost:5173/ai-api/get-file-content', {
+        const response = await axios.get('http://localhost:5173/ai-api/test/get-file-content', {
           params: { filePath: assignmentKey },
         });
         const assignmentKeyContent = response.data.fileContent;
@@ -228,7 +228,7 @@ const AITest = () => {
     console.log("Submitting with promptText:", fullPromptText);
 
     try {
-      const response = await axios.post(`http://localhost:5173/ai-api/gpt/assistants`, { 
+      const response = await axios.post(`http://localhost:5173/ai-api/test/assistants`, { 
         promptText: fullPromptText,
         fileNames: [submissionFile],
       });

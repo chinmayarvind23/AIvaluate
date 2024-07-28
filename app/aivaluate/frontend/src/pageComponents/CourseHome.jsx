@@ -184,6 +184,8 @@ const CourseHome = () => {
                         </button>
                         <br />
                         <button className="course-button" onClick={handleDeleteCourse}>Delete Course</button>
+                        <br />
+                        <button className="course-button" onClick={handleAiTest}>AI Test</button>
                     </div>
                 </div>
             </div>

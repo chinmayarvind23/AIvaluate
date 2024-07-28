@@ -173,12 +173,12 @@ const SelectedAssignment = () => {
                             />
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>
-                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile ? file.submissionFile.split('/').pop() : file.submissionLink}</div>
-                                    {file.isGraded && <div className="file-status">*Marked as graded</div>}
-                                </div>
-                            ))}
+                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
+                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
+                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                    </div>
+                                ))}
                             </div>
                             {isLoading && (
                             <div className="spinner-container">

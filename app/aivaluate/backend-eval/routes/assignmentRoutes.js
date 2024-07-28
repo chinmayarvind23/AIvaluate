@@ -5,6 +5,7 @@ const { formatDueDate } = require('../util');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { formatISO } = require('date-fns');
 
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
@@ -134,6 +135,7 @@ router.get('/assignments/:assignmentId', async (req, res) => {
             return res.status(404).json({ message: 'Assignment not found' });
         }
 
+        const dueDate = formatDueDate(result.rows[0].dueDate);
         let assignment = result.rows[0];
 
         if (!assignment.criteria) {
@@ -160,7 +162,8 @@ router.get('/assignments/:assignmentId', async (req, res) => {
 
             assignment = updatedResult.rows[0];
         }
-
+        assignment.dueDate = formatISO(new Date(assignment.dueDate));
+        
         res.status(200).json(assignment);
     } catch (error) {
         console.error('Error fetching assignment:', error);

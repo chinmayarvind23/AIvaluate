@@ -302,8 +302,6 @@ const parseAIResponse = async (aiResponse) => {
     };
 
     let aiResponseString = '';
-
-    let aiResponseString = '';
     const maxRetries = 10;
     let attempt = 0;
 
@@ -497,9 +495,9 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 }
             }
 
-                const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
-                const messages = threadMessagesResponse.data || [];
-                const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+            const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
+            const messages = threadMessagesResponse.data || [];
+            const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
 
             if (latestAssistantMessage) {
                 parsedResponse = await parseAIResponse(latestAssistantMessage.content);
@@ -535,10 +533,6 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 console.log(`Feedback recorded for student: ${studentId}`);
             } catch (error) {
                 console.error(`Error recording feedback for student ${studentId}:`, error);
-                    parsedResponse = {
-                        grade: 0,
-                        feedback: 'The AI server is currently down or not responding. Please manually review and grade this submission.'
-                };                
             }
         } else {
             console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);

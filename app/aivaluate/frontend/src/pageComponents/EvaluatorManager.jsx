@@ -134,32 +134,9 @@ const EvaluatorManager = () => {
                                         onChange={handleSearchChange}
                                     />
                                 </div>
-                                <div className="empty"> </div>
+                                
                                 <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
                             </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
-                                    <div 
-                                        className="file-item" 
-                                        key={index} 
-                                        onClick={() => handleEvaluatorClick(file.instructorId)}
-                                    >
-                                        <div className="file-name">{file.name}</div>
-                                        {file.TA && <div className="file-status">*Teaching Assistant</div>}
-                                        <div className="file-icon"><CircumIcon name="edit" /></div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="empty"> </div>
-                            <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
-                            {!loading && deletedEvaluators.length > 0 && (
-                                <button 
-                                    className="revertEvalButton" 
-                                    onClick={() => handleRevertAction(deletedEvaluators[0].instructorId)}
-                                >
-                                    Undo Delete
-                                </button>
-                            )}
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (

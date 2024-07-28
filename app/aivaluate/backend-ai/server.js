@@ -2,13 +2,14 @@ const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 const { log } = require('console');
-
+const aiTestRoutest = require('./aiTestRoutes');
 const aiRoutes = require('./aiRoutes');
 
 const app = express();
 app.use(bodyParser.json());
 
 app.use('/ai-api', aiRoutes);
+app.use('/ai-api', aiTestRoutest);
 
 if (process.env.NODE_ENV !== 'test') {
   const PORT = process.env.PORT || 9000;

@@ -67,7 +67,7 @@ router.get('/assignments/course/:courseId', async (req, res) => {
 
         const assignments = result.rows.map(assignment => ({
             ...assignment,
-            dueDate: formatDueDate(assignment.dueDate)
+            dueDate: assignment.dueDate //formatDueDate(assignment.dueDate)
         }));
 
         res.status(200).json(assignments);

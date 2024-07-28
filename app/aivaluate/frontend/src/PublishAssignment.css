@@ -125,11 +125,11 @@
 
 .deadline-input {
     margin-left: 20px;
-    width: 200px;
+    width: 250px;
     padding: 10px;
     border: 2px solid RED;
     border-radius: 10px;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: RED;
     background-color: var(--secondary-color);
     margin-bottom: 20px;

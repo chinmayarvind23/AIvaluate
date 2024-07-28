@@ -49,7 +49,6 @@ import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
 
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
-import TestForComponents from './pageComponents/testForComponents';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -75,7 +74,6 @@ const App = () => {
           <Route path="/admin/login" element={<AdminLogin />} /> {/* Done*/}
           <Route path="/eval/login" element={<EvalLogin />} /> {/* Done*/}
           <Route path="/admin/signup" element={<SignupAdmin />} /> {/* Done*/}
-          <Route path="/test" element={<TestForComponents />} /> {/* Done*/}
 
           {/* <Route path="/eval/rubric/rubricId" element={<EditRubric />} /> */}
 

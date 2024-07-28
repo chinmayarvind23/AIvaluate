@@ -34,9 +34,9 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
         const studentInfo = studentInfoResult.rows[0];
 
         // Query to get assignment details
-
         const query = `
             SELECT 
+                a."assignmentId",
                 a."assignmentName" AS name,
                 a."dueDate" AS due,
                 COALESCE(MAX(ag."InstructorAssignedFinalGrade"), 0) AS score,

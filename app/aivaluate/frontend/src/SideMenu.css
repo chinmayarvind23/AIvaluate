@@ -1,19 +1,15 @@
 /* CSS for the side menu directory that shows up when you've selected a class to view. */
 .side-menu {
-    position:absolute;
-    top:20px;
-    left: 35px;
-    width: 200px;
     display: flex;
     flex-direction: column;
+    width: 240px;
+    max-width: 240px;
+    min-width: 240px;
     height: stretch;
+    padding-top: 70px;
+    padding-left: 20px;
+    /* padding-right: 20px; */
     border: var(--primary-color) 2px solid;
-    font-size: 30px;
-    padding-top: 150px;
-    padding-left:20px;
-    min-height:740px;
-    border-radius: 50px 0px 0px;
-    overflow: hidden;
   }
 
   .side-menu a{

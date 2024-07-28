@@ -1,6 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
@@ -151,91 +151,93 @@ const CreateAssignment = () => {
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
-                <SideMenuBarEval tab="assignments" />
-                <div className="main-margin">
-                    <div className="top-bar">
-                        <div className="back-btn-div">
-                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
-                        </div>
-                        <div className="title-text"><h1>Create Assignment</h1></div>
+            <SideMenuBarEval tab="assignments" />
+            <div className="main-margin">
+                <div className="top-bar">
+                    <div className="back-btn-div">
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                     </div>
-                    <div className="scrollable-div">
-                        <div className="create-assignment-content">
-                            <form onSubmit={handleSubmit}>
-                                <label htmlFor="assignmentName">Assignment Name:</label>
+                    <div className="title-text"><h1>Create Assignment</h1></div>
+                </div>
+                <div className="scrollable-div">
+                    <div className="create-assignment-content">
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor="assignmentName">Assignment Name:</label>
+                            <input
+                                type="text"
+                                id="assignmentName"
+                                name="assignmentName"
+                                value={assignment.assignmentName}
+                                onChange={handleInputChange}
+                            />
+                            <label htmlFor="criteria">Assignment Rubric</label>
+                            <textarea
+                                id="criteria"
+                                name="criteria"
+                                ref={criteriaRef}
+                                placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended."
+                                value={assignment.criteria}
+                                onChange={handleInputChange}
+                            />
+                            <div className="rubric-options">
+                                <span>or</span>
+                                <button type="button" className="use-past-rubric" onClick={handleUsePastRubricClick}>Use a past Rubric</button>
+                            </div>
+                            <label htmlFor="dueDate">Due Date:</label>
+                            <div className="date-picker">
                                 <input
-                                    type="text"
-                                    id="assignmentName"
-                                    name="assignmentName"
-                                    value={assignment.assignmentName}
+                                    type="date"
+                                    id="dueDate"
+                                    name="dueDate"
+                                    value={assignment.dueDate}
                                     onChange={handleInputChange}
                                 />
-                                <label htmlFor="criteria">Assignment Rubric</label>
-                                <textarea
-                                    id="criteria"
-                                    name="criteria"
-                                    ref={criteriaRef}
-                                    placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended."
-                                    value={assignment.criteria}
-                                    onChange={handleInputChange}
+                            </div>
+                            <label htmlFor="maxObtainableGrade">Max Points:</label>
+                            <input
+                                type="number"
+                                id="maxObtainableGrade"
+                                name="maxObtainableGrade"
+                                value={assignment.maxObtainableGrade}
+                                onChange={handleInputChange}
+                            />
+                            <label htmlFor="assignmentKey">Add a solution <span className="optional">*Not required</span></label>
+                            <div
+                                className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                onDragOver={handleDragOver}
+                                onDragLeave={handleDragLeave}
+                                onDrop={handleDrop}
+                            >
+                                <label htmlFor="file-upload" className="file-upload-label">
+                                    Drag files here or Click to browse files
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="file-upload" 
+                                    className="file-upload-input" 
+                                    name="assignmentKey"
+                                    onChange={handleFileChange}
+                                    multiple 
                                 />
-                                <div className="rubric-options">
-                                    <span>or</span>
-                                    <button type="button" className="use-past-rubric" onClick={handleUsePastRubricClick}>Use a past Rubric</button>
-                                </div>
-                                <label htmlFor="dueDate">Due Date:</label>
-                                <div className="date-picker">
-                                    <input
-                                        type="date"
-                                        id="dueDate"
-                                        name="dueDate"
-                                        value={assignment.dueDate}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                                <label htmlFor="maxObtainableGrade">Max Points:</label>
-                                <input
-                                    type="number"
-                                    id="maxObtainableGrade"
-                                    name="maxObtainableGrade"
-                                    value={assignment.maxObtainableGrade}
-                                    onChange={handleInputChange}
-                                />
-                                <label htmlFor="solutionFile">Add a solution <span className="optional">*Not required</span></label>
-                                <div
-                                    className={`file-upload ${dragging ? 'dragging' : ''}`}
-                                    onDragOver={handleDragOver}
-                                    onDragLeave={handleDragLeave}
-                                    onDrop={handleDrop}
-                                >
-                                    <input 
-                                        type="file" 
-                                        id="file-upload" 
-                                        className="file-upload-input" 
-                                        name="assignmentKey"
-                                        onChange={handleFileChange}
-                                        multiple 
-                                    />
-                                    <span>Drag files here or Click to browse files</span>
-                                </div>
-                                {assignmentKey && (
+                            </div>
+                            {assignmentKey && (
                                 <div className="file-preview">
                                     <p>Uploaded File: {assignmentKey.name}</p>
                                 </div>
-                                )}
-                                <div className="form-footer">
-                                    <button type="submit" className="post-button">Post</button>
-                                </div>
-                            </form>
-                            <div className="available-rubrics" ref={availableRubricsRef}>
-                                <h3>Available Rubrics</h3>
-                                <ul>
-                                    {rubrics.map(rubric => (
-                                        <li key={rubric.assignmentRubricId} onClick={() => handleRubricClick(rubric.criteria)}>
-                                            {rubric.rubricName}
-                                        </li>
-                                    ))}
-                                </ul>
+                            )}
+                            <div className="form-footer">
+                                <button type="submit" className="post-button">Post</button>
+                            </div>
+                        </form>
+                        <div className="available-rubrics" ref={availableRubricsRef}>
+                            <h3>Available Rubrics</h3>
+                            <ul>
+                                {rubrics.map(rubric => (
+                                    <li key={rubric.assignmentRubricId} onClick={() => handleRubricClick(rubric.criteria)}>
+                                        {rubric.rubricName}
+                                    </li>
+                                ))}
+                            </ul>
                             </div>
                         </div>
                     </div>

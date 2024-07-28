@@ -226,30 +226,21 @@ const SelectedAssignment = () => {
                                     <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
                                     {file.isGraded && <div className="file-status">*Marked as graded</div>}
                                 </div>
-                            </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index}>
-                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
-                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
-                                    </div>
-                                ))}
-                            </div>
+                            ))}
                         </div>
                         {error && <div className="error-message">{error}</div>}
-                    </div>
-                    {isLoading && (
-                        <div className="spinner-container">
-                            <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                            <p className="loading-text" style={{ color: '#4B0082' }}>AI Grading in Progress...</p>
-                        </div>
-                    )}
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text" style={{ color: '#4B0082' }}>AI Grading in Progress...</p>
+                            </div>
+                        )}
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
+
 import { format, parseISO } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
@@ -7,6 +8,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../GeneralStyling.css';
+import '../PublishAssignment.css';
+import '../ToastStyles.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 import '../GeneralStyling.css';
@@ -24,6 +28,8 @@ const PublishAssignment = () => {
     const [rubricContent, setRubricContent] = useState("");
     const [isEdited, setIsEdited] = useState(false);
     const [isPublished, setIsPublished] = useState(null);
+    const [dragging, setDragging] = useState(false);
+    const [files, setFiles] = useState([]);
 
     const fetchAssignment = useCallback(async () => {
         try {
@@ -33,7 +39,7 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(parseISO(dueDate)); // Convert ISO string to Date object
+                setDeadline(new Date(dueDate)); // Convert the dueDate to Date object
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
                 console.log("Fetched assignment:", response.data);
@@ -82,6 +88,27 @@ const PublishAssignment = () => {
         } catch (error) {
             console.error(`Error ${isPublished ? 'unpublishing' : 'publishing'} assignment:`, error);
         }
+    };
+
+    const handleFileChange = (e) => {
+        const selectedFiles = Array.from(e.target.files);
+        setFiles(selectedFiles);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        const selectedFiles = Array.from(e.dataTransfer.files);
+        handleFileChange({ target: { files: selectedFiles } });
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setDragging(true);
+    };
+
+    const handleDragLeave = () => {
+        setDragging(false);
     };
 
     const handleSubmitChanges = async () => {
@@ -133,16 +160,8 @@ const PublishAssignment = () => {
                                     selected={deadline}
                                     onChange={handleDeadlineChange}
                                     showTimeSelect
-                                    dateFormat="MMMM do 'at' h:mmaaa"
+                                    dateFormat="MMMM d, yyyy h:mm aa"
                                     className="deadline-input"
-                                    customInput={
-                                        <input 
-                                            type="text" 
-                                            className="deadline-input" 
-                                            value={formatDueDate(deadline.toISOString())}
-                                            readOnly
-                                        />
-                                    }
                                 />
                                 <p className="click-to-edit">Click to edit</p>
                                 <button className="assignment-button" onClick={handleViewSubmissions}>
@@ -160,6 +179,33 @@ const PublishAssignment = () => {
                                 />
                             </div>
                             <p className="click-to-edit2">Click to edit</p>
+                            <div className="submitFile">
+                                <div
+                                    className={`file-upload ${dragging ? 'dragging' : ''}`}
+                                    onDragOver={handleDragOver}
+                                    onDragLeave={handleDragLeave}
+                                    onDrop={handleDrop}
+                                >
+                                    <input 
+                                        type="file" 
+                                        id="file-upload" 
+                                        className="file-upload-input" 
+                                        onChange={handleFileChange}
+                                        multiple 
+                                    />
+                                    <span>Click to add a file or drag your file here</span>
+                                </div>
+                                {files.length > 0 && (
+                                    <div className="file-preview">
+                                        <h3>Selected Files:</h3>
+                                        <ul>
+                                            {files.map((file, index) => (
+                                                <li key={index}>{file.name}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
                             <div className="center-button">
                                 <button className="assignment-button2" onClick={handleSubmitChanges}>
                                     Submit Changes

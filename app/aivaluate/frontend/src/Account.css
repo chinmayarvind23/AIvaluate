@@ -17,6 +17,7 @@
   padding-top: 150px;
   padding-left: 30px;
   margin-right: 35px;
+  border: 2px solid var(--primary-color);
 }
 
 .detail-row,

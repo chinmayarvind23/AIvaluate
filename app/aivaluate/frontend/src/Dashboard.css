@@ -15,6 +15,9 @@
     opacity: 0;
     animation-fill-mode: forwards;
     cursor: default;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
 .notification-container {

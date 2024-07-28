@@ -217,15 +217,15 @@ const EvaluatorManager = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     );

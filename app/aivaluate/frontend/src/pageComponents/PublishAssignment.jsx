@@ -1,5 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
+
+import { format, parseISO } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,6 +13,8 @@ import '../PublishAssignment.css';
 import '../ToastStyles.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
+import '../GeneralStyling.css';
+import '../PublishAssignment.css';
 
 const PublishAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -123,6 +127,11 @@ const PublishAssignment = () => {
             console.error('Error updating assignment:', error);
             toast.error('Failed to update assignment');
         }
+    };
+
+    const formatDueDate = (dueDate) => {
+        const date = parseISO(dueDate);
+        return format(date, "MMMM do 'at' h:mmaaa");
     };
 
     return (

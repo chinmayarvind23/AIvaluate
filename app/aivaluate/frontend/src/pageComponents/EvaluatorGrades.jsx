@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
@@ -47,6 +48,11 @@ const EvaluatorGrades = () => {
 
     let average = ((sumOfAvgGrades / sumOfTotalGrades) * 100).toFixed(1);
 
+    const formatDueDate = (dueDate) => {
+        const date = parseISO(dueDate); // Parse as ISO string
+        return format(date, "MMMM do 'at' h:mmaaa"); // Format without time zone offset
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -94,7 +100,7 @@ const EvaluatorGrades = () => {
                                                 <div className="file-icon"></div>
                                                 {grade.name}
                                             </td>
-                                            <td>{new Date(grade.due).toLocaleDateString()}</td>
+                                            <td>{formatDueDate(grade.due)}</td>
                                             <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>
                                         </tr>
                                     ))}

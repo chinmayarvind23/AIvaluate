@@ -1,6 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
@@ -12,14 +14,14 @@ axios.defaults.withCredentials = true;
 const CreateAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const { courseId } = sessionStorage.getItem('courseId');
+    const courseId = sessionStorage.getItem('courseId');
     const navBarText = `${courseCode} - ${courseName}`;
     const navigate = useNavigate();
     const availableRubricsRef = useRef(null);
     const criteriaRef = useRef(null);
     const [assignment, setAssignment] = useState({
         assignmentName: '',
-        dueDate: '',
+        dueDate: new Date(),
         criteria: '',
         maxObtainableGrade: '',
         courseId: courseId,
@@ -70,15 +72,15 @@ const CreateAssignment = () => {
         const selectedFiles = Array.from(e.dataTransfer.files);
         handleFileChange({ target: { files: selectedFiles } });
     };
-    
+
     const handleDragOver = (e) => {
         e.preventDefault();
         setDragging(true);
     };
-    
+
     const handleDragLeave = () => {
         setDragging(false);
-    };    
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -88,12 +90,12 @@ const CreateAssignment = () => {
         }
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
-    
+
         if (dueDate < today) {
             alert('Due date cannot be in the past.');
             return;
         }
-    
+
         try {
             const instructorId = sessionStorage.getItem('instructorId');
             const courseId = sessionStorage.getItem('courseId');
@@ -109,7 +111,7 @@ const CreateAssignment = () => {
                 formData.append('assignmentKey', assignmentKey);
                 formData.append('instructorId', instructorId);
                 formData.append('courseId', courseId);
-    
+
                 await axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -124,7 +126,7 @@ const CreateAssignment = () => {
                 console.error('Error response data:', error.response.data);
             }
         }
-    };                  
+    };
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();
@@ -180,15 +182,21 @@ const CreateAssignment = () => {
                                     <button type="button" className="use-past-rubric" onClick={handleUsePastRubricClick}>Use a past Rubric</button>
                                 </div>
                                 <label htmlFor="dueDate">Due Date:</label>
-                                <div className="date-picker">
-                                    <input
-                                        type="date"
-                                        id="dueDate"
-                                        name="dueDate"
-                                        value={assignment.dueDate}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
+                                <DatePicker
+                                    selected={assignment.dueDate}
+                                    onChange={(date) => setAssignment(prevAssignment => ({ ...prevAssignment, dueDate: date }))}
+                                    showTimeSelect
+                                    dateFormat="MMMM d 'at' h:mmaaa"
+                                    className="date-picker"
+                                    customInput={
+                                        <input 
+                                            type="text" 
+                                            className="deadline-input" 
+                                            value={assignment.dueDate ? assignment.dueDate.toLocaleString() : ''}
+                                            readOnly
+                                        />
+                                    }
+                                />
                                 <label htmlFor="maxObtainableGrade">Max Points:</label>
                                 <input
                                     type="number"

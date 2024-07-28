@@ -1,4 +1,6 @@
+
 import axios from 'axios';
+import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../GeneralStyling.css';
@@ -64,6 +66,11 @@ console.log("FirstName:", firstName);
     return <div>Loading...</div>;
   }
 
+  const formatDueDate = (dueDate) => {
+    const date = parseISO(dueDate);
+    return format(date, "MMMM do 'at' h:mmaaa");
+  };
+
   const total = ((totalGrade / totalMaxGrade) * 100).toFixed(1);
 
   return (
@@ -95,7 +102,7 @@ console.log("FirstName:", firstName);
                         {grade.name}
                       </Link>
                     </td>
-                      <td>{new Date(grade.due).toLocaleDateString()}</td>
+                      <td>{formatDueDate(grade.due)}</td>
                       <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                       <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                       <td>{grade.score.toFixed(1)}/{grade.total}</td>

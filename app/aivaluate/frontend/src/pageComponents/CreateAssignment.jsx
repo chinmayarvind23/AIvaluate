@@ -44,12 +44,16 @@ const CreateAssignment = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        if (name === 'maxObtainableGrade' && isNaN(value)) {
+            alert('Maximum Points for an assignment must be a number.');
+            return;
+        }
         console.log(`${name}: ${value}`);
         setAssignment(prevAssignment => ({
             ...prevAssignment,
             [name]: value
         }));
-    };
+    };    
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];

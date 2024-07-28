@@ -165,7 +165,7 @@ const CourseHome = () => {
     return (
         <div>
             <ToastContainer />
-            <AIvaluateNavBarEval navBarText={navBarText} />
+            <AIvaluateNavBarEval navBarText={navBarText} tab="home"/>
             <div className="filler-div">
                 <SideMenuBarEval tab='management' />
                 <div className="main-margin">

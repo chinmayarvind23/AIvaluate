@@ -286,8 +286,8 @@ const AISettings = () => {
                         </div>
                         <div className="radio-group">
                             {prompts.map(prompt => (
-                                <div key={prompt.promptId} className="radio-item">
-                                    <label>
+                                <div key={prompt.promptId} className="radio-item third-color-text">
+                                    <label className="third-color-text">
                                         <input
                                             type="radio"
                                             value={prompt.promptId}

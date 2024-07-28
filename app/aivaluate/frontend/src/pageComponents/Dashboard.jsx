@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="secondary-colorbg message-container">
+      <div className="message-container">
         <div className="notification-container">
         <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>

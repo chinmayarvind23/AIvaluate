@@ -1,11 +1,14 @@
 :root {
-    --primary-color: #4d24d4;
+    --primary-color: #003ECB; /* #4d24d4; */
     --secondary-color: white;
     --third-color: black;
     --gradient-color: linear-gradient(to right, #000000, #2600a3);
 }
 
-.background-color{background: var(--gradient-color);}
+.background-color{
+    /* background: var(--gradient-color); */
+    background: white;
+}
 .primary-color-text{color: var(--primary-color);}   /* Purple text */
 .secondary-color-text{color:var(--secondary-color);} /* White text */
 .third-color-text{color:var(--third-color);} /* Black text */
@@ -13,7 +16,8 @@
 a {text-decoration: none;}
 
 html{
-    background: var(--gradient-color);
+    /* background: var(--gradient-color); */
+    background: white;
     min-width: 1300px;
     min-height: 800px;
     height: 100%;

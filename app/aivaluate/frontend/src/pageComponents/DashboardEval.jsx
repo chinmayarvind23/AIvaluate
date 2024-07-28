@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 import '../Dashboard.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import CourseCards from '../components/CourseCards';
-import axios from 'axios';
-import { useEffect } from 'react';
 
 const DashboardEval = () => {
   const navigate = useNavigate();
@@ -45,7 +44,7 @@ const DashboardEval = () => {
 
   return (
     <div>
-      <div className="secondary-colorbg message-container">
+      <div className="message-container">
         <div className="notification-container">
         <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const AITest = () => {
   const [AIResponse, setAIResponse] = useState('');
@@ -208,7 +208,7 @@ const AITest = () => {
       const initialPrompt = `Professor's Prompt: ${profPromptText}\n\n--- End of Professor's Prompt ---\n\nAssignment Rubric: ${rubricText}\n\n--- End of Assignment Rubric ---\n\nMax Obtainable Grade: ${maxGrade}\n\n--- End of Max Obtainable Grade ---`;
       // Fetch assignment key content
       try {
-        const response = await axios.get('http://localhost:5173/ai-api/get-file-content', {
+        const response = await axios.get('http://localhost:5173/ai-api/test/get-file-content', {
           params: { filePath: assignmentKey },
         });
         const assignmentKeyContent = response.data.fileContent;
@@ -228,7 +228,7 @@ const AITest = () => {
     console.log("Submitting with promptText:", fullPromptText);
 
     try {
-      const response = await axios.post(`http://localhost:5173/ai-api/gpt/assistants`, { 
+      const response = await axios.post(`http://localhost:5173/ai-api/test/assistants`, { 
         promptText: fullPromptText,
         fileNames: [submissionFile],
       });
@@ -244,7 +244,7 @@ const AITest = () => {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: 'auto', fontFamily: 'Arial, sans-serif' }}>
+    <div style={{ maxWidth: '800px', margin: 'auto', fontFamily: 'Arial, sans-serif' }} class="third-color-text">
       <h2 style={{ textAlign: 'center' }}>AI Grading Testing Page</h2>
       <table style={{ border: '1px solid white', borderCollapse: 'collapse', width: '100%', marginBottom: '20px' }}>
         <tbody>

@@ -192,25 +192,28 @@ const SelectedAssignment = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            <SideMenuBarEval tab="assignments" />
-            <div className="accented-outside rborder">
+            <div className="filler-div">
+                <SideMenuBarEval tab="assignments" />
                 <div className="main-margin">
                     <div className="portal-container">
                         <div className="top-bar">
                             <div className="back-btn-div">
-                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                             </div>
-                            <div className="title-text"><h1>Assignment - Submissions</h1></div>
-                            <div className="empty"> </div>
-                            <button className="grades-button" onClick={handleGradeWithAI}>
-                                Grade With AI
-                            </button>
-                            <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
-                                Hide Grades
-                            </button>
-                            <button className="grades-button" disabled={!gradesVisible} onClick={toggleGradesVisibility}>
-                                Publish Grades
-                            </button>
+                            <div className="float-left">
+                                <div className="title-text"><h1>Assignment - Submissions</h1></div>
+                            </div>
+                            <div className="float-right">
+                                <button className="grades-button" onClick={handleGradeWithAI}>
+                                    Grade With AI
+                                </button>
+                                <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
+                                    Hide Grades
+                                </button>
+                                <button className="grades-button" disabled={!gradesVisible} onClick={toggleGradesVisibility}>
+                                    Publish Grades
+                                </button>
+                            </div>
                         </div>
                         <input
                             type="text"
@@ -222,7 +225,7 @@ const SelectedAssignment = () => {
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
-                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                    <div className="folder-icon"><CircumIcon name="folder_on" /></div>
                                     <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
                                     {file.isGraded && <div className="file-status">*Marked as graded</div>}
                                 </div>
@@ -232,7 +235,7 @@ const SelectedAssignment = () => {
                         {isLoading && (
                             <div className="spinner-container">
                                 <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                                <p className="loading-text" style={{ color: '#4B0082' }}>AI Grading in Progress...</p>
+                                <p className="loading-text">AI Grading in Progress...</p>
                             </div>
                         )}
                         <div className="pagination-controls">

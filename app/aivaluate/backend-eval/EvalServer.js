@@ -156,6 +156,12 @@ function ensureCourseAndInstructor(req, res, next) {
 
 app.use('/eval-api/rubrics', ensureCourseAndInstructor, courseRoutes);
 app.use('/eval-api/assignments', ensureCourseAndInstructor, assignmentRoutes);
+app.use('/eval-api', evalRoutes);
+app.use('/eval-api', instructorRoutes);
+app.use('/eval-api', gradeRoutes);
+app.use('/eval-api', studentRoutes);
+app.use('/eval-api', promptRoutes);
+app.use('/eval-api', submissionRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

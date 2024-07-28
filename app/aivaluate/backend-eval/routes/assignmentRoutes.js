@@ -393,6 +393,20 @@ router.get('/rubric/:rubricId', async (req, res) => {
     }
 });
 
+router.get('/rubrics/:courseId', async (req, res) => {
+    const { courseId } = req.params;
+    try {
+        const result = await pool.query(
+            'SELECT * FROM "AssignmentRubric" WHERE "courseId" = $1',
+            [courseId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubrics:', error);
+        res.status(500).json({ message: 'Error fetching rubrics' });
+    }
+});
+
 // Get published assignments by course ID
 router.get('/assignments/course/:courseId', async (req, res) => {
     const courseId = parseInt(req.params.courseId, 10);

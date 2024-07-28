@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentKey" VARCHAR(500),
     "maxObtainableGrade" FLOAT,
     "assignmentDescription" VARCHAR(1000),
-    "isPublished" BOOLEAN DEFAULT false,
+    "isPublished" BOOLEAN DEFAULT true,
     "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );
@@ -353,3 +353,46 @@ VALUES (6, 1),
        (5, 2),
        (4, 3)
 ON CONFLICT DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS "BackupStudent" AS TABLE "Student" WITH NO DATA;
+ALTER TABLE "BackupStudent" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupInstructor" AS TABLE "Instructor" WITH NO DATA;
+ALTER TABLE "BackupInstructor" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupCourse" AS TABLE "Course" WITH NO DATA;
+ALTER TABLE "BackupCourse" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupEnrolledIn" AS TABLE "EnrolledIn" WITH NO DATA;
+ALTER TABLE "BackupEnrolledIn" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupTeaches" AS TABLE "Teaches" WITH NO DATA;
+ALTER TABLE "BackupTeaches" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupAssignment" AS TABLE "Assignment" WITH NO DATA;
+ALTER TABLE "BackupAssignment" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupAssignmentSubmission" AS TABLE "AssignmentSubmission" WITH NO DATA;
+ALTER TABLE "BackupAssignmentSubmission" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupAssignmentGrade" AS TABLE "AssignmentGrade" WITH NO DATA;
+ALTER TABLE "BackupAssignmentGrade" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupStudentFeedback" AS TABLE "StudentFeedback" WITH NO DATA;
+ALTER TABLE "BackupStudentFeedback" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupStudentFeedbackReport" AS TABLE "StudentFeedbackReport" WITH NO DATA;
+ALTER TABLE "BackupStudentFeedbackReport" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupAssignmentRubric" AS TABLE "AssignmentRubric" WITH NO DATA;
+ALTER TABLE "BackupAssignmentRubric" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupPrompt" AS TABLE "Prompt" WITH NO DATA;
+ALTER TABLE "BackupPrompt" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupUseRubric" AS TABLE "useRubric" WITH NO DATA;
+ALTER TABLE "BackupUseRubric" ADD COLUMN "deleted_at" TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS "BackupCourseNotification" AS TABLE "CourseNotification" WITH NO DATA;
+ALTER TABLE "BackupCourseNotification" ADD COLUMN "deleted_at" TIMESTAMP;
+

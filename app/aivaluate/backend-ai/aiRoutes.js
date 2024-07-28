@@ -10,9 +10,6 @@ const cors = require('cors');
 const parseSafe = require('json-parse-safe');
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
-const path = require('path');
-const fs = require('fs');
-const FormData = require('form-data');
 
 router.use(bodyParser.json());
 const openaiApiKey = process.env.OPENAI_API_KEY;

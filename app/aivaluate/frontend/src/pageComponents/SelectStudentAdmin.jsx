@@ -1,5 +1,5 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -114,42 +114,48 @@ const SelectStudentAdmin = () => {
         <div>
             <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
-            <SideMenuBarAdmin tab="studentManager" />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
-                    </div>
-                    <h1>Student Info</h1>
-                </div>
-                <div className="center-it">
-                    <div>
-                        <div className="user-info2">
-                            <div className="user-name">
-                                <span>{student.firstName} {student.lastName}</span>
-                                <span>{student.studentId}</span>
+            <div className="filler-div">
+                <SideMenuBarAdmin tab="studentManager" />
+                <div className="main-margin">
+                    <div className="student-container secondary-colorbg">
+                        <div className="top-bar">
+                            <div className="button-box-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}>
+                                    <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
+                                </button>
                             </div>
-                            <div className="major">Major: {student.major}</div>
-                            <div className="email">
-                                <span>Email:</span>
-                                <span>{student.email}</span>
+                            <div className="header-content">
+                                <h1 className="student-title primary-color-text">Student Info</h1>
                             </div>
-                            <div className="password">
-                                <span>Password:</span>
-                                <span>{maskedPassword}</span>
+                        </div>
+                        <div className="scrollable-div">
+                            <div className="user-info2">
+                                <div className="user-name">
+                                    <span>{student.firstName} {student.lastName}</span>
+                                    <span>{student.studentId}</span>
+                                </div>
+                                <div className="major">Major: {student.major}</div>
+                                <div className="email">
+                                    <span>Email:</span>
+                                    <span>{student.email}</span>
+                                </div>
+                                <div className="password">
+                                    <span>Password:</span>
+                                    <span>{maskedPassword}</span>
+                                </div>
+                                <div className="courses">
+                                    <span>Courses:</span>
+                                    <ul>
+                                        {courses.map((course, index) => (
+                                            <li key={index}>
+                                                {course.courseCode}
+                                                <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
                             </div>
-                            <div className="courses">
-                                <span>Courses:</span>
-                                <ul>
-                                    {courses.map((course, index) => (
-                                        <li key={index}>
-                                            {course.courseCode}
-                                            <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <button className="delete-button" onClick={handleDelete}>Delete user</button>
                         </div>
                     </div>
                 </div>

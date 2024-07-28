@@ -182,6 +182,7 @@ const EvaluatorManager = () => {
                             </div>
                         </div>
                     </div> 
+                </div>
             </div>
         </div>
     );

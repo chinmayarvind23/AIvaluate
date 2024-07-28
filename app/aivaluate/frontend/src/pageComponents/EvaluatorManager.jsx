@@ -209,63 +209,15 @@ const EvaluatorManager = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                        </div>
-                    </div>
-                </div> 
-                <div className="main-margin">
-                    <div className="portal-container">
-                        <div className="top-bar">
-                            <h1>Professors</h1>
-                            <div className="search-container">
-                                <div className="search-box">
-                                    <FaSearch className="search-icon" />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                </div>
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                             </div>
-                            <div className="empty"> </div>
-                            <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
-                            {!loading && deletedEvaluators.length > 0 && (
-                                <button 
-                                    className="revertEvalButton" 
-                                    onClick={() => handleRevertAction(deletedEvaluators[0].instructorId)}
-                                >
-                                    Undo Delete
-                                </button>
-                            )}
                         </div>
-                        <div className="filetab">
-                            {currentFiles.map((file, index) => (
-                                <div 
-                                    className="file-item" 
-                                    key={index} 
-                                    onClick={() => handleEvaluatorClick(file.instructorId)}
-                                >
-                                    <div className="file-name">{file.name}</div>
-                                    {file.TA && <div className="file-status">*Teaching Assistant</div>}
-                                    <div className="file-icon"><CircumIcon name="edit" /></div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                        </div>
-                    </div>
-                </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const AITest = () => {
   const [AIResponse, setAIResponse] = useState('');
@@ -244,7 +244,7 @@ const AITest = () => {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: 'auto', fontFamily: 'Arial, sans-serif' }}>
+    <div style={{ maxWidth: '800px', margin: 'auto', fontFamily: 'Arial, sans-serif' }} class="third-color-text">
       <h2 style={{ textAlign: 'center' }}>AI Grading Testing Page</h2>
       <table style={{ border: '1px solid white', borderCollapse: 'collapse', width: '100%', marginBottom: '20px' }}>
         <tbody>

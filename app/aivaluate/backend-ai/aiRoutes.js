@@ -226,110 +226,120 @@ const uploadFileToOpenAI = async (filePath, purpose, label) => {
     }
 };
 
-const parseAIResponse = (aiResponse) => {
+const parseAIResponse = async (aiResponse) => {
     const response = {
         grade: 0,
         feedback: 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.'
     };
 
     let aiResponseString = '';
+    const maxRetries = 10;
+    let attempt = 0;
 
-    try {
-        aiResponseString = typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse);
-        console.log("AI Response String:", aiResponseString);
-        const feedbackIndex = aiResponseString.indexOf('feedback:');
-        const gradeIndex = aiResponseString.indexOf('grade:');
+    while (attempt < maxRetries) {
+        try {
+            aiResponseString = typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse);
+            console.log("AI Response String:", aiResponseString);
 
-        if (feedbackIndex !== -1 && gradeIndex !== -1) {
-            response.feedback = aiResponseString.substring(feedbackIndex + 9, gradeIndex).trim();
-            const gradeEndIndex = aiResponseString.indexOf('\n', gradeIndex);
-            response.grade = parseFloat(aiResponseString.substring(gradeIndex + 6, gradeEndIndex).trim());
-            return response;
-        }
-        
-        const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m);
-        if (!jsonStringMatch) {
-            throw new Error('Invalid AI response format');
-        }
+            const feedbackIndex = aiResponseString.indexOf('feedback:');
+            const gradeIndex = aiResponseString.indexOf('grade:');
 
-        let jsonString = jsonStringMatch[1];
-        jsonString = jsonString.replace(/\\n/g, ' ')
-                               .replace(/\\'/g, "'")
-                               .replace(/\\"/g, '"')
-                               .replace(/\\t/g, ' ')
-                               .replace(/\\r/g, ' ')
-                               .replace(/\s+/g, ' ')
-                               .trim();
-
-        const parsed = parseSafe(jsonString);
-        if (parsed.error) {
-            throw new Error('Error parsing AI response JSON');
-        }
-
-        const feedbackMatch = parsed.value.feedback || parsed.value.Feedback;
-        const gradeMatch = parsed.value.grade || parsed.value.Grade;
-
-        if (feedbackMatch) {
-            response.feedback = feedbackMatch.substring(0, 20000);
-        } else {
-            const plainFeedbackMatch = aiResponseString.match(/feedback":\s*"([^"]+)"/i) ||
-                                       aiResponseString.match(/Feedback":\s*"([^"]+)"/i) ||
-                                       aiResponseString.match(/"feedback":\s*"([^"]+)"/i);
-
-            if (plainFeedbackMatch) {
-                response.feedback = plainFeedbackMatch[1].substring(0, 20000);
-            } else {
-                const feedbackStart = aiResponseString.toLowerCase().indexOf('feedback');
-                const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
-                if (feedbackStart !== -1) {
-                    const feedbackEnd = gradeStart !== -1 ? gradeStart : aiResponseString.length;
-                    response.feedback = aiResponseString.substring(feedbackStart + 9, feedbackEnd).trim();
+            if (feedbackIndex !== -1 && gradeIndex !== -1) {
+                const feedbackEndIndex = aiResponseString.indexOf('\n', feedbackIndex);
+                const gradeEndIndex = aiResponseString.indexOf('\n', gradeIndex);
+                response.feedback = aiResponseString.substring(feedbackIndex + 9, feedbackEndIndex).trim();
+                response.grade = parseFloat(aiResponseString.substring(gradeIndex + 6, gradeEndIndex).trim());
+                if (!isNaN(response.grade) && response.grade > 0) {
+                    return response;
                 }
             }
-        }
 
-        if (gradeMatch) {
-            const gradeValue = parseFloat(gradeMatch.match(/[\d.]+/)[0]);
-            response.grade = gradeValue;
-        } else {
-            const plainGradeMatch = aiResponseString.match(/grade":\s*"([^"]+)"/i) ||
-                                    aiResponseString.match(/Grade":\s*"([^"]+)"/i) ||
-                                    aiResponseString.match(/"grade":\s*"([^"]+)"/i);
+            const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m);
+            if (!jsonStringMatch) {
+                throw new Error('Invalid AI response format');
+            }
 
-            if (plainGradeMatch) {
-                const gradeValue = parseFloat(plainGradeMatch[1].match(/[\d.]+/)[0]);
-                response.grade = gradeValue;
+            let jsonString = jsonStringMatch[1];
+            jsonString = jsonString.replace(/\\n/g, ' ')
+                                   .replace(/\\'/g, "'")
+                                   .replace(/\\"/g, '"')
+                                   .replace(/\\t/g, ' ')
+                                   .replace(/\\r/g, ' ')
+                                   .replace(/\s+/g, ' ')
+                                   .trim();
+
+            const parsed = parseSafe(jsonString);
+            if (parsed.error) {
+                throw new Error('Error parsing AI response JSON');
+            }
+
+            const feedbackMatch = parsed.value.feedback || parsed.value.Feedback;
+            const gradeMatch = parsed.value.grade || parsed.value.Grade;
+
+            if (typeof feedbackMatch === 'string') {
+                response.feedback = feedbackMatch.substring(0, 20000);
             } else {
-                const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
-                if (gradeStart !== -1) {
-                    const gradeSubstring = aiResponseString.substring(gradeStart + 6).match(/[\d.]+/);
-                    if (gradeSubstring) {
-                        response.grade = parseFloat(gradeSubstring[0]);
+                const plainFeedbackMatch = aiResponseString.match(/feedback":\s*"([^"]+)"/i) ||
+                                           aiResponseString.match(/Feedback":\s*"([^"]+)"/i) ||
+                                           aiResponseString.match(/"feedback":\s*"([^"]+)"/i);
+
+                if (plainFeedbackMatch) {
+                    response.feedback = plainFeedbackMatch[1].substring(0, 20000);
+                } else {
+                    const feedbackStart = aiResponseString.toLowerCase().indexOf('feedback');
+                    const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
+                    if (feedbackStart !== -1) {
+                        const feedbackEnd = gradeStart !== -1 ? gradeStart : aiResponseString.length;
+                        response.feedback = aiResponseString.substring(feedbackStart + 9, feedbackEnd).trim();
                     }
                 }
             }
-        }
-    } catch (error) {
-        console.error('Error parsing AI response:', error);
-        try {
-            if (aiResponseString.includes('feedback:') && aiResponseString.includes('grade:')) {
-                const feedbackIndex = aiResponseString.indexOf('feedback:') + 9;
-                const gradeIndex = aiResponseString.indexOf('grade:') + 6;
 
-                const feedbackEnd = aiResponseString.indexOf('grade:');
-                response.feedback = aiResponseString.substring(feedbackIndex, feedbackEnd).trim();
+            if (typeof gradeMatch === 'string') {
+                const gradeValue = gradeMatch.match(/[\d.]+/);
+                if (gradeValue) {
+                    response.grade = parseFloat(gradeValue[0]);
+                }
+            } else {
+                const plainGradeMatch = aiResponseString.match(/grade":\s*"([^"]+)"/i) ||
+                                        aiResponseString.match(/Grade":\s*"([^"]+)"/i) ||
+                                        aiResponseString.match(/"grade":\s*"([^"]+)"/i);
 
-                const gradeEnd = aiResponseString.indexOf('\n', gradeIndex);
-                response.grade = parseFloat(aiResponseString.substring(gradeIndex, gradeEnd).trim());
+                if (plainGradeMatch) {
+                    const gradeValue = plainGradeMatch[1].match(/[\d.]+/);
+                    if (gradeValue) {
+                        response.grade = parseFloat(gradeValue[0]);
+                    }
+                } else {
+                    const gradeStart = aiResponseString.toLowerCase().indexOf('grade');
+                    if (gradeStart !== -1) {
+                        const gradeSubstring = aiResponseString.substring(gradeStart + 6).match(/[\d.]+/);
+                        if (gradeSubstring) {
+                            response.grade = parseFloat(gradeSubstring[0]);
+                        }
+                    }
+                }
             }
-        } catch (fallbackError) {
-            console.error('Error in fallback parsing:', fallbackError);
+
+            if (!isNaN(response.grade) && response.grade > 0) {
+                break;
+            } else {
+                throw new Error('Parsed grade is NaN or zero');
+            }
+        } catch (error) {
+            console.error(`Error parsing AI response on attempt ${attempt + 1}:`, error);
+            attempt++;
+            if (attempt >= maxRetries) {
+                console.error('Max retries reached. Unable to parse AI response.');
+            }
+            await new Promise(resolve => setTimeout(resolve, 1000));
         }
     }
 
     console.log("Parsed Response:", response);
     return response;
 };
+
 
 // Processes student submissions as a whole and creates the setup for the individual students' submissions to be processed
 const processStudentSubmissions = async (studentId, submissions, assistantId, instructorPrompt, assignmentRubric, maxPoints, assignmentKeyPath) => {
@@ -405,50 +415,33 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             }));
             console.log('Run created:', runResponse.id);
 
-            try {
-                let response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
-                while (response.status === "in_progress" || response.status === "queued") {
+            let response;
+            while (true) {
+                response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
+                if (response.status === "in_progress" || response.status === "queued") {
                     console.log("Waiting for assistant's response...");
                     await new Promise(resolve => setTimeout(resolve, 5000));
-                    response = await retryRequest(() => openai.beta.threads.runs.retrieve(thread, runResponse.id));
-                }
-
-                const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
-                const messages = threadMessagesResponse.data || [];
-                const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
-
-                let result;
-                if (latestAssistantMessage) {
-                    try {
-                        if (typeof latestAssistantMessage.content === 'string') {
-                            result = JSON.parse(latestAssistantMessage.content);
-                        } else {
-                            result = latestAssistantMessage.content;
-                        }
-                    } catch (error) {
-                        console.error('Error parsing JSON content:', error);
-                        result = latestAssistantMessage.content;
-                    }
                 } else {
-                    result = null;
+                    break;
                 }
+            }
 
-                console.log('Final assistant response:', result);
-                if (result) {
-                    parsedResponse = parseAIResponse(result);
-                    if (parsedResponse.feedback !== 'The AI was unable to provide a grade for the submission(s) of this student. Please manually enter a grade and provide feedback.') {
-                        break;
-                    }
+            const threadMessagesResponse = await retryRequest(() => openai.beta.threads.messages.list(thread));
+            const messages = threadMessagesResponse.data || [];
+            const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();
+
+            if (latestAssistantMessage) {
+                parsedResponse = await parseAIResponse(latestAssistantMessage.content);
+                if (parsedResponse.grade > 0) {
+                    break;
                 }
-            } catch (error) {
-                console.error('Error fetching or parsing AI response:', error);
             }
 
             retryCount++;
             console.log(`Retrying... Attempt ${retryCount + 1}/${maxRetries}`);
         }
 
-        if (parsedResponse) {
+        if (parsedResponse && parsedResponse.grade > 0) {
             try {
                 await pool.query(
                     'INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "isGraded") VALUES ($1, $2, $3, $4, true) ON CONFLICT ("assignmentSubmissionId", "assignmentId") DO UPDATE SET "AIassignedGrade" = EXCLUDED."AIassignedGrade","isGraded" = EXCLUDED."isGraded";',
@@ -471,10 +464,6 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
                 console.log(`Feedback recorded for student: ${studentId}`);
             } catch (error) {
                 console.error(`Error recording feedback for student ${studentId}:`, error);
-                    parsedResponse = {
-                        grade: 0,
-                        feedback: 'The AI server is currently down or not responding. Please manually review and grade this submission.'
-                };                
             }
         } else {
             console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);

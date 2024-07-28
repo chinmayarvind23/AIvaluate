@@ -255,6 +255,12 @@ const SelectedAssignment = () => {
                                         {file.isGraded && <div className="file-status">*Marked as graded</div>}
                                     </div>
                                 ))}
+                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
+                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
+                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                    </div>
+                                ))}
                             </div>
                             {isLoading && (
                             <div className="spinner-container">

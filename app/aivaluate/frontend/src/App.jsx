@@ -50,12 +50,15 @@ import SubmitAssignment from './pageComponents/SubmitAssignment';
 import EvalManagerInfo from './pageComponents/EvalManagerInfo';
 import TestForComponents from './pageComponents/testForComponents';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AITest from './pageComponents/AITest';
 
 const App = () => {
   return (
     <Router>
       <div className="app">
+        <ToastContainer />
         <Routes>
           {/* No session validation routes required */}
           <Route path="/" element={<Login />} /> {/* Default route */}

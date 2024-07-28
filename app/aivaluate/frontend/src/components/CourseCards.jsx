@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+
 import '../CourseCards.css';
 import '../SearchBar.css';
 import Card from './card';

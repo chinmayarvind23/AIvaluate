@@ -13,6 +13,7 @@ const gradeRoutes = require('./routes/gradeRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const promptRoutes = require('./routes/promptRoutes');
 const evalRoutes = require('./routes/evalRoutes');
+const submissionRoutes = require('./routes/submissionRoutes');
 const initializePassport = require("./passportConfig");
 initializePassport(passport);
 
@@ -99,6 +100,7 @@ app.use('/eval-api', instructorRoutes);
 app.use('/eval-api', gradeRoutes);
 app.use('/eval-api', studentRoutes);
 app.use('/eval-api', promptRoutes);
+app.use('/eval-api', submissionRoutes);
 
 app.post("/eval-api/login", passport.authenticate("local", {
     successRedirect: "/eval-api/dashboard",

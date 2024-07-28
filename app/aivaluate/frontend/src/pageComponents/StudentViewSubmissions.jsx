@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
+import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -70,13 +71,13 @@ const StudentViewSubmissions = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText={navBarText} />
+            <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
+            <div className="filler-div">
             <SideMenuBar tab="submissions" />
-            <div className="accented-outside rborder">
                 <div className="main-margin">
                     <div className="portal-container">
                         <div className="top-bar">
-                            <h1>Student Submissions</h1>
+                            <h1>Submissions</h1>
                             <div className="search-container">
                                 <div className="search-box">
                                     <FaSearch className="search-icon" />
@@ -91,19 +92,19 @@ const StudentViewSubmissions = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                                <div className="file-item" key={index}>
-                                    {console.log('File:', file)}
-                                    {console.log('Assignment ID:', file.assignmentId)}
-                                    <a 
-                                        className="file-name" 
-                                        href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
-                                        download
-                                    >
-                                        {file.submissionFile.split('/').pop()} Submission
-                                    </a>
-                                    {file.isGraded && <div className="file-status">Marked as graded</div>}
-                                </div>
-                            ))}
+                            <div className="file-item" key={index}>
+                                {console.log('File:', file)}
+                                {console.log('Assignment ID:', file.assignmentId)}
+                                <a 
+                                    className="file-name" 
+                                    href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
+                                    download
+                                >
+                                    {file.submissionFile.split('/').pop()} Submission
+                                </a>
+                                {file.isGraded && <div className="file-status">Marked as graded</div>}
+                            </div>
+                        ))}
                         </div>
                     </div>
                     <div className="pagination-controls">
@@ -112,8 +113,8 @@ const StudentViewSubmissions = () => {
                             <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
                             <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
-                    </div>
-                </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     );

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import axios from 'axios';
-import '../CourseEditModal.css'; 
+import '../CourseEditModal.css';
 
 const EditCourseModal = ({ isOpen, onClose, course, onSave }) => {
     const [editedCourse, setEditedCourse] = useState({ ...course });
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         setEditedCourse(course); // Update state when course prop changes
@@ -17,21 +17,31 @@ const EditCourseModal = ({ isOpen, onClose, course, onSave }) => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        saveCourseEdits(editedCourse);
+
+        // Check if the course name or course code exceeds the specified length limits
+        if (editedCourse.courseName.length > 50) {
+            setErrorMessage('Course name must be less than 50 characters.');
+            return;
+        }
+
+        if (editedCourse.courseCode.length > 10) {
+            setErrorMessage('Course code must be less than 10 characters.');
+            return;
+        }
+
+        setErrorMessage(''); // Clear any existing error message
+        onSave(editedCourse);
+        sessionStorage.setItem('courseName', editedCourse.courseName);
+        sessionStorage.setItem('courseCode', editedCourse.courseCode);
+
+        // Reload the page to reflect the updated course details
+        window.location.reload();
     };
 
     return (
         <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Edit Course" className="modal" overlayClassName="overlay">
             <h2 className="modal-title">Edit Course Details</h2>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                onSave(editedCourse);
-                sessionStorage.setItem('courseName', editedCourse.courseName);
-                sessionStorage.setItem('courseCode', editedCourse.courseCode);
-
-                // Reload the page to reflect the updated course details
-                window.location.reload();
-            }} className="edit-course-form">
+            <form onSubmit={handleSave} className="edit-course-form">
                 <div className="form-group">
                     <label htmlFor="courseName" className="form-label">
                         Course Name:
@@ -43,6 +53,7 @@ const EditCourseModal = ({ isOpen, onClose, course, onSave }) => {
                         className="course-form-input"
                         value={editedCourse.courseName || ''}
                         onChange={handleChange}
+                        maxLength="50" // Limit the course name to 50 characters
                     />
                 </div>
                 <div className="form-group">
@@ -56,21 +67,10 @@ const EditCourseModal = ({ isOpen, onClose, course, onSave }) => {
                         className="course-form-input"
                         value={editedCourse.courseCode || ''}
                         onChange={handleChange}
+                        maxLength="10" // Limit the course code to 10 characters
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="maxStudents" className="form-label">
-                        Max Students:
-                    </label>
-                    <input
-                        type="number"
-                        id="maxStudents"
-                        name="maxStudents"
-                        className="course-form-input"
-                        value={editedCourse.maxStudents || ''}
-                        onChange={handleChange}
-                    />
-                </div>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <div className="form-actions">
                     <button type="submit" className="course-save-button">Save Changes</button>
                     <button type="button" className="course-cancel-button" onClick={onClose}>Cancel</button>

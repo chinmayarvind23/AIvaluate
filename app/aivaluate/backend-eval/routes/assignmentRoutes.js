@@ -123,7 +123,7 @@ router.get('/assignments/:assignmentId', async (req, res) => {
 
     try {
         const result = await pool.query(
-            `SELECT a."assignmentName", a."dueDate", a."assignmentDescription", a."isPublished", ar."criteria" 
+            `SELECT a."maxObtainableGrade", a."assignmentName", a."dueDate", a."assignmentDescription", a."isPublished", ar."criteria" 
              FROM "Assignment" a 
              LEFT JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId" 
              LEFT JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId" 
@@ -163,6 +163,24 @@ router.get('/assignments/:assignmentId', async (req, res) => {
         }
 
         res.status(200).json(assignment);
+    } catch (error) {
+        console.error('Error fetching assignment:', error);
+        res.status(500).json({ message: 'Error fetching assignment' });
+    }
+});
+
+// Get assignment by assignment ID
+router.get('/assignment/:assignmentId', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query('SELECT * FROM "Assignment" WHERE "assignmentId" = $1', [assignmentId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json(result.rows[0]);
     } catch (error) {
         console.error('Error fetching assignment:', error);
         res.status(500).json({ message: 'Error fetching assignment' });
@@ -742,6 +760,27 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
         } else {
             res.status(500).json({ error: 'Failed to process submissions' });
         }
+    }
+});
+
+// Fetch assignmentRubricId in useRubric table by assignmentId
+router.get('/assignments/:assignmentId/rubric', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query(
+            'SELECT "assignmentRubricId" FROM "useRubric" WHERE "assignmentId" = $1',
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Rubric not found' });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching rubric:', error);
+        res.status(500).json({ message: 'Error fetching rubric' });
     }
 });
 

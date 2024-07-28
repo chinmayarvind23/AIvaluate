@@ -42,9 +42,9 @@
   border-radius: 20px;
   padding: 10px 20px;
   text-align: center;
-  width: 60%; /* Ensure consistent width for input fields */
-  box-sizing: border-box; /* Ensure padding is included in the width */
-  height: 40px; /* Set a fixed height */
+  width: 60%;
+  box-sizing: border-box;
+  height: 40px;
 }
 
 .edit-button,
@@ -53,12 +53,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 20px;
-  padding: 0 20px; /* Adjust padding to match the row height */
+  padding: 0 20px;
   cursor: pointer;
   font-weight: bold;
   width: 100px; 
   text-align: center; 
-  height: 40px; /* Set the same height as the input fields */
+  height: 40px;
   margin-left: 20px;
 }
 

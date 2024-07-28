@@ -10,6 +10,9 @@ const cors = require('cors');
 const parseSafe = require('json-parse-safe');
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
+const path = require('path');
+const fs = require('fs');
+const FormData = require('form-data');
 
 router.use(bodyParser.json());
 const openaiApiKey = process.env.OPENAI_API_KEY;
@@ -89,9 +92,11 @@ router.post('/gpt/completions', async (req, res) => {
     }
 });
 
+// OpenAI Assistant, Thread, and Message creation endpoint
 router.post('/gpt/assistants', async (req, res) => {
-    const { promptText } = req.body;
+    const { promptText, fileNames } = req.body;
     log(`Received promptText: ${promptText}`);
+    log(`Received fileNames: ${fileNames}`);
 
     try {
         const assistantResponse = await openai.beta.assistants.create({
@@ -104,7 +109,7 @@ router.post('/gpt/assistants', async (req, res) => {
             }`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
-        });              
+        });
 
         const assistant = assistantResponse;
         log(`Assistant created: ${JSON.stringify(assistant)}`);
@@ -133,7 +138,6 @@ router.post('/gpt/assistants', async (req, res) => {
         }
 
         const threadMessagesResponse = await openai.beta.threads.messages.list(thread.id);
-
         const messages = threadMessagesResponse.data || [];
         log(`Messages received: ${JSON.stringify(messages)}`);
         const latestAssistantMessage = messages.filter(message => message.role === 'assistant').pop();

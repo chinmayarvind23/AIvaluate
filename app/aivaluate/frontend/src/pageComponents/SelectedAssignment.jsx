@@ -226,7 +226,16 @@ const SelectedAssignment = () => {
                                     <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
                                     {file.isGraded && <div className="file-status">*Marked as graded</div>}
                                 </div>
-                            ))}
+                            </div>
+                            <div className="filetab">
+                                {currentFiles.map((file, index) => (
+                                    <div className="file-item" key={index}>
+                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
+                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         {error && <div className="error-message">{error}</div>}
                     </div>

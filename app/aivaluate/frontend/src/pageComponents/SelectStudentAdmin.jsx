@@ -1,10 +1,15 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import '../GeneralStyling.css';
-import '../SelectStudentAdmin.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBarAdmin from "../components/AIvaluateNavBarAdmin";
 import SideMenuBarAdmin from "../components/SideMenuBarAdmin";
+import '../GeneralStyling.css';
+import '../SelectStudentAdmin.css';
+import '../ToastStyles.css';
 
 const SelectStudentAdmin = () => {
     const navigate = useNavigate();
@@ -29,56 +34,91 @@ const SelectStudentAdmin = () => {
         fetchStudentDetails();
     }, [studentId]);
 
-    const handleDelete = async () => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this user?");
-        if (confirmDelete) {
-            try {
-                const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}`, {
-                    method: 'DELETE',
-                    credentials: 'include'
-                });
-                if (response.ok) {
-                    alert("User deleted successfully.");
-                    navigate('/admin/studentManager'); // Redirect to student manager page after deletion
-                } else {
-                    alert('Failed to delete the user');
-                }
-            } catch (error) {
-                console.error('Error deleting user:', error);
-                alert('Failed to delete the user');
-            }
-        }
+    const handleDelete = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirmDelete = async () => {
+                    try {
+                        const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}`, {
+                            method: 'DELETE',
+                            credentials: 'include'
+                        });
+                        if (response.ok) {
+                            toast.success("User deleted successfully.");
+                            navigate('/admin/studentManager');
+                        } else {
+                            toast.error('Failed to delete the user');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting user:', error);
+                        toast.error('Failed to delete the user');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm Deletion</h1>
+                        <p>Are you sure you want to delete this user?</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirmDelete} className="confirm-button">Confirm</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay"
+        });
     };
 
-    const handleDropCourse = async (courseCode) => {
-        const confirmDrop = window.confirm(`Are you sure you want to drop the course ${courseCode}?`);
-        if (confirmDrop) {
-            try {
-                const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}/drop/${courseCode}`, {
-                    method: 'DELETE',
-                    credentials: 'include'
-                });
-                if (response.ok) {
-                    setCourses(courses.filter(course => course.courseCode !== courseCode));
-                    alert(`Dropped course: ${courseCode}`);
-                } else {
-                    alert('Failed to drop the course');
-                }
-            } catch (error) {
-                console.error('Error dropping course:', error);
-                alert('Failed to drop the course');
-            }
-        }
+    const handleDropCourse = (courseCode) => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirmDrop = async () => {
+                    try {
+                        const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}/drop/${courseCode}`, {
+                            method: 'DELETE',
+                            credentials: 'include'
+                        });
+                        if (response.ok) {
+                            setCourses(courses.filter(course => course.courseCode !== courseCode));
+                            toast.success(`Dropped course: ${courseCode}`);
+                        } else {
+                            toast.error('Failed to drop the course');
+                        }
+                    } catch (error) {
+                        console.error('Error dropping course:', error);
+                        toast.error('Failed to drop the course');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm Drop</h1>
+                        <p>Are you sure you want to drop the course {courseCode}?</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirmDrop} className="confirm-button">Confirm</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay"
+        });
     };
+
     const maskedPassword = student.password ? '*'.repeat(student.password.length) : '';
+
     return (
         <div>
-            <AIvaluateNavBarAdmin navBarText="Admin Home Portal"/>
+            <ToastContainer />
+            <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <SideMenuBarAdmin tab="studentManager" />
             <div className="main-margin">
                 <div className="top-bar">
                     <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                     </div>
                     <h1>Student Info</h1>
                 </div>
@@ -103,7 +143,7 @@ const SelectStudentAdmin = () => {
                                 <ul>
                                     {courses.map((course, index) => (
                                         <li key={index}>
-                                            {course.courseCode} 
+                                            {course.courseCode}
                                             <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
                                         </li>
                                     ))}

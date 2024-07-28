@@ -17,7 +17,14 @@ RUN npm install express multer
 
 COPY . .
 
+# Check the directory structure for debugging
+RUN ls -la /app/aivaluate/backend-eval
+
+# Check if jest.config.js and logger.js exist for debugging
+RUN ls -la /app/aivaluate/backend-eval/jest.config.js
+RUN ls -la /app/aivaluate/backend-eval/evallogger.js
+
+
 EXPOSE 6001
 
-CMD ["sh", "-c", "echo 'DB_HOST: $DB_HOST'; echo 'DB_PORT: $DB_PORT'; while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done && node EvalServer.js"]
-
+CMD ["sh", "-c", "echo 'DB_HOST: $DB_HOST'; echo 'DB_PORT: $DB_PORT'; while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done && npm test -- --coverage --coverageReporters=text && node EvalServer.js"]

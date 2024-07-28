@@ -134,17 +134,9 @@ const EvaluatorManager = () => {
                                         onChange={handleSearchChange}
                                     />
                                 </div>
+                                
+                                <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
                             </div>
-                            <div className="empty"> </div>
-                            <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
-                            {!loading && deletedEvaluators.length > 0 && (
-                                <button 
-                                    className="revertEvalButton" 
-                                    onClick={() => handleRevertAction(deletedEvaluators[0].instructorId)}
-                                >
-                                    Undo Delete
-                                </button>
-                            )}
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (

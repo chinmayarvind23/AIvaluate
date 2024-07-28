@@ -12,10 +12,9 @@ function checkAuthenticated(req, res, next) {
 
 router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
     const { courseId } = req.params;
+    console.log('Received courseId:', courseId);
 
     try {
-        console.log('Received courseId:', courseId);
-
         const query = `
             SELECT s."firstName", s."lastName"
             FROM "Student" s
@@ -32,5 +31,6 @@ router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
         res.status(500).json({ error: 'Database error' }); 
     }
 });
+
 
 module.exports = router;

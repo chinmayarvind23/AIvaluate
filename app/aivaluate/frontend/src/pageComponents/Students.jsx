@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
@@ -6,13 +6,17 @@ import '../GeneralStyling.css';
 import '../SearchBar.css';
 import AIvaluateNavBarEval from "../components/AIvaluateNavBarEval";
 import SideMenuBarEval from '../components/SideMenuBarEval';
+import axios from 'axios';
 
 const Students = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
     const navBarText = `${courseCode} - ${courseName}`;
 
-    const { courseId } = useParams();
+    const { courseId: paramsCourseId } = useParams();
+    const storedCourseId = sessionStorage.getItem('courseId');
+    const [effectiveCourseId, setEffectiveCourseId] = useState(paramsCourseId || storedCourseId);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -20,10 +24,64 @@ const Students = () => {
     const [files, setFiles] = useState([]);
     const [error, setError] = useState(null);
 
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            console.log('Setting session data:', { instructorId, courseId });
+            await axios.post('http://localhost:5173/eval-api/set-session', {
+                instructorId,
+                courseId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+            setEffectiveCourseId(courseId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+            setError('Failed to set session data.');
+        }
+    }, []);
+
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                setError('Failed to fetch instructor details.');
+                return;
+            }
+        }
+
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            setError('Course ID must be set in session storage.');
+            return;
+        }
+
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);
+
     useEffect(() => {
         const fetchStudents = async () => {
+            if (!effectiveCourseId) {
+                setError('No course ID available.');
+                return;
+            }
+
             try {
-                const response = await fetch(`http://localhost:5173/eval-api/students/show/${courseId}`, { 
+                const response = await fetch(`http://localhost:5173/eval-api/students/show/${effectiveCourseId}`, { 
                     credentials: 'include'
                 });
 
@@ -42,7 +100,7 @@ const Students = () => {
         };
 
         fetchStudents();
-    }, [courseId]);
+    }, [effectiveCourseId]);
 
     useEffect(() => {
         const filtered = files.filter(file =>

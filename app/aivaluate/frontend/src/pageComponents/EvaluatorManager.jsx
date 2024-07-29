@@ -184,9 +184,17 @@ const EvaluatorManager = () => {
                                         onChange={handleSearchChange}
                                     />
                                 </div>
-                                
-                                <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
                             </div>
+                            <div className="empty"> </div>
+                            <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
+                            {!loading && deletedEvaluators.length > 0 && (
+                                <button 
+                                    className="revertEvalButton" 
+                                    onClick={() => handleRevertAction(deletedEvaluators[0].instructorId)}
+                                >
+                                    Undo Delete
+                                </button>
+                            )}
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
@@ -201,15 +209,15 @@ const EvaluatorManager = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className="pagination-controls">
-                            <span>Page {currentPage} of {totalPages}</span>
-                            <div className="pagination-buttons">
-                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                            </div>
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
-                    </div> 
-                </div>
+                    </div>
+                </div> 
             </div>
         </div>
     );

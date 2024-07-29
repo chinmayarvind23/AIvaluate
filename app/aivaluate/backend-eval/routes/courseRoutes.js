@@ -191,6 +191,7 @@ router.get('/courses/:courseId/submissions', async (req, res) => {
                 "Student"."firstName",
                 "Student"."lastName",
                 "Assignment"."assignmentKey",
+                "Assignment"."assignmentId",
                 "AssignmentSubmission"."isGraded",
                 "AssignmentSubmission"."submissionFile"
             FROM "AssignmentSubmission"
@@ -199,6 +200,7 @@ router.get('/courses/:courseId/submissions', async (req, res) => {
             WHERE "AssignmentSubmission"."courseId" = $1
         `;
         const result = await pool.query(query, [courseId]);
+        console.log(result.rows);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'No submissions found for this course' });

@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -11,6 +11,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 const EvalViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
+    const navigate = useNavigate();
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -25,6 +26,7 @@ const EvalViewSubmissions = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setFiles(data);
+                    console.log(data);
                 } else {
                     console.error('Error fetching submissions:', response.statusText);
                 }
@@ -67,6 +69,10 @@ const EvalViewSubmissions = () => {
         setCurrentPage(1);
     };
 
+    const handleMarkAssignment = (studentId, assignmentId) => {
+        navigate(`/eval/${studentId}/${assignmentId}/grading`);
+    };
+
     const navBarText = `${courseCode} - ${courseName}`;
 
     return (
@@ -92,9 +98,9 @@ const EvalViewSubmissions = () => {
                             </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index}>
+                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
                                         <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                        <div className="file-name">{file.studentId} - {file.assignmentKey} Submission</div>
+                                        <div className="file-name">{file.studentId} - {file.assignmentId} Submission</div>
                                         {file.isGraded && <div className="file-status">Marked as graded</div>}
                                     </div>
                                 ))}

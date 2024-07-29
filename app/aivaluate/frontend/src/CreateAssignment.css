@@ -102,6 +102,13 @@
     margin-bottom: 20px;
 }
 
+.react-datepicker__input-container {
+    position: relative;
+    display: inline-block;
+    margin-left: -20px;
+    width: 100%;
+}
+
 .date-picker input[type="date"] {
     padding: 10px;
     border: 1px solid var(--primary-color);

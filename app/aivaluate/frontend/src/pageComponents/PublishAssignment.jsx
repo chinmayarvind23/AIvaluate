@@ -134,9 +134,9 @@ const PublishAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={navBarText} tab="assignments" />
+            <AIvaluateNavBarEval navBarText={navBarText}  />
             <div className="filler-div">
-                <SideMenuBarEval tab="rubrics"/>
+                <SideMenuBarEval tab="assignments" />
                 <div className="main-margin">
                     <div className="rubric-div">
                         <div className="top-bar">

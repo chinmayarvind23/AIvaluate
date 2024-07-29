@@ -66,10 +66,11 @@ function checkAuthenticated(req, res, next) {
 
 // Create a new assignment
 router.post('/assignments', upload.single('assignmentKey'), async (req, res) => {
-    const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, rubricName, criteria } = req.body;
+    const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, criteria } = req.body;
     const instructorId = req.session.instructorId;
     const courseId = req.session.courseId;
     const assignmentKey = req.file ? req.file.path : null;
+    const rubricName = `${assignmentName} Rubric`;
 
     console.log('Received request body:', req.body);
     console.log('Received file info:', req.file);
@@ -793,6 +794,20 @@ router.get('/assignments/:assignmentId/rubric', async (req, res) => {
     }
 });
 
-
+// Get rubrics by Course ID
+router.get('/rubrics/:courseId', async (req, res) => {
+    const courseId = req.body.courseId || req.session.courseId;
+    
+    try {
+        const result = await pool.query(
+            'SELECT * FROM "AssignmentRubric" WHERE "courseId" = $1',
+            [courseId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubrics:', error);
+        res.status(500).json({ message: 'Error fetching rubrics' });
+    }
+});
 
 module.exports = router;

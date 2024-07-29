@@ -130,11 +130,6 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
           <img src="../../public/prof-course-image.svg" alt="Professor Course Image" />
         )
       )}
-      {enrolled && (
-        <div className="check-overlay">
-          <CircumIcon name="circle_check" className="check-icon" />
-        </div>
-      )}
       <h2>{courseCode}
         {isArchived && <span className="archive-status"> - Archived</span>}
       </h2>

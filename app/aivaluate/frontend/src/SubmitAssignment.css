@@ -147,10 +147,10 @@
     border: solid var(--primary-color);
     padding: 10px;
     width: stretch;
-    /* margin-left: 20px; */
+    margin-left: 20px;
+    margin-right: 20px;
     background-color: var(--secondary-color);
     color: var(--primary-color);
-    margin-bottom: 20px;
 }
 
 .drop-top{

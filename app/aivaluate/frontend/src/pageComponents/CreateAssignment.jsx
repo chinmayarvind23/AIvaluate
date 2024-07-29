@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
+import { useCallback } from 'react';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -75,11 +76,7 @@ const CreateAssignment = () => {
     
     useEffect(() => {
         ensureSessionData();
-    }, [ensureSessionData]);
-
-    useEffect(() => {
-        sessionStorage.setItem('courseId', courseId);
-    }, [courseId]);    
+    }, [ensureSessionData]);    
 
     useEffect(() => {
         axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
@@ -136,6 +133,9 @@ const CreateAssignment = () => {
         
         await ensureSessionData();
         
+        
+        await ensureSessionData();
+        
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
             alert('Please fill in all fields.');
             return;
@@ -143,10 +143,12 @@ const CreateAssignment = () => {
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
     
+    
         if (dueDate < today) {
             alert('Due date cannot be in the past.');
             return;
         }
+    
     
         try {
             const instructorId = sessionStorage.getItem('instructorId');
@@ -165,6 +167,8 @@ const CreateAssignment = () => {
                 formData.append('courseId', courseId);
                 formData.append('assignmentId', response.data.assignmentId);
     
+                formData.append('assignmentId', response.data.assignmentId);
+    
                 await axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -179,6 +183,7 @@ const CreateAssignment = () => {
                 console.error('Error response data:', error.response.data);
             }
         }
+    };    
     };    
 
     const handleUsePastRubricClick = (e) => {

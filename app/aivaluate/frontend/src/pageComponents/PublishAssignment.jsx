@@ -4,10 +4,6 @@ import { format, parseISO } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format, parseISO } from 'date-fns';
-import React, { useCallback, useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -76,6 +72,51 @@ const PublishAssignment = () => {
     useEffect(() => {
         ensureSessionData();
     }, [ensureSessionData]);
+    const [file, setFile] = useState(null);
+
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            await axios.post('http://localhost:5173/eval-api/set-course', {
+                courseId,
+                instructorId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                return;
+            }
+        }
+
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);
 
     const fetchAssignment = useCallback(async () => {
         try {
@@ -85,7 +126,7 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(parseISO(dueDate)); // Convert ISO string to Date object
+                setDeadline(new Date(dueDate));
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
             } else {
@@ -138,6 +179,9 @@ const PublishAssignment = () => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
         setFiles([selectedFile]);
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+        setFiles([selectedFile]);
     };
 
     const handleDrop = (e) => {
@@ -157,14 +201,27 @@ const PublishAssignment = () => {
     };
 
     const handleSubmitChanges = async () => {
+        const formData = new FormData();
+        formData.append('assignmentName', title);
+        formData.append('dueDate', deadline.toISOString());
+        formData.append('criteria', rubricContent || "");
+        formData.append('courseId', courseId);
+        formData.append('assignmentId', assignmentId);
+        if (file) {
+            formData.append('assignmentKey', file);
+        }
+    
+        console.log('Submitting the following form data:');
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+    
         try {
-            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
-                assignmentName: title,
-                dueDate: deadline.toISOString(), // Convert Date object to ISO string
-                criteria: rubricContent,
-                courseId: courseId
-            }, {
-                withCredentials: true
+            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             setIsEdited(false);
             toast.success('Assignment updated successfully');
@@ -172,7 +229,7 @@ const PublishAssignment = () => {
             console.error('Error updating assignment:', error);
             toast.error('Failed to update assignment');
         }
-    };
+    };    
 
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
@@ -181,13 +238,14 @@ const PublishAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={navBarText} tab="assignments" />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
                 <div className="main-margin">
                     <div className="rubric-div">
                         <div className="top-bar">
                             <div className="back-btn-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                                 <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                             </div>
                             <input 
@@ -254,6 +312,15 @@ const PublishAssignment = () => {
                                     onDragLeave={handleDragLeave}
                                     onDrop={handleDrop}
                                 >
+                                    <label htmlFor="file-upload" className="file-upload-label">
+                                        <span>Click to add a file or drag your file here</span>
+                                        <input 
+                                            type="file" 
+                                            id="file-upload" 
+                                            className="file-upload-input" 
+                                            onChange={handleFileChange} 
+                                        />
+                                    </label>
                                     <label htmlFor="file-upload" className="file-upload-label">
                                         <span>Click to add a file or drag your file here</span>
                                         <input 

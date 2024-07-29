@@ -85,22 +85,22 @@ services:
     networks:
       - aivaluate-net
 
-  # drone-server:
-  #   image: drone/drone:latest
-  #   container_name: drone-server
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - /var/lib/drone:/data
-  #   environment:
-  #     DRONE_GITHUB_CLIENT_ID: Ov23liZvCwyDq8H6y4kq
-  #     DRONE_GITHUB_CLIENT_SECRET: 165c9dcb9fd1eb31f35512212abf4e3c74876551
-  #     DRONE_RPC_SECRET: ci-cd-setup-team-8
-  #     DRONE_SERVER_HOST: droneci.ok.ubc.ca
-  #     DRONE_SERVER_PROTO: https
-  #   networks:
-  #     - aivaluate-net
+  drone-server:
+    image: drone/drone:latest
+    container_name: drone-server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/lib/drone:/data
+    environment:
+      DRONE_GITHUB_CLIENT_ID: Ov23liZvCwyDq8H6y4kq
+      DRONE_GITHUB_CLIENT_SECRET: 165c9dcb9fd1eb31f35512212abf4e3c74876551
+      DRONE_RPC_SECRET: ci-cd-setup-team-8
+      DRONE_SERVER_HOST: droneci.ok.ubc.ca
+      DRONE_SERVER_PROTO: https
+    networks:
+      - aivaluate-net
 
   backend-ai:
     build:

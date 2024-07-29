@@ -128,7 +128,7 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(parseISO(dueDate)); // Convert ISO string to Date object
+                setDeadline(new Date(dueDate));
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
             } else {
@@ -205,15 +205,27 @@ const PublishAssignment = () => {
     };
 
     const handleSubmitChanges = async () => {
+        const formData = new FormData();
+        formData.append('assignmentName', title);
+        formData.append('dueDate', deadline.toISOString());
+        formData.append('criteria', rubricContent || "");
+        formData.append('courseId', courseId);
+        formData.append('assignmentId', assignmentId);
+        if (file) {
+            formData.append('assignmentKey', file);
+        }
+    
+        console.log('Submitting the following form data:');
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+    
         try {
-            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
-                assignmentName: title,
-                dueDate: deadline.toISOString(), // Convert Date object to ISO string
-                dueDate: deadline.toISOString(), // Convert Date object to ISO string
-                criteria: rubricContent,
-                courseId: courseId
-            }, {
-                withCredentials: true
+            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             setIsEdited(false);
             toast.success('Assignment updated successfully');
@@ -223,7 +235,7 @@ const PublishAssignment = () => {
             toast.error('Failed to update assignment');
             toast.error('Failed to update assignment');
         }
-    };
+    };    
 
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
@@ -232,7 +244,7 @@ const PublishAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={navBarText} tab="assignments" />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
                 <div className="main-margin">

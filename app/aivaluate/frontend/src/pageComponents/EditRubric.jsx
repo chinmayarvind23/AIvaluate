@@ -103,7 +103,7 @@ const EditRubric = () => {
                             value={title} 
                             onChange={handleTitleChange} 
                         /> 
-                        <h3 className="edit-text">Click to edit</h3>
+                        <h3 className="edit-textt">Click to edit</h3>
                     </div>
                     <div className="main-text2">
                         <textarea

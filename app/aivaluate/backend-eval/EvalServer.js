@@ -132,6 +132,16 @@ app.post('/eval-api/set-course', (req, res) => {
     res.status(200).json({ message: 'Course ID and Instructor ID set in session', courseId, instructorId });
 });
 
+app.post('/eval-api/set-session', (req, res) => {
+    const { instructorId, courseId } = req.body;
+    if (!instructorId || !courseId) {
+        return res.status(400).json({ message: 'Instructor ID and Course ID are required' });
+    }
+    req.session.instructorId = instructorId;
+    req.session.courseId = courseId;
+    res.status(200).json({ message: 'Session variables set successfully' });
+  });
+
 function ensureCourseAndInstructor(req, res, next) {
     if (!req.session.courseId || !req.session.instructorId) {
         return res.status(400).json({ message: 'Course ID and Instructor ID must be set in session' });

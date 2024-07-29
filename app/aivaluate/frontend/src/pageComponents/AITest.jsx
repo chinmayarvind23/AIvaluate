@@ -1,7 +1,11 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../GeneralStyling.css';
 
 const AITest = () => {
+  const navigate = useNavigate();
   const [AIResponse, setAIResponse] = useState('');
   const [profPromptText, setProfPromptText] = useState(''); // For prof prompt text without rubric
   const [fullPromptText, setFullPromptText] = useState(''); // For prompt text with rubric
@@ -244,7 +248,12 @@ const AITest = () => {
   };
 
   return (
+    <div>
+      <button className="main-back-button" onClick={() => navigate(-1)} style={{ margin: '20px' }}>
+          <CircumIcon name="circle_chev_left" className="back-button-icon-size" />
+      </button>
     <div style={{ maxWidth: '800px', margin: 'auto', fontFamily: 'Arial, sans-serif' }} class="third-color-text">
+      
       <h2 style={{ textAlign: 'center' }}>AI Grading Testing Page</h2>
       <table style={{ border: '1px solid black', borderCollapse: 'collapse', width: '100%', marginBottom: '20px' }}>
         <tbody>
@@ -303,6 +312,7 @@ const AITest = () => {
       <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
         <button type="submit" className="update-ai" style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>Submit</button>
       </form>
+    </div>
     </div>
   );
 }

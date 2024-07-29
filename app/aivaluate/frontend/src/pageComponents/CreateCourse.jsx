@@ -102,6 +102,7 @@ const CreateCourse = () => {
                   value={courseName}
                   onChange={(e) => setCourseName(e.target.value)}
                   maxLength="50" // Limit the course name to 50 characters
+                  class="drop-down-menu"
                 />
               </div>
               <div className="form-group">
@@ -112,6 +113,7 @@ const CreateCourse = () => {
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
                   maxLength="10" // Limit the course code to 10 characters
+                  class="drop-down-menu"
                 />
               </div>
 

@@ -32,6 +32,7 @@ const SelectedAssignment = () => {
                 if (response.status === 200) {
                     setSubmissions(response.data);
                     setFilteredFiles(response.data);
+                    console.log(response.data);
                 } else {
                     console.error('Expected an array but got:', response.data);
                 }

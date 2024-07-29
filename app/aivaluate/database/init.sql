@@ -283,9 +283,6 @@ VALUES (1, 1, 1, '2022-01-14 12:00:00', 'submission1.zip', true, '2022-01-14 12:
        (8, 4, 6, '2024-07-15 12:00:00', 'lab-3-files', true, '2024-07-15 12:00:00', false)
        ON CONFLICT DO NOTHING;
 
-INSERT INTO useRubric ("assignmentId", "assignmentRubricId")
-VALUES ()
-
 -- Insert dummy data into AssignmentGrade table with conflict handling
 INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
 VALUES (1, 1, 10, 8, 8, true),

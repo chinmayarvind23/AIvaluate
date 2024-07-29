@@ -114,14 +114,11 @@
     width: 200px;
     align-items: center;
     justify-content: center;
-    border-radius: 50px;
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-    /* margin-top: -70px; */
-    /* height: 20px; */
-    padding: 10px 10px;
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+    padding-top: -20px;
     font-size: 1rem;
-    height: auto;
 }
 
 .score-class{
@@ -144,9 +141,8 @@
     border-radius: 10px;
     border: solid var(--primary-color);
     padding: 10px;
-    width: stretch;
+    width: 400px;
     margin-left: 20px;
-    margin-right: 20px;
     background-color: var(--secondary-color);
     color: var(--primary-color);
 }

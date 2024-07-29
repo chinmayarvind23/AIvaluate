@@ -117,4 +117,28 @@
     background-color: #cc0000;
 }
 
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.edit-button, .confirm-button, .delete-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirm-button {
+    background-color: green;
+}
+
+.delete-button {
+    background-color: red;
+}
+
+
 

@@ -16,6 +16,9 @@ const SelectStudentAdmin = () => {
     const { studentId } = useParams();
     const [student, setStudent] = useState({});
     const [courses, setCourses] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedName, setEditedName] = useState('');
+    const [editedEmail, setEditedEmail] = useState('');
 
     useEffect(() => {
         const fetchStudentDetails = async () => {
@@ -26,6 +29,8 @@ const SelectStudentAdmin = () => {
                 const data = await response.json();
                 setStudent(data);
                 setCourses(data.courses);
+                setEditedName(`${data.firstName} ${data.lastName}`);
+                setEditedEmail(data.email);
             } catch (error) {
                 console.error('Error fetching student details:', error);
             }
@@ -108,6 +113,38 @@ const SelectStudentAdmin = () => {
         });
     };
 
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleConfirmClick = async () => {
+        const [firstName, lastName] = editedName.split(' ');
+        try {
+            const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    email: editedEmail,
+                }),
+            });
+            if (response.ok) {
+                setStudent({ ...student, firstName, lastName, email: editedEmail });
+                toast.success('Your new information has been updated');
+            } else {
+                toast.error('Failed to update student');
+            }
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating student:', error);
+            toast.error('Failed to update student');
+        }
+    };
+
     const maskedPassword = student.password ? '*'.repeat(student.password.length) : '';
 
     return (
@@ -115,46 +152,70 @@ const SelectStudentAdmin = () => {
             <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <div className="filler-div">
-            <SideMenuBarAdmin tab="studentManager" />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
+                <SideMenuBarAdmin tab="studentManager" />
+                <div className="main-margin">
+                    <div className="top-bar">
+                        <div className="back-btn-div">
+                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
+                        </div>
+                        <h1>Student Info</h1>
                     </div>
-                    <h1>Student Info</h1>
-                </div>
-                <div className="center-it">
-                    <div>
-                        <div className="user-info2">
-                            <div className="user-name">
-                                <span>{student.firstName} {student.lastName}</span>
-                                <span>{student.studentId}</span>
+                    <div className="center-it">
+                        <div>
+                            <div className="user-info2">
+                                <div className="user-name">
+                                    {isEditing ? (
+                                        <div>
+                                            <input 
+                                                type="text" 
+                                                value={editedName} 
+                                                onChange={(e) => setEditedName(e.target.value)} 
+                                            />
+                                            <input 
+                                                type="email" 
+                                                value={editedEmail} 
+                                                onChange={(e) => setEditedEmail(e.target.value)} 
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <span>{student.firstName} {student.lastName}</span>
+                                            <span>{student.studentId}</span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="major">Major: {student.major}</div>
+                                <div className="email">
+                                    <span>Email:</span>
+                                    <span>{student.email}</span>
+                                </div>
+                                <div className="password">
+                                    <span>Password:</span>
+                                    <span>{maskedPassword}</span>
+                                </div>
+                                <div className="courses">
+                                    <span>Courses:</span>
+                                    <ul>
+                                        {courses.map((course, index) => (
+                                            <li key={index}>
+                                                {course.courseCode}
+                                                <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="action-buttons">
+                                    {isEditing ? (
+                                        <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
+                                    ) : (
+                                        <button className="edit-button" onClick={handleEditClick}>Edit</button>
+                                    )}
+                                    <button className="delete-button" onClick={handleDelete}>Delete user</button>
+                                </div>
                             </div>
-                            <div className="major">Major: {student.major}</div>
-                            <div className="email">
-                                <span>Email:</span>
-                                <span>{student.email}</span>
-                            </div>
-                            <div className="password">
-                                <span>Password:</span>
-                                <span>{maskedPassword}</span>
-                            </div>
-                            <div className="courses">
-                                <span>Courses:</span>
-                                <ul>
-                                    {courses.map((course, index) => (
-                                        <li key={index}>
-                                            {course.courseCode}
-                                            <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <button className="delete-button" onClick={handleDelete}>Delete user</button>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     );

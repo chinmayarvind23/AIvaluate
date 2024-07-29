@@ -238,4 +238,29 @@ router.put('/admin/:adminId/password', async (req, res) => {
     }
 });
 
+
+router.put('/student/:studentId', async (req, res) => {
+    const studentId = req.params.studentId;
+    const { firstName, lastName, email } = req.body;
+  
+    try {
+      const result = await pool.query(
+        'UPDATE "Student" SET "firstName" = $1, "lastName" = $2, "email" = $3 WHERE "studentId" = $4 RETURNING *',
+        [firstName, lastName, email, studentId]
+      );
+  
+      if (result.rows.length > 0) {
+        res.status(200).json(result.rows[0]);
+      } else {
+        res.status(404).json({ error: 'Student not found' });
+      }
+    } catch (error) {
+      console.error('Error updating student:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+  router.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
 module.exports = router;

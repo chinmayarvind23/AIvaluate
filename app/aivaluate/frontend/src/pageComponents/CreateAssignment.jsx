@@ -75,7 +75,11 @@ const CreateAssignment = () => {
     
     useEffect(() => {
         ensureSessionData();
-    }, [ensureSessionData]);    
+    }, [ensureSessionData]);
+
+    useEffect(() => {
+        sessionStorage.setItem('courseId', courseId);
+    }, [courseId]);    
 
     useEffect(() => {
         axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
@@ -260,16 +264,17 @@ const CreateAssignment = () => {
                                     onDragOver={handleDragOver}
                                     onDragLeave={handleDragLeave}
                                     onDrop={handleDrop}
+                                    onClick={() => document.getElementById('file-upload').click()}
                                 >
+                                    <span>Drag files here or Click to browse files</span>
                                     <input 
                                         type="file" 
                                         id="file-upload" 
                                         className="file-upload-input" 
                                         name="assignmentKey"
                                         onChange={handleFileChange}
-                                        multiple 
+                                        style={{ display: 'none' }}
                                     />
-                                    <span>Drag files here or Click to browse files</span>
                                 </div>
                                 {assignmentKey && (
                                 <div className="file-preview">

@@ -90,7 +90,7 @@ router.post('/assignments', upload.single('assignmentKey'), async (req, res) => 
         await pool.query('BEGIN');
 
         const assignmentResult = await pool.query(
-            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentDescription", "maxObtainableGrade", "assignmentKey") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "assignmentId"',
+            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentDescription", "maxObtainableGrade", "assignmentKey", "isPublished") VALUES ($1, $2, $3, $4, $5, $6, false) RETURNING "assignmentId"',
             [courseId, dueDate, assignmentName, assignmentDescription, maxObtainableGrade, assignmentKey]
         );
 

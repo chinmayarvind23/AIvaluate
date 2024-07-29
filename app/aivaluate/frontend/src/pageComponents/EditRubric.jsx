@@ -1,6 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../EditRubric.css';
 import '../GeneralStyling.css';
@@ -74,10 +76,12 @@ const EditRubric = () => {
         .then(response => {
             console.log('Success:', response.data);
             setIsEdited(false); // Reset the edit flag
+            toast.success('Rubric updated successfully!');
             navigate(-1); // Navigate back after successful update
         })
         .catch(error => {
             console.error('Error updating rubric:', error);
+            toast.error('An error occurred while updating the rubric.');
             setError('An error occurred while updating the rubric.');
         });
     };
@@ -125,6 +129,7 @@ const EditRubric = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

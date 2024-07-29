@@ -167,6 +167,7 @@ body {
 .empty{
     width: stretch;
     /* border: red 2px solid; */
+    min-width: 20px;
 }
 
 .float-right{

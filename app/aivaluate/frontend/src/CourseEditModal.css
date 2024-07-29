@@ -40,16 +40,23 @@
   .course-save-button {
     background-color: var(--secondary-color);
     color: var(--primary-color);
+    border: solid 1px var(--primary-color);
     width: 240px;
+    margin-right:10px;
     margin-left:10px;
+    border-radius: 50px;
+    padding: 10px;
   }
   
   .course-cancel-button {
-    margin-left: 10px;
-    background-color: #ccc;
-    color: #333;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: solid 1px var(--primary-color);
     width: 240px;
     margin-right:10px;
+    margin-left:10px;
+    border-radius: 50px;
+    padding: 10px;
   }
   
   .form-actions {

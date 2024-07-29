@@ -64,7 +64,7 @@
 }
 
 .assignment-text{
-    width: 400px;
+    width: 550px;
 }
 
 .details-content {
@@ -111,24 +111,22 @@
 
 .score{
     display:flex;
-    width: fit-content;
-    padding: 10px;
-    padding-top:0px;
-    padding-bottom: 20px;
+    width: 200px;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
     color: var(--secondary-color);
     background-color: var(--primary-color);
     /* margin-top: -70px; */
-    height: 20px;
-    padding: 10px 20px;
+    /* height: 20px; */
+    padding: 10px 10px;
     font-size: 1rem;
     height: auto;
 }
 
 .score-class{
     display:flex;
+    /* width: 300px; */
 }
 
 .feeback-text{
@@ -140,6 +138,17 @@
 .both-feedback{
     /* display: flex; */
     margin-top: 20px;
+}
+
+.link-upload{
+    border-radius: 10px;
+    border: solid var(--primary-color);
+    padding: 10px;
+    width: stretch;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
 }
 
 .drop-top{

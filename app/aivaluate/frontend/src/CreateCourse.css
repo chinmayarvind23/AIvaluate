@@ -30,7 +30,7 @@
   width: 80%;
 }
 
-input, .drop-down-menu {
+.drop-down-menu {
   width: 100%;
   max-width: 500px;
   padding: 10px;
@@ -41,12 +41,12 @@ input, .drop-down-menu {
   box-sizing: border-box; 
 }
 
-input:disabled {
+/* input:disabled {
   background-color: #d2c7f4;
   color: #eee;
   font-weight: bold;
   text-align: center;
-}
+} */
 
 h3 {
   margin-bottom: 0px;

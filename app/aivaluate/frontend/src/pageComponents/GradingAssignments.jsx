@@ -264,15 +264,8 @@ const GradingAssignments = () => {
       }, {
         withCredentials: true
       });
-
-      if (response.status === 200) {
-        toast.success('Due date updated successfully');
-      } else {
-        toast.error('Failed to update due date');
-      }
     } catch (error) {
       console.error('Error updating due date:', error);
-      toast.error('Failed to update due date');
     }
   };
 
@@ -363,7 +356,6 @@ const GradingAssignments = () => {
           </div>
           <div className="score-div">
             <h2 className="aiscore">AIScore: {assignmentDetails.AIassignedGrade}/{assignmentDetails.maxObtainableGrade}</h2>
-            <div className="empty"></div>
             <div className="final-score">
               <label htmlFor="final-score-input">Confirm Final Score:</label>
               <input
@@ -376,6 +368,7 @@ const GradingAssignments = () => {
               <h2 className="full-score">/ {assignmentDetails.maxObtainableGrade}</h2>
             </div>
           </div>
+          
           <div className="student-info">
             <div className="feedback">
               <h4>AI Feedback</h4>

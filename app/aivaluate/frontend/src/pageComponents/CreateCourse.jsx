@@ -89,6 +89,7 @@ const CreateCourse = () => {
       await setCourseIdInSession(courseId); 
 
       if (instructorId) {
+        console.log('Assigning instructor:', { courseId, instructorId });
         await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId
@@ -96,6 +97,7 @@ const CreateCourse = () => {
       }
 
       if (taId) {
+        console.log('Assigning TA:', { courseId, taId });
         await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId: taId
@@ -115,6 +117,7 @@ const CreateCourse = () => {
     <>
       <AIvaluateNavBarEval navBarText='Create a Course' />
       <div className='form-container'>
+      <ToastContainer />
         <section>
           <div className="form-content">
             <form onSubmit={handleSubmit}>
@@ -169,7 +172,6 @@ const CreateCourse = () => {
           </div>
         </section>
       </div>
-      <ToastContainer />
     </>
   );
 };

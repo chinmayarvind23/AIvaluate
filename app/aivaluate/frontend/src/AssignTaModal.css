@@ -50,9 +50,10 @@
 }
 
 .modal-actions {
-    display: flex;
-    justify-content: flex-start; /* Align buttons to the left */
-    margin-top: 20px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .ta-save-button {

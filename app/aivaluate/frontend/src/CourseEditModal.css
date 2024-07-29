@@ -59,12 +59,12 @@
     padding: 10px;
   }
   
-  .form-actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-  }
+.modal-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
   
   .edit-course-form {
     display: flex;

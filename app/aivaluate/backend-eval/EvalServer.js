@@ -47,11 +47,16 @@ app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {
+    console.log('Course ID from body:', req.body.courseId);
+    console.log('Course ID from session:', req.session.courseId);
     if (!req.session.courseId && req.body.courseId) {
         req.session.courseId = req.body.courseId;
     }
     if (!req.session.instructorId && req.body.instructorId) {
         req.session.instructorId = req.body.instructorId;
+    }
+    if (!req.session.assignmentId && req.body.assignmentId) {
+        req.session.assignmentId = req.body.assignmentId;
     }
     next();
 });
@@ -134,6 +139,7 @@ function ensureCourseAndInstructor(req, res, next) {
     next();
 }
 
+app.use('/eval-api', ensureCourseAndInstructor, assignmentRoutes);
 app.use('/eval-api/rubrics', ensureCourseAndInstructor, courseRoutes);
 app.use('/eval-api/assignments', ensureCourseAndInstructor, assignmentRoutes);
 

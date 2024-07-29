@@ -1,6 +1,5 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-
 import { format, parseISO } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
@@ -28,6 +27,51 @@ const PublishAssignment = () => {
     const [isPublished, setIsPublished] = useState(null);
     const [dragging, setDragging] = useState(false);
     const [files, setFiles] = useState([]);
+    const [file, setFile] = useState(null);
+
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            await axios.post('http://localhost:5173/eval-api/set-course', {
+                courseId,
+                instructorId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                return;
+            }
+        }
+
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);
 
     const fetchAssignment = useCallback(async () => {
         try {
@@ -37,10 +81,9 @@ const PublishAssignment = () => {
             if (response.status === 200) {
                 const { assignmentName, dueDate, criteria, isPublished } = response.data;
                 setTitle(assignmentName);
-                setDeadline(new Date(dueDate)); // Convert the dueDate to Date object
+                setDeadline(new Date(dueDate));
                 setRubricContent(criteria);
                 setIsPublished(isPublished);
-                console.log("Fetched assignment:", response.data);
             } else {
                 console.error('Failed to fetch assignment:', response);
             }
@@ -79,7 +122,6 @@ const PublishAssignment = () => {
             });
             if (response.status === 200) {
                 fetchAssignment();
-                console.log(`Assignment ${isPublished ? 'unpublished' : 'published'} successfully`);
             } else {
                 console.error(`Failed to ${isPublished ? 'unpublish' : 'publish'} assignment:`, response);
             }
@@ -89,8 +131,9 @@ const PublishAssignment = () => {
     };
 
     const handleFileChange = (e) => {
-        const selectedFiles = Array.from(e.target.files);
-        setFiles(selectedFiles);
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+        setFiles([selectedFile]);
     };
 
     const handleDrop = (e) => {
@@ -110,14 +153,27 @@ const PublishAssignment = () => {
     };
 
     const handleSubmitChanges = async () => {
+        const formData = new FormData();
+        formData.append('assignmentName', title);
+        formData.append('dueDate', deadline.toISOString());
+        formData.append('criteria', rubricContent || "");
+        formData.append('courseId', courseId);
+        formData.append('assignmentId', assignmentId);
+        if (file) {
+            formData.append('assignmentKey', file);
+        }
+    
+        console.log('Submitting the following form data:');
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+    
         try {
-            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
-                assignmentName: title,
-                dueDate: deadline.toISOString(), // Convert Date object to ISO string
-                criteria: rubricContent,
-                courseId: courseId
-            }, {
-                withCredentials: true
+            await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}`, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             setIsEdited(false);
             toast.success('Assignment updated successfully');
@@ -125,7 +181,7 @@ const PublishAssignment = () => {
             console.error('Error updating assignment:', error);
             toast.error('Failed to update assignment');
         }
-    };
+    };    
 
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
@@ -134,14 +190,14 @@ const PublishAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={navBarText}  />
+            <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
                 <div className="main-margin">
                     <div className="rubric-div">
                         <div className="top-bar">
                             <div className="back-btn-div">
-                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+                                <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
                             </div>
                             <input 
                                 type="text" 
@@ -184,14 +240,15 @@ const PublishAssignment = () => {
                                     onDragLeave={handleDragLeave}
                                     onDrop={handleDrop}
                                 >
-                                    <input 
-                                        type="file" 
-                                        id="file-upload" 
-                                        className="file-upload-input" 
-                                        onChange={handleFileChange}
-                                        multiple 
-                                    />
-                                    <span>Click to add a file or drag your file here</span>
+                                    <label htmlFor="file-upload" className="file-upload-label">
+                                        <span>Click to add a file or drag your file here</span>
+                                        <input 
+                                            type="file" 
+                                            id="file-upload" 
+                                            className="file-upload-input" 
+                                            onChange={handleFileChange} 
+                                        />
+                                    </label>
                                 </div>
                                 {files.length > 0 && (
                                     <div className="file-preview">

@@ -11,7 +11,7 @@ function checkAuthenticated(req, res, next) {
 
 // Create a course
 router.post('/courses', async (req, res) => {
-    const { courseName, courseCode, maxStudents } = req.body;
+    const { courseName, courseCode } = req.body;
     console.log(req.body);
 
     try {

@@ -89,4 +89,18 @@ router.delete('/evaluator/:instructorId/course/:courseId', checkAuthenticated, a
     }
 });
 
+router.get('/me', checkAuthenticated, async (req, res) => {
+    const instructorId = req.user.instructorId;
+    try {
+        const result = await pool.query('SELECT * FROM "Instructor" WHERE "instructorId" = $1', [instructorId]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Evaluator not found' });
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching evaluator details:', error);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
+
 module.exports = router;

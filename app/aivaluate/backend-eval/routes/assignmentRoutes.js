@@ -10,9 +10,9 @@ const { formatISO } = require('date-fns');
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const courseId = req.session.courseId;
+        const courseId = req.body.courseId || req.session.courseId;
         const instructorId = req.session.instructorId;
-        const assignmentId = req.session.assignmentId;
+        const assignmentId = req.body.assignmentId || req.params.assignmentId || req.session.assignmentId;
 
         if (!instructorId) {
             console.error('Instructor ID not found in session');
@@ -24,6 +24,7 @@ const storage = multer.diskStorage({
             return cb(new Error('Assignment ID not found in session'), false);
         }
 
+        req.session.assignmentId = assignmentId;
         try {
             const dir = path.resolve(__dirname, `../assignmentKeys/${courseId}/${instructorId}/${assignmentId}`);
             fs.mkdirSync(dir, { recursive: true });
@@ -229,9 +230,13 @@ router.post('/rubrics', async (req, res) => {
 
 // Add or update a solution
 router.post('/assignments/:assignmentId/solutions', upload.single('assignmentKey'), async (req, res) => {
-    const { assignmentId } = req.params;
+    const assignmentId = req.params.assignmentId || req.session.assignmentId;
     const { instructorId } = req.body;
     const assignmentKey = req.file ? req.file.path : null;
+
+    if (!assignmentId) {
+        return res.status(400).json({ message: 'Assignment ID not found in session or request parameters' });
+    }
 
     if (!instructorId) {
         return res.status(400).json({ message: 'Instructor ID is required' });
@@ -486,15 +491,37 @@ router.get('/assignments/count/:courseId/all', async (req, res) => {
 });
 
 // Update assignment by ID with error handling for missing rubrics
-router.put('/assignments/:assignmentId', async (req, res) => {
+router.put('/assignments/:assignmentId', upload.single('assignmentKey'), async (req, res) => {
+    const body = { ...req.body };
     const { assignmentId } = req.params;
-    const { assignmentName, dueDate, assignmentDescription, criteria } = req.body;
+    const { assignmentName, dueDate, assignmentDescription, criteria = "", courseId: courseIdFromBody } = body;
+    const assignmentKey = req.file ? req.file.path : null;
+    const courseId = courseIdFromBody || req.session.courseId;
+
+    console.log('Received request body:', JSON.stringify(body));
+    console.log('Received file info:', req.file);
+    console.log('Instructor ID from session:', req.session.instructorId);
+    console.log('Course ID from session:', req.session.courseId);
+    console.log('Course ID from body:', body.courseId);
+
+    if (!req.session.instructorId) {
+        return res.status(400).json({ message: 'Instructor ID not found in session' });
+    }
+
+    if (!courseId) {
+        return res.status(400).json({ message: 'Course ID not found in request or session' });
+    }
+
+    if (!dueDate || !assignmentName || criteria === undefined) {
+        console.log('Missing fields:', { dueDate, assignmentName, criteria });
+        return res.status(400).json({ message: 'Missing required fields in request body' });
+    }
 
     try {
         await pool.query('BEGIN');
         const result = await pool.query(
-            'UPDATE "Assignment" SET "assignmentName" = $1, "dueDate" = $2, "assignmentDescription" = $3 WHERE "assignmentId" = $4 RETURNING *',
-            [assignmentName, dueDate, assignmentDescription, assignmentId]
+            'UPDATE "Assignment" SET "assignmentName" = $1, "dueDate" = $2, "assignmentDescription" = $3, "assignmentKey" = COALESCE($4, "assignmentKey") WHERE "assignmentId" = $5 RETURNING *',
+            [assignmentName, dueDate, assignmentDescription, assignmentKey, assignmentId]
         );
 
         if (result.rows.length === 0) {
@@ -515,7 +542,7 @@ router.put('/assignments/:assignmentId', async (req, res) => {
         if (rubricResult.rows.length === 0) {
             const newRubricResult = await pool.query(
                 'INSERT INTO "AssignmentRubric" ("rubricName", "criteria", "courseId") VALUES ($1, $2, $3) RETURNING "assignmentRubricId"',
-                [assignmentName, criteria, result.rows[0].courseId]
+                [assignmentName, criteria, courseId]
             );
             assignmentRubricId = newRubricResult.rows[0].assignmentRubricId;
             await pool.query(

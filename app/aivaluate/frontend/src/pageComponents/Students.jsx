@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -19,6 +20,34 @@ const Students = () => {
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
     const [error, setError] = useState(null);
+
+    const setSessionData = useCallback(async (courseId) => {
+        try {
+            await axios.post('http://localhost:5173/eval-api/set-course-only', {
+                courseId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+    
+    const ensureSessionData = useCallback(async () => {
+        let courseId = sessionStorage.getItem('courseId');
+    
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+    
+        await setSessionData(courseId);
+    }, [setSessionData]);
+    
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);    
 
     useEffect(() => {
         const fetchStudents = async () => {

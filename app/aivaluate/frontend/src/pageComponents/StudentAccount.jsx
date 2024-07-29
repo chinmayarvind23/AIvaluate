@@ -167,14 +167,14 @@ const StudentAccount = () => {
                                     value={confirmNewPassword}
                                     onChange={(e) => setConfirmNewPassword(e.target.value)}
                                 />
-                                <button className="primary-button save-button" onClick={handlePasswordSaveClick}>Save</button>
+                                <button className="primary-button account-save-button" onClick={handlePasswordSaveClick}>Save</button>
                             </div>
                             {errorMessage && <div className="error-message">{errorMessage}</div>}
                         </>
                     ) : (
                         <div className="password-edit-container">
                             <div className="primary-colorbg password-input">**********</div>
-                            <button className="primary-button edit-button" onClick={handlePasswordEditClick}>Edit</button>
+                            <button className="primary-button account-edit-button" onClick={handlePasswordEditClick}>Edit</button>
                         </div>
                     )}
                     {successMessage && <div className="success-message">{successMessage}</div>}

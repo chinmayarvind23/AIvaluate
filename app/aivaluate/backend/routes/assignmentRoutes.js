@@ -233,7 +233,7 @@ router.delete('/assignments/:assignmentId/solutions', async (req, res) => {
     }
 });
 
-
+// retrieve assignment details for the SubmitAssignment.jsx page
 router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
     const { courseId, assignmentId } = req.params;
     const studentId = req.session.studentId;
@@ -246,11 +246,13 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
         const assignmentQuery = `
             SELECT 
                 a."assignmentName",
+                a."assignmentDescription",
                 ar."rubricName",
                 ar."criteria",
                 a."dueDate",
                 a."maxObtainableGrade",
-                ag."InstructorAssignedFinalGrade"
+                ag."InstructorAssignedFinalGrade",
+                sfr."AIFeedbackText"
             FROM "Assignment" a
             LEFT JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId"
             LEFT JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId"
@@ -261,6 +263,8 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
                 WHERE "assignmentId" = $1 AND "studentId" = $2 AND "courseId" = $3
                 LIMIT 1
             )
+            LEFT JOIN "StudentFeedbackReport" sfr ON a."assignmentId" = sfr."assignmentId"
+            AND sfr."studentId" = $2 AND sfr."courseId" = $3
             WHERE a."assignmentId" = $1 AND a."courseId" = $3
         `;
         const result = await pool.query(assignmentQuery, [assignmentId, studentId, courseId]);

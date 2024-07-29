@@ -30,22 +30,6 @@ services:
     networks:
       - aivaluate-net
 
-  test_db:
-    image: postgres
-    restart: always
-    shm_size: 128mb
-    container_name: test_database
-    environment:
-      POSTGRES_DB: AIvaluatetestdb
-      POSTGRES_USER: test_user
-      POSTGRES_PASSWORD: test_password
-    ports:
-      - "5433:5432" 
-    volumes:
-      - ./aivaluate/test-database:/docker-entrypoint-initdb.d
-    networks:
-      - aivaluate-net
-
   adminer:
     image: adminer
     restart: always
@@ -100,22 +84,22 @@ services:
     networks:
       - aivaluate-net
 
-  drone-server:
-    image: drone/drone:latest
-    container_name: drone-server
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/lib/drone:/data
-    environment:
-      DRONE_GITHUB_CLIENT_ID: Ov23liZvCwyDq8H6y4kq
-      DRONE_GITHUB_CLIENT_SECRET: 165c9dcb9fd1eb31f35512212abf4e3c74876551
-      DRONE_RPC_SECRET: ci-cd-setup-team-8
-      DRONE_SERVER_HOST: droneci.ok.ubc.ca
-      DRONE_SERVER_PROTO: https
-    networks:
-      - aivaluate-net
+  # drone-server:
+  #   image: drone/drone:latest
+  #   container_name: drone-server
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - /var/lib/drone:/data
+  #   environment:
+  #     DRONE_GITHUB_CLIENT_ID: Ov23liZvCwyDq8H6y4kq
+  #     DRONE_GITHUB_CLIENT_SECRET: 165c9dcb9fd1eb31f35512212abf4e3c74876551
+  #     DRONE_RPC_SECRET: ci-cd-setup-team-8
+  #     DRONE_SERVER_HOST: droneci.ok.ubc.ca
+  #     DRONE_SERVER_PROTO: https
+  #   networks:
+  #     - aivaluate-net
 
   backend-ai:
     build:

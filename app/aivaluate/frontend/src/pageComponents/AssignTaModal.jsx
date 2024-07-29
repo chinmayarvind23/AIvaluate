@@ -104,8 +104,8 @@ const AssignTaModal = ({ isOpen, onClose, courseId }) => {
                 </ul>
             )}
             <div className="modal-actions">
-                <button className="ta-save-button" onClick={handleSave}>Save</button>
                 <button className="ta-cancel-button" onClick={onClose}>Close</button>
+                <button className="ta-save-button" onClick={handleSave}>Save</button>
             </div>
         </Modal>
     );

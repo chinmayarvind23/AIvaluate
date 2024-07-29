@@ -11,6 +11,7 @@ import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 import '../GeneralStyling.css';
 import '../PublishAssignment.css';
+import '../ToastStyles.css';
 
 const PublishAssignment = () => {
     const courseCode = sessionStorage.getItem('courseCode');
@@ -138,7 +139,7 @@ const PublishAssignment = () => {
 
     return (
         <div>
-            <AIvaluateNavBarEval navBarText={navBarText} />
+            <AIvaluateNavBarEval navBarText={navBarText} tab="assignments" />
             <div className="filler-div">
                 <SideMenuBarEval tab="rubrics"/>
                 <div className="main-margin">

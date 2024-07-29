@@ -72,8 +72,8 @@ const EditCourseModal = ({ isOpen, onClose, course, onSave }) => {
                 </div>
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <div className="form-actions">
-                    <button type="submit" className="course-save-button">Save Changes</button>
                     <button type="button" className="course-cancel-button" onClick={onClose}>Cancel</button>
+                    <button type="submit" className="course-save-button">Save Changes</button>
                 </div>
             </form>
         </Modal>

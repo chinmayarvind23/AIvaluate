@@ -57,6 +57,8 @@
     border-radius: 25px;
     height: 40px;
     font-size: 14px;
+    box-sizing: border-box;
+    color: var(--primary-color);
   }
 
   .auth-input::placeholder {

@@ -92,10 +92,11 @@
     font-size: 16px;
   }
 
-  .background{
+  .background-div{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--radial-color);
   }
 
   .logoText{

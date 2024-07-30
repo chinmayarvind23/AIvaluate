@@ -17,13 +17,15 @@ const Rubrics = () => {
 
     const navigate = useNavigate();
     const { courseId } = useParams();
+    const courseIdFromSession = sessionStorage.getItem('courseId');
+    const [effectiveCourseId, setEffectiveCourseId] = useState(courseIdFromSession || courseId);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [rubrics, setRubrics] = useState([]);
     const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
-    const [effectiveCourseId, setEffectiveCourseId] = useState(courseId);
 
     const setSessionData = useCallback(async (courseId, instructorId) => {
         try {
@@ -74,9 +76,10 @@ const Rubrics = () => {
     useEffect(() => {
         const fetchCourseDetails = async () => {
             try {
-                const response = await fetch(`/eval-api/courses/${effectiveCourseId}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const courseId = sessionStorage.getItem('courseId');
+                const response = await axios.get(`/eval-api/rubrics/${courseId}`);
+                if (response.status === 200) {
+                    const data = response.data;
                     setCourseDetails(data);
                 } else {
                     console.error('Error fetching course details:', response.statusText);
@@ -88,9 +91,10 @@ const Rubrics = () => {
     
         const fetchRubrics = async () => {
             try {
-                const response = await fetch(`/eval-api/rubrics/${effectiveCourseId}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const courseId = sessionStorage.getItem('courseId');
+                const response = await axios.get(`/eval-api/rubrics/${courseId}`);
+                if (response.status === 200) {
+                    const data = response.data;
                     setRubrics(data);
                     setFilteredFiles(data);
                 } else {

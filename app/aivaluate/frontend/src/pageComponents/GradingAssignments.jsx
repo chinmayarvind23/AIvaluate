@@ -211,6 +211,7 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 
 const GradingAssignments = () => {
   const { studentId, assignmentId } = useParams();
+  const courseId = sessionStorage.getItem('courseId');
   const courseCode = sessionStorage.getItem('courseCode');
   const courseName = sessionStorage.getItem('courseName');
   const navigate = useNavigate();

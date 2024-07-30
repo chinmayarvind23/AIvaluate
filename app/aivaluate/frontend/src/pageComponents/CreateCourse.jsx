@@ -12,6 +12,7 @@ const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
   const [instructorId, setInstructorId] = useState('');
+  const [maxStudents, setMaxStudents] = useState('');
   const [taId, setTaId] = useState('');
   const [instructors, setInstructors] = useState([]);
   const [tas, setTAs] = useState([]);

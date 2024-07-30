@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS "Course" (
     "courseId" SERIAL NOT NULL PRIMARY KEY,
     "courseName" VARCHAR(100),
     "courseCode" VARCHAR(100),
+    "maxStudents" INT CHECK ("maxStudents" > 0),
     "courseDescription" VARCHAR(1000),
     "isArchived" BOOLEAN DEFAULT FALSE
 );

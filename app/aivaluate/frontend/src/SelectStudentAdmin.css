@@ -70,7 +70,15 @@
     color: var(--primary-color);
 }
 
-.delete-button {
+.select-student-admin-action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Space between content and buttons */
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.select-student-admin-delete-button {
     position: absolute;
     left: 20px;
    
@@ -79,23 +87,24 @@
     border: none;
     border-radius: 10px;
     padding: 10px;
-    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .select-student-admin-delete-button:hover {
     background-color: #cc0000;
 }
 
-.edit-button {
-    position: absolute;
-    right: 20px;
-  
-    background-color: #007bff;
+.select-student-admin-edit-button, .select-student-admin-confirm-button {
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
     border-radius: 10px;
     padding: 10px;
+    margin-bottom: 10px;
     cursor: pointer;
+    position: absolute;
+    right: 0; /* Move to the right corner */
+    bottom: 0; /* Move to the bottom */
 }
 
 .edit-button:hover {

@@ -153,7 +153,7 @@ const AISettings = () => {
                             type="text"
                             id="prompt-name-input"
                             defaultValue={prompt.promptName}
-                            className="prompt-name-input"
+                            className="prompt-name-input-s"
                         />
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
@@ -222,7 +222,7 @@ const AISettings = () => {
                         <input
                             type="text"
                             id="new-prompt-name-input"
-                            className="prompt-name-input"
+                            className="prompt-name-input-s"
                         />
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>

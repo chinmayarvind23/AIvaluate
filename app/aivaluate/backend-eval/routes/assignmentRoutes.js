@@ -6,6 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { formatISO } = require('date-fns');
+const baseDir = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
@@ -90,7 +91,7 @@ router.post('/assignments', upload.single('assignmentKey'), async (req, res) => 
         await pool.query('BEGIN');
 
         const assignmentResult = await pool.query(
-            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentDescription", "maxObtainableGrade", "assignmentKey", "isPublished") VALUES ($1, $2, $3, $4, $5, $6, false) RETURNING "assignmentId"',
+            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentDescription", "maxObtainableGrade", "assignmentKey", "isPublished") VALUES ($1, $2, $3, $4, $5, $6, true) RETURNING "assignmentId"',
             [courseId, dueDate, assignmentName, assignmentDescription, maxObtainableGrade, assignmentKey]
         );
 
@@ -688,20 +689,21 @@ router.put('/rubric/:rubricId', async (req, res) => {
 });
 
 // Route to get assignment details
-router.get('/assignment/:studentId/:assignmentId', checkAuthenticated, async (req, res) => {
+router.get('/assignment/:studentId/:assignmentId', async (req, res) => {
     const { studentId, assignmentId } = req.params;
 
     try {
         const query = `
             SELECT
                 a."assignmentName",
-                s."studentId" AS studentNumber,
+                s."studentId" AS "studentNumber",
                 a."dueDate",
                 a."maxObtainableGrade",
                 sf."AIFeedbackText",
                 sf."InstructorFeedbackText",
                 ag."AIassignedGrade",
-                ag."InstructorAssignedFinalGrade"
+                ag."InstructorAssignedFinalGrade",
+                asub."submissionFile"
             FROM
                 "Assignment" a
             JOIN
@@ -721,7 +723,12 @@ router.get('/assignment/:studentId/:assignmentId', checkAuthenticated, async (re
             return res.status(404).json({ error: 'Assignment not found' });
         }
 
+        const assignmentDetails = result.rows[0];
+        if (assignmentDetails.submissionFile) {
+            assignmentDetails.submissionFile = `${studentId}/${assignmentId}/${assignmentDetails.submissionFile}`;
+        }
         res.status(200).json(result.rows[0]);
+
     } catch (error) {
         console.error('Error fetching assignment details:', error);
         res.status(500).json({ error: 'Database error' });
@@ -808,6 +815,18 @@ router.get('/rubrics/:courseId', async (req, res) => {
         console.error('Error fetching rubrics:', error);
         res.status(500).json({ message: 'Error fetching rubrics' });
     }
+});
+
+router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
+    const { studentId, courseId, assignmentId, fileName } = req.params || req.body || req.session;
+    const filePath = path.join(baseDir, studentId, courseId, assignmentId, fileName);
+
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error('Error sending file:', err);
+            res.status(500).send('Error sending file');
+        }
+    });
 });
 
 module.exports = router;

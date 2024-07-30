@@ -105,7 +105,8 @@ const GradingAssignments = () => {
         dueDate,
         InstructorAssignedFinalGrade: finalScore,
         AIFeedbackText: feedback,
-        InstructorFeedbackText: instructorFeedback
+        InstructorFeedbackText: instructorFeedback,
+        maxObtainableGrade: assignmentDetails.maxObtainableGrade
       }, {
         withCredentials: true
       });

@@ -738,9 +738,17 @@ router.get('/assignment/:studentId/:assignmentId', async (req, res) => {
 // Route to mark assignment as complete
 router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, async (req, res) => {
     const { studentId, assignmentId } = req.params;
-    const { dueDate, InstructorAssignedFinalGrade, AIFeedbackText, InstructorFeedbackText } = req.body;
-
+    const { dueDate, InstructorAssignedFinalGrade, AIFeedbackText, InstructorFeedbackText, maxObtainableGrade } = req.body;
+    console.log('Received request body:', req.body);
+    
     try {
+        const courseResult = await pool.query(
+            'SELECT "courseId" FROM "Assignment" WHERE "assignmentId" = $1',
+            [assignmentId]
+        );
+        
+        const courseId = courseResult.rows[0].courseId;
+        
         const updateQuery = `
             UPDATE "Assignment"
             SET
@@ -767,32 +775,76 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
 
             if (gradeExists.rows.length === 0) {
                 const insertGradeQuery = `
-                    INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "InstructorAssignedFinalGrade", "isGraded")
-                    VALUES ($1, $2, $3, true)`;
+                    INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "InstructorAssignedFinalGrade", "isGraded", "maxObtainableGrade")
+                    VALUES ($1, $2, $3, true, $4)`;
+                    console.log('Inserting grade:', {
+                        submissionId,
+                        assignmentId,
+                        InstructorAssignedFinalGrade,
+                        maxObtainableGrade
+                    });
                 
-                await pool.query(insertGradeQuery, [submissionId, assignmentId, InstructorAssignedFinalGrade]);
+                await pool.query(insertGradeQuery, [submissionId, assignmentId, InstructorAssignedFinalGrade, maxObtainableGrade]);
             } else {
                 const updateGradeQuery = `
-                    UPDATE "AssignmentGrade"
+                UPDATE "AssignmentGrade"
+                SET
+                    "InstructorAssignedFinalGrade" = $1,
+                    "isGraded" = true,
+                    "maxObtainableGrade" = $4
+                WHERE 
+                    "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
+                    console.log('Updating grade:', {
+                        submissionId,
+                        assignmentId,
+                        InstructorAssignedFinalGrade,
+                        maxObtainableGrade
+                    });
+            await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId, maxObtainableGrade]);
+            }
+            const updateSubmissionQuery = `
+                UPDATE "AssignmentSubmission"
+                SET "isGraded" = true
+                WHERE "assignmentSubmissionId" = $1`;
+            await pool.query(updateSubmissionQuery, [submissionId]);
+
+            const checkFeedbackQuery = `
+                SELECT 1 FROM "StudentFeedback" WHERE "assignmentId" = $1 AND "studentId" = $2`;
+            
+            const feedbackExists = await pool.query(checkFeedbackQuery, [assignmentId, studentId]);
+
+            if (feedbackExists.rows.length === 0) {
+                const insertFeedbackQuery = `
+                    INSERT INTO "StudentFeedback" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                    VALUES ($1, $2, $3, $4, $5)`;
+                    console.log('Inserting feedback:', {
+                        assignmentId,
+                        studentId,
+                        courseId,
+                        AIFeedbackText,
+                        InstructorFeedbackText
+                    });
+                await pool.query(insertFeedbackQuery, [assignmentId, studentId, courseId, AIFeedbackText, InstructorFeedbackText]);
+
+            } else {
+                const updateFeedbackQuery = `
+                    UPDATE "StudentFeedback"
                     SET
-                        "InstructorAssignedFinalGrade" = $1,
-                        "isGraded" = true
-                    WHERE 
-                        "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
-                
-                await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId]);
+                        "AIFeedbackText" = $1,
+                        "InstructorFeedbackText" = $2,
+                        "courseId" = $3
+                    WHERE
+                        "assignmentId" = $4 AND "studentId" = $5`;
+                        console.log('Updating feedback:', {
+                            AIFeedbackText,
+                            InstructorFeedbackText,
+                            courseId,
+                            assignmentId,
+                            studentId
+                        });
+                await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, courseId, assignmentId, studentId]);
             }
         }
-
-        const updateFeedbackQuery = `
-            UPDATE "StudentFeedback"
-            SET
-                "AIFeedbackText" = $1,
-                "InstructorFeedbackText" = $2
-            WHERE
-                "assignmentId" = $3 AND "studentId" = $4`;
-
-        await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, assignmentId, studentId]);
 
         res.status(200).json({ message: 'Assignment marked as complete' });
     } catch (error) {

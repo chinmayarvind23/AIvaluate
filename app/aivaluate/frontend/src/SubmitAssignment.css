@@ -141,10 +141,11 @@
     border-radius: 10px;
     border: solid var(--primary-color);
     padding: 10px;
-    width: 400px;
-    margin-left: 20px;
+    width: stretch;
+    /* margin-left: 20px; */
     background-color: var(--secondary-color);
     color: var(--primary-color);
+    margin-bottom: 20px;
 }
 
 .drop-top{

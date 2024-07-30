@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,29 +11,53 @@ import '../ToastStyles.css';
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
-  const [maxStudents, setMaxStudents] = useState('');
   const [instructorId, setInstructorId] = useState('');
+  const [maxStudents, setMaxStudents] = useState('');
   const [taId, setTaId] = useState('');
   const [instructors, setInstructors] = useState([]);
   const [tas, setTAs] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  const setCourseIdInSession = useCallback(async (courseId) => {
+    try {
+      await axios.post('http://localhost:5173/eval-api/set-course-only', { courseId }, { withCredentials: true });
+      sessionStorage.setItem('courseId', courseId);
+    } catch (error) {
+      console.error('Failed to set course ID in session:', error);
+    }
+  }, []);
+  
+  const ensureCourseIdInSession = useCallback(async () => {
+    let courseId = sessionStorage.getItem('courseId');
+  
+    if (!courseId) {
+      console.error('Course ID is missing from session storage.');
+      return;
+    }
+  
+    await setCourseIdInSession(courseId);
+  }, [setCourseIdInSession]);
+  
+  useEffect(() => {
+    ensureCourseIdInSession();
+  }, [ensureCourseIdInSession]);  
+
   useEffect(() => {
     const fetchInstructorsAndTAs = async () => {
       try {
         const instructorResponse = await axios.get('http://localhost:5173/eval-api/instructors');
         setInstructors(instructorResponse.data);
-
+  
         const taResponse = await axios.get('http://localhost:5173/eval-api/tas');
         setTAs(taResponse.data);
       } catch (error) {
         console.error('Error fetching instructors and TAs:', error);
       }
     };
-
+  
     fetchInstructorsAndTAs();
-  }, []);
+  }, []);  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,8 +87,10 @@ const CreateCourse = () => {
       });
 
       const courseId = response.data.courseId;
+      await setCourseIdInSession(courseId); 
 
       if (instructorId) {
+        console.log('Assigning instructor:', { courseId, instructorId });
         await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId
@@ -72,6 +98,7 @@ const CreateCourse = () => {
       }
 
       if (taId) {
+        console.log('Assigning TA:', { courseId, taId });
         await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId: taId
@@ -91,6 +118,7 @@ const CreateCourse = () => {
     <>
       <AIvaluateNavBarEval navBarText='Create a Course' />
       <div className='form-container'>
+      <ToastContainer />
         <section>
           <div className="form-content">
             <form onSubmit={handleSubmit}>
@@ -102,7 +130,7 @@ const CreateCourse = () => {
                   value={courseName}
                   onChange={(e) => setCourseName(e.target.value)}
                   maxLength="50" // Limit the course name to 50 characters
-                  class="drop-down-menu"
+                  className="drop-down-menu"
                 />
               </div>
               <div className="form-group">
@@ -113,7 +141,7 @@ const CreateCourse = () => {
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
                   maxLength="10" // Limit the course code to 10 characters
-                  class="drop-down-menu"
+                  className="drop-down-menu"
                 />
               </div>
 
@@ -145,7 +173,6 @@ const CreateCourse = () => {
           </div>
         </section>
       </div>
-      <ToastContainer />
     </>
   );
 };

@@ -1,9 +1,9 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -46,17 +46,25 @@ const CreateAccPT = () => {
             const response = await axios.post('http://localhost:5173/admin-api/evaluatorRegister', data, {
               withCredentials: true
             });
-            toast.success('User successfully registered!');
-            console.log('User successfully registered!');
+        
+            if (response.status === 201) {
+              toast.success('User successfully registered!');
+              console.log('User successfully registered!');
+            } else if (response.status === 400) {
+              console.error('Duplicate email error:', response.data.error);
+              toast.error('Email already exists');
+            } else {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
             onClose();
           } catch (error) {
             console.error('Error registering evaluator:', error);
-            setMessage('Failed to register evaluator');
-            toast.error('Failed to register evaluator');
+            setMessage('Failed to register evaluator, the email is already in use.');
+            toast.error('Failed to register evaluator, the email is already in use.');
             onClose();
           }
         };
-
+  
         return (
           <div className="custom-ui">
             <h1>Confirm Registration</h1>
@@ -70,7 +78,7 @@ const CreateAccPT = () => {
       },
       overlayClassName: "custom-overlay",
     });
-  };
+  };      
 
   return (
     <div className="admin-home-portal">

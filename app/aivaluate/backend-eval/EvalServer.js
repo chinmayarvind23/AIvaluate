@@ -47,11 +47,16 @@ app.use(passport.session());
 app.use(flash());
 
 app.use((req, res, next) => {
+    console.log('Course ID from body:', req.body.courseId);
+    console.log('Course ID from session:', req.session.courseId);
     if (!req.session.courseId && req.body.courseId) {
         req.session.courseId = req.body.courseId;
     }
     if (!req.session.instructorId && req.body.instructorId) {
         req.session.instructorId = req.body.instructorId;
+    }
+    if (!req.session.assignmentId && req.body.assignmentId) {
+        req.session.assignmentId = req.body.assignmentId;
     }
     next();
 });
@@ -127,6 +132,25 @@ app.post('/eval-api/set-course', (req, res) => {
     res.status(200).json({ message: 'Course ID and Instructor ID set in session', courseId, instructorId });
 });
 
+app.post('/eval-api/set-course-only', (req, res) => {
+    const { courseId } = req.body;
+    if (!courseId) {
+        return res.status(400).json({ message: 'Course ID is required' });
+    }
+    req.session.courseId = courseId;
+    res.status(200).json({ message: 'Course ID set in session', courseId });
+});
+
+app.post('/eval-api/set-session', (req, res) => {
+    const { instructorId, courseId } = req.body;
+    if (!instructorId || !courseId) {
+        return res.status(400).json({ message: 'Instructor ID and Course ID are required' });
+    }
+    req.session.instructorId = instructorId;
+    req.session.courseId = courseId;
+    res.status(200).json({ message: 'Session variables set successfully' });
+  });
+
 function ensureCourseAndInstructor(req, res, next) {
     if (!req.session.courseId || !req.session.instructorId) {
         return res.status(400).json({ message: 'Course ID and Instructor ID must be set in session' });
@@ -134,6 +158,7 @@ function ensureCourseAndInstructor(req, res, next) {
     next();
 }
 
+app.use('/eval-api', ensureCourseAndInstructor, assignmentRoutes);
 app.use('/eval-api/rubrics', ensureCourseAndInstructor, courseRoutes);
 app.use('/eval-api/assignments', ensureCourseAndInstructor, assignmentRoutes);
 

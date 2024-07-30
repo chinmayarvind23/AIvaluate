@@ -6,13 +6,14 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { formatISO } = require('date-fns');
+const baseDir = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const courseId = req.session.courseId;
+        const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
         const instructorId = req.session.instructorId;
-        const assignmentId = req.session.assignmentId;
+        const assignmentId = req.body.assignmentId || req.params.assignmentId || req.session.assignmentId;
 
         if (!instructorId) {
             console.error('Instructor ID not found in session');
@@ -24,6 +25,7 @@ const storage = multer.diskStorage({
             return cb(new Error('Assignment ID not found in session'), false);
         }
 
+        req.session.assignmentId = assignmentId;
         try {
             const dir = path.resolve(__dirname, `../assignmentKeys/${courseId}/${instructorId}/${assignmentId}`);
             fs.mkdirSync(dir, { recursive: true });
@@ -65,10 +67,11 @@ function checkAuthenticated(req, res, next) {
 
 // Create a new assignment
 router.post('/assignments', upload.single('assignmentKey'), async (req, res) => {
-    const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, rubricName, criteria } = req.body;
+    const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, criteria } = req.body;
     const instructorId = req.session.instructorId;
-    const courseId = req.session.courseId;
+    const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
     const assignmentKey = req.file ? req.file.path : null;
+    const rubricName = `${assignmentName} Rubric`;
 
     console.log('Received request body:', req.body);
     console.log('Received file info:', req.file);
@@ -79,7 +82,7 @@ router.post('/assignments', upload.single('assignmentKey'), async (req, res) => 
         return res.status(400).json({ message: 'Instructor ID not found in session' });
     }
 
-    if (!courseId || !dueDate || !assignmentName || !maxObtainableGrade || !rubricName || !criteria) {
+    if (!courseId || courseId === undefined || !dueDate || !assignmentName || !maxObtainableGrade || !rubricName || !criteria) {
         console.error('Missing required fields in request body');
         return res.status(400).json({ message: 'Missing required fields in request body' });
     }
@@ -88,7 +91,7 @@ router.post('/assignments', upload.single('assignmentKey'), async (req, res) => 
         await pool.query('BEGIN');
 
         const assignmentResult = await pool.query(
-            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentDescription", "maxObtainableGrade", "assignmentKey") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "assignmentId"',
+            'INSERT INTO "Assignment" ("courseId", "dueDate", "assignmentName", "assignmentDescription", "maxObtainableGrade", "assignmentKey", "isPublished") VALUES ($1, $2, $3, $4, $5, $6, true) RETURNING "assignmentId"',
             [courseId, dueDate, assignmentName, assignmentDescription, maxObtainableGrade, assignmentKey]
         );
 
@@ -229,9 +232,13 @@ router.post('/rubrics', async (req, res) => {
 
 // Add or update a solution
 router.post('/assignments/:assignmentId/solutions', upload.single('assignmentKey'), async (req, res) => {
-    const { assignmentId } = req.params;
+    const assignmentId = req.params.assignmentId || req.session.assignmentId;
     const { instructorId } = req.body;
     const assignmentKey = req.file ? req.file.path : null;
+
+    if (!assignmentId) {
+        return res.status(400).json({ message: 'Assignment ID not found in session or request parameters' });
+    }
 
     if (!instructorId) {
         return res.status(400).json({ message: 'Instructor ID is required' });
@@ -362,7 +369,7 @@ router.get('/instructors/:instructorId/rubrics', async (req, res) => {
 
 // Fetch rubrics by courseId
 router.get('/rubrics', async (req, res) => {
-    const courseId = req.session.courseId;
+    const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
     if (!courseId) {
         return res.status(400).json({ message: 'Course ID not set in session' });
     }
@@ -486,15 +493,37 @@ router.get('/assignments/count/:courseId/all', async (req, res) => {
 });
 
 // Update assignment by ID with error handling for missing rubrics
-router.put('/assignments/:assignmentId', async (req, res) => {
+router.put('/assignments/:assignmentId', upload.single('assignmentKey'), async (req, res) => {
+    const body = { ...req.body };
     const { assignmentId } = req.params;
-    const { assignmentName, dueDate, assignmentDescription, criteria } = req.body;
+    const { assignmentName, dueDate, assignmentDescription, criteria = "", courseId: courseIdFromBody } = body;
+    const assignmentKey = req.file ? req.file.path : null;
+    const courseId = courseIdFromBody || req.body.courseId || req.session.courseId || req.query.courseId;
+
+    console.log('Received request body:', JSON.stringify(body));
+    console.log('Received file info:', req.file);
+    console.log('Instructor ID from session:', req.session.instructorId);
+    console.log('Course ID from session:', req.session.courseId);
+    console.log('Course ID from body:', body.courseId);
+
+    if (!req.session.instructorId) {
+        return res.status(400).json({ message: 'Instructor ID not found in session' });
+    }
+
+    if (!courseId) {
+        return res.status(400).json({ message: 'Course ID not found in request or session' });
+    }
+
+    if (!dueDate || !assignmentName || criteria === undefined) {
+        console.log('Missing fields:', { dueDate, assignmentName, criteria });
+        return res.status(400).json({ message: 'Missing required fields in request body' });
+    }
 
     try {
         await pool.query('BEGIN');
         const result = await pool.query(
-            'UPDATE "Assignment" SET "assignmentName" = $1, "dueDate" = $2, "assignmentDescription" = $3 WHERE "assignmentId" = $4 RETURNING *',
-            [assignmentName, dueDate, assignmentDescription, assignmentId]
+            'UPDATE "Assignment" SET "assignmentName" = $1, "dueDate" = $2, "assignmentDescription" = $3, "assignmentKey" = COALESCE($4, "assignmentKey") WHERE "assignmentId" = $5 RETURNING *',
+            [assignmentName, dueDate, assignmentDescription, assignmentKey, assignmentId]
         );
 
         if (result.rows.length === 0) {
@@ -515,7 +544,7 @@ router.put('/assignments/:assignmentId', async (req, res) => {
         if (rubricResult.rows.length === 0) {
             const newRubricResult = await pool.query(
                 'INSERT INTO "AssignmentRubric" ("rubricName", "criteria", "courseId") VALUES ($1, $2, $3) RETURNING "assignmentRubricId"',
-                [assignmentName, criteria, result.rows[0].courseId]
+                [assignmentName, criteria, courseId]
             );
             assignmentRubricId = newRubricResult.rows[0].assignmentRubricId;
             await pool.query(
@@ -660,20 +689,21 @@ router.put('/rubric/:rubricId', async (req, res) => {
 });
 
 // Route to get assignment details
-router.get('/assignment/:studentId/:assignmentId', checkAuthenticated, async (req, res) => {
+router.get('/assignment/:studentId/:assignmentId', async (req, res) => {
     const { studentId, assignmentId } = req.params;
 
     try {
         const query = `
             SELECT
                 a."assignmentName",
-                s."studentId" AS studentNumber,
+                s."studentId" AS "studentNumber",
                 a."dueDate",
                 a."maxObtainableGrade",
                 sf."AIFeedbackText",
                 sf."InstructorFeedbackText",
                 ag."AIassignedGrade",
-                ag."InstructorAssignedFinalGrade"
+                ag."InstructorAssignedFinalGrade",
+                asub."submissionFile"
             FROM
                 "Assignment" a
             JOIN
@@ -693,7 +723,12 @@ router.get('/assignment/:studentId/:assignmentId', checkAuthenticated, async (re
             return res.status(404).json({ error: 'Assignment not found' });
         }
 
+        const assignmentDetails = result.rows[0];
+        if (assignmentDetails.submissionFile) {
+            assignmentDetails.submissionFile = `${studentId}/${assignmentId}/${assignmentDetails.submissionFile}`;
+        }
         res.status(200).json(result.rows[0]);
+
     } catch (error) {
         console.error('Error fetching assignment details:', error);
         res.status(500).json({ error: 'Database error' });
@@ -703,9 +738,17 @@ router.get('/assignment/:studentId/:assignmentId', checkAuthenticated, async (re
 // Route to mark assignment as complete
 router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, async (req, res) => {
     const { studentId, assignmentId } = req.params;
-    const { dueDate, InstructorAssignedFinalGrade, AIFeedbackText, InstructorFeedbackText } = req.body;
-
+    const { dueDate, InstructorAssignedFinalGrade, AIFeedbackText, InstructorFeedbackText, maxObtainableGrade } = req.body;
+    console.log('Received request body:', req.body);
+    
     try {
+        const courseResult = await pool.query(
+            'SELECT "courseId" FROM "Assignment" WHERE "assignmentId" = $1',
+            [assignmentId]
+        );
+        
+        const courseId = courseResult.rows[0].courseId;
+        
         const updateQuery = `
             UPDATE "Assignment"
             SET
@@ -716,27 +759,92 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
 
         await pool.query(updateQuery, [dueDate, assignmentId]);
 
-        const updateGradeQuery = `
-            UPDATE "AssignmentGrade"
-            SET
-                "InstructorAssignedFinalGrade" = $1,
-                "isGraded" = true
-            WHERE
-                "assignmentId" = $2 AND "assignmentSubmissionId" = (
-                    SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "assignmentId" = $2 AND "studentId" = $3
-                )`;
+        // Fetch all submission IDs
+        const submissionIdsResult = await pool.query(
+            'SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "assignmentId" = $1 AND "studentId" = $2',
+            [assignmentId, studentId]
+        );
 
-        await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, assignmentId, studentId]);
+        const submissionIds = submissionIdsResult.rows.map(row => row.assignmentSubmissionId);
 
-        const updateFeedbackQuery = `
-            UPDATE "StudentFeedback"
-            SET
-                "AIFeedbackText" = $1,
-                "InstructorFeedbackText" = $2
-            WHERE
-                "assignmentId" = $3 AND "studentId" = $4`;
+        for (const submissionId of submissionIds) {
+            const checkGradeQuery = `
+                SELECT 1 FROM "AssignmentGrade" WHERE "assignmentSubmissionId" = $1 AND "assignmentId" = $2`;
+            
+            const gradeExists = await pool.query(checkGradeQuery, [submissionId, assignmentId]);
 
-        await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, assignmentId, studentId]);
+            if (gradeExists.rows.length === 0) {
+                const insertGradeQuery = `
+                    INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "InstructorAssignedFinalGrade", "isGraded", "maxObtainableGrade")
+                    VALUES ($1, $2, $3, true, $4)`;
+                    console.log('Inserting grade:', {
+                        submissionId,
+                        assignmentId,
+                        InstructorAssignedFinalGrade,
+                        maxObtainableGrade
+                    });
+                
+                await pool.query(insertGradeQuery, [submissionId, assignmentId, InstructorAssignedFinalGrade, maxObtainableGrade]);
+            } else {
+                const updateGradeQuery = `
+                UPDATE "AssignmentGrade"
+                SET
+                    "InstructorAssignedFinalGrade" = $1,
+                    "isGraded" = true,
+                    "maxObtainableGrade" = $4
+                WHERE 
+                    "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
+                    console.log('Updating grade:', {
+                        submissionId,
+                        assignmentId,
+                        InstructorAssignedFinalGrade,
+                        maxObtainableGrade
+                    });
+            await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId, maxObtainableGrade]);
+            }
+            const updateSubmissionQuery = `
+                UPDATE "AssignmentSubmission"
+                SET "isGraded" = true
+                WHERE "assignmentSubmissionId" = $1`;
+            await pool.query(updateSubmissionQuery, [submissionId]);
+
+            const checkFeedbackQuery = `
+                SELECT 1 FROM "StudentFeedback" WHERE "assignmentId" = $1 AND "studentId" = $2`;
+            
+            const feedbackExists = await pool.query(checkFeedbackQuery, [assignmentId, studentId]);
+
+            if (feedbackExists.rows.length === 0) {
+                const insertFeedbackQuery = `
+                    INSERT INTO "StudentFeedback" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                    VALUES ($1, $2, $3, $4, $5)`;
+                    console.log('Inserting feedback:', {
+                        assignmentId,
+                        studentId,
+                        courseId,
+                        AIFeedbackText,
+                        InstructorFeedbackText
+                    });
+                await pool.query(insertFeedbackQuery, [assignmentId, studentId, courseId, AIFeedbackText, InstructorFeedbackText]);
+
+            } else {
+                const updateFeedbackQuery = `
+                    UPDATE "StudentFeedback"
+                    SET
+                        "AIFeedbackText" = $1,
+                        "InstructorFeedbackText" = $2,
+                        "courseId" = $3
+                    WHERE
+                        "assignmentId" = $4 AND "studentId" = $5`;
+                        console.log('Updating feedback:', {
+                            AIFeedbackText,
+                            InstructorFeedbackText,
+                            courseId,
+                            assignmentId,
+                            studentId
+                        });
+                await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, courseId, assignmentId, studentId]);
+            }
+        }
 
         res.status(200).json({ message: 'Assignment marked as complete' });
     } catch (error) {
@@ -766,6 +874,33 @@ router.get('/assignments/:assignmentId/rubric', async (req, res) => {
     }
 });
 
+// Get rubrics by Course ID
+router.get('/rubrics/:courseId', async (req, res) => {
+    const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
+    
+    try {
+        const result = await pool.query(
+            'SELECT * FROM "AssignmentRubric" WHERE "courseId" = $1',
+            [courseId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubrics:', error);
+        res.status(500).json({ message: 'Error fetching rubrics' });
+    }
+});
 
+// Route to get file by file name and download it
+router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
+    const { studentId, courseId, assignmentId, fileName } = req.params;
+    const filePath = path.join(baseDir, studentId, courseId, assignmentId, fileName);
+    console.log('File path:', filePath);
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error('Error sending file:', err);
+            res.status(500).send('Error sending file');
+        }
+    });
+});
 
 module.exports = router;

@@ -12,13 +12,12 @@ function checkAuthenticated(req, res, next) {
 // Create a course
 router.post('/courses', async (req, res) => {
     const { courseName, courseCode, maxStudents } = req.body;
-
     console.log(req.body);
 
     try {
         const result = await pool.query(
-            'INSERT INTO "Course" ("courseName", "courseCode") VALUES ($1, $2) RETURNING "courseId"',
-            [courseName, courseCode]
+            'INSERT INTO "Course" ("courseName", "courseCode", "maxStudents") VALUES ($1, $2, $3) RETURNING "courseId"',
+            [courseName, courseCode, maxStudents]
         );
         res.status(201).send({ courseId: result.rows[0].courseId, message: 'Course created successfully' });
     } catch (error) {
@@ -177,7 +176,7 @@ router.get('/courses/:courseId', async (req, res) => {
 
 // Fetch all submissions for a course
 router.get('/courses/:courseId/submissions', async (req, res) => {
-    const { courseId } = req.params;
+    const courseId = parseInt(req.params.courseId, 10);
 
     if (!courseId) {
         return res.status(400).json({ message: 'Invalid course ID' });

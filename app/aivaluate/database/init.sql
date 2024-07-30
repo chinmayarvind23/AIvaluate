@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "assignmentKey" VARCHAR(500),
     "maxObtainableGrade" FLOAT,
     "assignmentDescription" VARCHAR(1000),
-    "isPublished" BOOLEAN DEFAULT false,
+    "isPublished" BOOLEAN DEFAULT true,
     "isGraded" BOOLEAN DEFAULT false,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );

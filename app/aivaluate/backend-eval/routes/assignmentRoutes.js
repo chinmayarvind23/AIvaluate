@@ -818,9 +818,9 @@ router.get('/rubrics/:courseId', async (req, res) => {
 });
 
 router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
-    const { studentId, courseId, assignmentId, fileName } = req.params || req.body || req.session;
+    const { studentId, courseId, assignmentId, fileName } = req.params;
     const filePath = path.join(baseDir, studentId, courseId, assignmentId, fileName);
-
+    console.log('File path:', filePath);
     res.sendFile(filePath, (err) => {
         if (err) {
             console.error('Error sending file:', err);

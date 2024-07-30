@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../DatePicker.css';
@@ -18,6 +18,7 @@ const GradingAssignments = () => {
   const courseCode = sessionStorage.getItem('courseCode');
   const courseName = sessionStorage.getItem('courseName');
   const navigate = useNavigate();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [dueDate, setDueDate] = useState(new Date());
@@ -28,7 +29,8 @@ const GradingAssignments = () => {
   const [isEditingFeedback, setIsEditingFeedback] = useState(false);
   const studentNumber = studentId;
   const [submittedFiles, setSubmittedFiles] = useState([]);
-
+  const { fileName } = location.state || {};
+  console.log("Received fileName:", fileName);
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
@@ -195,21 +197,18 @@ const GradingAssignments = () => {
             </div>
             <div className="student-submission">
                 <h4>Student Submission</h4>
-                {submittedFiles.length > 0 ? (
-                    submittedFiles.map((file, index) => (
-                        <div key={index}>
-                            <a 
-                                href={`http://localhost:5173/eval-api/file/${studentId}/${courseId}/${assignmentId}/${file.split('/').pop()}`} 
-                                download 
-                            >
-                                {file.split('/').pop()}
-                            </a>
-                        </div>
-                    ))
-                ) : (
-                    <p>No files uploaded yet.</p>
+                {fileName && (
+                    <div>
+                        <a 
+                            href={`http://localhost:5173/eval-api/file/${studentId}/${courseId}/${assignmentId}/${fileName}`} 
+                            download
+                        >
+                            {fileName}
+                        </a>
+                    </div>
                 )}
-                </div>
+                {!fileName && <p>No files uploaded yet.</p>}
+            </div>
             <button className="mark-complete" onClick={handleMarkComplete}>Mark evaluation as complete</button>
           </div>
         </div>

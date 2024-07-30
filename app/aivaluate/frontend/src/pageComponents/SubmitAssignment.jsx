@@ -1,7 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,7 +29,7 @@ const SubmitAssignment = () => {
         maxObtainableGrade: '',
         InstructorAssignedFinalGrade: '',
         assignmentDescription: '',
-        AIFeedbackText: '' // Add this to store AI feedback
+        AIFeedbackText: ''
     });
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -152,7 +152,6 @@ const SubmitAssignment = () => {
     };
 
     const handleFileUploadChange = () => {
-        // Implement this function
     };
 
     return (
@@ -254,7 +253,7 @@ const SubmitAssignment = () => {
                                         {uploadedFiles.flatMap(submission => (
                                             Array.isArray(submission.files) ? submission.files.map((file, index) => (
                                                 <li key={index}>
-                                                    <a href={`/${file}`} target="_blank" rel="noopener noreferrer">{String(file).split('/').pop()}</a>
+                                                    <span>{String(file).split('/').pop()}</span>
                                                 </li>
                                             )) : null
                                         ))}

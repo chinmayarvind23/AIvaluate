@@ -34,7 +34,7 @@ body {
     background-color: var(--secondary-color);
     color: var(--third-color);
     padding: 10px;
-    width: 200px;
+    width: 300px;
 }
 
 .user-details div input[type="text"]{
@@ -73,6 +73,7 @@ body {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    width: 150px;
 }
 
 .create-button {

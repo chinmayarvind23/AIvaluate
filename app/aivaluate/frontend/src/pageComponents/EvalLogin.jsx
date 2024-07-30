@@ -54,7 +54,7 @@ const EvalLogin = () => {
   };
 
   return (
-    <div className="background">
+    <div className="background-div">
       <div className="logo">
         <div className="logoText">
           <h1 className="primary-color-text">AI</h1><h1 className="third-color-text">valuate</h1>

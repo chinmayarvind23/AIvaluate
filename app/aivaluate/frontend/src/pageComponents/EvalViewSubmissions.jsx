@@ -13,7 +13,8 @@ const EvalViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
     const navigate = useNavigate();
-    const { courseId } = useParams();
+    const { paramCourseId } = useParams();
+    const courseId = sessionStorage.getItem('courseId') || paramCourseId;
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -67,6 +68,11 @@ const EvalViewSubmissions = () => {
 
     useEffect(() => {
         const fetchSubmissions = async () => {
+            const courseId = sessionStorage.getItem('courseId') || paramCourseId;
+            if (!courseId) {
+                console.error('Course ID is missing.');
+                return;
+            }
             try {
                 const response = await fetch(`/eval-api/courses/${courseId}/submissions`);
                 if (response.ok) {
@@ -80,9 +86,9 @@ const EvalViewSubmissions = () => {
                 console.error('Error fetching submissions:', error);
             }
         };
-
+    
         fetchSubmissions();
-    }, [courseId]);
+    }, [paramCourseId]);    
 
     useEffect(() => {
         const filtered = files.filter(file =>

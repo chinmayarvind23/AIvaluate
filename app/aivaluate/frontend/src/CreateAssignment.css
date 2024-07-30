@@ -55,7 +55,7 @@
 }
 
 .title-text{
-    
+    width: 500px;
 }
 
 .create-assignment-content input[type="text"],
@@ -100,6 +100,13 @@
     align-items: center;
     position: relative;
     margin-bottom: 20px;
+}
+
+.react-datepicker__input-container {
+    position: relative;
+    display: inline-block;
+    margin-left: -20px;
+    width: 100%;
 }
 
 .date-picker input[type="date"] {

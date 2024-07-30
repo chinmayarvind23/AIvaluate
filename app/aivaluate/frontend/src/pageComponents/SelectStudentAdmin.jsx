@@ -128,15 +128,14 @@ const SelectStudentAdmin = () => {
                         <div className="user-info2">
                             <div className="user-name">
                                 <span>{student.firstName} {student.lastName}</span>
-                                <span>{student.studentId}</span>
+                                <span>Student ID: {student.studentId}</span>
                             </div>
-                            <div className="major">Major: {student.major}</div>
                             <div className="email">
-                                <span>Email:</span>
+                                <span>Email: </span>
                                 <span>{student.email}</span>
                             </div>
                             <div className="password">
-                                <span>Password:</span>
+                                <span>Password: </span>
                                 <span>{maskedPassword}</span>
                             </div>
                             <div className="courses">

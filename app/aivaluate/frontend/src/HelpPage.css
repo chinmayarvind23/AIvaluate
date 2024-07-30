@@ -32,3 +32,46 @@
   font-size: 1.5rem;  /* Increase font size, adjust as needed */
   font-weight: bold;  /* Optional: make it bold to stand out */
 }
+
+.heading-dashboardd{
+  font-size: 1.5rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+}
+.heading-create-course{
+  font-size: 1.5rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+}
+.heading-manage-coursee{
+  font-size: 1.8rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+}
+.heading-managementt{
+  font-size: 1.5rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+  
+}
+.heading-gradess{
+  font-size: 1.5rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+}
+.heading-assignments{
+  font-size: 1.5rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+}
+
+.heading-submissions{
+  font-size: 1.5rem;  /* Increase font size, adjust as needed */
+  font-weight: bold;  /* Optional: make it bold to stand out */
+}
+.heading-rubrics {
+    font-size: 1.5rem; /* Uniform font size */
+    font-weight: bold; /* Bold font style for better visibility */
+}
+.heading-ss {
+    font-size: 1.5rem; /* Uniform font size */
+    font-weight: bold; /* Bold font style for better visibility */
+}
+.heading-assistt {
+    font-size: 1.8rem; /* Uniform font size */
+    font-weight: bold; /* Bold font style for better visibility */
+}

@@ -30,6 +30,23 @@ body {
     position: relative; /* Added for positioning */
 }
 
+.user-details div input[type="email"]{
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    background-color: var(--secondary-color);
+    color: var(--third-color);
+    padding: 10px;
+    width: 300px;
+}
+
+.user-details div input[type="text"]{
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    background-color: var(--secondary-color);
+    color: var(--third-color);
+    padding: 10px;
+}
+
 .user-details h2 {
     margin: 0;
 }
@@ -53,11 +70,12 @@ body {
 
 .delete-button {
     background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
     width: 150px;
-}
-
-.delete-button:hover {
-    background-color: #cc0000;
 }
 
 .create-button {

@@ -19,8 +19,9 @@ const AdminHelpPage = () => {
               
               <h3 className="heading-studentss">Managing Students</h3>
               <p><strong>Searching for a Student:</strong> Use the search bar at the top of the Student Manager to quickly locate students by name. Type the student's name into the search bar and press enter to find their profile.</p>
-                <p><strong>Dropping Courses:</strong> In the student's profile, use the 'Drop' button in fornt each course to manage their Courses.</p>
-                <p><strong>Deleting a Student Account:</strong> To remove a student completely, click the 'Delete user' button at the botton of their profile and confirm the deletion.</p>
+              <p><strong>Updating Student Profiles:</strong> Select an student from the list, click 'Edit', make any necessary changes to their profile, and save your updates.</p>
+              <p><strong>Dropping Courses:</strong> In the student's profile, use the 'Drop' button in fornt each course to manage their Courses.</p>
+              <p><strong>Deleting a Student Account:</strong> To remove a student completely, click the 'Delete user' button at the botton of their profile and confirm the deletion.</p>
 
                 <h3 className="heading-assistance">Need Further Assistance?</h3>
                 <p>If you require additional support or have any questions, please don’t hesitate to contact us at <a href="mailto:aivaluateoffical@gmail.com">aivaluateoffical@gmail.com</a>. Our team is ready to assist you with any issues or queries you might have.</p>

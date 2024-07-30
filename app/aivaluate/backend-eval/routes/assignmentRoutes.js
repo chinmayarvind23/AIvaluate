@@ -751,17 +751,38 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
 
         await pool.query(updateQuery, [dueDate, assignmentId]);
 
-        const updateGradeQuery = `
-            UPDATE "AssignmentGrade"
-            SET
-                "InstructorAssignedFinalGrade" = $1,
-                "isGraded" = true
-            WHERE
-                "assignmentId" = $2 AND "assignmentSubmissionId" = (
-                    SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "assignmentId" = $2 AND "studentId" = $3
-                )`;
+        // Fetch all submission IDs
+        const submissionIdsResult = await pool.query(
+            'SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "assignmentId" = $1 AND "studentId" = $2',
+            [assignmentId, studentId]
+        );
 
-        await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, assignmentId, studentId]);
+        const submissionIds = submissionIdsResult.rows.map(row => row.assignmentSubmissionId);
+
+        for (const submissionId of submissionIds) {
+            const checkGradeQuery = `
+                SELECT 1 FROM "AssignmentGrade" WHERE "assignmentSubmissionId" = $1 AND "assignmentId" = $2`;
+            
+            const gradeExists = await pool.query(checkGradeQuery, [submissionId, assignmentId]);
+
+            if (gradeExists.rows.length === 0) {
+                const insertGradeQuery = `
+                    INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "InstructorAssignedFinalGrade", "isGraded")
+                    VALUES ($1, $2, $3, true)`;
+                
+                await pool.query(insertGradeQuery, [submissionId, assignmentId, InstructorAssignedFinalGrade]);
+            } else {
+                const updateGradeQuery = `
+                    UPDATE "AssignmentGrade"
+                    SET
+                        "InstructorAssignedFinalGrade" = $1,
+                        "isGraded" = true
+                    WHERE 
+                        "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
+                
+                await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId]);
+            }
+        }
 
         const updateFeedbackQuery = `
             UPDATE "StudentFeedback"
@@ -817,6 +838,7 @@ router.get('/rubrics/:courseId', async (req, res) => {
     }
 });
 
+// Route to get file by file name and download it
 router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
     const { studentId, courseId, assignmentId, fileName } = req.params;
     const filePath = path.join(baseDir, studentId, courseId, assignmentId, fileName);

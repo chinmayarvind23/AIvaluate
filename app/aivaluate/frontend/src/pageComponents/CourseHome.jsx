@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -24,6 +24,33 @@ const CourseHome = () => {
     const [isTaModalOpen, setIsTaModalOpen] = useState(false);
     const [isArchived, setIsArchived] = useState(false);
     const [loading, setLoading] = useState(true);
+    const setSessionData = useCallback(async (courseId) => {
+        try {
+            await axios.post('http://localhost:5173/eval-api/set-course-only', {
+                courseId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+
+    const ensureSessionData = useCallback(async () => {
+        let courseId = sessionStorage.getItem('courseId');
+
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+
+        await setSessionData(courseId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);   
 
     useEffect(() => {
         axios.get(`http://localhost:5173/eval-api/courses/${courseId}`)

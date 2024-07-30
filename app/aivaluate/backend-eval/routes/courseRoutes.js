@@ -176,7 +176,7 @@ router.get('/courses/:courseId', async (req, res) => {
 
 // Fetch all submissions for a course
 router.get('/courses/:courseId/submissions', async (req, res) => {
-    const { courseId } = req.params;
+    const courseId = parseInt(req.params.courseId, 10);
 
     if (!courseId) {
         return res.status(400).json({ message: 'Invalid course ID' });

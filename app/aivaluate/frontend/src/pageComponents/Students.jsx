@@ -13,7 +13,7 @@ const Students = () => {
     const courseName = sessionStorage.getItem('courseName');
     const navBarText = `${courseCode} - ${courseName}`;
 
-    const { courseId } = useParams();
+    const courseId = sessionStorage.getItem('courseId');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');

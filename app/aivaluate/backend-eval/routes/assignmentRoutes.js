@@ -10,7 +10,7 @@ const { formatISO } = require('date-fns');
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const courseId = req.body.courseId || req.session.courseId;
+        const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
         const instructorId = req.session.instructorId;
         const assignmentId = req.body.assignmentId || req.params.assignmentId || req.session.assignmentId;
 
@@ -68,7 +68,7 @@ function checkAuthenticated(req, res, next) {
 router.post('/assignments', upload.single('assignmentKey'), async (req, res) => {
     const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, criteria } = req.body;
     const instructorId = req.session.instructorId;
-    const courseId = req.session.courseId;
+    const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
     const assignmentKey = req.file ? req.file.path : null;
     const rubricName = `${assignmentName} Rubric`;
 
@@ -81,7 +81,7 @@ router.post('/assignments', upload.single('assignmentKey'), async (req, res) => 
         return res.status(400).json({ message: 'Instructor ID not found in session' });
     }
 
-    if (!courseId || !dueDate || !assignmentName || !maxObtainableGrade || !rubricName || !criteria) {
+    if (!courseId || courseId === undefined || !dueDate || !assignmentName || !maxObtainableGrade || !rubricName || !criteria) {
         console.error('Missing required fields in request body');
         return res.status(400).json({ message: 'Missing required fields in request body' });
     }
@@ -368,7 +368,7 @@ router.get('/instructors/:instructorId/rubrics', async (req, res) => {
 
 // Fetch rubrics by courseId
 router.get('/rubrics', async (req, res) => {
-    const courseId = req.session.courseId;
+    const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
     if (!courseId) {
         return res.status(400).json({ message: 'Course ID not set in session' });
     }
@@ -497,7 +497,7 @@ router.put('/assignments/:assignmentId', upload.single('assignmentKey'), async (
     const { assignmentId } = req.params;
     const { assignmentName, dueDate, assignmentDescription, criteria = "", courseId: courseIdFromBody } = body;
     const assignmentKey = req.file ? req.file.path : null;
-    const courseId = courseIdFromBody || req.session.courseId;
+    const courseId = courseIdFromBody || req.body.courseId || req.session.courseId || req.query.courseId;
 
     console.log('Received request body:', JSON.stringify(body));
     console.log('Received file info:', req.file);
@@ -796,7 +796,7 @@ router.get('/assignments/:assignmentId/rubric', async (req, res) => {
 
 // Get rubrics by Course ID
 router.get('/rubrics/:courseId', async (req, res) => {
-    const courseId = req.body.courseId || req.session.courseId;
+    const courseId = req.body.courseId || req.session.courseId || req.query.courseId;
     
     try {
         const result = await pool.query(

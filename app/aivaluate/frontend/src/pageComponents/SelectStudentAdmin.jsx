@@ -171,7 +171,7 @@ const SelectStudentAdmin = () => {
                         <h1>Student Info</h1>
                     </div>
                     <div className="center-it">
-                        <div>
+                        <div className="user-info2-container">
                             <div className="user-info2">
                                 <div className="user-name">
                                     {isEditing ? (
@@ -188,13 +188,12 @@ const SelectStudentAdmin = () => {
                                             />
                                         </div>
                                     ) : (
-                                        <span>{student.firstName} {student.lastName}</span>
+                                        <span>Name: {student.firstName} {student.lastName}</span>
                                     )}
-                                    <span>{student.studentId}</span>
+                                    <span>Student ID: {student.studentId}</span>
                                 </div>
-                                <div className="major">Major: {student.major}</div>
                                 <div className="email">
-                                    <span>Email:</span>
+                                    <span>Email: </span>
                                     {isEditing ? (
                                         <input 
                                             type="email" 
@@ -206,7 +205,7 @@ const SelectStudentAdmin = () => {
                                     )}
                                 </div>
                                 <div className="password">
-                                    <span>Password:</span>
+                                    <span>Password: </span>
                                     <span>{maskedPassword}</span>
                                 </div>
                                 <div className="courses">
@@ -220,14 +219,14 @@ const SelectStudentAdmin = () => {
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="action-buttons">
-                                    <button className="delete-button" onClick={handleDelete}>Delete user</button>
-                                    {isEditing ? (
-                                        <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
-                                    ) : (
-                                        <button className="edit-button" onClick={handleEditClick}>Edit</button>
-                                    )}
-                                </div>
+                            </div>
+                            <div className="action-buttons">
+                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
+                                {isEditing ? (
+                                    <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
+                                ) : (
+                                    <button className="edit-button" onClick={handleEditClick}>Edit</button>
+                                )}
                             </div>
                         </div>
                     </div>

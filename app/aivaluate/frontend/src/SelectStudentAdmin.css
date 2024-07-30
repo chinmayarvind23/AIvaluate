@@ -1,5 +1,3 @@
-
-
 .back-to-last-page {
     display: flex;
     align-items: center;
@@ -38,13 +36,20 @@
     color: #000;
 }
 
-.user-info2 {
+.user-info2-container {
+    display: flex;
+    flex-direction: column;
     background-color: #3b3b3b;
     color: #fff;
     border-radius: 10px;
     padding: 20px;
     width: 900px;
     position: relative;
+    min-height: 300px; /* Ensure minimum height */
+}
+
+.user-info2 {
+    flex-grow: 1;
 }
 
 .user-name {
@@ -54,7 +59,6 @@
     margin-bottom: 10px;
     cursor: default;
 }
-
 
 .email, .password, .courses {
     background-color: #767676;
@@ -103,26 +107,29 @@
     color: var(--primary-color);
 }
 
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Space between content and buttons */
+    position: relative;
+}
+
 .delete-button {
     position: absolute;
-    left: 20px;
-   
+    left: 0; /* Move to the left corner */
+    bottom: 0; /* Move to the bottom */
     background-color: #ff0000;
     color: #fff;
     border: none;
     border-radius: 10px;
     padding: 10px;
-    cursor: pointer;
 }
 
 .delete-button:hover {
     background-color: #cc0000;
 }
 
-.edit-button {
-    position: absolute;
-    right: 20px;
-  
+.edit-button, .confirm-button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -131,9 +138,6 @@
     cursor: pointer;
 }
 
-.edit-button:hover {
+.edit-button:hover, .confirm-button:hover {
     background-color: #0056b3;
 }
-
-
-

@@ -16,7 +16,10 @@ const SelectStudentAdmin = () => {
     const { studentId } = useParams();
     const [student, setStudent] = useState({});
     const [courses, setCourses] = useState([]);
-    const [droppedCourses, setDroppedCourses] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedFirstName, setEditedFirstName] = useState('');
+    const [editedLastName, setEditedLastName] = useState('');
+    const [editedEmail, setEditedEmail] = useState('');
 
     useEffect(() => {
         const fetchStudentDetails = async () => {
@@ -27,6 +30,9 @@ const SelectStudentAdmin = () => {
                 const data = await response.json();
                 setStudent(data);
                 setCourses(data.courses);
+                setEditedFirstName(data.firstName);
+                setEditedLastName(data.lastName);
+                setEditedEmail(data.email);
             } catch (error) {
                 console.error('Error fetching student details:', error);
             }
@@ -34,6 +40,46 @@ const SelectStudentAdmin = () => {
 
         fetchStudentDetails();
     }, [studentId]);
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleConfirmClick = async () => {
+        console.log('Updating student with:', { firstName: editedFirstName, lastName: editedLastName, email: editedEmail }); // Debugging line
+
+        // Email validation regex pattern
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(editedEmail)) {
+            toast.error('Invalid email format');
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    firstName: editedFirstName,
+                    lastName: editedLastName,
+                    email: editedEmail
+                })
+            });
+            if (response.ok) {
+                setStudent({ ...student, firstName: editedFirstName, lastName: editedLastName, email: editedEmail });
+                toast.success('Student information updated successfully');
+                setIsEditing(false);
+            } else {
+                toast.error('Failed to update student information');
+            }
+        } catch (error) {
+            console.error('Error updating student:', error);
+            toast.error('Failed to update student information');
+        }
+    };
 
     const handleDelete = () => {
         confirmAlert({
@@ -169,15 +215,39 @@ const SelectStudentAdmin = () => {
                         <div>
                             <div className="user-info2">
                                 <div className="user-name">
-                                    <span>{student.firstName} {student.lastName}</span>
-                                    <span>Student ID: {student.studentId}</span>
+                                    {isEditing ? (
+                                        <div>
+                                            <input 
+                                                type="text" 
+                                                value={editedFirstName} 
+                                                onChange={(e) => setEditedFirstName(e.target.value)} 
+                                            />
+                                            <input 
+                                                type="text" 
+                                                value={editedLastName} 
+                                                onChange={(e) => setEditedLastName(e.target.value)} 
+                                            />
+                                        </div>
+                                    ) : (
+                                        <span>{student.firstName} {student.lastName}</span>
+                                    )}
+                                    <span>{student.studentId}</span>
                                 </div>
+                                <div className="major">Major: {student.major}</div>
                                 <div className="email">
-                                    <span>Email: </span>
-                                    <span>{student.email}</span>
+                                    <span>Email:</span>
+                                    {isEditing ? (
+                                        <input 
+                                            type="email" 
+                                            value={editedEmail} 
+                                            onChange={(e) => setEditedEmail(e.target.value)} 
+                                        />
+                                    ) : (
+                                        <span>{student.email}</span>
+                                    )}
                                 </div>
                                 <div className="password">
-                                    <span>Password: </span>
+                                    <span>Password:</span>
                                     <span>{maskedPassword}</span>
                                 </div>
                                 <div className="courses">
@@ -185,37 +255,20 @@ const SelectStudentAdmin = () => {
                                     <ul>
                                         {courses.map((course, index) => (
                                             <li key={index}>
-                                                {course.courseCode} - {course.courseName}
+                                                {course.courseCode}
                                                 <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="dropped-courses">
-                                    <span>Dropped Courses:</span>
-                                    <ul>
-                                        {droppedCourses.map((course, index) => (
-                                            <li key={index}>
-                                                {course.courseCode} - {course.courseName}
-                                                <button 
-                                                    className="restore-button" 
-                                                    onClick={() => handleRestoreCourse(course.courseCode)}
-                                                    style={{
-                                                        backgroundColor: 'green',
-                                                        color: 'white',
-                                                        border: 'none',
-                                                        padding: '5px 10px',
-                                                        cursor: 'pointer',
-                                                        marginLeft: '10px'
-                                                    }}
-                                                >
-                                                    Undo Drop
-                                                </button>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                <div className="action-buttons">
+                                    <button className="delete-button" onClick={handleDelete}>Delete user</button>
+                                    {isEditing ? (
+                                        <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
+                                    ) : (
+                                        <button className="edit-button" onClick={handleEditClick}>Edit</button>
+                                    )}
                                 </div>
-                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
                             </div>
                         </div>
                     </div>

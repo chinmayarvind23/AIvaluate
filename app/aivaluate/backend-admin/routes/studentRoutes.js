@@ -319,181 +319,29 @@ router.get('/students', checkAuthenticated, async (req, res) => {
     }
 });
 
-// Fetch all deleted students
-router.get('/deleted-students', checkAuthenticated, async (req, res) => {
-    try {
-        const result = await pool.query('SELECT "studentId", "firstName", "lastName", "email", "resetPasswordToken", "resetPasswordExpires", "deleted_at" FROM "BackupStudent"');
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error fetching deleted students:', error);
-        res.status(500).json({ error: 'Database error' });
-    }
-});
 
-// Restore student (soft delete restore)
-router.post('/student/restore/:studentId', checkAuthenticated, async (req, res) => {
+// Update student details
+router.put('/student/:studentId', checkAuthenticated, async (req, res) => {
     const { studentId } = req.params;
-    const client = await pool.connect();
+    const { firstName, lastName, email } = req.body;
+
+    console.log('Updating student with ID:', studentId); // Debugging line
+    console.log('Received data:', req.body); // Debugging line
+
     try {
-        await client.query('BEGIN');
-
-        // Fetch the student from the backup table
-        const selectQuery = 'SELECT * FROM "BackupStudent" WHERE "studentId" = $1';
-        const result = await client.query(selectQuery, [studentId]);
-        if (result.rows.length === 0) {
-            await client.query('ROLLBACK');
-            console.log('Student not found in backup, rolling back');
-            return res.status(404).json({ error: 'Student not found in backup' });
-        }
-        const student = result.rows[0];
-
-        console.log('Student to be restored:', student); // Debug log
-
-        // Restore the student to the main table
-        const insertMainQuery = `
-            INSERT INTO "Student" ("studentId", "firstName", "lastName", "email", "password", "resetPasswordToken", "resetPasswordExpires")
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-            ON CONFLICT DO NOTHING
-        `;
-        await client.query(insertMainQuery, [
-            student.studentId,
-            student.firstName,
-            student.lastName,
-            student.email,
-            student.password,
-            student.resetPasswordToken,
-            student.resetPasswordExpires
-        ]);
-
-        console.log('Student restored to main table'); // Debug log
-
-        // Restore related enrollments
-        const backupEnrollmentsResult = await client.query('SELECT * FROM "BackupEnrolledIn" WHERE "studentId" = $1', [studentId]);
-        for (const backupEnrollment of backupEnrollmentsResult.rows) {
-            await client.query(`
-                INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
-                VALUES ($1, $2, $3)
-                ON CONFLICT DO NOTHING
-            `, [backupEnrollment.studentId, backupEnrollment.courseId, backupEnrollment.studentGrade]);
-        }
-        console.log('Related enrollments restored successfully'); // Debug log
-
-        // Restore related assignment submissions
-        const backupSubmissionsResult = await client.query('SELECT * FROM "BackupAssignmentSubmission" WHERE "studentId" = $1', [studentId]);
-        for (const backupSubmission of backupSubmissionsResult.rows) {
-            await client.query(`
-                INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupSubmission.assignmentSubmissionId,
-                backupSubmission.studentId,
-                backupSubmission.courseId,
-                backupSubmission.assignmentId,
-                backupSubmission.submittedAt,
-                backupSubmission.submissionFile,
-                backupSubmission.isSubmitted,
-                backupSubmission.updatedAt,
-                backupSubmission.isGraded
-            ]);
-        }
-        console.log('Related assignment submissions restored successfully'); // Debug log
-
-        // Restore related assignment grades
-        const backupGradesResult = await client.query('SELECT * FROM "BackupAssignmentGrade" WHERE "assignmentSubmissionId" IN (SELECT "assignmentSubmissionId" FROM "BackupAssignmentSubmission" WHERE "studentId" = $1)', [studentId]);
-        for (const backupGrade of backupGradesResult.rows) {
-            await client.query(`
-                INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupGrade.assignmentSubmissionId,
-                backupGrade.assignmentId,
-                backupGrade.maxObtainableGrade,
-                backupGrade.AIassignedGrade,
-                backupGrade.InstructorAssignedFinalGrade,
-                backupGrade.isGraded
-            ]);
-        }
-        console.log('Related assignment grades restored successfully'); // Debug log
-
-        // Restore related feedback
-        const backupFeedbackResult = await client.query('SELECT * FROM "BackupStudentFeedback" WHERE "studentId" = $1', [studentId]);
-        for (const backupFeedback of backupFeedbackResult.rows) {
-            await client.query(`
-                INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupFeedback.studentFeedbackId,
-                backupFeedback.studentId,
-                backupFeedback.assignmentId,
-                backupFeedback.courseId,
-                backupFeedback.AIFeedbackText,
-                backupFeedback.InstructorFeedbackText
-            ]);
-        }
-        console.log('Related feedback restored successfully'); // Debug log
-
-        // Restore related feedback reports
-        const backupFeedbackReportsResult = await client.query('SELECT * FROM "BackupStudentFeedbackReport" WHERE "studentId" = $1', [studentId]);
-        for (const backupFeedbackReport of backupFeedbackReportsResult.rows) {
-            await client.query(`
-                INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupFeedbackReport.studentFeedbackReportId,
-                backupFeedbackReport.studentFeedbackReportText,
-                backupFeedbackReport.isResolved,
-                backupFeedbackReport.studentId,
-                backupFeedbackReport.assignmentId,
-                backupFeedbackReport.courseId,
-                backupFeedbackReport.AIFeedbackText,
-                backupFeedbackReport.InstructorFeedbackText
-            ]);
-        }
-        console.log('Related feedback reports restored successfully'); // Debug log
-
-        // Delete the backup entries for the restored student
-        await client.query('DELETE FROM "BackupStudent" WHERE "studentId" = $1', [studentId]);
-        await client.query('DELETE FROM "BackupEnrolledIn" WHERE "studentId" = $1', [studentId]);
-        await client.query('DELETE FROM "BackupAssignmentSubmission" WHERE "studentId" = $1', [studentId]);
-        await client.query('DELETE FROM "BackupAssignmentGrade" WHERE "assignmentSubmissionId" IN (SELECT "assignmentSubmissionId" FROM "BackupAssignmentSubmission" WHERE "studentId" = $1)', [studentId]);
-        await client.query('DELETE FROM "BackupStudentFeedback" WHERE "studentId" = $1', [studentId]);
-        await client.query('DELETE FROM "BackupStudentFeedbackReport" WHERE "studentId" = $1', [studentId]);
-
-        await client.query('COMMIT');
-        res.status(200).json({ message: 'Student restored successfully' });
+        const result = await pool.query(
+            'UPDATE "Student" SET "firstName" = $1, "lastName" = $2, "email" = $3 WHERE "studentId" = $4',
+            [firstName, lastName, email, studentId]
+        );
+        console.log('Update result:', result); // Debugging line
+        res.status(200).json({ message: 'Student updated successfully' });
     } catch (error) {
-        await client.query('ROLLBACK');
-        console.error('Error restoring student:', error);
-        res.status(500).json({ error: 'Database error' });
-    } finally {
-        client.release();
+        console.error('Error updating student:', error); // Detailed error logging
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
-// Clear all student backup tables
-router.delete('/clear-backup/student', async (req, res) => {
-    const client = await pool.connect();
-    try {
-        await client.query('BEGIN');
-        await client.query('DELETE FROM "BackupStudent"');
-        await client.query('DELETE FROM "BackupEnrolledIn"');
-        await client.query('DELETE FROM "BackupAssignmentSubmission"');
-        await client.query('DELETE FROM "BackupAssignmentGrade"');
-        await client.query('DELETE FROM "BackupStudentFeedback"');
-        await client.query('DELETE FROM "BackupStudentFeedbackReport"');
-        await client.query('COMMIT');
-        res.status(200).json({ message: 'Backup tables cleared successfully' });
-    } catch (error) {
-        await client.query('ROLLBACK');
-        console.error('Error clearing backup tables:', error);
-        res.status(500).json({ error: 'Database error' });
-    } finally {
-        client.release();
-    }
-});
+
+
 
 module.exports = router;

@@ -18,6 +18,11 @@ const AIvaluateNavBarAdmin = ({navBarText , tab}) => {
   const handleLogout = async () => {
     window.location.href = '/admin/login';
     try {
+      // Clear backup tables
+      await axios.delete('http://localhost:5173/admin-api/clear-backup/student', {
+          withCredentials: true
+      });
+    
       const response = await axios.get('http://localhost:5173/admin-api/logout', {
         withCredentials: true // Ensures cookies are included in the request
       });

@@ -1,3 +1,5 @@
+/* SelectStudentAdmin.css */
+
 .back-to-last-page {
     display: flex;
     align-items: center;
@@ -36,7 +38,7 @@
     color: #000;
 }
 
-.user-info2-container {
+.select-student-admin-container {
     display: flex;
     flex-direction: column;
     background-color: #3b3b3b;
@@ -48,11 +50,11 @@
     min-height: 300px; /* Ensure minimum height */
 }
 
-.user-info2 {
+.select-student-admin {
     flex-grow: 1;
 }
 
-.user-name {
+.select-student-admin-name {
     display: flex;
     justify-content: space-between;
     font-size: 20px;
@@ -60,7 +62,7 @@
     cursor: default;
 }
 
-.email, .password, .courses {
+.select-student-admin-email, .select-student-admin-password, .select-student-admin-courses {
     background-color: #767676;
     padding: 10px;
     border-radius: 5px;
@@ -68,32 +70,32 @@
     cursor: default;
 }
 
-.center-it{
+.select-student-admin-center-it {
     display: flex;
     justify-content: center;
     align-items: center;
     width: stretch;
 }
 
-.password span {
+.select-student-admin-password span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.courses ul {
+.select-student-admin-courses ul {
     list-style-type: none;
     padding: 0;
 }
 
-.courses li {
+.select-student-admin-courses li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 5px 0;
 }
 
-.drop-button {
+.select-student-admin-drop-button {
     background-color: var(--primary-color);
     color: #fff;
     border: none;
@@ -102,19 +104,19 @@
     cursor: pointer;
 }
 
-.drop-button:hover {
+.select-student-admin-drop-button:hover {
     background-color: var(--secondary-color);
     color: var(--primary-color);
 }
 
-.action-buttons {
+.select-student-admin-action-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 20px; /* Space between content and buttons */
     position: relative;
 }
 
-.delete-button {
+.select-student-admin-delete-button {
     position: absolute;
     left: 0; /* Move to the left corner */
     bottom: 0; /* Move to the bottom */
@@ -125,11 +127,11 @@
     padding: 10px;
 }
 
-.delete-button:hover {
+.select-student-admin-delete-button:hover {
     background-color: #cc0000;
 }
 
-.edit-button, .confirm-button {
+.select-student-admin-edit-button, .select-student-admin-confirm-button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -138,6 +140,16 @@
     cursor: pointer;
 }
 
-.edit-button:hover, .confirm-button:hover {
+.select-student-admin-edit-button:hover, .select-student-admin-confirm-button:hover {
     background-color: #0056b3;
+}
+
+.select-student-admin-input {
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    background-color: var(--secondary-color);
+    color: var(--third-color);
+    padding: 10px;
+    width: 300px;
+    margin: 5px;
 }

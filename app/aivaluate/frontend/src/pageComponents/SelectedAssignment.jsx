@@ -91,8 +91,10 @@ const SelectedAssignment = () => {
         setGradesVisible(!gradesVisible);
     };
 
-    const handleMarkAssignment = (studentId, assignmentId) => {
-        navigate(`/eval/${studentId}/${assignmentId}/grading`);
+    const handleMarkAssignment = (studentId, assignmentId, submissionFile) => {
+        const fileName = submissionFile.split('/').pop();
+        console.log("Navigating with fileName:", fileName);
+        navigate(`/eval/${studentId}/${assignmentId}/grading`, { state: { fileName } });
     };
 
     return (
@@ -123,7 +125,7 @@ const SelectedAssignment = () => {
                             </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
+                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile.split('/').pop())}>
                                         <div className="folder-icon"><CircumIcon name="folder_on"/></div>
                                         <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
                                         {file.isGraded && <div className="file-status">*Marked as graded</div>}

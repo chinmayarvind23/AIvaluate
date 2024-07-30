@@ -79,6 +79,7 @@ services:
       - db
     volumes:
       - assignment_keys:/app/aivaluate/backend-eval/assignmentKeys
+      - assignment_submissions:/app/aivaluate/backend/assignmentSubmissions
     env_file:
       - ./aivaluate/backend-eval/.env
     networks:

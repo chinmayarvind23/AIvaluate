@@ -56,24 +56,29 @@ body {
     gap: 1px; /* Add space between buttons */
 }
 
-.edit-button {
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
+.edit-button, .confirm-button, .delete-button {
     padding: 10px 20px;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
-    margin-bottom: 1px; /* Add margin to separate from the delete button */
+    color: #fff;
+}
+
+.edit-button, .confirm-button {
+    background-color: var(--primary-color);
+}
+
+.edit-button:hover, .confirm-button:hover {
+    background-color: #0056b3;
 }
 
 .delete-button {
     background-color: #ff0000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
     width: 150px;
+}
+
+.delete-button:hover {
+    background-color: #cc0000;
 }
 
 .create-button {
@@ -257,14 +262,4 @@ input:checked + .slider:before {
 
 input:checked + .slider .slider-text {
     color: #fff; /* Adjusted text color for visibility */
-}
-
-.restore-button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 10px;
 }

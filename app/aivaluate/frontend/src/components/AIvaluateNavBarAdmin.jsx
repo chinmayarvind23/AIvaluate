@@ -22,6 +22,10 @@ const AIvaluateNavBarAdmin = ({navBarText , tab}) => {
       await axios.delete('http://localhost:5173/admin-api/clear-backup/student', {
           withCredentials: true
       });
+
+      await axios.delete('http://localhost:5173/admin-api/clear-backup/instructor', {
+        withCredentials: true
+    });
     
       const response = await axios.get('http://localhost:5173/admin-api/logout', {
         withCredentials: true // Ensures cookies are included in the request

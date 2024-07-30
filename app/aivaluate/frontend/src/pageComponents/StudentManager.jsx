@@ -139,37 +139,37 @@ const StudentManager = () => {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                    <div className="pagination-controls">
-                        <span>Page {currentPage} of {totalPages}</span>
-                        <div className="pagination-buttons">
-                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        <div className="pagination-controls">
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <div className="pagination-buttons">
+                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                            </div>
                         </div>
-                    </div>
-                    {deletedStudents.length > 0 && (
-                        <div className="filetab">
-                            <h2>Deleted Students</h2>
-                            {deletedStudents.map((student) => (
-                                <div 
-                                    className="file-item-deleted" 
-                                    key={student.studentId} 
-                                    onClick={() => handleRestoreStudent(student.studentId)}
-                                >
-                                    <div className="file-name">{student.firstName} {student.lastName}</div>
+                        {deletedStudents.length > 0 && (
+                            <div className="filetab">
+                                <h2>Deleted Students</h2>
+                                {deletedStudents.map((student) => (
                                     <div 
-                                        className="file-icon" 
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Prevent triggering the student click
-                                            handleRestoreStudent(student.studentId);
-                                        }}
+                                        className="file-item-deleted" 
+                                        key={student.studentId}
+                                        onClick={() => handleRestoreStudent(student.studentId)}
                                     >
-                                        <CircumIcon name="undo" className="file-icon" />
+                                        <div className="file-name">{student.firstName} {student.lastName}</div>
+                                        <div 
+                                            className="file-icon" 
+                                            onClick={(e) => {
+                                                e.stopPropagation(); // Prevent triggering the student click
+                                                handleRestoreStudent(student.studentId);
+                                            }}
+                                        >
+                                            <CircumIcon name="undo" className="file-icon" />
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

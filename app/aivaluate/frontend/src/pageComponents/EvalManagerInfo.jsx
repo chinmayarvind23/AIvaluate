@@ -86,7 +86,7 @@ const EvalManagerInfo = () => {
                         <p>Are you sure you want to remove the course {courseCode}?</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleConfirmRemove} className="confirm-button">Confirm</button>
+                            <button onClick={handleConfirmRemove} className="cancel-button">Confirm</button>
                         </div>
                     </div>
                 );
@@ -118,7 +118,7 @@ const EvalManagerInfo = () => {
                         <p>Are you sure you want to delete this evaluator? Deleting this evaluator will remove all associated courses and data.</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleConfirmDelete} className="confirm-button">Confirm</button>
+                            <button onClick={handleConfirmDelete} className="cancel-button">Confirm</button>
                         </div>
                     </div>
                 );
@@ -174,7 +174,7 @@ const EvalManagerInfo = () => {
                                     await updateRole(newRole);
                                     onClose();
                                 }} 
-                                className="confirm-button"
+                                className="cancel-button"
                             >
                                 Confirm
                             </button>

@@ -109,7 +109,7 @@ const SelectStudentAdmin = () => {
                         <p>Are you sure you want to delete this user?</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleConfirmDelete} className="confirm-button">Confirm</button>
+                            <button onClick={handleConfirmDelete} className="cancel-button">Confirm</button>
                         </div>
                     </div>
                 );
@@ -148,7 +148,7 @@ const SelectStudentAdmin = () => {
                         <p>Are you sure you want to drop the course {courseCode}?</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleConfirmDrop} className="confirm-button">Confirm</button>
+                            <button onClick={handleConfirmDrop} className="cancel-button">Confirm</button>
                         </div>
                     </div>
                 );
@@ -187,7 +187,7 @@ const SelectStudentAdmin = () => {
                         <p>Are you sure you want to restore the course {courseCode}?</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleConfirmRestore} className="confirm-button">Confirm</button>
+                            <button onClick={handleConfirmRestore} className="cancel-button">Confirm</button>
                         </div>
                     </div>
                 );

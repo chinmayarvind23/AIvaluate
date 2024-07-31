@@ -23,7 +23,7 @@ router.get('/students', (req, res) => {
     });
 });
 
-//Selects all information about a student and their enrolled courses
+// Select all information about a student and their enrolled courses
 router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
     const { studentId } = req.params;
 
@@ -37,7 +37,7 @@ router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
         const student = studentResult.rows[0];
 
         const courseQuery = `
-            SELECT c."courseCode", c."courseId"
+            SELECT c."courseCode", c."courseId", c."courseName"
             FROM "Course" c
             JOIN "EnrolledIn" e ON c."courseId" = e."courseId"
             WHERE e."studentId" = $1

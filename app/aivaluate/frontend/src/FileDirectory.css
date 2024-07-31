@@ -82,6 +82,32 @@
     cursor: pointer;
   }
 
+  .file-item-deleted {
+    display: flex;
+    align-items: center;
+    width: 92%;
+    height: 80px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #ff7a7a84;
+    color: black;
+    border-radius: 5px;
+    font-size: 2rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .file-item-deleted:nth-child(odd), .file-item-no-click-deleted:nth-child(odd) {
+    background-color: rgb(220, 215, 215);
+    border-radius: -50% 0px 0px 0px;
+  }
+
+  .file-item-deleted:nth-child(even), .file-item-deleted-no-click:nth-child(even){
+    background-color: #ff7a7a84;
+  }
+
   .file-item-no-click {
     display: flex;
     align-items: center;
@@ -98,7 +124,7 @@
     text-align: left;
   }
 
-  .file-item:hover {
+  .file-item:hover, .file-item-deleted:hover {
     text-decoration: underline;
     transform: scale(1.01);
   }

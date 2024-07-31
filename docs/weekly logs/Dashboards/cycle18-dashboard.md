@@ -180,7 +180,7 @@
         <td> Revise frontend UI and fix various bugs based on test session feedback
         </td>
         <!-- Status -->
-        <td> Jerry
+        <td> Jerry & Chinmay
         </td>
     </tr>
     <tr>

@@ -67,7 +67,7 @@ const App = () => {
           <Route path="/login" element={<Login />} /> {/* Done*/}
           <Route path="/stu/login" element={<Login />} /> {/* Done*/}
           <Route path="/stu/signup" element={<Signup />} /> {/* Done*/}
-          <Route path ="/forgotpassword" element={<ForgotPassword />} /> {/* Done*/}
+          <Route path ="/stu/forgotpassword" element={<ForgotPassword />} /> {/* Done*/}
           <Route path="/resetpassword/:token" element={<ResetPassword />} /> {/* Done*/}
           <Route path="/admin/forgotpassword" element={<ForgotPasswordAdmin />} /> {/* Done*/}
           <Route path="/admin/resetpassword/:token" element={<ResetPasswordAdmin />} /> {/* Done*/}

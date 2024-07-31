@@ -179,7 +179,7 @@ const SelectCourseAdmin = () => {
                                     value={newInstructorId}
                                     onChange={(e) => setNewInstructorId(e.target.value)}
                                 >
-                                    <option value="">Select Instructor</option>
+                                    <option className="drop-down-menu" value="">Select Instructor</option>
                                     {allInstructors
                                         .filter(instructor => !instructor.isTA)
                                         .map((instructor) => (
@@ -188,7 +188,7 @@ const SelectCourseAdmin = () => {
                                             </option>
                                         ))}
                                 </select>
-                                <button onClick={handleAssignInstructor}>Assign Instructor</button>
+                                <button className="submit-button" onClick={handleAssignInstructor}>Assign Instructor</button>
                             </div>
                             <button className="delete-button" onClick={handleDelete}>Delete course</button>
                         </div>

@@ -541,4 +541,42 @@ router.get('/deleted-courses', async (req, res) => {
     }
 });
 
+// Clear all backup tables
+router.delete('/clear-backups', checkAuthenticated, async (req, res) => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        const backupTables = [
+            "BackupStudent",
+            "BackupInstructor",
+            "BackupCourse",
+            "BackupEnrolledIn",
+            "BackupTeaches",
+            "BackupAssignment",
+            "BackupAssignmentSubmission",
+            "BackupAssignmentGrade",
+            "BackupStudentFeedback",
+            "BackupStudentFeedbackReport",
+            "BackupAssignmentRubric",
+            "BackupUseRubric",
+            "BackupCourseNotification",
+            "BackupPrompt"
+        ];
+
+        for (const table of backupTables) {
+            await client.query(`DELETE FROM "${table}"`);
+        }
+
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'All backup tables cleared successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error clearing backup tables:', error);
+        res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
+    }
+});
+
 module.exports = router;

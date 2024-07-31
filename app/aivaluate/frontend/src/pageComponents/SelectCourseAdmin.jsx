@@ -174,12 +174,19 @@ const SelectCourseAdmin = () => {
                                     <p>No TAs assigned to this course</p>
                                 )}
                             </div>
-                            <div className="assign-instructor">
+                            <div className="assign-instructor" style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+                                <button
+                                    onClick={handleAssignInstructor}
+                                    style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer', width: '150px' }}
+                                >
+                                    Assign Instructor
+                                </button>
                                 <select
                                     value={newInstructorId}
                                     onChange={(e) => setNewInstructorId(e.target.value)}
+                                    style={{ padding: '10px', marginLeft: '10px', flex: '1' }}
                                 >
-                                    <option className="drop-down-menu" value="">Select Instructor</option>
+                                    <option value="">Select Instructor</option>
                                     {allInstructors
                                         .filter(instructor => !instructor.isTA)
                                         .map((instructor) => (
@@ -188,9 +195,10 @@ const SelectCourseAdmin = () => {
                                             </option>
                                         ))}
                                 </select>
-                                <button className="submit-button" onClick={handleAssignInstructor}>Assign Instructor</button>
                             </div>
-                            <button className="delete-button" onClick={handleDelete}>Delete course</button>
+                            <button onClick={handleDelete} style={{ marginTop: '10px', backgroundColor: 'red', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer', width: '150px' }}>
+                                Delete course
+                            </button>
                         </div>
                     </div>
                 </div>

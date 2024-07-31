@@ -903,4 +903,37 @@ router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
     });
 });
 
+router.put('/assignments/:studentId/:assignmentId/due-date', async (req, res) => {
+    const { studentId, assignmentId } = req.params;
+    const { dueDate } = req.body;
+
+    if (!dueDate) {
+        return res.status(400).json({ message: 'Due date is required' });
+    }
+
+    try {
+        const studentAssignment = await pool.query(
+            `SELECT a."assignmentId"
+             FROM "Assignment" a
+             JOIN "AssignmentSubmission" asub ON a."assignmentId" = asub."assignmentId"
+             WHERE asub."studentId" = $1 AND a."assignmentId" = $2`,
+            [studentId, assignmentId]
+        );
+
+        if (studentAssignment.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found for the given student' });
+        }
+
+        const result = await pool.query(
+            'UPDATE "Assignment" SET "dueDate" = $1 WHERE "assignmentId" = $2 RETURNING *',
+            [dueDate, assignmentId]
+        );
+
+        res.status(200).json({ message: 'Due date updated successfully', assignment: result.rows[0] });
+    } catch (error) {
+        console.error('Error updating due date:', error);
+        res.status(500).json({ message: 'Error updating due date' });
+    }
+});
+
 module.exports = router;

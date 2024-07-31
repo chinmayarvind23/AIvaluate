@@ -297,7 +297,6 @@
 
 // export default EvalManagerInfo;
 
-
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -321,6 +320,7 @@ const EvalManagerInfo = () => {
     const [editedFirstName, setEditedFirstName] = useState('');
     const [editedLastName, setEditedLastName] = useState('');
     const [editedEmail, setEditedEmail] = useState('');
+    const [droppedCourses, setDroppedCourses] = useState([]);
 
     useEffect(() => {
         const fetchEvaluatorDetails = async () => {
@@ -339,7 +339,7 @@ const EvalManagerInfo = () => {
                 console.error('Error fetching evaluator details:', error);
             }
         };
-    
+
         const fetchCourses = async () => {
             try {
                 const response = await axios.get(`http://localhost:5173/admin-api/evaluator/${instructorId}/courses`, {
@@ -350,12 +350,12 @@ const EvalManagerInfo = () => {
                 console.error('Error fetching courses:', error);
             }
         };
-    
+
         fetchEvaluatorDetails();
         fetchCourses();
     }, [instructorId]);
 
-    const handleRemoveCourse = (courseCode) => {
+    const handleRemoveCourse = (courseCode, courseName) => {
         confirmAlert({
             customUI: ({ onClose }) => {
                 const handleConfirmRemove = async () => {
@@ -365,7 +365,9 @@ const EvalManagerInfo = () => {
                             credentials: 'include'
                         });
                         if (response.ok) {
-                            setCourses(courses.filter(course => course.courseCode !== courseCode));
+                            console.log('Removing course:', courseCode); // Log removed course code
+                            setCourses(prevCourses => prevCourses.filter(course => course.courseCode !== courseCode));
+                            setDroppedCourses(prevDroppedCourses => [...prevDroppedCourses, { courseCode, courseName }]); // Update droppedCourses state
                             toast.success(`Removed course: ${courseCode}`);
                         } else {
                             toast.error('Failed to remove the course');
@@ -506,6 +508,30 @@ const EvalManagerInfo = () => {
         course.courseCode.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const handleRestoreCourse = async (courseCode, courseName) => {
+        try {
+            const response = await axios.post(`http://localhost:5173/admin-api/evaluator/${instructorId}/restore/${courseCode}`, {}, {
+                withCredentials: true
+            });
+            if (response.status === 200) {
+                console.log('Restoring course:', courseCode); // Log restored course code
+                setCourses(prevCourses => [...prevCourses, { courseCode, courseName, ...response.data }]);
+                setDroppedCourses(prevDroppedCourses => prevDroppedCourses.filter(course => course.courseCode !== courseCode)); // Update droppedCourses state
+                toast.success(`Restored course: ${courseCode}`);
+            } else {
+                toast.error('Failed to restore the course');
+            }
+        } catch (error) {
+            console.error('Error restoring course:', error);
+            toast.error('Failed to restore the course');
+        }
+    };
+
+    useEffect(() => {
+        console.log("Courses:", courses);
+        console.log("Dropped Courses:", droppedCourses);
+    }, [courses, droppedCourses]);
+
     return (
         <div className="admin-container">
             <ToastContainer />
@@ -589,7 +615,26 @@ const EvalManagerInfo = () => {
                         {filteredCourses.map((course, index) => (
                             <div className="course-item" key={index}>
                                 <span>{course.courseCode} - {course.courseName}</span>
-                                <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode)}>Drop</button>
+                                <button className="remove-button" onClick={() => handleRemoveCourse(course.courseCode, course.courseName)}>Drop</button>
+                            </div>
+                        ))}
+                        {droppedCourses.map((course, index) => (
+                            <div className="dropped-course-item" key={index}>
+                                <span>{course.courseCode} - {course.courseName}</span>
+                                <button 
+                                    className="restore-button" 
+                                    onClick={() => handleRestoreCourse(course.courseCode, course.courseName)}
+                                    style={{
+                                        backgroundColor: 'green',
+                                        color: 'white',
+                                        border: 'none',
+                                        padding: '5px 10px',
+                                        cursor: 'pointer',
+                                        marginLeft: '10px'
+                                    }}
+                                >
+                                    Undo Drop
+                                </button>
                             </div>
                         ))}
                     </div>

@@ -1,7 +1,26 @@
+# Cycle 14 Weekly Log
+
+- ## Date range: July 26 - July 31, 2024
+
+ ### Which features were in the project plan cycle?
+- AI set up with frontend
+- Code review/manual testing: Fixing dozens of small backend and frontend mistakes.
+
+- ### Which tasks from the project board are associated with these features?
+- AI API implementation
+- Create or edit an Assignment
+- Edit AI grading for professor
+- Assignment submissions
+- Admin account management
+
+### Which tasks are going to be targeted from the next cycle with time estimates and owners (ie planning and who is going to own/work on each task)
+- Email Notifications
+- Documentation
+
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-  <img width="1015" alt="Screenshot 2024-07-17 at 4 09 35 AM" src="">
+  
 
 ### Times for team/individual
 
@@ -14,7 +33,7 @@
         <td><strong>TASK/ISSUE #</strong>
         </td>
     </tr>
-        <tr>
+    <tr>
         <td> Add link submission capability
         </td>
         <!-- Status -->
@@ -128,6 +147,7 @@
     </tr>
 </table>
 
+
 - ### Table view of in progress tasks on project board
 <table border="1">
 <tr>
@@ -146,36 +166,8 @@
         </td>
         <!-- Status -->
         <td> Whole team
-     <tr>
-        <td> Revise frontend UI and fix various bugs based on test session feedback
-        </td>
-        <!-- Status -->
-        <td> Jerry
-        </td>
-    </tr>
-    <tr>
-        <td> Pass in Assignment Submission File to AI + error handling for AI requests, submission links + DB population fixing
-        </td>
-        <!-- Status -->
-        <td> Chinmay
         </td>
     </tr>
 </table>
 
-### Which tasks are going to be targeted from the next cycle
-- Notifications
-- Frontend bug fixes
-- Date fixes
-- File submission with AI
-
-### Project Progress
-- Frontend: 99% complete
-- Backend: 97% complete
-### Testing Report
-![Screenshot_2024-07-16_at_9 39 32_PM](https://github.com/user-attachments/assets/9caeac81-7fa6-4ea8-b3a7-0d2b27d65220)
-
-![Screenshot_2024-07-16_at_9 26 24](https://github.com/user-attachments/assets/22060072-e1f5-49c6-85ce-75c1e5edaf05)
-
-![Screenshot_2024-07-15_at_10 12 28_PM](https://github.com/user-attachments/assets/58e4d2d6-1f59-4d4e-adad-dd06de50361c)
-
-The report for the frontend testing will be added in the next cycle as we are still working on getting it fully up and running.
+- All backend tests are passing with 100% coverage. We are working on frontend tests using selenium.

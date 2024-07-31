@@ -636,7 +636,7 @@ This cycle went really well for me. The backend was much better then I expected 
 Clockify report
 ![alt text](./clockify-images/colton-clockify_C11.png)
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since July 3rd 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -688,7 +688,7 @@ This cycle I didn't have very much ime to get thigns done which caused some issu
 Clockify report
 ![alt text](./clockify-images/colton-clockify_C12.png)
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since July 5th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -738,7 +738,7 @@ This cycle my main focus was redoing all of our frontend to look more like canva
 Clockify report
 ![alt text](./clockify-images/colton-clockify_C13.png)
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since July 10th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -782,7 +782,7 @@ I hade alot of problems connecting our test to the database this cycle but after
 Clockify report
 ![alt text](./clockify-images/colton-clockify_C14.png)
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since July 12th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -846,7 +846,7 @@ I had a lot of problems with the Ollama API as I found the documentation was not
 Clockify report
 ![alt text](./clockify-images/colton-clockify_C14.png)
 
-### Progress Update (since June 14th 2024) 
+### Progress Update (since July 17th 2024) 
 <table>
     <tr>
         <td><strong>TASK/ISSUE #</strong>
@@ -963,7 +963,7 @@ My biggest challenge this cycle was trying to dealt with some of the merge confl
 
 -----------------------------------------------------------------------------------
 
-## Cycle 16: Friday July 19th - Wednesday July 24th
+## Cycle 16: Friday July 24th - Wednesday July 26th
 
 ### Current Tasks
   * #1: Fix date problem
@@ -1003,4 +1003,131 @@ I ran into alot of problems with the date not working because all of our backend
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - Fix up all small errors.
 - Work on Course notifications.
+-----------------------------------------------------------------------------------
+
+## Cycle 17: Friday July 26th - Wednesday July 31st
+
+### Current Tasks
+  * #1: Add link submission capability
+  * #2: Fixed due date on create assignment page
+  * #3: Fixed title of create assignment page
+  * #4: Fixed edit name and email boxes in eval editor for admin
+  * #5: Fixed and complete frontend and backend for Student grading page
+  * #6: Fixed create prompt and edit prompt modals
+  * #7: Fixed edit course modal
+  * #8: Fixed tool tips for student and people pages
+  * #9: Removed check image after joining a course
+  * #10: Fixed create course input text boxes
+  * #11: Fixed frontend display on AI-settings page
+  * #12: Changed the colour and styling of the entire site to make it more modern and feel like canvas.
+
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C17.png)
+
+### Progress Update (since July 26th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Add link submission capability
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed due date on create assignment page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed title of create assignment page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed edit name and email boxes in eval editor for admin
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed and complete frontend and backend for Student grading page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed create prompt and edit prompt modals
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed edit course modal
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed tool tips for student and people pages
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Removed check image after joining a course
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed create course input text boxes
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed frontend display on AI-settings page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Changed the colour and styling of the entire site to make it more modern and feel like canvas.
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I was suppose to work on course notifications but ended up spending my time helping my team members fix their issues. I made fixes in 25 different frontend and backend files and because of this I wasn't able to get to doing the notifications. I will be doing this in the next cycle.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Fixed empty assignment details from student submission page
+- Fix all pop up/toast messages
+- Added validation message for incorrectly submitted file types.
+- Add password check for admin account creation
+- Fix login pages so the auth div is more visible
+- Add notifications via email for newly created assignments
 -----------------------------------------------------------------------------------

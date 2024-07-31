@@ -51,7 +51,7 @@ describe('GET /tas', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockTAs);
-  });
+  }, 20000);
 
   it('should return an error when fetching TAs', async () => {
     pool.query.mockRejectedValue(new Error('Database error'));

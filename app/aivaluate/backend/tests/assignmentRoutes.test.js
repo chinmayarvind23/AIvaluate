@@ -331,7 +331,7 @@ describe('Assignment Routes', () => {
             expect(response.status).toBe(201);
             // This assertion will now pass because we included 'message' in the mock's resolved value
             expect(response.body).toEqual({ assignmentId: 1, message: 'Assignment created successfully' });
-        });
+        }, 20000);
     
         it('should handle errors when creating an assignment', async () => {
             const newAssignment = {

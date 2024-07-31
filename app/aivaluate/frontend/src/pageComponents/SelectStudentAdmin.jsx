@@ -17,6 +17,10 @@ const SelectStudentAdmin = () => {
     const [student, setStudent] = useState({});
     const [courses, setCourses] = useState([]);
     const [droppedCourses, setDroppedCourses] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedFirstName, setEditedFirstName] = useState('');
+    const [editedLastName, setEditedLastName] = useState('');
+    const [editedEmail, setEditedEmail] = useState('');
 
     useEffect(() => {
         const fetchStudentDetails = async () => {
@@ -27,6 +31,9 @@ const SelectStudentAdmin = () => {
                 const data = await response.json();
                 setStudent(data);
                 setCourses(data.courses);
+                setEditedFirstName(data.firstName);
+                setEditedLastName(data.lastName);
+                setEditedEmail(data.email);
             } catch (error) {
                 console.error('Error fetching student details:', error);
             }
@@ -34,6 +41,45 @@ const SelectStudentAdmin = () => {
 
         fetchStudentDetails();
     }, [studentId]);
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleConfirmClick = async () => {
+        console.log('Updating student with:', { firstName: editedFirstName, lastName: editedLastName, email: editedEmail });
+
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(editedEmail)) {
+            toast.error('Invalid email format');
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    firstName: editedFirstName,
+                    lastName: editedLastName,
+                    email: editedEmail
+                })
+            });
+            if (response.ok) {
+                setStudent({ ...student, firstName: editedFirstName, lastName: editedLastName, email: editedEmail });
+                toast.success('Student information updated successfully');
+                setIsEditing(false);
+            } else {
+                toast.error('Failed to update student information');
+            }
+        } catch (error) {
+            console.error('Error updating student:', error);
+            toast.error('Failed to update student information');
+        }
+    };
 
     const handleDelete = () => {
         confirmAlert({
@@ -165,22 +211,48 @@ const SelectStudentAdmin = () => {
                         </div>
                         <h1>Student Info</h1>
                     </div>
-                    <div className="center-it">
+                    <div className="select-student-admin-center-it">
                         <div>
-                            <div className="user-info2">
-                                <div className="user-name">
-                                    <span>{student.firstName} {student.lastName}</span>
+                            <div className="select-student-admin-container">
+                                <div className="select-student-admin-name">
+                                    {isEditing ? (
+                                        <div>
+                                            <input 
+                                                className="select-student-admin-input" 
+                                                type="text" 
+                                                value={editedFirstName} 
+                                                onChange={(e) => setEditedFirstName(e.target.value)} 
+                                            />
+                                            <input 
+                                                className="select-student-admin-input" 
+                                                type="text" 
+                                                value={editedLastName} 
+                                                onChange={(e) => setEditedLastName(e.target.value)} 
+                                            />
+                                        </div>
+                                    ) : (
+                                        <span>Name: {student.firstName} {student.lastName}</span>
+                                    )}
                                     <span>Student ID: {student.studentId}</span>
                                 </div>
-                                <div className="email">
+                                <div className="select-student-admin-email">
                                     <span>Email: </span>
-                                    <span>{student.email}</span>
+                                    {isEditing ? (
+                                        <input 
+                                            className="select-student-admin-input" 
+                                            type="email" 
+                                            value={editedEmail} 
+                                            onChange={(e) => setEditedEmail(e.target.value)} 
+                                        />
+                                    ) : (
+                                        <span>{student.email}</span>
+                                    )}
                                 </div>
-                                <div className="password">
+                                <div className="select-student-admin-password">
                                     <span>Password: </span>
                                     <span>{maskedPassword}</span>
                                 </div>
-                                <div className="courses">
+                                <div className="select-student-admin-courses">
                                     <span>Courses:</span>
                                     <ul>
                                         {courses.map((course, index) => (
@@ -206,7 +278,8 @@ const SelectStudentAdmin = () => {
                                                         border: 'none',
                                                         padding: '5px 10px',
                                                         cursor: 'pointer',
-                                                        marginLeft: '10px'
+                                                        marginLeft: '10px',
+                                                        borderRadius: '5px'
                                                     }}
                                                 >
                                                     Undo Drop
@@ -216,6 +289,15 @@ const SelectStudentAdmin = () => {
                                     </ul>
                                 </div>
                                 <button className="delete-button" onClick={handleDelete}>Delete user</button>
+
+                                <div className="select-student-admin-action-buttons">
+                                    {isEditing ? (
+                                        <button className="select-student-admin-confirm-button" onClick={handleConfirmClick}>Confirm</button>
+                                    ) : (
+                                        <button className="select-student-admin-edit-button" onClick={handleEditClick}>Edit</button>
+                                    )}
+                                    <button className="select-student-admin-delete-button" onClick={handleDelete}>Delete user</button>
+                                </div>
                             </div>
                         </div>
                     </div>

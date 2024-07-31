@@ -250,62 +250,69 @@ const EvalManagerInfo = () => {
                         <h1 className="eval-text">Evaluator Info</h1>
                     </div>
                     <div className="user-info">
-                        <div className="user-details">
-                            {isEditing ? (
-                                <div>
-                                    <input 
-                                        type="text" 
-                                        value={editedFirstName} 
-                                        onChange={(e) => setEditedFirstName(e.target.value)} 
-                                    />
-                                    <input 
-                                        type="text" 
-                                        value={editedLastName} 
-                                        onChange={(e) => setEditedLastName(e.target.value)} 
-                                    />
-                                    <input 
-                                        type="email" 
-                                        value={editedEmail} 
-                                        onChange={(e) => setEditedEmail(e.target.value)} 
-                                    />
-                                </div>
-                            ) : (
-                                <h2>Name: {evaluator.firstName} {evaluator.lastName}</h2>
-                            )}
-                            <div className="action-buttons">
-                                {isEditing ? (
-                                    <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
-                                ) : (
-                                    <button className="edit-button" onClick={handleEditClick}>Edit</button>
-                                )}
-                                <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
-                            </div>
-                        </div>
-                        <div className="info-row">
-                            <span>Email:</span>
-                            <span>{evaluator.email}</span>
-                        </div>
-                        <div className="info-row">
-                            <span>Password:</span>
-                            <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
-                        </div>
-                        <div className="info-row">
-                            <div className="align-check">
-                                <div className="slider-container">
-                                    <label className="switch">
-                                        <input 
-                                            type="checkbox" 
-                                            checked={isTeachingAssistant} 
-                                            onChange={handleRoleChange} 
-                                        />
-                                        <span className="slider round">
-                                        <span className="slider-text">{isTeachingAssistant ? 'TA' : 'Prof'}</span>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div className="user-details">
+        {isEditing ? (
+            <div>
+                <input 
+                    type="text" 
+                    value={editedFirstName} 
+                    onChange={(e) => setEditedFirstName(e.target.value)} 
+                    className="user-details-input"
+                />
+                <input 
+                    type="text" 
+                    value={editedLastName} 
+                    onChange={(e) => setEditedLastName(e.target.value)} 
+                    className="user-details-input"
+                />
+            </div>
+        ) : (
+            <h2>Name: {evaluator.firstName} {evaluator.lastName}</h2>
+        )}
+        <div className="action-buttons">
+            {isEditing ? (
+                <button className="confirm-button" onClick={handleConfirmClick}>Confirm</button>
+            ) : (
+                <button className="edit-button" onClick={handleEditClick}>Edit</button>
+            )}
+            <button className="delete-button" onClick={handleDeleteEvaluator}>Delete user</button>
+        </div>
+    </div>
+    <div className="info-row">
+        <span>Email: </span>
+        {isEditing ? (
+            <input 
+                type="email" 
+                value={editedEmail} 
+                onChange={(e) => setEditedEmail(e.target.value)} 
+                className="user-details-input"
+            />
+        ) : (
+            <span>{evaluator.email}</span>
+        )}
+    </div>
+    <div className="info-row">
+        <span>Password:</span>
+        <span>{'*'.repeat(evaluator.userPassword ? evaluator.userPassword.length : 10)}</span>
+    </div>
+    <div className="info-row">
+        <div className="align-check">
+            <div className="slider-container">
+                <label className="switch">
+                    <input 
+                        type="checkbox" 
+                        checked={isTeachingAssistant} 
+                        onChange={handleRoleChange} 
+                    />
+                    <span className="slider round">
+                        <span className="slider-text">{isTeachingAssistant ? 'TA' : 'Prof'}</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
                     <div className="course-section">
                         <div className="search-bar">
                             <FaSearch className="search-icon" />

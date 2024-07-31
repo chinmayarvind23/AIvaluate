@@ -28,21 +28,15 @@ body {
     position: relative; /* Added for positioning */
 }
 
-.user-details div input[type="email"]{
+.user-details div input[type="email"], 
+.user-details div input[type="text"], 
+.user-details-input {
     border: 2px solid var(--primary-color);
     border-radius: 50px;
     background-color: var(--secondary-color);
     color: var(--third-color);
     padding: 10px;
     width: 300px;
-}
-
-.user-details div input[type="text"]{
-    border: 2px solid var(--primary-color);
-    border-radius: 50px;
-    background-color: var(--secondary-color);
-    color: var(--third-color);
-    padding: 10px;
 }
 
 .user-details h2 {
@@ -56,24 +50,29 @@ body {
     gap: 1px; /* Add space between buttons */
 }
 
-.edit-button {
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
+.edit-button, .confirm-button, .delete-button {
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 10px;
+    border: none;
     cursor: pointer;
-    margin-bottom: 1px; /* Add margin to separate from the delete button */
+    color: #fff;
+    width: 100px;
+}
+
+.edit-button, .confirm-button {
+    background-color: var(--primary-color);
+}
+
+.edit-button:hover, .confirm-button:hover {
+    background-color: #0056b3;
 }
 
 .delete-button {
     background-color: #ff0000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 150px;
+}
+
+.delete-button:hover {
+    background-color: #cc0000;
 }
 
 .create-button {
@@ -194,11 +193,10 @@ body {
     align-items: center;
 }
 
-
 .switch {
     position: relative;
     display: inline-block;
-    width: 120px; /* Adjusted width */
+    width: 130px; /* Adjusted width */
     height: 34px;
     margin-left: -5px; /* Adjust as needed */
 }

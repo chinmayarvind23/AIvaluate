@@ -1,7 +1,11 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
@@ -24,6 +28,7 @@ const SelectedAssignment = () => {
     const [submissions, setSubmissions] = useState([]);
     const [error, setError] = useState(null);
     const [gradesVisible, setGradesVisible] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchSubmissions = useCallback(async () => {
@@ -51,7 +56,33 @@ const SelectedAssignment = () => {
     }, [assignmentId]); 
     
     useEffect(() => {
+    const fetchSubmissions = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
+                withCredentials: true
+            });
+    
+            if (response.status === 200) {
+                setSubmissions(response.data);
+                setFilteredFiles(response.data);
+                console.log(response.data);
+            } else {
+                console.error('Expected an array but got:', response.data);
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setError('No submissions found for this assignment.');
+                setSubmissions([]);
+                setFilteredFiles([]);
+            } else {
+                console.error('Error fetching submissions:', error);
+            }
+        }
+    }, [assignmentId]); 
+    
+    useEffect(() => {
         fetchSubmissions();
+    }, [assignmentId, fetchSubmissions]);       
     }, [assignmentId, fetchSubmissions]);       
 
     useEffect(() => {
@@ -138,6 +169,43 @@ const SelectedAssignment = () => {
     };
     
 
+    const handleGradeWithAI = async () => {
+        const courseId = sessionStorage.getItem('courseId');
+        const instructorId = sessionStorage.getItem('instructorId');
+    
+        if (!instructorId || !courseId) {
+            console.error('Instructor ID or Course ID is missing.');
+            setError('Instructor ID or Course ID is missing.');
+            return;
+        }
+    
+        try {
+            console.log('Sending request to grade with AI:', { instructorId, courseId });
+            setIsLoading(true);
+    
+            const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
+                instructorId,
+                courseId
+            }, {
+                withCredentials: true
+            });
+    
+            if (response.status === 200) {
+                toast.success('Submissions graded successfully.');
+                fetchSubmissions();
+            } else {
+                console.error('Failed to grade submissions:', response.data);
+                toast.error('Failed to grade submissions.');
+            }
+        } catch (error) {
+            console.error('Error grading submissions:', error);
+            toast.error('Failed to grade submissions. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
@@ -154,6 +222,7 @@ const SelectedAssignment = () => {
                                 </div>
                                 <div className="float-right">
                                     <button className="grades-button" onClick={handleGradeWithAI}>
+                                    <button className="grades-button" onClick={handleGradeWithAI}>
                                         Grade With AI
                                     </button>
                                     <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
@@ -164,6 +233,13 @@ const SelectedAssignment = () => {
                                     </button>
                                 </div>
                             </div>
+                            <input
+                            type="text"
+                            placeholder="Search by student ID or file name"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className="search-input"
+                            />
                             <input
                             type="text"
                             placeholder="Search by student ID or file name"
@@ -187,6 +263,13 @@ const SelectedAssignment = () => {
                             </div>
                             )}
                             </div>
+                            {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text">AI Grading in Progress...</p>
+                            </div>
+                            )}
+                            </div>
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>
                             <div className="pagination-buttons">
@@ -196,6 +279,7 @@ const SelectedAssignment = () => {
                         </div>
                     </div> 
             </div>
+            <ToastContainer />
             <ToastContainer />
         </div>
     );

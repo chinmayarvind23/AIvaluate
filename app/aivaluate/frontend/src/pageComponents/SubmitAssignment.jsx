@@ -207,7 +207,7 @@ const SubmitAssignment = () => {
                                 <div>
                                     <input 
                                         type="text" 
-                                        placeholder="Have a link? Upload it here!"
+                                        placeholder="Have a link? Upload it here! Please ensure the access is public."
                                         className="link-upload"
                                         onChange={handleFileUploadChange}
                                      />

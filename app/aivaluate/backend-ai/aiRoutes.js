@@ -4,7 +4,16 @@ const { log } = require('console');
 const router = express.Router();
 const { pool } = require('./dbConfig');
 const fs = require('fs');
+const { pool } = require('./dbConfig');
+const fs = require('fs');
 const path = require('path');
+const OpenAI = require('openai');
+const cors = require('cors');
+const parseSafe = require('json-parse-safe');
+const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
+const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
+const axios = require('axios');
+const cheerio = require('cheerio');
 const OpenAI = require('openai');
 const cors = require('cors');
 const parseSafe = require('json-parse-safe');
@@ -70,9 +79,64 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
     }
 });
 
+const openai = new OpenAI({ apiKey: openaiApiKey });
+
+router.post('/ai/assignments/:assignmentId/test', (req, res) => {
+    res.send('AI service endpoint is working');
+});
+
+router.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
+
+// Retry with exponential backoff and max retries
+async function retryRequest(fn, retries = 3, delay = 1000) {
+    let attempt = 0;
+    const delayPromise = (delay) => new Promise(resolve => setTimeout(resolve, delay));
+
+    while (attempt < retries) {
+        try {
+            const result = await fn();
+            return result;
+        } catch (error) {
+            attempt++;
+            console.error(`Attempt ${attempt} failed: ${error.message}`);
+            if (attempt >= retries) {
+                throw new Error("Maximum retries reached. The AI server doesn't seem to be responding.");
+            }
+            await delayPromise(delay);
+            delay *= 2;
+        }
+    }
+}
+
+router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res) => {
+    const { assignmentId } = req.params;
+    const { instructorId, courseId } = req.body;
+
+    console.log(`Received request to process submissions for assignment ${assignmentId}, course ${courseId}, instructor ${instructorId}`);
+
+    if (!instructorId || !courseId) {
+        console.error('Instructor ID and Course ID are required');
+        return res.status(400).json({ error: 'Instructor ID and Course ID are required' });
+    }
+
+    try {
+        console.log('Starting submission processing...');
+        const result = await processSubmissions(assignmentId, instructorId, courseId);
+        console.log('Submission processing completed');
+        return res.status(result.status).json({ message: result.message });
+    } catch (error) {
+        console.error(`Error processing submissions: ${error.message}`);
+        return res.status(500).json({ error: 'Failed to process submissions' });
+    }
+});
+
 router.post('/gpt/completions', async (req, res) => {
     const { prompt } = req.body;
     log(`Received prompt: ${prompt}`);
+  
   
   
     try {
@@ -109,7 +173,7 @@ router.post('/gpt/assistants', async (req, res) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
+            }`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });
@@ -175,7 +239,7 @@ router.post('/gpt/assistants', async (req, res) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
+            }`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });              
@@ -219,6 +283,14 @@ router.post('/gpt/assistants', async (req, res) => {
             res.status(500).json({ error: 'Failed to get assistant response' });
         }
     } catch (error) {
+        console.error(`Error: ${error.message}`);
+        if (error.response) {
+            console.error(`Status: ${error.response.status}`);
+            console.error(`Data: ${JSON.stringify(error.response.data)}`);
+            res.status(error.response.status).json({ error: error.response.data });
+        } else {
+            res.status(500).json({ error: 'Failed to communicate with AI model' });
+        }
         console.error(`Error: ${error.message}`);
         if (error.response) {
             console.error(`Status: ${error.response.status}`);
@@ -601,7 +673,7 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
+            }`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });                          

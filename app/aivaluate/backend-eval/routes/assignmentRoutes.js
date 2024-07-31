@@ -6,6 +6,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { formatISO } = require('date-fns');
+const baseDir = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
+const axios = require('axios');
 
 // Function to create directory structure and store file
 const storage = multer.diskStorage({
@@ -891,6 +893,7 @@ router.get('/assignments/:assignmentId/rubric', async (req, res) => {
 // Get rubrics by Course ID
 router.get('/rubrics/:courseId', async (req, res) => {
     const { courseId } = req.params;
+    const { courseId } = req.params;
     try {
         const result = await pool.query(
             'SELECT * FROM "AssignmentRubric" WHERE "courseId" = $1',
@@ -946,6 +949,31 @@ router.put('/assignments/:studentId/:assignmentId/due-date', async (req, res) =>
     } catch (error) {
         console.error('Error updating due date:', error);
         res.status(500).json({ message: 'Error updating due date' });
+    }
+});
+
+router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res) => {
+    const { assignmentId } = req.params;
+    const instructorId = req.session.instructorId;
+    const courseId = req.session.courseId;
+
+    console.log(`Forwarding request to AI server to process submissions for assignment ${assignmentId}, course ${courseId}, instructor ${instructorId}`);
+    try {
+        const response = await axios.post(`http://backend-ai:9000/ai-api/ai/assignments/${assignmentId}/process-submissions`, {
+            instructorId,
+            courseId
+        }, {
+            withCredentials: true
+        });
+
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        console.error(`Error forwarding grading request: ${error.message}`);
+        if (error.response) {
+            res.status(error.response.status).json({ error: error.response.data });
+        } else {
+            res.status(500).json({ error: 'Failed to process submissions' });
+        }
     }
 });
 

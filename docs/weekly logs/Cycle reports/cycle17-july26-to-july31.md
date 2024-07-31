@@ -138,8 +138,43 @@
         <td> Aayush
         </td>
     </tr>
+     <tr>
+        <td> add course management frontend and backend - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
     <tr>
-        <td> Fixed TA vs Prof access permissions
+        <td> Enable student deletion reversion - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+     <tr>
+        <td> enable evaluator deletion reversion - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+     <tr>
+        <td> enable course deletion reversion - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+     <tr>
+        <td> enable student course drop reversion - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+     <tr>
+        <td> enable evaluator course drop reversion - admin view
         </td>
         <!-- Status -->
         <td> Jerry

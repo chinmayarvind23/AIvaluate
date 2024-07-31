@@ -1,5 +1,58 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 26 - July 31 Morning) - 21 hours
+
+## Wednesday July 31st
+### 6 hours
+- Course management for admin view, undo admin actions, add toastify messages (Completed)
+- 
+## Tuesday July 30th
+### 4 hours
+- Course management for admin view, undo admin actions, add toastify messages (In Progress)
+
+## Monday July 29th
+### 4 hours
+- Revert deleting a student in the admin view
+
+## Sunday July 28th
+### 5.5 hours
+- Development branch bug fixes (2.5 hours)
+- Team meeting (1 hour)
+- Code Review (2 hours)
+
+## Saturday July 27th
+### 1.5 hours
+- Code Review (0.5 hour)
+- Rename testing ai page routes and api calls (1 hour)
+
+# Current Tasks
+- #1 Revert dropping a student and evaluator from a course #417
+- #2 Dev branch bug fixes #443
+- #3 Enable student deletion reversion #375
+- #4 Add toastify messages to admin view #418
+- #5 Add course management to the admin view (allows course deletion, assign prof to course, and undo actions) #469
+- #6 Fix percentage calculator #422
+- #7 Limit TA access of funcionalities #434
+- #8 Hide and publish grades #427
+
+# Progress Update
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Completed  |
+| Task #4 | Completed  |
+| Task #5 | Completed  |
+| Task #6 | Incomplete  |
+| Task #7 | Incomplete  |
+| Task #8 | Incomplete  |
+
+# Cycle Goal Review
+During this cycle, I focused on completing the admin view functions; I added undo feature for almost all admin actions. Also I added a course management feature which allows the admin to delete a course and assign a professor to the course. I've also spent a good amount to time fixing existing bugs.
+
+# Next Cycle 
+During the next cycle, I'll finish up my existing tasks and any other bugs we encounter. I will also help my team with preparing for the Friday test session.
+
 # Timesheet (June 24 - July 26 Morning) - 8 hours
 
 ## Friday July 26th

@@ -55,22 +55,95 @@ router.get('/student/:studentId', checkAuthenticated, async (req, res) => {
     }
 });
 
-//Drops a student from a course
+// //Drops a student from a course
+// router.delete('/student/:studentId/drop/:courseCode', checkAuthenticated, async (req, res) => {
+//     const { studentId, courseCode } = req.params;
+
+//     try {
+//         const dropQuery = `
+//             DELETE FROM "EnrolledIn"
+//             WHERE "studentId" = $1 AND "courseId" = (
+//                 SELECT "courseId" FROM "Course" WHERE "courseCode" = $2
+//             )
+//         `;
+//         await pool.query(dropQuery, [studentId, courseCode]);
+//         res.status(200).json({ message: 'Course dropped successfully' });
+//     } catch (err) {
+//         console.error('Error dropping course:', err);
+//         res.status(500).json({ error: 'Database error' });
+//     }
+// });
+// Remove course from student
 router.delete('/student/:studentId/drop/:courseCode', checkAuthenticated, async (req, res) => {
     const { studentId, courseCode } = req.params;
-
+    const client = await pool.connect();
     try {
-        const dropQuery = `
-            DELETE FROM "EnrolledIn"
-            WHERE "studentId" = $1 AND "courseId" = (
-                SELECT "courseId" FROM "Course" WHERE "courseCode" = $2
-            )
-        `;
-        await pool.query(dropQuery, [studentId, courseCode]);
+        await client.query('BEGIN');
+
+        // Fetch the courseId from courseCode
+        const courseResult = await client.query('SELECT "courseId" FROM "Course" WHERE "courseCode" = $1', [courseCode]);
+        if (courseResult.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Course not found' });
+        }
+        const courseId = courseResult.rows[0].courseId;
+
+        // Backup the enrolledIn relationship
+        await client.query(
+            'INSERT INTO "BackupEnrolledIn" ("studentId", "courseId", "studentGrade", "deleted_at") SELECT "studentId", "courseId", "studentGrade", NOW() FROM "EnrolledIn" WHERE "studentId" = $1 AND "courseId" = $2',
+            [studentId, courseId]
+        );
+
+        // Delete the enrolledIn relationship
+        const dropQuery = 'DELETE FROM "EnrolledIn" WHERE "studentId" = $1 AND "courseId" = $2';
+        await client.query(dropQuery, [studentId, courseId]);
+
+        await client.query('COMMIT');
         res.status(200).json({ message: 'Course dropped successfully' });
     } catch (err) {
+        await client.query('ROLLBACK');
         console.error('Error dropping course:', err);
         res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
+    }
+});
+
+// Restore course to student
+router.post('/student/:studentId/restore/:courseCode', checkAuthenticated, async (req, res) => {
+    const { studentId, courseCode } = req.params;
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Fetch the courseId from courseCode
+        const courseResult = await client.query('SELECT "courseId" FROM "Course" WHERE "courseCode" = $1', [courseCode]);
+        if (courseResult.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Course not found' });
+        }
+        const courseId = courseResult.rows[0].courseId;
+
+        // Restore the enrolledIn relationship
+        const restoreQuery = `
+            INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
+            SELECT "studentId", "courseId", "studentGrade" FROM "BackupEnrolledIn"
+            WHERE "studentId" = $1 AND "courseId" = $2
+        `;
+        await client.query(restoreQuery, [studentId, courseId]);
+
+        // Remove the entry from BackupEnrolledIn
+        const removeBackupQuery = 'DELETE FROM "BackupEnrolledIn" WHERE "studentId" = $1 AND "courseId" = $2';
+        await client.query(removeBackupQuery, [studentId, courseId]);
+
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'Course restored to student successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error restoring course to student:', error);
+        res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
     }
 });
 

@@ -100,11 +100,11 @@ const CreateAccPT = () => {
                 <div className="box">
                   <label className="primary-text">
                     First Name:
-                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                    <input type="text" className="main-text-space" name="firstName" value={formData.firstName} onChange={handleChange} required />
                   </label>
                   <label>
                     Last Name:
-                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                    <input type="text" className="main-text-space" name="lastName" value={formData.lastName} onChange={handleChange} required />
                   </label>
                 </div>
                 <div className="box">

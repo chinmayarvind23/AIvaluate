@@ -3,6 +3,18 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { pool } = require('../dbConfig');
 
+// Fetch all instructors (TAs and non-TAs)
+router.get('/instructors', async (req, res) => {
+    try {
+        const instructors = await pool.query('SELECT * FROM "Instructor"');
+        res.status(200).json(instructors.rows);
+    } catch (error) {
+        console.error('Error fetching instructors:', error);
+        res.status(500).json({ message: 'Error fetching instructors' });
+    }
+});
+
+
 router.get('/tas', async (req, res) => {
     try {
         const tas = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = TRUE');
@@ -10,6 +22,35 @@ router.get('/tas', async (req, res) => {
     } catch (error) {
         console.error('Error fetching TAs:', error);
         res.status(500).send({ message: 'Error fetching TAs' });
+    }
+});
+
+// Assign instructor to course (ensuring only one primary instructor per course)
+router.post('/courses/:courseId/instructors', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+    const { instructorId } = req.body;
+
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Remove existing instructor assigned to the course
+        await client.query('DELETE FROM "Teaches" WHERE "courseId" = $1 AND "instructorId" IN (SELECT "instructorId" FROM "Instructor" WHERE "isTA" = FALSE)', [courseId]);
+
+        // Assign the new instructor to the course
+        await client.query(
+            'INSERT INTO "Teaches" ("instructorId", "courseId") VALUES ($1, $2)',
+            [instructorId, courseId]
+        );
+
+        await client.query('COMMIT');
+        res.status(201).json({ message: 'Instructor assigned to course successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error assigning instructor to course:', error);
+        res.status(500).json({ message: 'Error assigning instructor to course' });
+    } finally {
+        client.release();
     }
 });
 
@@ -261,22 +302,95 @@ router.post('/evaluator/restore/:instructorId', checkAuthenticated, async (req, 
 });
 
 // Remove course from evaluator
+// router.delete('/evaluator/:instructorId/drop/:courseCode', checkAuthenticated, async (req, res) => {
+//     const { instructorId, courseCode } = req.params;
+//     try {
+//         const dropQuery = `DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
+//         await pool.query(dropQuery, [instructorId, courseCode]);
+//         res.status(200).json({ message: 'Course removed from instructor successfully' });
+//     } catch (error) {
+//         console.error('Error removing course from evaluator:', error);
+//         res.status(500).json({ error: 'Database error' });
+//     }
+// });
+
+// Remove course from evaluator
 router.delete('/evaluator/:instructorId/drop/:courseCode', checkAuthenticated, async (req, res) => {
     const { instructorId, courseCode } = req.params;
+    const client = await pool.connect();
     try {
-        const dropQuery = `DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = (SELECT "courseId" FROM "Course" WHERE "courseCode" = $2)`;
-        await pool.query(dropQuery, [instructorId, courseCode]);
+        await client.query('BEGIN');
+
+        // Fetch the courseId from courseCode
+        const courseResult = await client.query('SELECT "courseId" FROM "Course" WHERE "courseCode" = $1', [courseCode]);
+        if (courseResult.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Course not found' });
+        }
+        const courseId = courseResult.rows[0].courseId;
+
+        // Backup the teaches relationship
+        await client.query(
+            'INSERT INTO "BackupTeaches" ("instructorId", "courseId", "deleted_at") VALUES ($1, $2, NOW())',
+            [instructorId, courseId]
+        );
+
+        // Delete the teaches relationship
+        const dropQuery = 'DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = $2';
+        await client.query(dropQuery, [instructorId, courseId]);
+
+        await client.query('COMMIT');
         res.status(200).json({ message: 'Course removed from instructor successfully' });
     } catch (error) {
+        await client.query('ROLLBACK');
         console.error('Error removing course from evaluator:', error);
         res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
     }
 });
 
+router.post('/evaluator/:instructorId/restore/:courseCode', checkAuthenticated, async (req, res) => {
+    const { instructorId, courseCode } = req.params;
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
 
+        // Fetch the courseId and courseName from courseCode
+        const courseResult = await client.query('SELECT "courseId", "courseName" FROM "Course" WHERE "courseCode" = $1', [courseCode]);
+        if (courseResult.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Course not found' });
+        }
+        const { courseId, courseName } = courseResult.rows[0];
 
+        // Ensure there is no existing entry causing conflict
+        await client.query('DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = $2', [instructorId, courseId]);
 
+        // Restore the teaches relationship
+        const restoreQuery = `
+            INSERT INTO "Teaches" ("instructorId", "courseId")
+            SELECT "instructorId", "courseId" FROM "BackupTeaches"
+            WHERE "instructorId" = $1 AND "courseId" = $2
+        `;
+        await client.query(restoreQuery, [instructorId, courseId]);
 
+        // Remove the entry from BackupTeaches
+        const removeBackupQuery = 'DELETE FROM "BackupTeaches" WHERE "instructorId" = $1 AND "courseId" = $2';
+        await client.query(removeBackupQuery, [instructorId, courseId]);
+
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'Course restored to evaluator successfully', courseCode, courseName });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error restoring course to evaluator:', error);
+        res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
+    }
+});
+
+// Update evaluator
 router.put('/evaluator/:instructorId', checkAuthenticated, async (req, res) => {
     const { instructorId } = req.params;
     const { firstName, lastName, email } = req.body;

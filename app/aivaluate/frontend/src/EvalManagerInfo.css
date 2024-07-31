@@ -256,3 +256,13 @@ input:checked + .slider:before {
 input:checked + .slider .slider-text {
     color: #fff; /* Adjusted text color for visibility */
 }
+
+.restore-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}

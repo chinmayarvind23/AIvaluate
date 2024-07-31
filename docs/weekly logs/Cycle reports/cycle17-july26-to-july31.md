@@ -187,6 +187,27 @@
         <td> Chinmay
         </td>
     </tr>
+   <tr>
+        <td> Click to upload files and drag to upload files fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Evaluator's view of submissions page fixed to render correctly
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Publish assignment page and updates to backend fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
     <tr>
         <td> Changed the text for the AI help page
         </td>

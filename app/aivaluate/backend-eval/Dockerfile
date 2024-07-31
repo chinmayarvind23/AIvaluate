@@ -28,4 +28,3 @@ RUN ls -la /app/aivaluate/backend-eval/evallogger.js
 EXPOSE 6000
 
 CMD ["sh", "-c", "echo 'DB_HOST: $DB_HOST'; echo 'DB_PORT: $DB_PORT'; while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done && npm test -- --coverage --coverageReporters=text && node EvalServer.js"]
-

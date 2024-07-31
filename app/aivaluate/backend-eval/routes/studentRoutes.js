@@ -12,6 +12,7 @@ function checkAuthenticated(req, res, next) {
 
 router.get('/students/show/:courseId', checkAuthenticated, async (req, res) => {
     const { courseId } = req.params;
+    console.log('Received courseId:', courseId);
 
     try {
         console.log('Received courseId:', courseId);

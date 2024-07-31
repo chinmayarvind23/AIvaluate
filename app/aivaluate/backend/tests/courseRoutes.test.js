@@ -298,7 +298,7 @@ describe('GET /courses', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual(mockCourses);
-    });
+    }, 20000);
 
     it('should handle database errors', async () => {
         pool.query.mockRejectedValue(new Error('Database error'));

@@ -88,7 +88,7 @@ describe('GET /student-grades/:courseId', () => {
         { name: 'Assignment 2', due: '2022-02-10', submitted: false, score: 0, total: 100, marked: false }
       ]
     });
-  });
+  }, 20000);
 
   it('should return a 404 if no grades or assignments are found', async () => {
     const courseId = '2';

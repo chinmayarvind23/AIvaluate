@@ -1882,9 +1882,52 @@ Clockify report
 I invested considerable effort into conducting and improving front-end Selenium testing. I successfully resolved issues with the 10 failing tests, ensuring they now pass, and I added 5 additional tests to further enhance coverage. These activities were vital for confirming the reliability of our code.
 
 ### Next Cycle Goals 
-  * Goal 1: Work on the failing tests and add more test
-  * Goal 2: Make changes in tests overall according to the final changes
-  * Goal 3: Add coverage for frontend testing 
+  * Goal 1: Work on the failing tests and add more test.
+  * Goal 2: Make changes in tests overall according to the final changes.
+  * Goal 3: Add coverage for frontend testing.
+
+
+# Timesheet (July 26 - July 31) - 23 hours
+
+### Timesheet
+Clockify report
+
+<img width="928" alt="Screenshot 2024-07-31 at 1 54 51 AM" src="https://github.com/user-attachments/assets/71ed9c0c-ea02-48e7-bffc-0089495581d9">
+
+### Current Tasks 
+  * #1: Add more frontend tests
+  * #2: Fix the help page for student, evaluator, and admin
+  * #3: Backend testing
+
+### Progress Update (since 7/26/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Add more frontend tests</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Fix the help page for student, evaluator, and admin</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Backend testing</td>
+        <td>Complete</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I invested considerable effort into adding more frontend tests and fixing the help page for students, evaluators, and admin, conducting backend testing. These activities were crucial for ensuring the reliability and usability of our code. The testing process for the frontend and backend for student admin and evaluator is almost complete, but there might be minor adjustments. The bulk of the work has been accomplished.
+
+### Next Cycle Goals 
+  * Goal 1: Finalize the remaining frontend tests and address any new issues
+  * Goal 2: Testing for AI
+  * Goal 3: Bug fixes
+  * Goal 4: Prepare documentation
+
 
 
  

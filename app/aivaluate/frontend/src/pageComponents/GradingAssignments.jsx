@@ -67,7 +67,7 @@ const GradingAssignments = () => {
   const saveDueDate = async () => {
     setIsEditing(false);
     try {
-      const response = await axios.put(`http://localhost:5173/eval-api/assignment/${studentId}/${assignmentId}/due-date`, {
+      const response = await axios.put(`http://localhost:5173/eval-api/assignments/${studentId}/${assignmentId}/due-date`, {
         dueDate
       }, {
         withCredentials: true

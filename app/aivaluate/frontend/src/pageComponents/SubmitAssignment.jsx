@@ -31,6 +31,7 @@ const SubmitAssignment = () => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [submissionLink, setSubmissionLink] = useState('');
 
     const fetchAssignmentDetails = useCallback(async () => {
         try {
@@ -107,6 +108,10 @@ const SubmitAssignment = () => {
             formData.append('files', file);
         });
 
+        if (submissionLink) {
+            formData.append('submissionLink', submissionLink);
+        }
+
         try {
             await axios.post(`/stu-api/upload/${courseId}/${assignmentId}`, formData, {
                 headers: {
@@ -115,6 +120,7 @@ const SubmitAssignment = () => {
             });
             toast.success('Files uploaded successfully');
             setFiles([]);
+            setSubmissionLink('');
             fetchUploadedFiles();
         } catch (err) {
             toast.error('File upload failed. Please try again with a different file format.');
@@ -134,9 +140,6 @@ const SubmitAssignment = () => {
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
         return format(date, "MMMM do 'at' h:mmaaa");
-    };
-
-    const handleFileUploadChange = () => {
     };
 
     return (
@@ -194,7 +197,7 @@ const SubmitAssignment = () => {
                                         type="text" 
                                         placeholder="Have a link? Upload it here!"
                                         className="link-upload"
-                                        onChange={handleFileUploadChange}
+                                        onChange={(e) => setSubmissionLink(e.target.value)}
                                      />
                                 </div>
                                 <div className="submit-right">

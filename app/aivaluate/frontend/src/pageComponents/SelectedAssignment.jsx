@@ -276,6 +276,13 @@ const SelectedAssignment = () => {
                             </div>
                             )}
                             </div>
+                            {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text">AI Grading in Progress...</p>
+                            </div>
+                            )}
+                            </div>
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>
                             <div className="pagination-buttons">

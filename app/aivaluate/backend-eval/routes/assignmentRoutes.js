@@ -6,6 +6,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { formatISO } = require('date-fns');
+const baseDir = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
+const axios = require('axios');
 
 // Function to create directory structure and store file
 const storage = multer.diskStorage({

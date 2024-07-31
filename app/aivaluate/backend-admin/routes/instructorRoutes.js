@@ -3,6 +3,18 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const { pool } = require('../dbConfig');
 
+// Fetch all instructors (TAs and non-TAs)
+router.get('/instructors', async (req, res) => {
+    try {
+        const instructors = await pool.query('SELECT * FROM "Instructor"');
+        res.status(200).json(instructors.rows);
+    } catch (error) {
+        console.error('Error fetching instructors:', error);
+        res.status(500).json({ message: 'Error fetching instructors' });
+    }
+});
+
+
 router.get('/tas', async (req, res) => {
     try {
         const tas = await pool.query('SELECT * FROM "Instructor" WHERE "isTA" = TRUE');
@@ -10,6 +22,35 @@ router.get('/tas', async (req, res) => {
     } catch (error) {
         console.error('Error fetching TAs:', error);
         res.status(500).send({ message: 'Error fetching TAs' });
+    }
+});
+
+// Assign instructor to course (ensuring only one primary instructor per course)
+router.post('/courses/:courseId/instructors', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+    const { instructorId } = req.body;
+
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Remove existing instructor assigned to the course
+        await client.query('DELETE FROM "Teaches" WHERE "courseId" = $1 AND "instructorId" IN (SELECT "instructorId" FROM "Instructor" WHERE "isTA" = FALSE)', [courseId]);
+
+        // Assign the new instructor to the course
+        await client.query(
+            'INSERT INTO "Teaches" ("instructorId", "courseId") VALUES ($1, $2)',
+            [instructorId, courseId]
+        );
+
+        await client.query('COMMIT');
+        res.status(201).json({ message: 'Instructor assigned to course successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error assigning instructor to course:', error);
+        res.status(500).json({ message: 'Error assigning instructor to course' });
+    } finally {
+        client.release();
     }
 });
 

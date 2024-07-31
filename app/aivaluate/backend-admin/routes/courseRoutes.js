@@ -80,21 +80,44 @@ router.get('/enrolled-courses', checkAuthenticated, (req, res) => {
     );
 });
 
-// Get a single course by ID
-router.get('/courses/:id', async (req, res) => {
-    const courseId = req.params.id;
+router.get('/courses/:courseId', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
 
     try {
-        const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
+        const courseQuery = 'SELECT * FROM "Course" WHERE "courseId" = $1';
+        const courseResult = await pool.query(courseQuery, [courseId]);
 
-        if (course.rowCount > 0) {
-            res.status(200).send(course.rows[0]);
-        } else {
-            res.status(404).send({ message: 'Course not found' });
+        if (courseResult.rowCount === 0) {
+            return res.status(404).json({ message: 'Course not found' });
         }
+
+        const course = courseResult.rows[0];
+
+        // Fetch the primary instructor for the course
+        const instructorQuery = `
+            SELECT "Instructor"."instructorId", "Instructor"."firstName", "Instructor"."lastName"
+            FROM "Instructor"
+            JOIN "Teaches" ON "Instructor"."instructorId" = "Teaches"."instructorId"
+            WHERE "Teaches"."courseId" = $1 AND "Instructor"."isTA" = FALSE
+        `;
+        const instructorResult = await pool.query(instructorQuery, [courseId]);
+
+        // Fetch all TAs for the course
+        const tasQuery = `
+            SELECT "Instructor"."instructorId", "Instructor"."firstName", "Instructor"."lastName"
+            FROM "Instructor"
+            JOIN "Teaches" ON "Instructor"."instructorId" = "Teaches"."instructorId"
+            WHERE "Teaches"."courseId" = $1 AND "Instructor"."isTA" = TRUE
+        `;
+        const tasResult = await pool.query(tasQuery, [courseId]);
+
+        const instructor = instructorResult.rows[0] || null;
+        const tas = tasResult.rows;
+
+        res.status(200).json({ ...course, instructor, tas });
     } catch (error) {
         console.error('Error fetching course:', error);
-        res.status(500).send({ message: 'Error fetching course' });
+        res.status(500).json({ message: 'Error fetching course' });
     }
 });
 
@@ -139,23 +162,6 @@ router.post('/courses', async (req, res) => {
 });
 
 
-// Get a single course by ID
-router.get('/courses/:courseId', async (req, res) => {
-    const courseId = parseInt(req.params.courseId, 10);
-
-    try {
-        const course = await pool.query('SELECT * FROM "Course" WHERE "courseId" = $1', [courseId]);
-
-        if (course.rowCount > 0) {
-            res.status(200).send(course.rows[0]);
-        } else {
-            res.status(404).send({ message: 'Course not found' });
-        }
-    } catch (error) {
-        console.error('Error fetching course:', error);
-        res.status(500).send({ message: 'Error fetching course' });
-    }
-});
 
 // Fetch all submissions for a course
 router.get('/courses/:courseId/submissions', async (req, res) => {

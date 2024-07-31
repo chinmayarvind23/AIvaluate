@@ -124,6 +124,7 @@ const CourseManager = () => {
                                     />
                                 </div>
                             </div>
+                            <div className="empty"> </div>
                             {!loading && deletedCourses.length > 0 && (
                                 <button 
                                     className="revertEvalButton" 

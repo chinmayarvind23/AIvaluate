@@ -109,7 +109,7 @@ router.post('/gpt/assistants', async (req, res) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }`,
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });
@@ -175,7 +175,7 @@ router.post('/gpt/assistants', async (req, res) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }`,
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });              
@@ -601,7 +601,7 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }`,
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });                          

@@ -516,3 +516,47 @@ Progress Update:
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - Next cycle I will focus on issue #4 and take more issues if available and help out with AI implementation
 
+
+
+
+
+
+
+
+
+
+
+
+## Cycle 18 : Friday, July 26 - Wednesday, July 30
+
+Timesheet
+
+<img width="959" alt="Cycle 18" src="https://github.com/user-attachments/assets/05de8439-3d6f-460c-b887-3895857f1a57">
+
+
+
+
+
+
+### Current Tasks
+
+- Edit name and email for Student(Admin Page)
+- Edit name and email for Evaluator(Admin Page)
+- Clickable prof to TA and TA to prof on admin view of individual evaluator
+- Backend for assignment page student view
+
+  
+Progress Update: 
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Edit name and email for Student(Admin Page) | Completed |
+| Task #2 / Edit name and email for Evaluator(Admin Page)) | Completed |
+| Task #3 / Clickable prof to TA and TA to prof on admin view of individual evaluator |Completed|
+| Task #4 / Backend for assignment page student view |Completed|
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+- My main focus for this cycle was the Admin page and fixing the student information and the evaluator information. I got both pages to work perfectly with the backend integrated to update the new information. Also the assignment page backend was done by me and was used by my team members to update the assignment details for the students. 
+ 
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- The next cycle will be focused on testing the website for the testing day we have on Friday and making sure it works perfectly. UI will be helping out any of the team members that need any help!

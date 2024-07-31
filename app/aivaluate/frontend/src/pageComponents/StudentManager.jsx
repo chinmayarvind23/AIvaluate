@@ -2,12 +2,12 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from "../components/AIvaluateNavBarAdmin";
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const StudentManager = () => {
     const navigate = useNavigate();
@@ -18,6 +18,20 @@ const StudentManager = () => {
     const [filteredStudents, setFilteredStudents] = useState([]);
     const [deletedStudents, setDeletedStudents] = useState([]);
 
+    const fetchStudents = async () => {
+        try {
+            const response = await fetch('http://localhost:5173/admin-api/students', {
+                credentials: 'include'
+            });
+            const data = await response.json();
+            setStudents(data);
+            setFilteredStudents(data);
+        } catch (error) {
+            console.error('Error fetching students:', error);
+            toast.error('Failed to fetch students');
+        }
+    };
+
     const fetchDeletedStudents = async () => {
         try {
             const response = await fetch('http://localhost:5173/admin-api/deleted-students', {
@@ -27,19 +41,7 @@ const StudentManager = () => {
             setDeletedStudents(data);
         } catch (error) {
             console.error('Error fetching deleted students:', error);
-        }
-    };
-
-    const fetchStudents = async () => {
-        try {
-            const response = await fetch(`http://localhost:5173/admin-api/students`, {
-                credentials: 'include'
-            });
-            const data = await response.json();
-            setStudents(data);
-            setFilteredStudents(data);
-        } catch (error) {
-            console.error('Error fetching students:', error);
+            toast.error('Failed to fetch deleted students');
         }
     };
 
@@ -48,10 +50,10 @@ const StudentManager = () => {
             await fetchStudents();
             await fetchDeletedStudents();
         };
-    
+
         fetchData();
     }, []);
-    
+
     useEffect(() => {
         const filtered = students.filter(student =>
             `${student.firstName} ${student.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
@@ -104,7 +106,7 @@ const StudentManager = () => {
             toast.error('Failed to restore student');
         }
     };
-    
+
     return (
         <div>
             <ToastContainer />
@@ -177,4 +179,3 @@ const StudentManager = () => {
 };
 
 export default StudentManager;
-

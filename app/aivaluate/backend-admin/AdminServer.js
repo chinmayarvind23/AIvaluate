@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '/app/aivaluate/backend-admin/.env' });
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -69,7 +70,7 @@ app.post("/admin-api/signup", async (req, res) => {
         errors.push({ message: "Password should be at least 6 characters long" });
     }
 
-    if (password != password2) {
+    if (password !== password2) {
         errors.push({ message: "Passwords do not match" });
     }
 

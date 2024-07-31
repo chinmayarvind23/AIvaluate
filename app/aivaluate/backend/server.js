@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '/app/aivaluate/backend/.env' });
 const express = require('express');
 const app = express();
 const cors = require('cors');

@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
     "AIassignedGrade" FLOAT,
     "InstructorAssignedFinalGrade" FLOAT,
     "isGraded" BOOLEAN DEFAULT false,
+    CONSTRAINT unique_assignment_grade UNIQUE ("assignmentSubmissionId", "assignmentId"),
     FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId") ON DELETE CASCADE,
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE
 );
@@ -114,8 +115,9 @@ CREATE TABLE IF NOT EXISTS "StudentFeedback"(
     "studentId" INT NOT NULL,
     "assignmentId" INT NOT NULL,
     "courseId" INT NOT NULL,
-    "AIFeedbackText" VARCHAR(1000),
-    "InstructorFeedbackText" VARCHAR(1000),
+    "AIFeedbackText" VARCHAR(20000),
+    "InstructorFeedbackText" VARCHAR(20000),
+    CONSTRAINT "unique_feedback" UNIQUE ("studentId", "assignmentId", "courseId"),
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
@@ -123,13 +125,13 @@ CREATE TABLE IF NOT EXISTS "StudentFeedback"(
 
 CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
     "studentFeedbackReportId" SERIAL NOT NULL PRIMARY KEY,
-    "studentFeedbackReportText" VARCHAR(1000),
+    "studentFeedbackReportText" VARCHAR(10000),
     "isResolved" BOOLEAN,
     "studentId" INT NOT NULL,
     "assignmentId" INT NOT NULL,
     "courseId" INT NOT NULL,
-    "AIFeedbackText" VARCHAR(1000),
-    "InstructorFeedbackText" VARCHAR(1000),
+    "AIFeedbackText" VARCHAR(20000),
+    "InstructorFeedbackText" VARCHAR(20000),
     FOREIGN KEY ("studentId") REFERENCES "Student"("studentId") ON DELETE CASCADE,
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId")

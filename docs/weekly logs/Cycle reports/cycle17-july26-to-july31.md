@@ -125,6 +125,62 @@
         </td>
     </tr>
     <tr>
+        <td> Assignment key reuploads
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Rubrics page fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Students page fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Create course bugs fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Admin check for evaluators with same emails before registering enforced
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Random sidebar redirects bug fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Indiividual file submissions by file name downloads enabled for instructors
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr> 
+    <tr>
+        <td> Mark an assignment as graded backend fully functional, works with the AI
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
         <td> Implementing links with the AI model
         </td>
         <!-- Status -->

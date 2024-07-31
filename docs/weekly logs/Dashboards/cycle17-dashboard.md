@@ -1,11 +1,14 @@
+### Overview
+Our testing coverage is excellent and is at 98%, and aside from the error handling for the AI grading and submission links for submissions + notification system, we are almost complete with majority of the features of the project from our initial project plan, with only the notification system left to be finished for the next cycle, and incorporating feedback from the peer testing and the submission links.
+
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-  <img width="1015" alt="Screenshot 2024-07-17 at 4 09 35 AM" src="">
+  <img width="1011" alt="Screenshot 2024-07-26 at 8 18 17 AM" src="https://github.com/user-attachments/assets/b6849f21-42df-400c-86bc-30def654a1ea">
 
 ### Times for team/individual
 
-![alt text](../clockify-reports/cycle17.png)
+<img width="1920" alt="Screenshot 2024-07-26 at 8 17 08 AM" src="https://github.com/user-attachments/assets/bdea6e2d-526b-48bd-9b40-47b04402adb8">
 
 - ### Table view of completed tasks on project board
 
@@ -14,148 +17,34 @@
         <td><strong>TASK/ISSUE #</strong>
         </td>
     </tr>
-        <tr>
-        <td> Add link submission capability
+    <tr>
+        <td> Frontend fixes + broken page fixes for backend
         </td>
         <!-- Status -->
         <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed due date on create assignment page
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed title of create assignment page
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed edit name and email boxes in eval editor for admin
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed and complete frontend and backend for Student grading page
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed create prompt and edit prompt modals
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed edit course modal
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed tool tips for student and people pages
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Removed check image after joining a course
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed create course input text boxes
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed frontend display on AI-settings page
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Changed the colour and styling of the entire site to make it more modern and feel like canvas.
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Implementing AI into frontend
-        </td>
-        <!-- Status -->
-        <td> Chinmay
-        </td>
-    </tr>
-    <tr>
-        <td> Implementing links with the AI model
-        </td>
-        <!-- Status -->
-        <td> Chinmay
-        </td>
-    </tr>
-    <tr>
-        <td> Changed the text for the AI help page
-        </td>
-        <!-- Status -->
-        <td> Aayush
-        </td>
-    </tr>
-    <tr>
-        <td> Fixed TA vs Prof access permissions
-        </td>
-        <!-- Status -->
-        <td> Jerry
         </td>
     </tr>
      <tr>
-        <td> Edit name and email for Student(Admin Page)
+        <td> Append Assignment Rubric to Assistant API Instructions
         </td>
         <!-- Status -->
-        <td> Omar
+        <td> Jerry & Chinmay
         </td>
     </tr>
       <tr>
-        <td> Edit name and email for Evaluator(Admin Page)
+        <td> Pass in Assignment Key Files to the AI as instructions
         </td>
         <!-- Status -->
-        <td> Omar
+        <td> Chinmay
         </td>
     </tr>
-     <tr>
-        <td> Clickable prof to TA and TA to prof on admin view of individual evaluator
+       <tr>
+        <td> Pass in Assignment Submission File to AI + error handling for AI requests, submission links
         </td>
         <!-- Status -->
-        <td> Omar
+        <td> Chinmay
         </td>
     </tr>
-     <tr>
-        <td> Backend for assignment page student view
-        </td>
-        <!-- Status -->
-        <td> Omar
-        </td>
-    </tr>
-
-  
 </table>
 
 - ### Table view of in progress tasks on project board
@@ -165,17 +54,12 @@
         </td>
     </tr>
     <tr>
-        <td> Email notifications
+        <td> Fix date/time problem in DB
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
-    <tr>
-        <td> Documentation
-        </td>
-        <!-- Status -->
-        <td> Whole team
      <tr>
         <td> Revise frontend UI and fix various bugs based on test session feedback
         </td>
@@ -192,15 +76,17 @@
     </tr>
 </table>
 
-### Which tasks are going to be targeted from the next cycle
+### Which tasks are going to be targeted from the next cycle with time estimates and owners (ie planning and who is going to own/work on each task)
 - Notifications
-- Frontend bug fixes
-- Date fixes
-- File submission with AI
+- Finish AI with file submissions
+- Fix Date/Time issues
+- Fixing any remaining broken features
+- Adding submission links for submissions
 
 ### Project Progress
 - Frontend: 99% complete
 - Backend: 97% complete
+
 ### Testing Report
 ![Screenshot_2024-07-16_at_9 39 32_PM](https://github.com/user-attachments/assets/9caeac81-7fa6-4ea8-b3a7-0d2b27d65220)
 

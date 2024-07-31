@@ -1,4 +1,4 @@
-# Cycle 14 Weekly Log
+# Cycle 18 Weekly Log
 
 - ## Date range: July 26 - July 31, 2024
 
@@ -125,7 +125,84 @@
         </td>
     </tr>
     <tr>
+        <td> Assignment key reuploads
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Rubrics page fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Students page fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Create course bugs fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Admin check for evaluators with same emails before registering enforced
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Random sidebar redirects bug fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Indiividual file submissions by file name downloads enabled for instructors
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr> 
+    <tr>
+        <td> Mark an assignment as graded backend fully functional, works with the AI
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
         <td> Implementing links with the AI model
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Click to upload files and drag to upload files fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Evaluator's view of submissions page fixed to render correctly
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Publish assignment page and updates to backend fixed
         </td>
         <!-- Status -->
         <td> Chinmay
@@ -201,6 +278,18 @@
         </td>
         <!-- Status -->
         <td> Whole team
+     <tr>
+        <td> Revise frontend UI and fix various bugs based on test session feedback
+        </td>
+        <!-- Status -->
+        <td> Jerry & Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Submission Link integration with AI
+        </td>
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
 </table>

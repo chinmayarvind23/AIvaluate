@@ -100,6 +100,11 @@ const GradingAssignments = () => {
   };
 
   const handleMarkComplete = async () => {
+    if (!finalScore || !instructorFeedback) {
+      toast.error('Please fill in all required fields: Final Score and Instructor Feedback.');
+      return;
+    }
+
     try {
       const response = await axios.put(`http://localhost:5173/eval-api/assignment/complete/${studentId}/${assignmentId}`, {
         dueDate,

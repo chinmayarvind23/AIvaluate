@@ -39,6 +39,7 @@ import ResetPasswordEval from './pageComponents/ResetPasswordEval';
 import Rubrics from './pageComponents/Rubrics';
 import SelectStudentAdmin from './pageComponents/SelectStudentAdmin';
 import SelectedAssignment from './pageComponents/SelectedAssignment';
+import SelectCourseAdmin from './pageComponents/SelectCourseAdmin';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
 import StudentAccount from './pageComponents/StudentAccount';
@@ -98,6 +99,7 @@ const App = () => {
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} /> {/* Done*/}
           <Route path="/admin/coursemanager" element={<PrivateRouteAdmin element={CourseMananger} />} /> {/* Done*/}
           <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} /> {/* Done*/}
+          <Route path="/admin/course/:courseId" element={<PrivateRouteAdmin element={SelectCourseAdmin} />} /> {/* Done*/}
           <Route path="/admin/help" element={<PrivateRouteAdmin element={AdminHelpPage} />} /> {/* Done*/}
           <Route path="/admin/account" element={<PrivateRouteAdmin element={AdminAccount} />} /> {/* Done*/}
           

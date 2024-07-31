@@ -278,6 +278,18 @@
         </td>
         <!-- Status -->
         <td> Whole team
+     <tr>
+        <td> Revise frontend UI and fix various bugs based on test session feedback
+        </td>
+        <!-- Status -->
+        <td> Jerry & Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Submission Link integration with AI
+        </td>
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
 </table>

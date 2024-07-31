@@ -1,5 +1,97 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 24 - July 26 Morning) - 8 hours
+
+## Friday July 26th
+### 2 hours
+- Add a feature that allows admins to undo evaluator deletion #405/#375
+
+## Thursday July 25th
+### 6 hours
+- Add a feature that allows admins to undo evaluator deletion #405/#375
+
+# Current Tasks
+- #1 Revise frontend UI and fix various bugs based on test session feedback #375
+- #2 Revert evaluator deletion #405
+
+# Progress Update
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | In Progress  |
+| Task #2 | Completed  |
+
+# Cycle Goal Review
+During this cycle, I implemented a feature which allows the admin to revert a recent evaluator deletion. This is implemented because of the feedback collected during user testing. Minor fixes and manual testing are also completed based on the feedbacks.
+
+# Next Cycle 
+During the next cycle, I'll continue to work on the administrator undo feature, allowing the admin to undo student deletion, as well as undo dropping a course. Also, I think the development branch might be corrupted at this moment; I'll spend some time to fix the dev branch.
+
+# Timesheet (June 19 - July 23) - 13 hours
+
+## Tuesday July 23rd
+### 6.5 hours
+- Make sure file submissions and answer key file uploads can be accessed by AI (6.5 hours) Issues #389 and #390
+
+## Monday July 22nd
+### 4.5 hour
+- Append Assignment Rubrics to the OpenAI assistants API instruction (4.5 hours) Issue #374
+
+## Sunday July 21st
+### 2 hours
+- Team meeting and assigning tasks (2 hours)
+
+# Current Tasks
+- #1 Append Assignment Rubric to Assistant API Instructions #374
+- #2 Pass in Assignment Key Files to the AI as instructions #389
+- #3 Pass in Assignment Submission File to AI #390
+- #4 Revise frontend UI and fix various bugs based on test session feedback #375
+
+# Progress Update (since July 10)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Complete  |
+| Task #4 | Incomplete  |
+
+# Cycle Goal Review
+During this cycle, I focused on the AI part, I successfully attached the assignment rubric, submission file and answer key file to the AI grading assistant. Now if we provide a submission ID, the AI will return a grade and feedback based on all the relevant information.
+
+# Next Cycle 
+During the next cycle, I'll continue to work on AI grading; I'll make sure that the AI feedback and AI grades are stored in the database, and can be accessed and modified by the users.
+Also, I'll fix various bugs and any frontend issues that were brought up in the testing session last week. 
+
+
+# Timesheet (June 17 - July 18) - 8 hours
+
+## Thursday July 18th
+### 7 hours
+- Append rubric to the Assistants API backend (1 hour)
+- Check frontend and fix any potential nav bar issues ( 0.5 hour)
+- Switch to OpenAI assistant API for AI grading, fetching prompts to be used by AI (5 hours) 
+
+## Wednesday July 17th
+### 1 hour
+- Code Review and help teammates solve issues (0.5 hours)
+- Team meeting and deciding on task priorities (0.5 hours)
+
+# Current Tasks
+- #1 Switch to OpenAi Assistant API for grading, fetching prompts #350
+- #2 Fix Navigation Bar Issues #321
+- #3 Append Rubric to the Assistants API backend #358
+
+# Progress Update (since July 10)
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1  | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Ongoing  |
+
+# Cycle Goal Review
+During this cycle, I focused on the AI part, which is supposed to grade student assignments. I switched the AI from OpenAI Completion to Assistants. I made it to fetch the system default prompt and the professor's custom prompts when interacting with the AI.
+# Next Cycle 
+During the next cycle, I'll continue to work on AI grading; more specifically, I'll ensure the assignment rubric is passed to the AI. And also, I will improve based on any feedback we receive during Friday's testing session.
+
 # Timesheet (June 12 - July 16) - 16.5 hours
 
 ## Tuesday July 16th

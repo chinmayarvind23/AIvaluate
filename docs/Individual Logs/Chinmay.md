@@ -675,3 +675,94 @@ Completed 100% of my tasks, testing was added, but it failed. But, another team 
 - Goal 2: File downloads and integration with new assignment grading UI
 - Goal 3: Peer Testing Document preparation
 - Goal 4: AI API details editing to match new model requirements
+
+## July 17th - July 19th
+
+## Timesheet
+
+Clockify report: Total hours - 6 hours
+<img width="1920" alt="Screenshot 2024-07-18 at 10 03 38 PM" src="https://github.com/user-attachments/assets/e5338556-a2ad-411c-854e-28a30f118293">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** File submissions for AI, fixing dev branch & team meetings (5 hours) (XL Task)
+- **#2:** Peer testing document and survey (1 hour) (Medium Task)
+
+## Progress Update (since 7/17/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | File submission for AI in progress, dev branch fixed |
+| Task 2       | Completed |
+
+## Cycle Goal Review
+
+Completed 70% of my tasks, the file submission for the AI will be completed in the next cycle, and I am working on getting the submissions to appear on the grading page, and also getting the grades to appear with the AI feedback on assignment page for both student and evaluator, and I worked with Colton to complete the survey and the peer testing document.
+
+## Next Cycle Goals
+
+- Goal 1: AI file submission and DB updates
+- Goal 2: File downloads and integration with new assignment grading UI
+- Goal 3: AI API details editing to match new model requirements
+- Goal 4: Downloading submissions on grading page & submissions page for a course/assignment
+
+## July 19th - July 24th
+
+## Timesheet
+
+Clockify report: Total hours - 27 hours
+<img width="1920" alt="Screenshot 2024-07-24 at 7 27 21 AM" src="https://github.com/user-attachments/assets/f051a3c7-9b70-4dfa-9453-c3ecf70f740f">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** Team meetings (4 hours) (Medium Task)
+- **#2:** AI File submission (9 hours) (XL Task)
+- **#3:** AI Communication and response + DB entries (14 hours) (XL Task)
+
+## Progress Update (since 7/19/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Completed |
+| Task 3       | In progress, the responses are working, and will complete the DB population of the grade and feedback |
+
+## Cycle Goal Review
+
+Completed 85% of my tasks, the file submission is done, only the grading and population of the DB is left to be done and will be completed in the next cycle.
+
+## Next Cycle Goals
+
+- Goal 1: AI response extraction + DB updates
+- Goal 2: File downloads and integration with new assignment grading UI, fixing broken components
+- Goal 3: Downloading submissions on grading page & submissions page for a course/assignment
+
+## July 24th - July 26th
+
+## Timesheet
+
+Clockify report: Total hours - 24 hours
+<img width="1920" alt="Screenshot 2024-07-26 at 8 12 20 AM" src="https://github.com/user-attachments/assets/7ff7e176-50bf-4cb3-8694-62794bcca05f">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** AI parsing logic + DB entries and responses from AI with retry logic (14 hours) (XL Task)
+- **#2:** AI File submission, smaller fixes on assignment submissions page for evaluator (10 hours) (XL Task)
+
+## Progress Update (since 7/24/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Close to completed, just need to add in some more logic to ensure a response from the AI is guaranteed |
+| Task 2       | Completed |
+
+## Cycle Goal Review
+
+Completed 90% of my tasks, the file submission is done, the DB is being populated sometimes and I will add in logic to take care of that within the next cycle.
+
+## Next Cycle Goals
+
+- Goal 1: AI response extraction + DB updates completion
+- Goal 2: Fixing broken components on students and grades page
+- Goal 3: Fixing broken admin page components
+- Goal 4: Customizing file downloads for instructors and students

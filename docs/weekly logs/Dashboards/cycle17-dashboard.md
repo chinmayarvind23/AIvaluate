@@ -128,7 +128,6 @@
     </tr>
 </table>
 
-
 - ### Table view of in progress tasks on project board
 <table border="1">
 <tr>
@@ -147,6 +146,18 @@
         </td>
         <!-- Status -->
         <td> Whole team
+     <tr>
+        <td> Revise frontend UI and fix various bugs based on test session feedback
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
+    <tr>
+        <td> Pass in Assignment Submission File to AI + error handling for AI requests, submission links + DB population fixing
+        </td>
+        <!-- Status -->
+        <td> Chinmay
         </td>
     </tr>
 </table>
@@ -160,3 +171,11 @@
 ### Project Progress
 - Frontend: 99% complete
 - Backend: 97% complete
+### Testing Report
+![Screenshot_2024-07-16_at_9 39 32_PM](https://github.com/user-attachments/assets/9caeac81-7fa6-4ea8-b3a7-0d2b27d65220)
+
+![Screenshot_2024-07-16_at_9 26 24](https://github.com/user-attachments/assets/22060072-e1f5-49c6-85ce-75c1e5edaf05)
+
+![Screenshot_2024-07-15_at_10 12 28_PM](https://github.com/user-attachments/assets/58e4d2d6-1f59-4d4e-adad-dd06de50361c)
+
+The report for the frontend testing will be added in the next cycle as we are still working on getting it fully up and running.

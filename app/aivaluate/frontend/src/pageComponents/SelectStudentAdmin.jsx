@@ -16,6 +16,7 @@ const SelectStudentAdmin = () => {
     const { studentId } = useParams();
     const [student, setStudent] = useState({});
     const [courses, setCourses] = useState([]);
+    const [droppedCourses, setDroppedCourses] = useState([]);
 
     useEffect(() => {
         const fetchStudentDetails = async () => {
@@ -82,6 +83,8 @@ const SelectStudentAdmin = () => {
                         });
                         if (response.ok) {
                             setCourses(courses.filter(course => course.courseCode !== courseCode));
+                            const droppedCourse = courses.find(course => course.courseCode === courseCode);
+                            setDroppedCourses([...droppedCourses, droppedCourse]);
                             toast.success(`Dropped course: ${courseCode}`);
                         } else {
                             toast.error('Failed to drop the course');
@@ -108,6 +111,45 @@ const SelectStudentAdmin = () => {
         });
     };
 
+    const handleRestoreCourse = (courseCode) => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirmRestore = async () => {
+                    try {
+                        const response = await fetch(`http://localhost:5173/admin-api/student/${studentId}/restore/${courseCode}`, {
+                            method: 'POST',
+                            credentials: 'include'
+                        });
+                        if (response.ok) {
+                            const restoredCourse = droppedCourses.find(course => course.courseCode === courseCode);
+                            setCourses([...courses, restoredCourse]);
+                            setDroppedCourses(droppedCourses.filter(course => course.courseCode !== courseCode));
+                            toast.success(`Restored course: ${courseCode}`);
+                        } else {
+                            toast.error('Failed to restore the course');
+                        }
+                    } catch (error) {
+                        console.error('Error restoring course:', error);
+                        toast.error('Failed to restore the course');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm Restore</h1>
+                        <p>Are you sure you want to restore the course {courseCode}?</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirmRestore} className="confirm-button">Confirm</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay"
+        });
+    };
+
     const maskedPassword = student.password ? '*'.repeat(student.password.length) : '';
 
     return (
@@ -115,45 +157,69 @@ const SelectStudentAdmin = () => {
             <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <div className="filler-div">
-            <SideMenuBarAdmin tab="studentManager" />
-            <div className="main-margin">
-                <div className="top-bar">
-                    <div className="back-btn-div">
-                        <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
+                <SideMenuBarAdmin tab="studentManager" />
+                <div className="main-margin">
+                    <div className="top-bar">
+                        <div className="back-btn-div">
+                            <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
+                        </div>
+                        <h1>Student Info</h1>
                     </div>
-                    <h1>Student Info</h1>
-                </div>
-                <div className="center-it">
-                    <div>
-                        <div className="user-info2">
-                            <div className="user-name">
-                                <span>{student.firstName} {student.lastName}</span>
-                                <span>Student ID: {student.studentId}</span>
+                    <div className="center-it">
+                        <div>
+                            <div className="user-info2">
+                                <div className="user-name">
+                                    <span>{student.firstName} {student.lastName}</span>
+                                    <span>Student ID: {student.studentId}</span>
+                                </div>
+                                <div className="email">
+                                    <span>Email: </span>
+                                    <span>{student.email}</span>
+                                </div>
+                                <div className="password">
+                                    <span>Password: </span>
+                                    <span>{maskedPassword}</span>
+                                </div>
+                                <div className="courses">
+                                    <span>Courses:</span>
+                                    <ul>
+                                        {courses.map((course, index) => (
+                                            <li key={index}>
+                                                {course.courseCode} - {course.courseName}
+                                                <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="dropped-courses">
+                                    <span>Dropped Courses:</span>
+                                    <ul>
+                                        {droppedCourses.map((course, index) => (
+                                            <li key={index}>
+                                                {course.courseCode} - {course.courseName}
+                                                <button 
+                                                    className="restore-button" 
+                                                    onClick={() => handleRestoreCourse(course.courseCode)}
+                                                    style={{
+                                                        backgroundColor: 'green',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        padding: '5px 10px',
+                                                        cursor: 'pointer',
+                                                        marginLeft: '10px'
+                                                    }}
+                                                >
+                                                    Undo Drop
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
                             </div>
-                            <div className="email">
-                                <span>Email: </span>
-                                <span>{student.email}</span>
-                            </div>
-                            <div className="password">
-                                <span>Password: </span>
-                                <span>{maskedPassword}</span>
-                            </div>
-                            <div className="courses">
-                                <span>Courses:</span>
-                                <ul>
-                                    {courses.map((course, index) => (
-                                        <li key={index}>
-                                            {course.courseCode}
-                                            <button className="drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <button className="delete-button" onClick={handleDelete}>Delete user</button>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     );

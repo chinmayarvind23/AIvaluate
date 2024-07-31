@@ -97,23 +97,6 @@ router.get('/courses/:id', async (req, res) => {
         res.status(500).send({ message: 'Error fetching course' });
     }
 });
-// Delete a course
-router.delete('/courses/:id', async (req, res) => {
-    const courseId = req.params.id;
-
-    try {
-        const result = await pool.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId]);
-
-        if (result.rowCount > 0) {
-            res.status(200).json({ message: 'Course deleted successfully' });
-        } else {
-            res.status(404).json({ message: 'Course not found' });
-        }
-    } catch (error) {
-        console.error('Error deleting course:', error);
-        res.status(500).json({ message: 'Error deleting course' });
-    }
-});
 
 // Update a course
 router.put('/courses/:id', async (req, res) => {
@@ -299,6 +282,256 @@ router.post('/courses/:courseId/instructors', async (req, res) => {
     } catch (error) {
         console.error('Error assigning professor to course:', error);
         res.status(500).json({ message: 'Error assigning professor to course' });
+    }
+});
+
+// Soft delete a course and backup dependent data
+router.delete('/courses/:id', async (req, res) => {
+    const courseId = req.params.id;
+
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Backup dependent data
+        await client.query(`
+            INSERT INTO "BackupEnrolledIn" ("studentId", "courseId", "studentGrade", "deleted_at")
+            SELECT "studentId", "courseId", "studentGrade", NOW()
+            FROM "EnrolledIn"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupTeaches" ("instructorId", "courseId", "deleted_at")
+            SELECT "instructorId", "courseId", NOW()
+            FROM "Teaches"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupAssignment" ("assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded", "deleted_at")
+            SELECT "assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded", NOW()
+            FROM "Assignment"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupAssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded", "deleted_at")
+            SELECT "assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded", NOW()
+            FROM "AssignmentSubmission"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupAssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded", "deleted_at")
+            SELECT "assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded", NOW()
+            FROM "AssignmentGrade"
+            WHERE "assignmentSubmissionId" IN (
+                SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "courseId" = $1
+            )
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupCourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead", "deleted_at")
+            SELECT "senderId", "receiverId", "courseId", "notificationMessage", "isRead", NOW()
+            FROM "CourseNotification"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupStudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText", "deleted_at")
+            SELECT "studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText", NOW()
+            FROM "StudentFeedback"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupStudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText", "deleted_at")
+            SELECT "studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText", NOW()
+            FROM "StudentFeedbackReport"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupAssignmentRubric" ("assignmentRubricId", "rubricName", "criteria", "courseId", "deleted_at")
+            SELECT "assignmentRubricId", "rubricName", "criteria", "courseId", NOW()
+            FROM "AssignmentRubric"
+            WHERE "courseId" = $1
+        `, [courseId]);
+
+        await client.query(`
+            INSERT INTO "BackupUseRubric" ("assignmentId", "assignmentRubricId", "deleted_at")
+            SELECT "assignmentId", "assignmentRubricId", NOW()
+            FROM "useRubric"
+            WHERE "assignmentId" IN (
+                SELECT "assignmentId" FROM "Assignment" WHERE "courseId" = $1
+            )
+        `, [courseId]);
+
+        // Backup course data
+        await client.query(`
+            INSERT INTO "BackupCourse" ("courseId", "courseName", "courseCode", "maxStudents", "courseDescription", "isArchived", "deleted_at")
+            SELECT "courseId", "courseName", "courseCode", "maxStudents", "courseDescription", "isArchived", NOW()
+            FROM "Course"
+            WHERE "courseId" = $1
+            RETURNING "courseId"
+        `, [courseId]);
+
+        // Delete dependent data
+        await client.query('DELETE FROM "EnrolledIn" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "Teaches" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "AssignmentGrade" WHERE "assignmentSubmissionId" IN (SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "courseId" = $1)', [courseId]);
+        await client.query('DELETE FROM "AssignmentSubmission" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "Assignment" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "CourseNotification" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "StudentFeedback" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "StudentFeedbackReport" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "AssignmentRubric" WHERE "courseId" = $1', [courseId]);
+        await client.query('DELETE FROM "useRubric" WHERE "assignmentId" IN (SELECT "assignmentId" FROM "Assignment" WHERE "courseId" = $1)', [courseId]);
+
+        // Delete course data
+        await client.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId]);
+
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'Course and dependencies deleted and backed up successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error deleting course:', error);
+        res.status(500).json({ message: 'Error deleting course' });
+    } finally {
+        client.release();
+    }
+});
+
+// Restore a course and its dependencies from the backup table
+router.post('/course/restore/:id', async (req, res) => {
+    const courseId = req.params.id;
+
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Restore course data
+        const courseResult = await client.query(`
+            INSERT INTO "Course" ("courseId", "courseName", "courseCode", "maxStudents", "courseDescription", "isArchived")
+            SELECT "courseId", "courseName", "courseCode", "maxStudents", "courseDescription", "isArchived"
+            FROM "BackupCourse"
+            WHERE "courseId" = $1
+            RETURNING "courseId"
+        `, [courseId]);
+
+        if (courseResult.rowCount > 0) {
+            // Restore dependent data
+            await client.query(`
+                INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
+                SELECT "studentId", "courseId", "studentGrade"
+                FROM "BackupEnrolledIn"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "Teaches" ("instructorId", "courseId")
+                SELECT "instructorId", "courseId"
+                FROM "BackupTeaches"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "Assignment" ("assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded")
+                SELECT "assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded"
+                FROM "BackupAssignment"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+                SELECT "assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded"
+                FROM "BackupAssignmentSubmission"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
+                SELECT "assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded"
+                FROM "BackupAssignmentGrade"
+                WHERE "assignmentSubmissionId" IN (
+                    SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "courseId" = $1
+                )
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "CourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead")
+                SELECT "senderId", "receiverId", "courseId", "notificationMessage", "isRead"
+                FROM "BackupCourseNotification"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                SELECT "studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText"
+                FROM "BackupStudentFeedback"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                SELECT "studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText"
+                FROM "BackupStudentFeedbackReport"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "AssignmentRubric" ("assignmentRubricId", "rubricName", "criteria", "courseId")
+                SELECT "assignmentRubricId", "rubricName", "criteria", "courseId"
+                FROM "BackupAssignmentRubric"
+                WHERE "courseId" = $1
+            `, [courseId]);
+
+            await client.query(`
+                INSERT INTO "useRubric" ("assignmentId", "assignmentRubricId")
+                SELECT "assignmentId", "assignmentRubricId"
+                FROM "BackupUseRubric"
+                WHERE "assignmentId" IN (
+                    SELECT "assignmentId" FROM "Assignment" WHERE "courseId" = $1
+                )
+            `, [courseId]);
+
+            // Delete data from backup tables
+            await client.query('DELETE FROM "BackupEnrolledIn" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupTeaches" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupAssignment" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupAssignmentSubmission" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupAssignmentGrade" WHERE "assignmentSubmissionId" IN (SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "courseId" = $1)', [courseId]);
+            await client.query('DELETE FROM "BackupCourseNotification" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupStudentFeedback" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupStudentFeedbackReport" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupAssignmentRubric" WHERE "courseId" = $1', [courseId]);
+            await client.query('DELETE FROM "BackupUseRubric" WHERE "assignmentId" IN (SELECT "assignmentId" FROM "Assignment" WHERE "courseId" = $1)', [courseId]);
+            await client.query('DELETE FROM "BackupCourse" WHERE "courseId" = $1', [courseId]);
+
+            await client.query('COMMIT');
+            res.status(200).json({ message: 'Course and dependencies restored successfully' });
+        } else {
+            await client.query('ROLLBACK');
+            res.status(404).json({ message: 'Course not found in backup' });
+        }
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error restoring course:', error);
+        res.status(500).json({ message: 'Error restoring course' });
+    } finally {
+        client.release();
+    }
+});
+
+// Get all deleted courses
+router.get('/deleted-courses', async (req, res) => {
+    try {
+        const deletedCourses = await pool.query('SELECT * FROM "BackupCourse"');
+        res.status(200).send(deletedCourses.rows);
+    } catch (error) {
+        console.error('Error fetching deleted courses:', error);
+        res.status(500).send({ message: 'Error fetching deleted courses' });
     }
 });
 

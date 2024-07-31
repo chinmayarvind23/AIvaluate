@@ -771,8 +771,8 @@ Completed 90% of my tasks, the file submission is done, the DB is being populate
 
 ## Timesheet
 
-Clockify report: Total hours - 24 hours
-<img width="1920" alt="Screenshot 2024-07-31 at 7 48 47 AM" src="https://github.com/user-attachments/assets/88a247fa-89b4-4d37-943f-086e41ba801e">
+Clockify report: Total hours - 46 hours
+<img width="1920" alt="Screenshot 2024-07-31 at 7 54 01 AM" src="https://github.com/user-attachments/assets/bd331223-8f59-481f-a447-3406f33b8f8c">
 
 ## Current Tasks (Provide sufficient detail)
 

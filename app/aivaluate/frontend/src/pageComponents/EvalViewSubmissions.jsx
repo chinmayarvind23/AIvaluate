@@ -1,5 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../FileDirectory.css';
@@ -12,15 +13,66 @@ const EvalViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
     const navigate = useNavigate();
-    const { courseId } = useParams();
+    const { paramCourseId } = useParams();
+    const courseId = sessionStorage.getItem('courseId') || paramCourseId;
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
 
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            console.log('Setting session data:', { instructorId, courseId });
+            await axios.post('http://localhost:5173/eval-api/set-session', {
+                instructorId,
+                courseId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+    
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+    
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                return;
+            }
+        }
+    
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+    
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);    
+
     useEffect(() => {
         const fetchSubmissions = async () => {
+            const courseId = sessionStorage.getItem('courseId') || paramCourseId;
+            if (!courseId) {
+                console.error('Course ID is missing.');
+                return;
+            }
             try {
                 const response = await fetch(`/eval-api/courses/${courseId}/submissions`);
                 if (response.ok) {
@@ -34,9 +86,9 @@ const EvalViewSubmissions = () => {
                 console.error('Error fetching submissions:', error);
             }
         };
-
+    
         fetchSubmissions();
-    }, [courseId]);
+    }, [paramCourseId]);    
 
     useEffect(() => {
         const filtered = files.filter(file =>

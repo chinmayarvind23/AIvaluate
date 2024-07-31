@@ -63,6 +63,11 @@ router.get('/evaluator/:instructorId/courses', checkAuthenticated, async (req, r
 router.post('/evaluatorRegister', checkAuthenticated, async (req, res) => {
     const { firstName, lastName, email, password, isTA, department } = req.body;
     try {
+        const emailCheckQuery = 'SELECT * FROM "Instructor" WHERE "email" = $1';
+        const emailCheckResult = await pool.query(emailCheckQuery, [email]);
+        if (emailCheckResult.rows.length > 0) {
+            return res.status(400).json({ error: 'Email already in use' });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         // Insert without specifying instructorId to let PostgreSQL handle it
         await pool.query(
@@ -307,6 +312,23 @@ router.put('/evaluator/:id/role', async (req, res) => {
     }
 });
 
-
+// Clear all backup tables
+router.delete('/clear-backup/instructor', checkAuthenticated, async (req, res) => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        await client.query('DELETE FROM "BackupInstructor"');
+        await client.query('DELETE FROM "BackupTeaches"');
+        await client.query('DELETE FROM "BackupPrompt"');
+        await client.query('COMMIT');
+        res.status(200).json({ message: 'All backup tables cleared successfully' });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error clearing backup tables:', error);
+        res.status(500).json({ error: 'Database error' });
+    } finally {
+        client.release();
+    }
+});
 
 module.exports = router;

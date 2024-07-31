@@ -1,5 +1,7 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
+import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
@@ -15,6 +17,9 @@ const Rubrics = () => {
 
     const navigate = useNavigate();
     const { courseId } = useParams();
+    const courseIdFromSession = sessionStorage.getItem('courseId');
+    const [effectiveCourseId, setEffectiveCourseId] = useState(courseIdFromSession || courseId);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
     const [searchTerm, setSearchTerm] = useState('');
@@ -22,12 +27,59 @@ const Rubrics = () => {
     const [rubrics, setRubrics] = useState([]);
     const [courseDetails, setCourseDetails] = useState({ courseCode: '', courseName: '' });
 
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            console.log('Setting session data:', { instructorId, courseId });
+            await axios.post('http://localhost:5173/eval-api/set-session', {
+                instructorId,
+                courseId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+            setEffectiveCourseId(courseId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+    
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                return;
+            }
+        }
+    
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+    
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);    
+
     useEffect(() => {
         const fetchCourseDetails = async () => {
             try {
-                const response = await fetch(`/eval-api/courses/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const courseId = sessionStorage.getItem('courseId');
+                const response = await axios.get(`/eval-api/rubrics/${courseId}`);
+                if (response.status === 200) {
+                    const data = response.data;
                     setCourseDetails(data);
                 } else {
                     console.error('Error fetching course details:', response.statusText);
@@ -36,12 +88,13 @@ const Rubrics = () => {
                 console.error('Error fetching course details:', error);
             }
         };
-
+    
         const fetchRubrics = async () => {
             try {
-                const response = await fetch(`/eval-api/rubrics/${courseId}`);
-                if (response.ok) {
-                    const data = await response.json();
+                const courseId = sessionStorage.getItem('courseId');
+                const response = await axios.get(`/eval-api/rubrics/${courseId}`);
+                if (response.status === 200) {
+                    const data = response.data;
                     setRubrics(data);
                     setFilteredFiles(data);
                 } else {
@@ -51,10 +104,14 @@ const Rubrics = () => {
                 console.error('Error fetching rubrics:', error);
             }
         };
-
-        fetchCourseDetails();
-        fetchRubrics();
-    }, [courseId]);
+    
+        if (effectiveCourseId) {
+            fetchCourseDetails();
+            fetchRubrics();
+        } else {
+            console.error('No course ID available to fetch data.');
+        }
+    }, [effectiveCourseId]);        
 
     useEffect(() => {
         const filtered = rubrics.filter(file =>

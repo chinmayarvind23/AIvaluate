@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -31,6 +32,54 @@ const CreateAssignment = () => {
     const [rubrics, setRubrics] = useState([]);
     const [assignmentKey, setAssignmentKey] = useState(null);
     const [dragging, setDragging] = useState(false);
+
+    const setSessionData = useCallback(async (courseId, instructorId) => {
+        try {
+            await axios.post('http://localhost:5173/eval-api/set-course', {
+                courseId,
+                instructorId
+            }, {
+                withCredentials: true
+            });
+            sessionStorage.setItem('courseId', courseId);
+            sessionStorage.setItem('instructorId', instructorId);
+        } catch (error) {
+            console.error('Failed to set session data:', error);
+        }
+    }, []);
+    
+    const ensureSessionData = useCallback(async () => {
+        let instructorId = sessionStorage.getItem('instructorId');
+        let courseId = sessionStorage.getItem('courseId');
+    
+        if (!instructorId) {
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/me', {
+                    withCredentials: true
+                });
+                instructorId = response.data.instructorId;
+                sessionStorage.setItem('instructorId', instructorId);
+            } catch (error) {
+                console.error('Failed to fetch instructor details:', error);
+                return;
+            }
+        }
+    
+        if (!courseId) {
+            console.error('Course ID is missing from session storage.');
+            return;
+        }
+    
+        await setSessionData(courseId, instructorId);
+    }, [setSessionData]);
+    
+    useEffect(() => {
+        ensureSessionData();
+    }, [ensureSessionData]);
+
+    useEffect(() => {
+        sessionStorage.setItem('courseId', courseId);
+    }, [courseId]);    
 
     useEffect(() => {
         axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
@@ -84,18 +133,21 @@ const CreateAssignment = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        await ensureSessionData();
+        
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
             alert('Please fill in all fields.');
             return;
         }
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
-
+    
         if (dueDate < today) {
             alert('Due date cannot be in the past.');
             return;
         }
-
+    
         try {
             const instructorId = sessionStorage.getItem('instructorId');
             const courseId = sessionStorage.getItem('courseId');
@@ -111,7 +163,8 @@ const CreateAssignment = () => {
                 formData.append('assignmentKey', assignmentKey);
                 formData.append('instructorId', instructorId);
                 formData.append('courseId', courseId);
-
+                formData.append('assignmentId', response.data.assignmentId);
+    
                 await axios.post(`http://localhost:5173/eval-api/assignments/${response.data.assignmentId}/solutions`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -126,7 +179,7 @@ const CreateAssignment = () => {
                 console.error('Error response data:', error.response.data);
             }
         }
-    };
+    };    
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();
@@ -211,16 +264,17 @@ const CreateAssignment = () => {
                                     onDragOver={handleDragOver}
                                     onDragLeave={handleDragLeave}
                                     onDrop={handleDrop}
+                                    onClick={() => document.getElementById('file-upload').click()}
                                 >
+                                    <span>Drag files here or Click to browse files</span>
                                     <input 
                                         type="file" 
                                         id="file-upload" 
                                         className="file-upload-input" 
                                         name="assignmentKey"
                                         onChange={handleFileChange}
-                                        multiple 
+                                        style={{ display: 'none' }}
                                     />
-                                    <span>Drag files here or Click to browse files</span>
                                 </div>
                                 {assignmentKey && (
                                 <div className="file-preview">

@@ -1,25 +1,58 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom'; // to prevent page reload
+import axios from 'axios'; // Import axios
 import '../GeneralStyling.css';
 import '../SideMenu.css';
 
- const SideMenuBarEval = ({tab}) => {
+const SideMenuBarEval = ({ tab }) => {
     const { courseId } = useParams();
     const courseIdNavBar = sessionStorage.getItem('courseId') || courseId;
+    const [isTA, setIsTA] = useState(null); // Initialize as null to handle loading state
+    const [loading, setLoading] = useState(true); // Manage loading state
 
+    useEffect(() => {
+        const fetchTAStatus = async () => {
+            // Check if TA status is already in session storage
+            const storedIsTA = sessionStorage.getItem('isTA');
+            if (storedIsTA !== null) {
+                setIsTA(JSON.parse(storedIsTA));
+                setLoading(false); // No need to fetch if status is already available
+                return;
+            }
+
+            try {
+                const response = await axios.get('http://localhost:5173/eval-api/instructor/me', { withCredentials: true });
+                const { data } = await axios.get(`http://localhost:5173/eval-api/instructor/${response.data.instructorId}/isTA`, { withCredentials: true });
+                setIsTA(data.isTA);
+                sessionStorage.setItem('isTA', JSON.stringify(data.isTA)); // Store the status in session storage
+            } catch (error) {
+                console.error('Error fetching TA status:', error);
+            } finally {
+                setLoading(false); // Set loading to false once fetching is done
+            }
+        };
+
+        fetchTAStatus();
+    }, []); // Empty dependency array ensures it runs only once on mount
+
+    if (loading) {
+        return <div>Loading...</div>; // Display a loading message or spinner
+    }
 
     return (
         <div className="fourth-colorbg side-menu">
-            <div className="class-selection">
-                <div className="icon-div">
-                    <CircumIcon name="home" />
+            {isTA === false && ( // Render only if isTA is explicitly false
+                <div className="class-selection">
+                    <div className="icon-div">
+                        <CircumIcon name="home" />
+                    </div>
+                    <div className="link-div">
+                        <Link to={`/eval/coursehome/${courseIdNavBar}`} className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Management</Link>
+                    </div>
                 </div>
-                <div className="link-div">
-                    <Link to={`/eval/coursehome/${courseIdNavBar}`} className={`${tab === "home" ? 'primary-color-text' : 'third-color-text'}`}>Management</Link>
-                </div>
-            </div>
+            )}
 
             <div className="class-selection">
                 <div className="icon-div">
@@ -73,4 +106,4 @@ SideMenuBarEval.propTypes = {
     tab: PropTypes.string.isRequired,
 };
 
- export default SideMenuBarEval;
+export default SideMenuBarEval;

@@ -105,13 +105,13 @@ router.delete('/courses/:id', async (req, res) => {
         const result = await pool.query('DELETE FROM "Course" WHERE "courseId" = $1', [courseId]);
 
         if (result.rowCount > 0) {
-            res.status(200).send({ message: 'Course deleted successfully' });
+            res.status(200).json({ message: 'Course deleted successfully' });
         } else {
-            res.status(404).send({ message: 'Course not found' });
+            res.status(404).json({ message: 'Course not found' });
         }
     } catch (error) {
         console.error('Error deleting course:', error);
-        res.status(500).send({ message: 'Error deleting course' });
+        res.status(500).json({ message: 'Error deleting course' });
     }
 });
 
@@ -282,6 +282,23 @@ router.get('/courses/:courseId/is-archived', async (req, res) => {
     } catch (error) {
         console.error('Error fetching course:', error);
         res.status(500).json({ message: 'Error fetching course' });
+    }
+});
+
+// Assign a professor to a course
+router.post('/courses/:courseId/instructors', async (req, res) => {
+    const courseId = parseInt(req.params.courseId, 10);
+    const { instructorId } = req.body;
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO "Teaches" ("instructorId", "courseId") VALUES ($1, $2)',
+            [instructorId, courseId]
+        );
+        res.status(201).json({ message: 'Professor assigned to course successfully' });
+    } catch (error) {
+        console.error('Error assigning professor to course:', error);
+        res.status(500).json({ message: 'Error assigning professor to course' });
     }
 });
 

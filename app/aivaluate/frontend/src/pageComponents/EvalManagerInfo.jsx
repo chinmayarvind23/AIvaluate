@@ -328,14 +328,6 @@ const EvalManagerInfo = () => {
                                 <button 
                                     className="restore-button" 
                                     onClick={() => handleRestoreCourse(course.courseCode, course.courseName)}
-                                    style={{
-                                        backgroundColor: 'green',
-                                        color: 'white',
-                                        border: 'none',
-                                        padding: '5px 10px',
-                                        cursor: 'pointer',
-                                        marginLeft: '10px'
-                                    }}
                                 >
                                     Undo Drop
                                 </button>

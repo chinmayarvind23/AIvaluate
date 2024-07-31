@@ -1,13 +1,14 @@
+import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CircumIcon from "@klarr-agency/circum-icons-react";
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 import AIvaluateNavBarAdmin from '../components/AIvaluateNavBarAdmin';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
 import '../GeneralStyling.css';
+import '../SelectCourseAdmin.css';
 import '../ToastStyles.css';
 
 const SelectCourseAdmin = () => {
@@ -177,16 +178,16 @@ const SelectCourseAdmin = () => {
                             <div className="assign-instructor" style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
                                 <button
                                     onClick={handleAssignInstructor}
-                                    style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer', width: '150px' }}
+                                    style={{ backgroundColor: 'green', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer', width: '150px', borderRadius: '5px' }}
                                 >
                                     Assign Instructor
                                 </button>
                                 <select
                                     value={newInstructorId}
                                     onChange={(e) => setNewInstructorId(e.target.value)}
-                                    style={{ padding: '10px', marginLeft: '10px', flex: '1' }}
+                                    className="select-dropdown"
                                 >
-                                    <option value="">Select Instructor</option>
+                                    <option value="" style={{}}>Select Instructor</option>
                                     {allInstructors
                                         .filter(instructor => !instructor.isTA)
                                         .map((instructor) => (
@@ -196,7 +197,7 @@ const SelectCourseAdmin = () => {
                                         ))}
                                 </select>
                             </div>
-                            <button onClick={handleDelete} style={{ marginTop: '10px', backgroundColor: 'red', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer', width: '150px' }}>
+                            <button onClick={handleDelete} style={{ marginTop: '10px', backgroundColor: 'red', color: 'white', border: 'none', padding: '10px 20px', cursor: 'pointer', width: '150px', borderRadius: '5px' }}>
                                 Delete course
                             </button>
                         </div>

@@ -1,0 +1,7 @@
+.select-dropdown {
+    padding: 10px;
+    border-radius: 50px;
+    border: 2px solid black;
+    margin-left: 10px;
+    flex: 1;
+}

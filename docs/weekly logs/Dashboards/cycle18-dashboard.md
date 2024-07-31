@@ -1,3 +1,6 @@
+### Overview
+Our testing coverage is excellent and is at 98%, and aside from the submission links handling with the AI + notification system, we are almost complete with majority of the features of the project from our initial project plan, which will be finished within the next cycle.
+
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
@@ -283,6 +286,7 @@
 ### Project Progress
 - Frontend: 99% complete
 - Backend: 98% complete
+
 ### Testing Report
 ![Screenshot_2024-07-16_at_9 39 32_PM](https://github.com/user-attachments/assets/9caeac81-7fa6-4ea8-b3a7-0d2b27d65220)
 

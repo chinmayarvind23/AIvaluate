@@ -29,7 +29,7 @@ const GradingAssignments = () => {
   const [isEditingFeedback, setIsEditingFeedback] = useState(false);
   const studentNumber = studentId;
   const [submittedFiles, setSubmittedFiles] = useState([]);
-  const { fileName } = location.state || {};
+  const { fileName, submissionLink } = location.state || {};
   console.log("Received fileName:", fileName);
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
@@ -208,7 +208,18 @@ const GradingAssignments = () => {
                         </a>
                     </div>
                 )}
-                {!fileName && <p>No files uploaded yet.</p>}
+                {submissionLink && (
+                    <div>
+                        <a 
+                            href={submissionLink.startsWith('http://') || submissionLink.startsWith('https://') ? submissionLink : `https://${submissionLink}`}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            {submissionLink}
+                        </a>
+                    </div>
+                )}
+                {!fileName && !submissionLink && <p>No submissions uploaded yet.</p>}
             </div>
             <button className="mark-complete" onClick={handleMarkComplete}>Mark evaluation as complete</button>
           </div>

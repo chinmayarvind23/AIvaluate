@@ -91,10 +91,10 @@ const SelectedAssignment = () => {
         setGradesVisible(!gradesVisible);
     };
 
-    const handleMarkAssignment = (studentId, assignmentId, submissionFile) => {
-        const fileName = submissionFile.split('/').pop();
+    const handleMarkAssignment = (studentId, assignmentId, submissionFile, submissionLink) => {
+        const fileName = submissionFile ? submissionFile.split('/').pop() : null;
         console.log("Navigating with fileName:", fileName);
-        navigate(`/eval/${studentId}/${assignmentId}/grading`, { state: { fileName } });
+        navigate(`/eval/${studentId}/${assignmentId}/grading`, { state: { fileName, submissionLink } });
     };
 
     return (
@@ -125,12 +125,12 @@ const SelectedAssignment = () => {
                             </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile.split('/').pop())}>
-                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
-                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
-                                    </div>
-                                ))}
+                                <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>
+                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile ? file.submissionFile.split('/').pop() : file.submissionLink}</div>
+                                    {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                </div>
+                            ))}
                             </div>
                         </div>
                         <div className="pagination-controls">

@@ -1,12 +1,12 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
+import React, { useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from "../components/AIvaluateNavBarAdmin";
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
@@ -27,16 +27,11 @@ const CourseManager = () => {
             setFilteredCourses(response.data);
         } catch (error) {
             console.error('Error fetching courses:', error);
-            toast.error('Failed to fetch courses');
         }
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            await fetchCourses();
-        };
-    
-        fetchData();
+        fetchCourses();
     }, []);
     
     useEffect(() => {
@@ -103,6 +98,7 @@ const CourseManager = () => {
                                     onClick={() => handleCourseClick(course.courseId)}
                                 >
                                     <div className="file-name">{course.courseName} ({course.courseCode})</div>
+                                    <div className="file-status">{course.isArchived ? "Archived" : ""}</div>
                                     <div className="file-icon"><CircumIcon name="edit" /></div>
                                 </div>
                             ))}

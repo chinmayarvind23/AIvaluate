@@ -126,6 +126,36 @@
         <td> Jerry
         </td>
     </tr>
+     <tr>
+        <td> Edit name and email for Student(Admin Page)
+        </td>
+        <!-- Status -->
+        <td> Omar
+        </td>
+    </tr>
+      <tr>
+        <td> Edit name and email for Evaluator(Admin Page)
+        </td>
+        <!-- Status -->
+        <td> Omar
+        </td>
+    </tr>
+     <tr>
+        <td> Clickable prof to TA and TA to prof on admin view of individual evaluator
+        </td>
+        <!-- Status -->
+        <td> Omar
+        </td>
+    </tr>
+     <tr>
+        <td> Backend for assignment page student view
+        </td>
+        <!-- Status -->
+        <td> Omar
+        </td>
+    </tr>
+
+  
 </table>
 
 - ### Table view of in progress tasks on project board

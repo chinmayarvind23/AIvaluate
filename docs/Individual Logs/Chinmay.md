@@ -776,8 +776,8 @@ Clockify report: Total hours - 46 hours
 
 ## Current Tasks (Provide sufficient detail)
 
-- **#1:** AI logic redo on new branch and responses from AI with retry logic, submission link parsing (10 hours) (XL Task)
-- **#2:** Major fixes in Issue #468 (14 hours) (XL Task)
+- **#1:** AI logic redo on new branch and responses from AI with retry logic, submission link parsing (15 hours) (XL Task)
+- **#2:** Major fixes in Issue #468 (31 hours) (XL Task)
 
 ## Progress Update (since 7/26/2024)
 

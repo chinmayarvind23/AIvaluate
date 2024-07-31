@@ -123,7 +123,7 @@ const SelectCourseAdmin = () => {
                         <p>Are you sure you want to delete this course?</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleConfirmDelete} className="confirm-button">Confirm</button>
+                            <button onClick={handleConfirmDelete} className="cancel-button">Confirm</button>
                         </div>
                     </div>
                 );
@@ -149,11 +149,11 @@ const SelectCourseAdmin = () => {
                     </div>
                     <div className="center-it">
                         <div className="user-info2">
-                            <div className="user-name">
-                                <span>{course.courseName} ({course.courseCode})</span>
-                                <span>Course ID: {course.courseId}</span>
-                            </div>
-                            <div className="instructors">
+                        <div className="user-name" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span>{course.courseName} ({course.courseCode})</span>
+                            <span style={{ marginLeft: 'auto' }}>Course ID: {course.courseId}</span>
+                        </div>
+                            <div className="instructors" style={{ marginTop: '20px' }}>
                                 <span>Assigned Instructor:</span>
                                 {course.instructor ? (
                                     <ul>

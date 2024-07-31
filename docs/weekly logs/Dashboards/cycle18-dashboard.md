@@ -184,7 +184,7 @@
         </td>
     </tr>
     <tr>
-        <td> Pass in Assignment Submission File to AI + error handling for AI requests, submission links + DB population fixing
+        <td> Submission Link integration with AI
         </td>
         <!-- Status -->
         <td> Chinmay
@@ -196,11 +196,11 @@
 - Notifications
 - Frontend bug fixes
 - Date fixes
-- File submission with AI
+- Submission Link integration with AI
 
 ### Project Progress
 - Frontend: 99% complete
-- Backend: 97% complete
+- Backend: 98% complete
 ### Testing Report
 ![Screenshot_2024-07-16_at_9 39 32_PM](https://github.com/user-attachments/assets/9caeac81-7fa6-4ea8-b3a7-0d2b27d65220)
 
@@ -208,4 +208,4 @@
 
 ![Screenshot_2024-07-15_at_10 12 28_PM](https://github.com/user-attachments/assets/58e4d2d6-1f59-4d4e-adad-dd06de50361c)
 
-The report for the frontend testing will be added in the next cycle as we are still working on getting it fully up and running.
+The frontend testing is in progress and the report for it will be added as soon as possible.

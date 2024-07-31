@@ -91,6 +91,27 @@ router.delete('/student/:studentId/drop/:courseCode', checkAuthenticated, async 
 //     }
 // });
 
+// Update student details
+router.put('/student/:studentId', checkAuthenticated, async (req, res) => {
+    const { studentId } = req.params;
+    const { firstName, lastName, email } = req.body;
+
+    console.log('Updating student with ID:', studentId); // Debugging line
+    console.log('Received data:', req.body); // Debugging line
+
+    try {
+        const result = await pool.query(
+            'UPDATE "Student" SET "firstName" = $1, "lastName" = $2, "email" = $3 WHERE "studentId" = $4',
+            [firstName, lastName, email, studentId]
+        );
+        console.log('Update result:', result); // Debugging line
+        res.status(200).json({ message: 'Student updated successfully' });
+    } catch (error) {
+        console.error('Error updating student:', error); // Detailed error logging
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Soft deletes a student from the database
 router.delete('/student/:studentId', checkAuthenticated, async (req, res) => {
     const { studentId } = req.params;

@@ -766,3 +766,32 @@ Completed 90% of my tasks, the file submission is done, the DB is being populate
 - Goal 2: Fixing broken components on students and grades page
 - Goal 3: Fixing broken admin page components
 - Goal 4: Customizing file downloads for instructors and students
+
+## July 26th - July 31st
+
+## Timesheet
+
+Clockify report: Total hours - 24 hours
+<img width="1920" alt="Screenshot 2024-07-31 at 7 48 47 AM" src="https://github.com/user-attachments/assets/88a247fa-89b4-4d37-943f-086e41ba801e">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** AI logic redo on new branch and responses from AI with retry logic, submission link parsing (10 hours) (XL Task)
+- **#2:** Major fixes in Issue #468 (14 hours) (XL Task)
+
+## Progress Update (since 7/24/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | AI responses are being generated, need to find a way to read different websites and parse the content, will be worked on and finished in the next cycle and before the testing session on Friday |
+| Task 2       | Completed |
+
+## Cycle Goal Review
+
+Completed 90% of my tasks, the file submission is done, the DB is being populated and multiple medium sized fixes to the broken components on the previous dev branch have been fixed.
+
+## Next Cycle Goals
+
+- Goal 1: AI response extraction + DB updates completion, working on submission link extraction
+- Goal 2: Fixing forgot password (broken)
+- Goal 3: Fixing and changing around some small frontend fixes

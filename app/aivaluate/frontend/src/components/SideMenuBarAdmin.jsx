@@ -25,6 +25,15 @@ const SideMenuBarAdmin = ({tab}) => {
                     <Link to={`/admin/studentmanager`} className={`${tab === "studentManager" ? 'primary-color-text' : 'third-color-text'}`}>Student Manager</Link>
                 </div>
             </div>
+
+            <div className="class-selection">
+                <div className="icon-div">
+                    <CircumIcon name="circle_list"/>
+                </div>
+                <div className="link-div">
+                    <Link to={`/admin/coursemanager`} className={`${tab === "courseManager" ? 'primary-color-text' : 'third-color-text'}`}>Course Manager</Link>
+                </div>
+            </div>
             {/* <a href="/admin/evaluatormanager" className={`${tab === "evalManager" ? 'primary-color-text' : 'third-color-text'}`}>Evaluator Manager</a>
             <a href="/admin/studentmanager" className={`${tab === "studentManager" ? 'primary-color-text' : 'third-color-text'}`}>Student Manager</a> */}
         </div>

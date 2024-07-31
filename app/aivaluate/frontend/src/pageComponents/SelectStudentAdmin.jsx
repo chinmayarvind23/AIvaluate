@@ -11,6 +11,7 @@ import '../GeneralStyling.css';
 import '../SelectStudentAdmin.css';
 import '../ToastStyles.css';
 
+
 const SelectStudentAdmin = () => {
     const navigate = useNavigate();
     const { studentId } = useParams();
@@ -213,6 +214,13 @@ const SelectStudentAdmin = () => {
                     <div className="select-student-admin-center-it">
                         <div>
                             <div className="select-student-admin-container">
+                                <div className="select-student-admin-action-buttons">
+                                    {isEditing ? (
+                                        <button className="select-student-admin-confirm-button" onClick={handleConfirmClick}>Confirm</button>
+                                    ) : (
+                                        <button className="select-student-admin-edit-button" onClick={handleEditClick}>Edit</button>
+                                    )}
+                                </div>
                                 <div className="select-student-admin-name">
                                     {isEditing ? (
                                         <div>
@@ -256,20 +264,40 @@ const SelectStudentAdmin = () => {
                                     <ul>
                                         {courses.map((course, index) => (
                                             <li key={index}>
-                                                {course.courseCode}
+                                                {course.courseCode} - {course.courseName}
                                                 <button className="select-student-admin-drop-button" onClick={() => handleDropCourse(course.courseCode)}>Drop</button>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="select-student-admin-action-buttons">
-                                    {isEditing ? (
-                                        <button className="select-student-admin-confirm-button" onClick={handleConfirmClick}>Confirm</button>
-                                    ) : (
-                                        <button className="select-student-admin-edit-button" onClick={handleEditClick}>Edit</button>
-                                    )}
-                                    <button className="select-student-admin-delete-button" onClick={handleDelete}>Delete user</button>
+                                <div className="dropped-courses">
+                                    <span>Dropped Courses:</span>
+                                    <ul>
+                                        {droppedCourses.map((course, index) => (
+                                            <li key={index}>
+                                                {course.courseCode} - {course.courseName}
+                                                <button 
+                                                    className="restore-button" 
+                                                    onClick={() => handleRestoreCourse(course.courseCode)}
+                                                    style={{
+                                                        backgroundColor: 'green',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        padding: '5px 10px',
+                                                        cursor: 'pointer',
+                                                        marginLeft: '10px',
+                                                        borderRadius: '5px'
+                                                    }}
+                                                >
+                                                    Undo Drop
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
+                                <button className="delete-button" onClick={handleDelete}>Delete user</button>
+
+                                
                             </div>
                         </div>
                     </div>

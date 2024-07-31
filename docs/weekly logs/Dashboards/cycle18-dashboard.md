@@ -14,7 +14,7 @@
         <td><strong>TASK/ISSUE #</strong>
         </td>
     </tr>
-        <tr>
+    <tr>
         <td> Add link submission capability
         </td>
         <!-- Status -->
@@ -106,7 +106,84 @@
         </td>
     </tr>
     <tr>
+        <td> Assignment key reuploads
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Rubrics page fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Students page fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Create course bugs fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Admin check for evaluators with same emails before registering enforced
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Random sidebar redirects bug fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Indiividual file submissions by file name downloads enabled for instructors
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr> 
+    <tr>
+        <td> Mark an assignment as graded backend fully functional, works with the AI
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
         <td> Implementing links with the AI model
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Click to upload files and drag to upload files fixed
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+    <tr>
+        <td> Evaluator's view of submissions page fixed to render correctly
+        </td>
+        <!-- Status -->
+        <td> Chinmay
+        </td>
+    </tr>
+   <tr>
+        <td> Publish assignment page and updates to backend fixed
         </td>
         <!-- Status -->
         <td> Chinmay
@@ -119,43 +196,48 @@
         <td> Aayush
         </td>
     </tr>
+     <tr>
+        <td> add course management frontend and backend - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
     <tr>
-        <td> Fixed TA vs Prof access permissions
+        <td> Enable student deletion reversion - admin view
         </td>
         <!-- Status -->
         <td> Jerry
         </td>
     </tr>
      <tr>
-        <td> Edit name and email for Student(Admin Page)
+        <td> enable evaluator deletion reversion - admin view
         </td>
         <!-- Status -->
-        <td> Omar
-        </td>
-    </tr>
-      <tr>
-        <td> Edit name and email for Evaluator(Admin Page)
-        </td>
-        <!-- Status -->
-        <td> Omar
+        <td> Jerry
         </td>
     </tr>
      <tr>
-        <td> Clickable prof to TA and TA to prof on admin view of individual evaluator
+        <td> enable course deletion reversion - admin view
         </td>
         <!-- Status -->
-        <td> Omar
+        <td> Jerry
         </td>
     </tr>
      <tr>
-        <td> Backend for assignment page student view
+        <td> enable student course drop reversion - admin view
         </td>
         <!-- Status -->
-        <td> Omar
+        <td> Jerry
         </td>
     </tr>
-
-  
+     <tr>
+        <td> enable evaluator course drop reversion - admin view
+        </td>
+        <!-- Status -->
+        <td> Jerry
+        </td>
+    </tr>
 </table>
 
 - ### Table view of in progress tasks on project board

@@ -1,4 +1,4 @@
-# Cycle 14 Weekly Log
+# Cycle 18 Weekly Log
 
 - ## Date range: July 26 - July 31, 2024
 

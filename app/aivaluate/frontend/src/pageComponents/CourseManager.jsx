@@ -6,7 +6,7 @@ import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarAdmin from "../components/AIvaluateNavBarAdmin";
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
@@ -17,6 +17,8 @@ const CourseManager = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [courses, setCourses] = useState([]);
     const [filteredCourses, setFilteredCourses] = useState([]);
+    const [deletedCourses, setDeletedCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const fetchCourses = async () => {
         try {
@@ -30,16 +32,31 @@ const CourseManager = () => {
         }
     };
 
+    const fetchDeletedCourses = async () => {
+        try {
+            const response = await axios.get('http://localhost:5173/admin-api/deleted-courses', {
+                withCredentials: true
+            });
+            setDeletedCourses(response.data);
+        } catch (error) {
+            console.error('Error fetching deleted courses:', error);
+        }
+    };
+
     useEffect(() => {
-        fetchCourses();
+        const fetchData = async () => {
+            await Promise.all([fetchCourses(), fetchDeletedCourses()]);
+            setLoading(false);
+        };
+        fetchData();
     }, []);
-    
+
     useEffect(() => {
         const filtered = courses.filter(course =>
             `${course.courseName} ${course.courseCode}`.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredCourses(filtered);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }, [searchTerm, courses]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -61,13 +78,31 @@ const CourseManager = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     };
 
     const handleCourseClick = (courseId) => {
         navigate(`/admin/course/${courseId}`);
     };
-    
+
+    const handleRevertAction = async (courseId) => {
+        try {
+            const response = await axios.post(`http://localhost:5173/admin-api/course/restore/${courseId}`, {}, {
+                withCredentials: true
+            });
+            if (response.status === 200) {
+                toast.success('Course restored successfully.');
+                await fetchCourses();
+                await fetchDeletedCourses();
+            } else {
+                toast.error('Failed to restore the course.');
+            }
+        } catch (error) {
+            console.error('Error restoring course:', error);
+            toast.error('Failed to restore the course.');
+        }
+    };
+
     return (
         <div>
             <ToastContainer />
@@ -89,6 +124,14 @@ const CourseManager = () => {
                                     />
                                 </div>
                             </div>
+                            {!loading && deletedCourses.length > 0 && (
+                                <button 
+                                    className="revertEvalButton" 
+                                    onClick={() => handleRevertAction(deletedCourses[0].courseId)}
+                                >
+                                    Undo Delete
+                                </button>
+                            )}
                         </div>
                         <div className="filetab">
                             {currentCourses.map((course) => (

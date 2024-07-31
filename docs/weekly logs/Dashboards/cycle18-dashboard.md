@@ -1,7 +1,7 @@
 ### Burn-up chart (velocity)
 
 - Generated burn-up chart for the current cycle:
-  <img width="1015" alt="Screenshot 2024-07-17 at 4 09 35 AM" src="">
+  <img width="915" alt="Screenshot 2024-07-31 at 8 00 52 AM" src="https://github.com/user-attachments/assets/afcf161f-c858-496f-ae88-0b406d4737e0">
 
 ### Times for team/individual
 

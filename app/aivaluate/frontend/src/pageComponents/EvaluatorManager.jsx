@@ -128,7 +128,7 @@ const EvaluatorManager = () => {
                 <div className="main-margin">
                     <div className="portal-container">
                         <div className="top-bar">
-                            <h1>Professors</h1>
+                            <h1>Evaluators</h1>
                             <div className="search-container">
                                 <div className="search-box">
                                     <FaSearch className="search-icon" />
@@ -140,7 +140,6 @@ const EvaluatorManager = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="empty"> </div>
                             <button className="addEvalButton" onClick={() => navigate('/admin/CreateAccPT')}>Add Evaluator</button>
                             {!loading && deletedEvaluators.length > 0 && (
                                 <button 

@@ -4,6 +4,7 @@
     --third-color: black;
     --gradient-color: linear-gradient(to right, #000000, #2600a3);
     --radial-color: radial-gradient(circle, #ffffff, #003ECB);
+    /* --radial-color: radial-gradient(circle, #003ECB, #ffffff,); */
 }
 
 .background-color{

@@ -34,13 +34,13 @@
 .main-text{
     margin-left: 20px;
     display:block;
-    height: 400px;
+    height: 350px;
     /* border: red 2px solid; */
 }
 
 .rubric-text {
     width: 90%;
-    height: 350px;
+    height: 300px;
     padding: 20px;
 
     border: 2px solid var(--primary-color);
@@ -71,9 +71,17 @@
     display: flex;
 }
 
-/* .abutton1{
-    margin-left: -200px;
-} */
+.center-deadline{
+    display: flex;
+    align-items: center;
+}  
+
+.center-deadline h2 {
+    margin: 0; /* Remove default margins that might affect alignment */
+    line-height: 1; /* Ensure line-height doesn't interfere with vertical alignment */
+}
+
+
 .assignment-button{
     display:flex;
     width: 200px;

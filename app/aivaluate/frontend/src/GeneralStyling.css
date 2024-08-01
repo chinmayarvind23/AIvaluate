@@ -113,6 +113,7 @@ body {
     padding-top: 20px;
     height:stretch;
     border: var(--primary-color) 2px solid;
+    border-bottom: none;
   }
   .filler-div{
     display:flex;
@@ -170,7 +171,6 @@ body {
 
 .empty{
     width: stretch;
-    /* border: red 2px solid; */
     min-width: 20px;
 }
 

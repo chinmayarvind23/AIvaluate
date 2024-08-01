@@ -48,9 +48,10 @@ body {
     flex-direction: column; /* Stack the buttons vertically */
     align-items: flex-end; /* Align buttons to the right */
     gap: 1px; /* Add space between buttons */
+    position: relative;
 }
 
-.edit-button, .confirm-button, .delete-button {
+.edit-button, .Eval-confirm-button, .delete-button {
     padding: 10px 20px;
     border-radius: 10px;
     border: none;
@@ -59,11 +60,11 @@ body {
     width: 100px;
 }
 
-.edit-button, .confirm-button {
+.edit-button, .Eval-confirm-button {
     background-color: var(--primary-color);
 }
 
-.edit-button:hover, .confirm-button:hover {
+.edit-button:hover, .Eval-confirm-button:hover {
     background-color: #0056b3;
 }
 

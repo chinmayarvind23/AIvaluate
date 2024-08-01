@@ -117,7 +117,7 @@ const SubmitAssignment = () => {
             return;
         }
         
-        const allowedPlatform = 'docs.google.com';
+        const allowedPlatform = 'gist.github.com';
 
         if (submissionLink) {
             const url = new URL(submissionLink.startsWith('http://') || submissionLink.startsWith('https://') 
@@ -126,7 +126,7 @@ const SubmitAssignment = () => {
                 const isAllowed = url.hostname.includes(allowedPlatform);
     
             if (!isAllowed) {
-                toast.error('Only links from Google Docs, Google Drive, Dropbox, OneDrive, Box, and SharePoint are allowed.');
+                toast.error('Only links from Github Gists are allowed.');
                 return;
             }
         }

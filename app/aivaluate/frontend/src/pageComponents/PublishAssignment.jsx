@@ -209,14 +209,16 @@ const PublishAssignment = () => {
                         </div>
                         <div>
                             <div className="deadline">
-                                <h2>Due:</h2>
-                                <DatePicker
-                                    selected={deadline}
-                                    onChange={handleDeadlineChange}
-                                    showTimeSelect
-                                    dateFormat="MMMM d, yyyy h:mm aa"
-                                    className="deadline-input"
-                                />
+                                <div className="center-deadline">
+                                    <h2>Due:</h2>
+                                    <DatePicker
+                                        selected={deadline}
+                                        onChange={handleDeadlineChange}
+                                        showTimeSelect
+                                        dateFormat="MMMM d, yyyy h:mm aa"
+                                        className="deadline-input"
+                                    />
+                                </div>
                                 <p className="click-to-edit">Click to edit</p>
                                 <button className="assignment-button" onClick={handleViewSubmissions}>
                                     View Submissions

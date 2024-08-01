@@ -1,10 +1,9 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -226,7 +225,7 @@ const CreateAssignment = () => {
                                     id="criteria"
                                     name="criteria"
                                     ref={criteriaRef}
-                                    placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended."
+                                    placeholder="Enter assignment expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended. Example: student must submit a html file (2 points), a title which says 'Hello World' (1 point), and a paragraph with the text 'Hello World' (2 points)."
                                     value={assignment.criteria}
                                     onChange={handleInputChange}
                                 />

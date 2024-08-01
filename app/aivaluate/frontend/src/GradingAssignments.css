@@ -161,6 +161,10 @@
   color: var(--primary-color);
 }
 
+.student-submission div{
+  margin-top: 10px;
+}
+
 .mark-complete {
   width: 100%;
   padding: 15px;
@@ -203,6 +207,7 @@
   text-align: center;
   /* height: 20px; */
   font-size: 17px;
+  margin-top: -20px;
 }
 
 .final-score label {

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
@@ -5,7 +6,6 @@ import '../Dashboard.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import CourseCards from '../components/CourseCards';
-import axios from 'axios';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -45,7 +45,6 @@ const Dashboard = () => {
     <div>
       <div className="message-container">
         <div className="notification-container">
-        <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>
         <h1>Your courses...</h1>
       </div>

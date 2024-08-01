@@ -874,6 +874,26 @@ router.get('/rubrics/:courseId', async (req, res) => {
     }
 });
 
+// Get rubrics by instructor ID
+router.get('/rubrics/all/:instructorId', async (req, res) => {
+    const { instructorId } = req.params;
+    try {
+        const result = await pool.query(
+            `SELECT ar.*
+            FROM "AssignmentRubric" ar
+            JOIN "Course" c ON ar."courseId" = c."courseId"
+            JOIN "Teaches" t ON c."courseId" = t."courseId"
+            WHERE t."instructorId" = $1`,
+            [instructorId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubrics:', error);
+        res.status(500).json({ message: 'Error fetching rubrics' });
+    }
+});
+
+
 // Route to get file by file name and download it
 router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
     const { studentId, courseId, assignmentId, fileName } = req.params;

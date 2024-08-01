@@ -131,7 +131,11 @@ const SelectedAssignment = () => {
             }
         } catch (error) {
             console.error('Error grading submissions:', error);
-            toast.error('Failed to grade submissions. Please try again.');
+            if (!error.response) {
+                toast.error('AI server is currently unreachable. Please check your internet connection or try again later.');
+            } else {
+                toast.error('Failed to grade submissions. Please try again.');
+            }
         } finally {
             setIsLoading(false);
         }

@@ -164,5 +164,6 @@
 .spinner-container{
     margin-left: 20px;
     display: flex;
-    
+    margin-left: 10px;
+    font-size: 18px;
 }

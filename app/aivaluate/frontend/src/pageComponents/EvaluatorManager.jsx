@@ -18,7 +18,7 @@ const EvaluatorManager = () => {
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
     const [deletedEvaluators, setDeletedEvaluators] = useState([]);
-    const [loading, setLoading] = useState(true); // Loading state to manage initial data fetch
+    const [loading, setLoading] = useState(true);
 
     const fetchEvaluators = async () => {
         try {
@@ -54,7 +54,7 @@ const EvaluatorManager = () => {
     useEffect(() => {
         const fetchData = async () => {
             await Promise.all([fetchEvaluators(), fetchDeletedEvaluators()]);
-            setLoading(false); // Set loading to false after data is fetched
+            setLoading(false);
         };
 
         fetchData();
@@ -65,14 +65,8 @@ const EvaluatorManager = () => {
             file.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredFiles(filtered);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }, [searchTerm, files]);
-
-    useEffect(() => {
-        // Re-fetch evaluators and deleted evaluators whenever currentPage or searchTerm changes
-        fetchEvaluators();
-        fetchDeletedEvaluators();
-    }, [currentPage, searchTerm]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -93,7 +87,6 @@ const EvaluatorManager = () => {
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
     };
 
     const handleEvaluatorClick = (instructorId) => {
@@ -109,7 +102,6 @@ const EvaluatorManager = () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            // Refresh the deleted evaluators list
             await fetchDeletedEvaluators();
             await fetchEvaluators();
             toast.success('Evaluator restored successfully');

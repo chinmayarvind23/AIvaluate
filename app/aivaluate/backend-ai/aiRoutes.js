@@ -407,7 +407,9 @@ const parseAIResponse = async (aiResponse) => {
                 }
             }
 
-            const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m);
+            const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m) ||
+                        aiResponseString.match(/"(\{[\s\S]+?\})"/) || 
+                        aiResponseString.match(/(\{[\s\S]+?\})/);
             if (!jsonStringMatch) {
                 throw new Error('Invalid AI response format');
             }
@@ -567,11 +569,11 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             console.log('Thread created:', threadResponse.id);
             const thread = threadResponse.id;
 
-            let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Provide your response in the following JSON format:
+            let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Please make 100% sure that you do not assign a grade higher than ${maxPoints}. Provide your response in the following JSON format:
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}.`;
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"} and please make 100% sure that you do not assign a grade higher than ${maxPoints}.`;
 
             if (assignmentKeyFileId) {
                 messageContent += ` The file with ID ${assignmentKeyFileId} is the assignment key to be used to grade the students' submissions.`;
@@ -696,7 +698,7 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"} and please make 100% sure that you do not assign a grade higher than ${maxPoints}.`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });                          

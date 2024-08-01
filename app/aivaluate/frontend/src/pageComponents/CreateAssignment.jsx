@@ -81,7 +81,7 @@ const CreateAssignment = () => {
     }, [courseId]);    
 
     useEffect(() => {
-        axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
+        axios.get(`http://localhost:5173/eval-api/rubrics/all/${instructorId}`)
             .then(response => {
                 setRubrics(response.data);
             })

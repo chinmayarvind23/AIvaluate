@@ -1,9 +1,9 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate, useParams } from 'react-router-dom';
 import '../EditRubric.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -77,7 +77,6 @@ const EditRubric = () => {
             console.log('Success:', response.data);
             setIsEdited(false); // Reset the edit flag
             toast.success('Rubric updated successfully!');
-            navigate(-1); // Navigate back after successful update
         })
         .catch(error => {
             console.error('Error updating rubric:', error);
@@ -120,11 +119,11 @@ const EditRubric = () => {
                     <div className="bottom-bar">
                         <div className="empty"></div>
                         <button 
-                            className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
+                            className="confirm-button-rubric"
                             onClick={handleSaveChanges}
                             disabled={!isEdited}
                         >
-                            CLICK TO CONFIRM CHANGES
+                            Confirm Changes
                         </button>
                     </div>
                 </div>

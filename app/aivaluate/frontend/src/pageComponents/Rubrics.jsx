@@ -1,7 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import { useEffect, useState } from 'react';
-import { useCallback } from 'react';
 import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../Auth.css';
@@ -168,14 +167,18 @@ const Rubrics = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index} onClick={() => handleRubric(file.assignmentRubricId)}>
-                                        <div className="folder-icon"><CircumIcon name="file_on"/></div>
-                                        <div className="file-name">{file.rubricName}</div>
-                                    </div>
-                                ))}
-                            </div>
+                            {rubrics.length === 0 ? (
+                                <div className="no-rubrics primary-color-text">You currently have no rubrics</div>
+                            ) : (
+                                <div className="filetab">
+                                    {currentFiles.map((file, index) => (
+                                        <div className="file-item" key={index} onClick={() => handleRubric(file.assignmentRubricId)}>
+                                            <div className="folder-icon"><CircumIcon name="file_on"/></div>
+                                            <div className="file-name">{file.rubricName}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>

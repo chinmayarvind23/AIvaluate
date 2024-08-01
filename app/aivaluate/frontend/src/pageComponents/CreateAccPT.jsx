@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -20,10 +20,25 @@ const CreateAccPT = () => {
     lastName: '',
     email: '',
     password: '',
-    department: '' 
+    department: ''
   });
 
   const [message, setMessage] = useState('');
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
+  };
+
+  const validatePassword = (password) => {
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    return re.test(password);
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -38,6 +53,26 @@ const CreateAccPT = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Client-side validation
+    if (!validateEmail(formData.email)) {
+      setMessage('Invalid email address.');
+      toast.error('Invalid email address.');
+      return;
+    }
+
+    if (!validatePassword(formData.password)) {
+      setMessage('Password must be at least 6 characters long and contain both letters and numbers.');
+      toast.error('Password must be at least 6 characters long and contain both letters and numbers.');
+      return;
+    }
+
+    if (!validateInput(formData.firstName) || !validateInput(formData.lastName)) {
+      setMessage('Invalid characters detected in name fields.');
+      toast.error('Invalid characters detected in name fields.');
+      return;
+    }
+
     confirmAlert({
       customUI: ({ onClose }) => {
         const handleRegister = async () => {
@@ -46,10 +81,11 @@ const CreateAccPT = () => {
             const response = await axios.post('http://localhost:5173/admin-api/evaluatorRegister', data, {
               withCredentials: true
             });
-        
+
             if (response.status === 201) {
               toast.success('User successfully registered!');
               console.log('User successfully registered!');
+              navigate('/admin/evaluatormanager'); // Navigate to evaluator manager page after successful registration
             } else if (response.status === 400) {
               console.error('Duplicate email error:', response.data.error);
               toast.error('Email already exists');
@@ -64,7 +100,7 @@ const CreateAccPT = () => {
             onClose();
           }
         };
-  
+
         return (
           <div className="custom-ui">
             <h1>Confirm Registration</h1>
@@ -78,21 +114,20 @@ const CreateAccPT = () => {
       },
       overlayClassName: "custom-overlay",
     });
-  };      
+  };
 
   return (
     <div className="admin-home-portal">
       <ToastContainer />
       <AIvaluateNavBar navBarText="Admin Home Portal" />
       <div className="filler-div">
-        <SideMenuBarAdmin tab="evalManager"/>
+        <SideMenuBarAdmin tab="evalManager" />
         <div className="main-margin">
           <div className="top-bar">
             <div className="back-btn-div">
-              <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
+              <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left" /></button>
             </div>
-            <h1 className="eval-text">Register Evaluator</h1>
-            <div className="empty"> </div>
+            <h1 className="eval-text-up-top">Register Evaluator</h1>
           </div>
           <div className="content">
             <form className="user-form" onSubmit={handleSubmit}>
@@ -100,11 +135,11 @@ const CreateAccPT = () => {
                 <div className="box">
                   <label className="primary-text">
                     First Name:
-                    <input type="text" className="main-text-space" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
                   </label>
                   <label>
                     Last Name:
-                    <input type="text" className="main-text-space" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
                   </label>
                 </div>
                 <div className="box">
@@ -130,8 +165,8 @@ const CreateAccPT = () => {
                     <input type="password" name="password" value={formData.password} onChange={handleChange} required />
                   </label>
                 </div>
-                <button type="submit" className="create-user-button">Create user</button>
               </div>
+              <button type="submit" className="create-user-button">Create user</button>
             </form>
             {message && <p>{message}</p>}
           </div>

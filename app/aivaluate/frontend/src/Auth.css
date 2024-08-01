@@ -97,6 +97,9 @@
     align-items: center;
     justify-content: center;
     background-color: var(--radial-color);
+    height: 100vh; /* Ensure it covers the full height of the viewport */
+    width: 100vw;
+    background: var(--radial-color);
   }
 
   .logoText{
@@ -118,5 +121,17 @@
     margin-top: 40px;
     font-size:13px;
     color: var(--third-color);
+  }
+
+  .ai-text{
+    /* text-shadow: -1px 1px 0 #000,
+                1px 1px 0 #000,
+                1px -1px 0 #000,
+                -1px -1px 0 #000; */
+    text-shadow: -1px 1px 0 var(--third-color),
+                1px 1px 0 var(--third-color),
+                1px -1px 0 var(--third-color),
+                -1px -1px 0 var(--third-color);
+    color: var(--primary-color);
   }
   

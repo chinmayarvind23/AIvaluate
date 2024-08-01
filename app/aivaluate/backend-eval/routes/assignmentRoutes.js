@@ -50,22 +50,6 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/eval-api/login');
 }
 
-// router.post('/assignments', async (req, res) => {
-//     const { courseId, dueDate, assignmentName, maxObtainableGrade, rubricName, criteria, assignmentKey } = req.body;
-//         try {
-//             const dir = path.resolve(__dirname, `../assignmentKeys/${courseId}/${instructorId}/${assignmentId}`);
-//             fs.mkdirSync(dir, { recursive: true });
-//             cb(null, dir);
-//         } catch (err) {
-//             console.error('Error creating directory:', err);
-//             cb(err);
-//         }
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname);
-//     },
-// });
-
 // Create a new assignment
 router.post('/assignments', upload.single('assignmentKey'), async (req, res) => {
     const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, criteria } = req.body;
@@ -958,6 +942,27 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
         } else {
             res.status(500).json({ error: 'Failed to process submissions' });
         }
+    }
+});
+
+// Delete assignment by assignment ID
+router.delete('/assignments/:assignmentId', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query(
+            'DELETE FROM "Assignment" WHERE "assignmentId" = $1 RETURNING *',
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json({ message: 'Assignment deleted successfully', assignment: result.rows[0] });
+    } catch (error) {
+        console.error('Error deleting assignment:', error);
+        res.status(500).json({ message: 'Error deleting assignment' });
     }
 });
 

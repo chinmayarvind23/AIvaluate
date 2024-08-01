@@ -1,10 +1,10 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ClipLoader } from 'react-spinners';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -164,13 +164,12 @@ const SelectedAssignment = () => {
                                     </button>
                                 </div>
                             </div>
-                            <input
-                            type="text"
-                            placeholder="Search by student ID or file name"
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            className="search-input"
-                            />
+                            {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text primary-color-text">AI Grading in Progress...</p>
+                            </div>
+                            )}
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>
@@ -180,12 +179,7 @@ const SelectedAssignment = () => {
                                 </div>
                             ))}
                             </div>
-                            {isLoading && (
-                            <div className="spinner-container">
-                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                                <p className="loading-text">AI Grading in Progress...</p>
-                            </div>
-                            )}
+                            
                             </div>
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>

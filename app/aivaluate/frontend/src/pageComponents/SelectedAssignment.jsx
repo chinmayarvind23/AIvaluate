@@ -5,8 +5,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClipLoader } from 'react-spinners';
+import { FaSearch } from 'react-icons/fa';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
+import '../SearchBar.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -56,10 +58,11 @@ const SelectedAssignment = () => {
 
     useEffect(() => {
         if (searchTerm) {
-            const results = submissions.filter(file =>
-                file.submissionFile.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                file.studentId.includes(searchTerm)
-            );
+            const results = submissions.filter(file => {
+                const studentId = file.studentId ? String(file.studentId) : '';
+                const submissionFile = file.submissionFile ? String(file.submissionFile).toLowerCase() : '';
+                return studentId.includes(searchTerm) || submissionFile.includes(searchTerm.toLowerCase());
+            });
             setFilteredFiles(results);
         } else {
             setFilteredFiles(submissions);
@@ -89,6 +92,12 @@ const SelectedAssignment = () => {
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
         setCurrentPage(1); // Reset to first page on new search
+    };
+
+    const truncateFileName = (fileName, maxLength = 30) => {
+        return fileName.length > maxLength 
+            ? `${fileName.slice(0, maxLength)}...` 
+            : fileName;
     };
 
     const toggleGradesVisibility = () => {
@@ -145,6 +154,12 @@ const SelectedAssignment = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
+            {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text">AI Grading in Progress...</p>
+                            </div>
+            )}
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
                     <div className="main-margin">
@@ -168,28 +183,28 @@ const SelectedAssignment = () => {
                                     </button>
                                 </div>
                             </div>
-                            <input
-                            type="text"
-                            placeholder="Search by student ID or file name"
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            className="search-input"
-                            />
+                            <div className="center-search">
+                                <div className="search-container">
+                                    <div className="search-box">
+                                        <FaSearch className="search-icon" />
+                                        <input
+                                            type="text"
+                                            placeholder="Search by student ID or file name"
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>
                                     <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile ? file.submissionFile.split('/').pop() : file.submissionLink}</div>
+                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile ? truncateFileName(file.submissionFile.split('/').pop()) : file.submissionLink}</div>
                                     {file.isGraded && <div className="file-status">*Marked as graded</div>}
                                 </div>
                             ))}
                             </div>
-                            {isLoading && (
-                            <div className="spinner-container">
-                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                                <p className="loading-text">AI Grading in Progress...</p>
-                            </div>
-                            )}
                             </div>
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>

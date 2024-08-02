@@ -68,6 +68,21 @@ const SubmitAssignment = () => {
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
         const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
+        const emptyFiles = selectedFiles.filter(file => file.size === 0);
+        
+        if (emptyFiles.length > 0) {
+            toast.error('Empty files are not allowed.');
+            setErrorMessage('Empty files are not allowed.');
+            setFiles([]);
+            return;
+        }
+
+        if (selectedFiles.length > 7) {
+            toast.error('You can only upload a maximum of 7 files.');
+            setErrorMessage('You can only upload a maximum of 7 files.');
+            setFiles([]);
+            return;
+        }
 
         const invalidFiles = selectedFiles.filter(file => !allowedExtensions.exec(file.name));
         if (invalidFiles.length > 0) {
@@ -85,6 +100,20 @@ const SubmitAssignment = () => {
         e.preventDefault();
         setDragging(false);
         const selectedFiles = Array.from(e.dataTransfer.files);
+        const emptyFiles = selectedFiles.filter(file => file.size === 0);
+        if (emptyFiles.length > 0) {
+            toast.error('Empty files are not allowed.');
+            setErrorMessage('Empty files are not allowed.');
+            setFiles([]);
+            return;
+        }
+
+        if (selectedFiles.length > 7) {
+            toast.error('You can only upload a maximum of 7 files.');
+            setErrorMessage('You can only upload a maximum of 7 files.');
+            setFiles([]);
+            return;
+        }
         handleFileChange({ target: { files: selectedFiles } });
     };
 

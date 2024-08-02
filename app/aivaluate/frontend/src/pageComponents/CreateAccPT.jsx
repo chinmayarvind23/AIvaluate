@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
@@ -50,6 +50,9 @@ const CreateAccPT = () => {
             if (response.status === 201) {
               toast.success('User successfully registered!');
               console.log('User successfully registered!');
+              setTimeout(() => {
+                navigate('/admin/evaluatormanager');
+              }, 3000);
             } else if (response.status === 400) {
               console.error('Duplicate email error:', response.data.error);
               toast.error('Email already exists');

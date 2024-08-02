@@ -2,7 +2,7 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -12,7 +12,6 @@ import SideMenuBarEval from '../components/SideMenuBarEval';
 const EvalViewSubmissions = () => {
     const courseCode = sessionStorage.getItem('courseCode');
     const courseName = sessionStorage.getItem('courseName');
-    const navigate = useNavigate();
     const { paramCourseId } = useParams();
     const courseId = sessionStorage.getItem('courseId') || paramCourseId;
     const [currentPage, setCurrentPage] = useState(1);
@@ -121,9 +120,9 @@ const EvalViewSubmissions = () => {
         setCurrentPage(1);
     };
 
-    const handleMarkAssignment = (studentId, assignmentId) => {
-        navigate(`/eval/${studentId}/${assignmentId}/grading`);
-    };
+    // const handleMarkAssignment = (studentId, assignmentId) => {
+    //     console.log(`Student ID: ${studentId}, Assignment ID: ${assignmentId}`);
+    // };
 
     const navBarText = `${courseCode} - ${courseName}`;
 
@@ -150,7 +149,7 @@ const EvalViewSubmissions = () => {
                             </div>
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId)}>
+                                    <div className="file-item" key={index}>
                                         <div className="folder-icon"><CircumIcon name="folder_on"/></div>
                                         <div className="file-name">{file.studentId} - {file.assignmentId} Submission</div>
                                         {file.isGraded && <div className="file-status">Marked as graded</div>}

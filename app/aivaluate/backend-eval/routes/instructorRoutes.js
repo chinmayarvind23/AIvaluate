@@ -244,6 +244,36 @@ router.get('/courses', async (req, res) => {
     }
 });
 
+// Route to get all courses taught by an instructor
+router.get('/courses/me/:instructorId', async (req, res) => {
+  const instructorId = req.params.instructorId;
+
+  try {
+      const result = await pool.query(`
+          SELECT 
+              C."courseId", 
+              C."courseName", 
+              C."courseCode", 
+              C."isArchived"
+          FROM 
+              "Teaches" T
+          JOIN 
+              "Course" C ON C."courseId" = T."courseId"
+          WHERE 
+              T."instructorId" = $1
+      `, [instructorId]);
+
+      // Log the results to verify they meet expectations
+      console.log('Fetched Courses:', result.rows);  // Add this log
+
+      res.status(200).json(result.rows); // Ensure this sends an array
+  } catch (error) {
+      console.error('Error fetching courses:', error);
+      res.status(500).send({ message: 'Error fetching courses' });
+  }
+});
+    
+
 // Get all instructors
 router.get('/instructors', async (req, res) => {
     try {

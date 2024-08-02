@@ -27,7 +27,7 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
             LEFT JOIN "AssignmentSubmission" asub ON s."studentId" = asub."studentId"
             LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
             LEFT JOIN "Assignment" a ON asub."assignmentId" = a."assignmentId"
-            WHERE s."studentId" = $1 AND asub."courseId" = $2 AND ag."isGraded" = true
+            WHERE s."studentId" = $1 AND asub."courseId" = $2 AND ag."isGraded" = true 
             GROUP BY s."firstName"
         `;
         const studentInfoResult = await pool.query(studentInfoQuery, [studentId, courseId]);
@@ -47,6 +47,7 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
             LEFT JOIN "AssignmentSubmission" s ON a."assignmentId" = s."assignmentId" AND s."studentId" = $1
             LEFT JOIN "AssignmentGrade" ag ON s."assignmentSubmissionId" = ag."assignmentSubmissionId"
             WHERE a."courseId" = $2
+            AND a."isPublished" = true
             GROUP BY a."assignmentId"
         `;
         const result = await pool.query(query, [studentId, courseId]);

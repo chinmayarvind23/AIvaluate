@@ -59,7 +59,7 @@ router.get('/assignments/course/:courseId', async (req, res) => {
     }
 
     try {
-        const result = await pool.query('SELECT * FROM "Assignment" WHERE "courseId" = $1', [courseId]);
+        const result = await pool.query('SELECT * FROM "Assignment" WHERE "courseId" = $1 AND "isPublished" = TRUE', [courseId]);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'No assignments found for this course' });

@@ -58,7 +58,7 @@
 .CreateAccPT-box input[type="password"] {
   padding: 10px;
   margin-top: 5px;
-  width: 600px;
+  width: 700px;
   border: 1px solid #ccc;
   border-radius: 10px;
 }
@@ -83,10 +83,10 @@
 /* Create user button styling */
 .CreateAccPT-create-user-button {
   display: flex;
-  width: 200px; /* Increased width */
+  width: 200px; /* Adjusted width */
   padding: 10px 20px; /* Matching padding to Edit button */
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-top: 20px; /* Added margin-top for spacing */
+  align-self: flex-end; /* Align to the right */
   justify-content: center;
   align-items: center;
   height: 50px;
@@ -98,6 +98,7 @@
   color: #fff;
   border: none;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  margin-right:150px;
 }
 
 /* Hover effect for create user button */

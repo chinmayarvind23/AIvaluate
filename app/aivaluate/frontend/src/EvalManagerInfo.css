@@ -47,7 +47,7 @@ body {
     display: flex;
     flex-direction: column; /* Stack the buttons vertically */
     align-items: flex-end; /* Align buttons to the right */
-    gap: 1px; /* Add space between buttons */
+    gap: 4px; /* Add space between buttons */
     position: relative;
 }
 
@@ -57,7 +57,8 @@ body {
     border: none;
     cursor: pointer;
     color: #fff;
-    width: 100px;
+    width: 150px;
+    gap: 1px;
 }
 
 .edit-button, .Eval-confirm-button {

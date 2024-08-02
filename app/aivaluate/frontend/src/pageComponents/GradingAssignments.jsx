@@ -31,6 +31,7 @@ const GradingAssignments = () => {
   const [submittedFiles, setSubmittedFiles] = useState([]);
   const { fileName, submissionLink } = location.state || {};
   console.log("Received fileName:", fileName);
+
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
@@ -67,7 +68,7 @@ const GradingAssignments = () => {
   const saveDueDate = async () => {
     setIsEditing(false);
     try {
-      const response = await axios.put(`http://localhost:5173/eval-api/assignments/${studentId}/${assignmentId}/due-date`, {
+      await axios.put(`http://localhost:5173/eval-api/assignments/${studentId}/${assignmentId}/due-date`, {
         dueDate
       }, {
         withCredentials: true
@@ -108,7 +109,7 @@ const GradingAssignments = () => {
     try {
       const response = await axios.put(`http://localhost:5173/eval-api/assignment/complete/${studentId}/${assignmentId}`, {
         dueDate,
-        InstructorAssignedFinalGrade: finalScore,
+        InstructorAssignedFinalGrade: parseFloat(finalScore),
         AIFeedbackText: feedback,
         InstructorFeedbackText: instructorFeedback,
         maxObtainableGrade: assignmentDetails.maxObtainableGrade
@@ -236,5 +237,3 @@ const GradingAssignments = () => {
 };
 
 export default GradingAssignments;
-
-

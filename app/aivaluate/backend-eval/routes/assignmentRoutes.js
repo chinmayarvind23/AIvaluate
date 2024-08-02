@@ -762,30 +762,30 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
                 const insertGradeQuery = `
                     INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "InstructorAssignedFinalGrade", "isGraded", "maxObtainableGrade")
                     VALUES ($1, $2, $3, true, $4)`;
-                    console.log('Inserting grade:', {
-                        submissionId,
-                        assignmentId,
-                        InstructorAssignedFinalGrade,
-                        maxObtainableGrade
-                    });
+                console.log('Inserting grade:', {
+                    submissionId,
+                    assignmentId,
+                    InstructorAssignedFinalGrade,
+                    maxObtainableGrade
+                });
                 
                 await pool.query(insertGradeQuery, [submissionId, assignmentId, InstructorAssignedFinalGrade, maxObtainableGrade]);
             } else {
                 const updateGradeQuery = `
-                UPDATE "AssignmentGrade"
-                SET
-                    "InstructorAssignedFinalGrade" = $1,
-                    "isGraded" = true,
-                    "maxObtainableGrade" = $4
-                WHERE 
-                    "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
-                    console.log('Updating grade:', {
-                        submissionId,
-                        assignmentId,
-                        InstructorAssignedFinalGrade,
-                        maxObtainableGrade
-                    });
-            await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId, maxObtainableGrade]);
+                    UPDATE "AssignmentGrade"
+                    SET
+                        "InstructorAssignedFinalGrade" = $1,
+                        "isGraded" = true,
+                        "maxObtainableGrade" = $4
+                    WHERE 
+                        "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
+                console.log('Updating grade:', {
+                    submissionId,
+                    assignmentId,
+                    InstructorAssignedFinalGrade,
+                    maxObtainableGrade
+                });
+                await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId, maxObtainableGrade]);
             }
             const updateSubmissionQuery = `
                 UPDATE "AssignmentSubmission"
@@ -794,7 +794,7 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
             await pool.query(updateSubmissionQuery, [submissionId]);
 
             const checkFeedbackQuery = `
-                SELECT 1 FROM "StudentFeedback" WHERE "assignmentId" = $1 AND "studentId" = $2`;
+                SELECT 1 FROM "StudentFeedbackReport" WHERE "assignmentId" = $1 AND "studentId" = $2`;
             
             const feedbackExists = await pool.query(checkFeedbackQuery, [assignmentId, studentId]);
 
@@ -802,13 +802,13 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
                 const insertFeedbackQuery = `
                     INSERT INTO "StudentFeedbackReport" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
                     VALUES ($1, $2, $3, $4, $5)`;
-                    console.log('Inserting feedback:', {
-                        assignmentId,
-                        studentId,
-                        courseId,
-                        AIFeedbackText,
-                        InstructorFeedbackText
-                    });
+                console.log('Inserting feedback:', {
+                    assignmentId,
+                    studentId,
+                    courseId,
+                    AIFeedbackText,
+                    InstructorFeedbackText
+                });
                 await pool.query(insertFeedbackQuery, [assignmentId, studentId, courseId, AIFeedbackText, InstructorFeedbackText]);
 
             } else {
@@ -820,13 +820,13 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
                         "courseId" = $3
                     WHERE
                         "assignmentId" = $4 AND "studentId" = $5`;
-                        console.log('Updating feedback:', {
-                            AIFeedbackText,
-                            InstructorFeedbackText,
-                            courseId,
-                            assignmentId,
-                            studentId
-                        });
+                console.log('Updating feedback with values:', {
+                    AIFeedbackText,
+                    InstructorFeedbackText,
+                    courseId,
+                    assignmentId,
+                    studentId
+                });
                 await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, courseId, assignmentId, studentId]);
             }
         }
@@ -837,6 +837,7 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
         res.status(500).json({ error: 'Database error' });
     }
 });
+
 
 // Fetch assignmentRubricId in useRubric table by assignmentId
 router.get('/assignments/:assignmentId/rubric', async (req, res) => {

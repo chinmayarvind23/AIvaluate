@@ -252,7 +252,8 @@ router.get('/assignment/:courseId/:assignmentId', async (req, res) => {
                 a."dueDate",
                 a."maxObtainableGrade",
                 ag."InstructorAssignedFinalGrade",
-                sfr."AIFeedbackText"
+                ag."isGraded",
+                sfr."InstructorFeedbackText"
             FROM "Assignment" a
             LEFT JOIN "useRubric" ur ON a."assignmentId" = ur."assignmentId"
             LEFT JOIN "AssignmentRubric" ar ON ur."assignmentRubricId" = ar."assignmentRubricId"

@@ -800,7 +800,7 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
 
             if (feedbackExists.rows.length === 0) {
                 const insertFeedbackQuery = `
-                    INSERT INTO "StudentFeedback" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                    INSERT INTO "StudentFeedbackReport" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
                     VALUES ($1, $2, $3, $4, $5)`;
                     console.log('Inserting feedback:', {
                         assignmentId,
@@ -813,7 +813,7 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
 
             } else {
                 const updateFeedbackQuery = `
-                    UPDATE "StudentFeedback"
+                    UPDATE "StudentFeedbackReport"
                     SET
                         "AIFeedbackText" = $1,
                         "InstructorFeedbackText" = $2,
@@ -892,6 +892,7 @@ router.get('/rubrics/all/:instructorId', async (req, res) => {
         res.status(500).json({ message: 'Error fetching rubrics' });
     }
 });
+
 
 
 // Route to get file by file name and download it

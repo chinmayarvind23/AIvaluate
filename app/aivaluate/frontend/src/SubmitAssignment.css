@@ -167,3 +167,12 @@
     margin-left: 10px;
     font-size: 18px;
 }
+
+.due-date-submit-assign{
+    width: 600px;
+    color: red;
+}
+
+.no-feedback{
+    color: var(--primary-color);
+}

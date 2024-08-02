@@ -5,9 +5,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../ToastStyles.css';
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
+import '../ToastStyles.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import SideMenuBar from '../components/SideMenuBar';
@@ -26,7 +26,8 @@ const SubmitAssignment = () => {
         maxObtainableGrade: '',
         InstructorAssignedFinalGrade: '',
         assignmentDescription: '',
-        AIFeedbackText: ''
+        AIFeedbackText: '',
+        InstructorFeedbackText: ''
     });
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -187,7 +188,7 @@ const SubmitAssignment = () => {
                         </div>
                         <div className="scrollable-div">
                             <div className="due-date-div">
-                                <div className="due-date"><h3>Due: {formatDueDate(assignmentDetails.dueDate)}</h3></div>
+                                <div className="due-date-submit-assign"><h3>Due: {formatDueDate(assignmentDetails.dueDate)}</h3></div>
                                 <div className="empty"> </div>
                                 <div className="score">
                                     <h3>Score: {assignmentDetails.InstructorAssignedFinalGrade}/{assignmentDetails.maxObtainableGrade}</h3>
@@ -224,15 +225,11 @@ const SubmitAssignment = () => {
                                      />
                                 </div>
                                 <div className="submit-right">
-                                    <h2 className="assignment-text">Assignment Rubric/Details</h2>
+                                    <h2 className="assignment-text"> Files to be uploaded</h2>
                                     <div className="empty"> </div>
                                     <button className="submit-button rborder" type="submit">Submit</button>
                                 </div>
                             </form>
-                            <div className="assignment-details">
-                                <pre className="details-content">{assignmentDetails.assignmentDescription}</pre>
-                            </div>
-                            <h2>Files to be uploaded</h2>
                             <div className="uploaded-files-container">
                                 {files.length > 0 ? (
                                     <ul>
@@ -245,6 +242,10 @@ const SubmitAssignment = () => {
                                 ) : (
                                     <p>No files selected yet.</p>
                                 )}
+                            </div>
+                            <h2>Assignment Rubric/Details</h2>
+                            <div className="assignment-details">
+                                <pre className="details-content">{assignmentDetails.criteria}</pre>
                             </div>
                             <h2>Recently Uploaded Files</h2>
                             <div className="uploaded-files-container">
@@ -264,20 +265,19 @@ const SubmitAssignment = () => {
                             </div>
                             <h2>Feedback</h2>
                             <div className="feedback-container">
-                                {isGraded ? (
+                                {typeof assignmentDetails.InstructorFeedbackText === 'string' && assignmentDetails.InstructorFeedbackText.trim().length > 0 ? (
                                     <div className="feedback">
                                         <div className="score-class">
                                             <div className="empty"> </div>
                                         </div>
                                         <div className="both-feedback">
-                                            <h3>Feedback</h3>
                                             <div className="feedback-text">
-                                                <MarkdownRenderer markdownText={assignmentDetails.AIFeedbackText || 'There is no feedback on this assignment'} />
+                                                <MarkdownRenderer markdownText={assignmentDetails.InstructorFeedbackText} />
                                             </div>
                                         </div>
                                     </div>
                                 ) : (
-                                    <h3>No feedback available yet...</h3>
+                                    <h3 className="no-feedback">No feedback available yet...</h3>
                                 )}
                             </div>
                         </div>

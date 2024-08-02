@@ -27,12 +27,15 @@ RUN apt-get update && \
     xdg-utils \
     libxshmfence1 \
     libgbm-dev \
+    libflite1 \
+    --fix-missing \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 RUN npm install
 RUN npm install cheerio playwright
-RUN npx playwright install --with-deps chromium webkit && npx playwright install-deps
+RUN npx playwright install-deps
+RUN npx playwright install chromium webkit
 
 COPY . .
 

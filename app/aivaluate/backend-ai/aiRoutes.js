@@ -10,8 +10,8 @@ const cors = require('cors');
 const parseSafe = require('json-parse-safe');
 const baseDirSubmissions = path.resolve('/app/aivaluate/backend/assignmentSubmissions');
 const baseDirKeys = path.resolve('/app/aivaluate/backend-eval/assignmentKeys');
-const axios = require('axios');
-const cheerio = require('cheerio');
+const { chromium } = require('playwright');
+const fetch = require('node-fetch');
 
 router.use(bodyParser.json());
 const openaiApiKey = process.env.OPENAI_API_KEY;
@@ -44,6 +44,85 @@ async function retryRequest(fn, retries = 3, delay = 1000) {
             }
             await delayPromise(delay);
             delay *= 2;
+        }
+    }
+}
+
+async function loadPageWithRetry(page, submissionLink, retries = 3, delay = 1000) {
+    let attempt = 0;
+    const delayPromise = (delay) => new Promise(resolve => setTimeout(resolve, delay));
+    while (attempt < retries) {
+        try {
+            await page.goto(submissionLink, { waitUntil: 'domcontentloaded', timeout: 60000 });
+            const gistContent = await page.textContent('body');
+            if (gistContent && gistContent.trim().length > 0) {
+                console.log(`Successfully loaded content from ${submissionLink}`);
+                return true;
+            } else {
+                throw new Error('Failed to load Gist content or content is empty');
+            }
+        } catch (error) {
+            attempt++;
+            console.error(`Attempt ${attempt} failed: ${error.message}`);
+            if (attempt >= retries) {
+                throw new Error(`Failed to load page after ${retries} attempts: ${submissionLink}`);
+            }
+            await delayPromise(delay);
+            delay *= 2;
+        }
+    }
+}
+
+
+async function fetchAndProcessSubmissionLink(submissionLink) {
+    console.log('Processing submission link:', submissionLink);
+    const gistRegex = /^https:\/\/gist\.github\.com\/.+$/;
+    if (!gistRegex.test(submissionLink)) {
+        console.error('The submission link is not a GitHub Gist link:', submissionLink);
+        return null;
+    }
+
+    const rawGistUrl = submissionLink.replace('gist.github.com', 'gist.githubusercontent.com') + '/raw';
+
+    try {
+        const response = await fetch(rawGistUrl);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch the Gist content: ${response.statusText}`);
+        }
+
+        const textContent = await response.text();
+        console.log('Extracted text content:', textContent.slice(0, 500));
+
+        return textContent;
+    } catch (error) {
+        console.error(`Direct fetch failed: ${error.message}. Falling back to loadPageWithRetry.`);
+        try {
+            const browser = await chromium.launch({
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            });
+
+            const context = await browser.newContext({
+                javaScriptEnabled: false,
+                timeout: 60000
+            });
+
+            const page = await context.newPage();
+
+            const pageLoaded = await loadPageWithRetry(page, rawGistUrl);
+
+            if (!pageLoaded) {
+                throw new Error('Failed to load the Gist content after retries');
+            }
+
+            const textContent = await page.textContent('body');
+            console.log('Extracted text content (fallback):', textContent.slice(0, 500));
+
+            await browser.close();
+            return textContent;
+        } catch (retryError) {
+            console.error(`Error fetching or processing the submission link ${submissionLink} using Playwright:`, retryError);
+            return null;
         }
     }
 }
@@ -328,7 +407,9 @@ const parseAIResponse = async (aiResponse) => {
                 }
             }
 
-            const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m);
+            const jsonStringMatch = aiResponseString.match(/```json\s*([\s\S]+?)\s*```/m) ||
+                        aiResponseString.match(/"(\{[\s\S]+?\})"/) || 
+                        aiResponseString.match(/(\{[\s\S]+?\})/);
             if (!jsonStringMatch) {
                 throw new Error('Invalid AI response format');
             }
@@ -437,35 +518,49 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
 
         const submissionFileIds = [];
         let submissionTextContent = '';
+        let allFilesFailed = true;
+        let allLinksFailed = true; 
+        let parsedResponse = null;
         for (const file of submissions) {
-          if (file.submissionFile) {
-              const filePath = path.resolve(baseDirSubmissions, file.submissionFile.replace('assignmentSubmissions/', ''));
-              console.log('Resolved file path:', filePath);
-              if (!fs.existsSync(filePath)) {
-                  throw new Error(`File not found: ${filePath}`);
-              }
-              const fileId = await uploadFileToOpenAI(filePath, 'assistants');
-              submissionFileIds.push(fileId);
-          }
-
-          if (file.submissionLink) {
-              console.log('Processing submission link:', file.submissionLink);
-
-              try {
-                  const response = await axios.get(file.submissionLink);
-                  const html = response.data;
-                  const $ = cheerio.load(html);
-                  const textContent = $('body').text().trim();
-                  console.log('Extracted text content:', textContent.slice(0, 500));
-                  submissionTextContent += `\nContent from link ${file.submissionLink}:\n${textContent}\n`;
-              } catch (error) {
-                  console.error(`Error fetching or processing the submission link ${file.submissionLink}:`, error);
-              }
-          }
-      }
+            if (file.submissionFile) {
+                try {
+                    const filePath = path.resolve(baseDirSubmissions, file.submissionFile.replace('assignmentSubmissions/', ''));
+                    console.log('Resolved file path:', filePath);
+                    if (!fs.existsSync(filePath)) {
+                        throw new Error(`File not found: ${filePath}`);
+                    }
+                    const fileId = await uploadFileToOpenAI(filePath, 'assistants');
+                    submissionFileIds.push(fileId);
+                    allFilesFailed = false;
+                } catch (error) {
+                    console.error(`Error processing file ${file.submissionFile}:`, error);
+                }
+            }
+        
+            if (file.submissionLink) {
+                try {
+                    const textContent = await fetchAndProcessSubmissionLink(file.submissionLink);
+                    if (textContent) {
+                        const tempFilePath = path.join(baseDirSubmissions, `${path.basename(file.submissionLink)}.txt`);
+                        fs.writeFileSync(tempFilePath, textContent);
+                        const fileId = await uploadFileToOpenAI(tempFilePath, 'assistants');
+                        submissionFileIds.push(fileId);
+                        fs.unlinkSync(tempFilePath);
+                        allLinksFailed = false;
+                    }
+                } catch (error) {
+                    console.error(`Error fetching or processing the submission link ${file.submissionLink}:`, error);
+                }
+            }
+        }
       console.log('Submission file IDs created:', submissionFileIds);
-
-        let parsedResponse;
+      if (allFilesFailed && allLinksFailed) {
+        console.error(`All submissions failed for student: ${studentId}. Assigning default grade and feedback.`);
+        parsedResponse = {
+            grade: 0,
+            feedback: 'The AI was unable to process any submissions. Please manually enter a grade and provide feedback.'
+        };
+    } else {
         let retryCount = 0;
         const maxRetries = 10;
 
@@ -474,11 +569,12 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
             console.log('Thread created:', threadResponse.id);
             const thread = threadResponse.id;
 
-            let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Provide your response in the following JSON format:
+            let messageContent = `Grade the student's assignment submissions for accuracy using the following rubric: ${assignmentRubric}. The maximum points available for this assignment is ${maxPoints}. Please make 100% sure that you do not assign a grade higher than ${maxPoints}. Provide your response in the following JSON format:
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }`;
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"} and please make 100% sure that you do not assign a grade higher than ${maxPoints}.`;
+
             if (assignmentKeyFileId) {
                 messageContent += ` The file with ID ${assignmentKeyFileId} is the assignment key to be used to grade the students' submissions.`;
             }
@@ -565,13 +661,14 @@ const processStudentSubmissions = async (studentId, submissions, assistantId, in
         } else {
             console.error(`Parsed feedback is empty for student: ${studentId}. Response: ${JSON.stringify(parsedResponse)}`);
         }
+    }
     } catch (error) {
         console.error('Error in processStudentSubmissions:', error);
         throw error;
     }
 };
 
-// Process individual student submissions
+// Process individual student's submissions (submissions for a single student before moving to the next student's submissions)
 const processSubmissions = async (assignmentId, instructorId, courseId) => {
     console.log('Processing submissions for assignment:', assignmentId);
     console.log('Instructor ID:', instructorId);
@@ -601,7 +698,7 @@ const processSubmissions = async (assignmentId, instructorId, courseId) => {
             {
                 "feedback": "Your detailed feedback here",
                 "grade": "Your grade here"
-            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"}`,
+            }. Please make 100% sure that you provide your response in the following JSON format: { "feedback": "Your detailed feedback here", "grade": "Your grade here"} and please make 100% sure that you do not assign a grade higher than ${maxPoints}.`,
             model: "gpt-4o",
             tools: [{ type: "code_interpreter" }, { type: "file_search" }]
         });                          

@@ -50,6 +50,9 @@ const CreateAccPT = () => {
             if (response.status === 201) {
               toast.success('User successfully registered!');
               console.log('User successfully registered!');
+              setTimeout(() => {
+                navigate('/admin/evaluatormanager');
+              }, 3000);
             } else if (response.status === 400) {
               console.error('Duplicate email error:', response.data.error);
               toast.error('Email already exists');

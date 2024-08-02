@@ -68,14 +68,31 @@ const SubmitAssignment = () => {
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
         const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
+        const emptyFiles = selectedFiles.filter(file => file.size === 0);
+        
+        if (emptyFiles.length > 0) {
+            toast.error('Empty files are not allowed.');
+            setErrorMessage('Empty files are not allowed.');
+            setFiles([]);
+            return;
+        }
+
+        if (selectedFiles.length > 7) {
+            toast.error('You can only upload a maximum of 7 files.');
+            setErrorMessage('You can only upload a maximum of 7 files.');
+            setFiles([]);
+            return;
+        }
 
         const invalidFiles = selectedFiles.filter(file => !allowedExtensions.exec(file.name));
         if (invalidFiles.length > 0) {
+            toast.error('Please upload files with extensions .css, .html, .js, or .jsx only.');
             setErrorMessage('Please upload files with extensions .css, .html, .js, or .jsx only.');
             setFiles([]);
         } else {
             setErrorMessage('');
             setFiles(selectedFiles);
+            setSubmissionLink('');
         }
     };
 
@@ -83,6 +100,20 @@ const SubmitAssignment = () => {
         e.preventDefault();
         setDragging(false);
         const selectedFiles = Array.from(e.dataTransfer.files);
+        const emptyFiles = selectedFiles.filter(file => file.size === 0);
+        if (emptyFiles.length > 0) {
+            toast.error('Empty files are not allowed.');
+            setErrorMessage('Empty files are not allowed.');
+            setFiles([]);
+            return;
+        }
+
+        if (selectedFiles.length > 7) {
+            toast.error('You can only upload a maximum of 7 files.');
+            setErrorMessage('You can only upload a maximum of 7 files.');
+            setFiles([]);
+            return;
+        }
         handleFileChange({ target: { files: selectedFiles } });
     };
 
@@ -95,6 +126,18 @@ const SubmitAssignment = () => {
         setDragging(false);
     };
 
+    const handleLinkChange = (e) => {
+        const linkValue = e.target.value;
+        setSubmissionLink(linkValue);
+    
+        if (linkValue) {
+            setFiles([]);
+            setErrorMessage(''); 
+        }
+    };
+    
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -103,23 +146,16 @@ const SubmitAssignment = () => {
             return;
         }
         
-        const allowedPlatforms = [
-            'docs.google.com',
-            'drive.google.com',
-            'dropbox.com',
-            'onedrive.live.com',
-            'box.com',
-            'sharepoint.com'
-        ];
+        const allowedPlatform = 'gist.github.com';
 
         if (submissionLink) {
             const url = new URL(submissionLink.startsWith('http://') || submissionLink.startsWith('https://') 
                 ? submissionLink 
                 : `https://${submissionLink}`);
-            const isAllowed = allowedPlatforms.some(platform => url.hostname.includes(platform));
+                const isAllowed = url.hostname.includes(allowedPlatform);
     
             if (!isAllowed) {
-                toast.error('Only links from Google Docs, Google Drive, Dropbox, OneDrive, Box, and SharePoint are allowed.');
+                toast.error('Only links from Github Gists are allowed.');
                 return;
             }
         }
@@ -203,6 +239,10 @@ const SubmitAssignment = () => {
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
                                         onDrop={handleDrop}
+                                        style={{ 
+                                            pointerEvents: submissionLink ? 'none' : 'auto', 
+                                            opacity: submissionLink ? 0.5 : 1 
+                                        }}
                                     >
                                         <input 
                                             type="file" 
@@ -211,6 +251,7 @@ const SubmitAssignment = () => {
                                             name="files"
                                             onChange={handleFileChange}
                                             multiple 
+                                            disabled={!!submissionLink}
                                         />
                                     </div>
                                     {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -220,7 +261,13 @@ const SubmitAssignment = () => {
                                         type="text" 
                                         placeholder="Have a link? Upload it here! Please ensure the access is public."
                                         className="link-upload"
-                                        onChange={(e) => setSubmissionLink(e.target.value)}
+                                        onChange={handleLinkChange}
+                                        value={submissionLink}
+                                        disabled={files.length > 0}
+                                        style={{ 
+                                            pointerEvents: files.length > 0 ? 'none' : 'auto', 
+                                            opacity: files.length > 0 ? 0.5 : 1 
+                                        }}
                                      />
                                 </div>
                                 <div className="submit-right">

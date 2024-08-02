@@ -1,11 +1,45 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (June 31 - August 1) -  9 hours
+
+## Thursday August 1st
+### 7 hours
+- Hide and publish grade --- incomplete (3.5 hours)
+- Team meeting and deciding on task priorities (1 hour)
+- Fixing class average calculation and eval side course creation/display logic (2.5 hours)
+
+## Wednesday July 31st
+### 2 hours
+- Team meeting (1.5 hours)
+- Frontend fixes on the eval view (0.5 hours)
+
+# Current Tasks
+- #1 Fix percentage calculator
+- #2 Limit TA access of funcionalities
+- #3 UX improvements and fixing frontend issues
+- #3 Hide and publish grades #427
+
+# Progress Update
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 | Completed  |
+| Task #2 | Completed  |
+| Task #3 | Completed  |
+| Task #4 | Incomplete  |
+
+
+# Cycle Goal Review
+During this cycle, I focused on fixing various existing bugs or system inconsistencies. We also tested the whole website and tried to find out what are the remaining issues. 
+
+# Next Cycle 
+All my tasks are complete other than the publish/hide grade feature by the evaluator; I'll try to add that if time permits.
+
 # Timesheet (June 26 - July 31 Morning) - 21 hours
 
 ## Wednesday July 31st
 ### 6 hours
 - Course management for admin view, undo admin actions, add toastify messages (Completed)
-- 
+
 ## Tuesday July 30th
 ### 4 hours
 - Course management for admin view, undo admin actions, add toastify messages (In Progress)

@@ -9,7 +9,6 @@ import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
 import '../ToastStyles.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import MarkdownRenderer from '../components/MarkdownRenderer';
 import SideMenuBar from '../components/SideMenuBar';
 
 const SubmitAssignment = () => {
@@ -27,7 +26,8 @@ const SubmitAssignment = () => {
         InstructorAssignedFinalGrade: '',
         assignmentDescription: '',
         AIFeedbackText: '',
-        InstructorFeedbackText: ''
+        InstructorFeedbackText: '',
+        isGraded: false // Include isGraded in the state
     });
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -44,7 +44,7 @@ const SubmitAssignment = () => {
             });
             const data = response.data;
             setAssignmentDetails(data);
-            setIsGraded(data.InstructorAssignedFinalGrade !== "--");
+            setIsGraded(data.isGraded);
         } catch (error) {
             console.error('Error fetching assignment details:', error);
         } finally {
@@ -227,7 +227,7 @@ const SubmitAssignment = () => {
                                 <div className="submit-right">
                                     <h2 className="assignment-text"> Files to be uploaded</h2>
                                     <div className="empty"> </div>
-                                    <button className="submit-button rborder" type="submit">Submit</button>
+                                    <button className="submit-button rborder" type="submit" disabled={isGraded}>Submit</button>
                                 </div>
                             </form>
                             <div className="uploaded-files-container">
@@ -272,7 +272,7 @@ const SubmitAssignment = () => {
                                         </div>
                                         <div className="both-feedback">
                                             <div className="feedback-text">
-                                                <MarkdownRenderer markdownText={assignmentDetails.InstructorFeedbackText} />
+                                                {assignmentDetails.InstructorFeedbackText}
                                             </div>
                                         </div>
                                     </div>

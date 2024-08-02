@@ -329,19 +329,12 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into StudentFeedbackReport table
-INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-VALUES 
-    ('Reported issue regarding assignment grading', false, 1, 1, 1, 'N/A', 'N/A'),
-    ('Reported missing lecture materials', true, 2, 1, 1, 'N/A', 'N/A'),
-    ('Reported incorrect answer keys', false, 3, 2, 2, 'N/A', 'N/A')
-ON CONFLICT DO NOTHING;
-
--- Insert dummy data into StudentFeedbackReport table
 INSERT INTO "StudentFeedbackReport" ("studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
 VALUES 
     (5, 10, 5, 'Great job!', 'Good effort, but could be improved'),
     (5, 11, 5, 'Well done!', 'Excellent work'),
-    (5, 12, 5, 'Needs improvement', 'Good attempt')
+    (5, 12, 5, 'Needs improvement', '#Good attempt 
+                                    This code looks **really good!**')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table

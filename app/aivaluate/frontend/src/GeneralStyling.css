@@ -163,7 +163,7 @@ body {
 
 .scrollable-div {
     overflow-y: auto;
-    max-height: 600px;
+    max-height: 700px;
     padding: 10px;
     background: var(--secondary-color);
     width: stretch;

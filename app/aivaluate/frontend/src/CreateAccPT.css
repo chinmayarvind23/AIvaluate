@@ -104,3 +104,9 @@
 .CreateAccPT-create-user-button:hover {
   background-color:#0056b3;
 }
+
+.main-text-space{
+  width: 300px;
+  padding: 10px;
+  border-radius: 50px;
+}

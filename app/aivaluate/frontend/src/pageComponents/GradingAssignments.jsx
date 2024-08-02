@@ -29,7 +29,7 @@ const GradingAssignments = () => {
   const [isEditingFeedback, setIsEditingFeedback] = useState(false);
   const studentNumber = studentId;
   const [submittedFiles, setSubmittedFiles] = useState([]);
-  const { fileName } = location.state || {};
+  const { fileName, submissionLink } = location.state || {};
   console.log("Received fileName:", fileName);
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
@@ -67,7 +67,7 @@ const GradingAssignments = () => {
   const saveDueDate = async () => {
     setIsEditing(false);
     try {
-      const response = await axios.put(`http://localhost:5173/eval-api/assignment/${studentId}/${assignmentId}/due-date`, {
+      const response = await axios.put(`http://localhost:5173/eval-api/assignments/${studentId}/${assignmentId}/due-date`, {
         dueDate
       }, {
         withCredentials: true
@@ -100,6 +100,11 @@ const GradingAssignments = () => {
   };
 
   const handleMarkComplete = async () => {
+    if (!finalScore || !instructorFeedback) {
+      toast.error('Please fill in all required fields: Final Score and Instructor Feedback.');
+      return;
+    }
+
     try {
       const response = await axios.put(`http://localhost:5173/eval-api/assignment/complete/${studentId}/${assignmentId}`, {
         dueDate,
@@ -208,7 +213,18 @@ const GradingAssignments = () => {
                         </a>
                     </div>
                 )}
-                {!fileName && <p>No files uploaded yet.</p>}
+                {submissionLink && (
+                    <div>
+                        <a 
+                            href={submissionLink.startsWith('http://') || submissionLink.startsWith('https://') ? submissionLink : `https://${submissionLink}`}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                        >
+                            {submissionLink}
+                        </a>
+                    </div>
+                )}
+                {!fileName && !submissionLink && <p>No submissions uploaded yet.</p>}
             </div>
             <button className="mark-complete" onClick={handleMarkComplete}>Mark evaluation as complete</button>
           </div>

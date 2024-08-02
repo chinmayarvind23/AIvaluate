@@ -2,6 +2,8 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -110,13 +112,16 @@ const EvaluatorManager = () => {
             // Refresh the deleted evaluators list
             await fetchDeletedEvaluators();
             await fetchEvaluators();
+            toast.success('Evaluator restored successfully');
         } catch (error) {
             console.error('Error reverting evaluator:', error);
+            toast.error('Failed to restore evaluator');
         }
     };
 
     return (
         <div>
+            <ToastContainer />
             <AIvaluateNavBarAdmin navBarText="Admin Home Portal" />
             <div className="filler-div">
                 <SideMenuBarAdmin tab="evalManager" />

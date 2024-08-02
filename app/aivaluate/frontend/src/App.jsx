@@ -39,11 +39,13 @@ import ResetPasswordEval from './pageComponents/ResetPasswordEval';
 import Rubrics from './pageComponents/Rubrics';
 import SelectStudentAdmin from './pageComponents/SelectStudentAdmin';
 import SelectedAssignment from './pageComponents/SelectedAssignment';
+import SelectCourseAdmin from './pageComponents/SelectCourseAdmin';
 import Signup from './pageComponents/Signup';
 import SignupAdmin from './pageComponents/SignupAdmin';
 import StudentAccount from './pageComponents/StudentAccount';
 import StudentGrades from './pageComponents/StudentGrades';
 import StudentManager from './pageComponents/StudentManager';
+import CourseMananger from './pageComponents/CourseManager';
 import StudentViewSubmissions from './pageComponents/StudentViewSubmissions';
 import Students from './pageComponents/Students';
 import SubmitAssignment from './pageComponents/SubmitAssignment';
@@ -65,7 +67,7 @@ const App = () => {
           <Route path="/login" element={<Login />} /> {/* Done*/}
           <Route path="/stu/login" element={<Login />} /> {/* Done*/}
           <Route path="/stu/signup" element={<Signup />} /> {/* Done*/}
-          <Route path ="/forgotpassword" element={<ForgotPassword />} /> {/* Done*/}
+          <Route path ="/stu/forgotpassword" element={<ForgotPassword />} /> {/* Done*/}
           <Route path="/resetpassword/:token" element={<ResetPassword />} /> {/* Done*/}
           <Route path="/admin/forgotpassword" element={<ForgotPasswordAdmin />} /> {/* Done*/}
           <Route path="/admin/resetpassword/:token" element={<ResetPasswordAdmin />} /> {/* Done*/}
@@ -95,7 +97,9 @@ const App = () => {
           <Route path="/admin/evalManagerInfo/:instructorId" element={<PrivateRouteAdmin element={EvalManagerInfo} />} /> {/* Done*/}
           <Route path="/admin/CreateAccPT" element={<PrivateRouteAdmin element={CreateAccPT} />} /> {/* Done*/}
           <Route path="/admin/studentmanager" element={<PrivateRouteAdmin element={StudentManager} />} /> {/* Done*/}
+          <Route path="/admin/coursemanager" element={<PrivateRouteAdmin element={CourseMananger} />} /> {/* Done*/}
           <Route path="/admin/student/:studentId" element={<PrivateRouteAdmin element={SelectStudentAdmin} />} /> {/* Done*/}
+          <Route path="/admin/course/:courseId" element={<PrivateRouteAdmin element={SelectCourseAdmin} />} /> {/* Done*/}
           <Route path="/admin/help" element={<PrivateRouteAdmin element={AdminHelpPage} />} /> {/* Done*/}
           <Route path="/admin/account" element={<PrivateRouteAdmin element={AdminAccount} />} /> {/* Done*/}
           

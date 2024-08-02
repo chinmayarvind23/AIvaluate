@@ -9,12 +9,12 @@ import Card from './card';
 const CourseCards = ({ navBarText, page }) => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    
+    const [isTA, setIsTA] = useState(false);
+    const [taLoaded, setTaLoaded] = useState(false); // New state to track TA loading
 
     if (page === "JoinCourse") {
-        
         const [searchTerm, setSearchTerm] = useState('');
+        
         useEffect(() => {
             const fetchCourses = async () => {
                 try {
@@ -23,7 +23,7 @@ const CourseCards = ({ navBarText, page }) => {
                     setCourses(response.data);
                     setLoading(false);
                 } catch (error) {
-                    console.error('Error fetching enrolled courses:', error);
+                    console.error('Error fetching not enrolled courses:', error);
                     setLoading(false);
                 }
             };
@@ -34,6 +34,7 @@ const CourseCards = ({ navBarText, page }) => {
         if (loading) {
             return <div>Loading...</div>;
         }
+        
         // Filter courses based on search term
         const filteredCourses = courses.filter(course =>
             course.courseCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,6 +95,7 @@ const CourseCards = ({ navBarText, page }) => {
         if (loading) {
             return <div>Loading...</div>;
         }
+        
         return (
             <div className="dashboard">
                 {courses.map(course => (
@@ -103,31 +105,49 @@ const CourseCards = ({ navBarText, page }) => {
                         courseName={course.courseName} 
                         courseId={course.courseId}
                         isArchived={course.isArchived}
-                        user = "stu"
+                        user="stu"
                     />
                 ))}
             </div>
         );
     } else if (page === "prof/dashboard") {
         useEffect(() => {
-            const fetchCourses = async () => {
+            const fetchUserRole = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5173/eval-api/courses', { withCredentials: true });
-                    console.log('Fetched Courses:', response.data); // Log fetched courses to verify
-                    setCourses(response.data);
-                    setLoading(false);
+                    const response = await axios.get('http://localhost:5173/eval-api/instructor/me', { withCredentials: true });
+                    const { data } = await axios.get(`http://localhost:5173/eval-api/instructor/${response.data.instructorId}/isTA`, { withCredentials: true });
+                    setIsTA(data.isTA);
+                    setTaLoaded(true); // Set taLoaded to true once TA status is fetched
                 } catch (error) {
-                    console.error('Error fetching enrolled courses:', error);
-                    setLoading(false);
+                    console.error('Error fetching user role:', error);
                 }
             };
     
-            fetchCourses();
+            fetchUserRole();
         }, []);
+        
+        useEffect(() => {
+            if (taLoaded) {
+                const fetchCourses = async () => {
+                    try {
+                        const response = await axios.get('http://localhost:5173/eval-api/courses', { withCredentials: true });
+                        console.log('Fetched Courses:', response.data); // Log fetched courses to verify
+                        setCourses(response.data);
+                        setLoading(false);
+                    } catch (error) {
+                        console.error('Error fetching courses:', error);
+                        setLoading(false);
+                    }
+                };
+        
+                fetchCourses();
+            }
+        }, [taLoaded]);
     
         if (loading) {
             return <div>Loading...</div>;
         }
+        
         return (
             <div className="dashboard">
                 {courses.map(course => (
@@ -140,7 +160,12 @@ const CourseCards = ({ navBarText, page }) => {
                         user="prof" 
                     />
                 ))}
-                <Card courseCode ="Create Course" CourseName="Click to create a new course" />
+                {!isTA && (
+                    <Card 
+                        courseCode="Create Course" 
+                        courseName="Click to create a new course" 
+                    />
+                )}
             </div>
         );
     }

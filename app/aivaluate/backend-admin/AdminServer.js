@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '/app/aivaluate/backend-admin/.env' });
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -12,6 +13,7 @@ const passport = require("passport");
 const adminRoutes = require('./routes/adminRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const instructorRoutes = require('./routes/instructorRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -55,6 +57,7 @@ app.use(flash());
 app.use('/admin-api', adminRoutes);
 app.use('/admin-api', studentRoutes);
 app.use('/admin-api', instructorRoutes);
+app.use('/admin-api', courseRoutes);
 
 app.post("/admin-api/signup", async (req, res) => {
     let { firstName, lastName, email, password, password2 } = req.body;
@@ -69,7 +72,7 @@ app.post("/admin-api/signup", async (req, res) => {
         errors.push({ message: "Password should be at least 6 characters long" });
     }
 
-    if (password != password2) {
+    if (password !== password2) {
         errors.push({ message: "Passwords do not match" });
     }
 

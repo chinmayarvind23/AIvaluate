@@ -31,6 +31,7 @@ const SubmitAssignment = () => {
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [submissionLink, setSubmissionLink] = useState('');
 
     const fetchAssignmentDetails = useCallback(async () => {
         try {
@@ -96,32 +97,60 @@ const SubmitAssignment = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (files.length === 0) {
-            setErrorMessage('Please select files to upload.');
+    
+        if (files.length === 0 && !submissionLink) {
+            setErrorMessage('Please select files or provide a submission link.');
             return;
         }
+        
+        const allowedPlatforms = [
+            'docs.google.com',
+            'drive.google.com',
+            'dropbox.com',
+            'onedrive.live.com',
+            'box.com',
+            'sharepoint.com'
+        ];
 
+        if (submissionLink) {
+            const url = new URL(submissionLink.startsWith('http://') || submissionLink.startsWith('https://') 
+                ? submissionLink 
+                : `https://${submissionLink}`);
+            const isAllowed = allowedPlatforms.some(platform => url.hostname.includes(platform));
+    
+            if (!isAllowed) {
+                toast.error('Only links from Google Docs, Google Drive, Dropbox, OneDrive, Box, and SharePoint are allowed.');
+                return;
+            }
+        }
+    
         const formData = new FormData();
         files.forEach(file => {
             formData.append('files', file);
         });
 
+        if (submissionLink && !submissionLink.startsWith('http://') && !submissionLink.startsWith('https://')) {
+            formData.append('submissionLink', `https://${submissionLink}`);
+        } else {
+            formData.append('submissionLink', submissionLink);
+        }
+    
         try {
             await axios.post(`/stu-api/upload/${courseId}/${assignmentId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            toast.success('Files uploaded successfully');
+            toast.success('Submission successful');
             setFiles([]);
+            setSubmissionLink('');
             fetchUploadedFiles();
         } catch (err) {
-            toast.error('File upload failed. Please try again with a different file format.');
-            console.error('File upload failed:', err);
-            setErrorMessage('File upload failed. Please try again.');
+            toast.error('Submission failed. Please try again.');
+            console.error('Submission failed:', err);
+            setErrorMessage('Submission failed. Please try again.');
         }
-    };
+    };    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -134,9 +163,6 @@ const SubmitAssignment = () => {
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate);
         return format(date, "MMMM do 'at' h:mmaaa");
-    };
-
-    const handleFileUploadChange = () => {
     };
 
     return (
@@ -192,9 +218,9 @@ const SubmitAssignment = () => {
                                 <div>
                                     <input 
                                         type="text" 
-                                        placeholder="Have a link? Upload it here!"
+                                        placeholder="Have a link? Upload it here! Please ensure the access is public."
                                         className="link-upload"
-                                        onChange={handleFileUploadChange}
+                                        onChange={(e) => setSubmissionLink(e.target.value)}
                                      />
                                 </div>
                                 <div className="submit-right">

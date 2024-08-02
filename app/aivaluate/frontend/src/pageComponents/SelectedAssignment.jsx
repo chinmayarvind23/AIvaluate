@@ -1,7 +1,10 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ClipLoader } from 'react-spinners';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
@@ -21,34 +24,35 @@ const SelectedAssignment = () => {
     const [submissions, setSubmissions] = useState([]);
     const [error, setError] = useState(null);
     const [gradesVisible, setGradesVisible] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchSubmissions = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
-                    withCredentials: true
-                });
-
-                if (response.status === 200) {
-                    setSubmissions(response.data);
-                    setFilteredFiles(response.data);
-                    console.log(response.data);
-                } else {
-                    console.error('Expected an array but got:', response.data);
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    setError('No submissions found for this assignment.');
-                    setSubmissions([]);
-                    setFilteredFiles([]);
-                } else {
-                    console.error('Error fetching submissions:', error);
-                }
+    const fetchSubmissions = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/submissions`, {
+                withCredentials: true
+            });
+    
+            if (response.status === 200) {
+                setSubmissions(response.data);
+                setFilteredFiles(response.data);
+                console.log(response.data);
+            } else {
+                console.error('Expected an array but got:', response.data);
             }
-        };
-
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setError('No submissions found for this assignment.');
+                setSubmissions([]);
+                setFilteredFiles([]);
+            } else {
+                console.error('Error fetching submissions:', error);
+            }
+        }
+    }, [assignmentId]); 
+    
+    useEffect(() => {
         fetchSubmissions();
-    }, [assignmentId]);
+    }, [assignmentId, fetchSubmissions]);       
 
     useEffect(() => {
         if (searchTerm) {
@@ -91,11 +95,48 @@ const SelectedAssignment = () => {
         setGradesVisible(!gradesVisible);
     };
 
-    const handleMarkAssignment = (studentId, assignmentId, submissionFile) => {
-        const fileName = submissionFile.split('/').pop();
+    const handleMarkAssignment = (studentId, assignmentId, submissionFile, submissionLink) => {
+        const fileName = submissionFile ? submissionFile.split('/').pop() : null;
         console.log("Navigating with fileName:", fileName);
-        navigate(`/eval/${studentId}/${assignmentId}/grading`, { state: { fileName } });
+        navigate(`/eval/${studentId}/${assignmentId}/grading`, { state: { fileName, submissionLink } });
     };
+
+    const handleGradeWithAI = async () => {
+        const courseId = sessionStorage.getItem('courseId');
+        const instructorId = sessionStorage.getItem('instructorId');
+    
+        if (!instructorId || !courseId) {
+            console.error('Instructor ID or Course ID is missing.');
+            setError('Instructor ID or Course ID is missing.');
+            return;
+        }
+    
+        try {
+            console.log('Sending request to grade with AI:', { instructorId, courseId });
+            setIsLoading(true);
+    
+            const response = await axios.post(`http://localhost:5173/eval-api/ai/assignments/${assignmentId}/process-submissions`, {
+                instructorId,
+                courseId
+            }, {
+                withCredentials: true
+            });
+    
+            if (response.status === 200) {
+                toast.success('Submissions graded successfully.');
+                fetchSubmissions();
+            } else {
+                console.error('Failed to grade submissions:', response.data);
+                toast.error('Failed to grade submissions.');
+            }
+        } catch (error) {
+            console.error('Error grading submissions:', error);
+            toast.error('Failed to grade submissions. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
 
     return (
         <div>
@@ -112,7 +153,7 @@ const SelectedAssignment = () => {
                                     <div className="title-text"><h1>Assignment - Submissions</h1></div>
                                 </div>
                                 <div className="float-right">
-                                    <button className="grades-button">
+                                    <button className="grades-button" onClick={handleGradeWithAI}>
                                         Grade With AI
                                     </button>
                                     <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
@@ -123,16 +164,29 @@ const SelectedAssignment = () => {
                                     </button>
                                 </div>
                             </div>
+                            <input
+                            type="text"
+                            placeholder="Search by student ID or file name"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className="search-input"
+                            />
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile.split('/').pop())}>
-                                        <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                        <div className="file-name">Student ID: {file.studentId} - {file.submissionFile}</div>
-                                        {file.isGraded && <div className="file-status">*Marked as graded</div>}
-                                    </div>
-                                ))}
+                                <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>
+                                    <div className="folder-icon"><CircumIcon name="folder_on"/></div>
+                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile ? file.submissionFile.split('/').pop() : file.submissionLink}</div>
+                                    {file.isGraded && <div className="file-status">*Marked as graded</div>}
+                                </div>
+                            ))}
                             </div>
-                        </div>
+                            {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text">AI Grading in Progress...</p>
+                            </div>
+                            )}
+                            </div>
                         <div className="pagination-controls">
                             <span>Page {currentPage} of {totalPages}</span>
                             <div className="pagination-buttons">
@@ -142,6 +196,7 @@ const SelectedAssignment = () => {
                         </div>
                     </div> 
             </div>
+            <ToastContainer />
         </div>
     );
 };

@@ -344,13 +344,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async (req, res) => {
-    if (req.files && req.files.length > 0) {
-        const { courseId, assignmentId } = req.params;
-        const studentId = req.session.studentId;
-        const currentDate = new Date();
-        const formattedDate = currentDate.toISOString();
+    const { courseId, assignmentId } = req.params;
+    const studentId = req.session.studentId;
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString();
+    const submissionLink = req.body.submissionLink || '';
 
-        try {
+    if (!studentId) {
+        return res.status(401).send('Unauthorized');
+    }
+
+    try {
+        if (req.files && req.files.length > 0) {
+            // Handles the case of file uploads
             const filePromises = req.files.map(async (file) => {
                 const newPath = path.join(req.assignmentDir, file.originalname);
                 fs.mkdirSync(path.dirname(newPath), { recursive: true });
@@ -368,14 +374,14 @@ router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async 
                 if (existingSubmission.rows.length > 0) {
                     const assignmentSubmissionId = existingSubmission.rows[0].assignmentSubmissionId;
                     await pool.query(
-                        `UPDATE "AssignmentSubmission" SET "submittedAt" = $1, "updatedAt" = $1 WHERE "assignmentSubmissionId" = $2`,
-                        [formattedDate, assignmentSubmissionId]
+                        `UPDATE "AssignmentSubmission" SET "submittedAt" = $1, "updatedAt" = $1, "submissionLink" = $2 WHERE "assignmentSubmissionId" = $3`,
+                        [formattedDate, submissionLink, assignmentSubmissionId]
                     );
                 } else {
                     await pool.query(
-                        `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "submittedAt", "updatedAt", "isSubmitted")
-                        VALUES ($1, $2, $3, $4, $5, $5, true)`,
-                        [studentId, courseId, assignmentId, submissionFile, formattedDate]
+                        `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionFile", "submissionLink", "submittedAt", "updatedAt", "isSubmitted")
+                        VALUES ($1, $2, $3, $4, $5, $6, $6,true)`,
+                        [studentId, courseId, assignmentId, submissionFile, submissionLink, formattedDate]
                     );
                 }
 
@@ -387,16 +393,39 @@ router.post('/upload/:courseId/:assignmentId', upload.array('files', 10), async 
                 const rootDir = path.resolve(__dirname, `../assignmentSubmissions/${studentId}/${courseId}/${assignmentId}`);
                 removeEmptyDirs(rootDir);
 
-                res.status(200).send('Files uploaded and paths saved successfully');
+                res.status(200).send('Files uploaded and paths saved successfully with links');
             } else {
                 res.status(400).send('No valid files uploaded');
             }
-        } catch (error) {
-            console.error('Error saving file paths to database:', error);
-            res.status(500).send('Internal Server Error');
+        } else if (submissionLink) {
+            // Handles the case of only submission links
+            const existingSubmission = await pool.query(
+                `SELECT "assignmentSubmissionId" FROM "AssignmentSubmission"
+                WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
+                [studentId, courseId, assignmentId]
+            );
+
+            if (existingSubmission.rows.length > 0) {
+                const assignmentSubmissionId = existingSubmission.rows[0].assignmentSubmissionId;
+                await pool.query(
+                    `UPDATE "AssignmentSubmission" SET "submittedAt" = $1, "updatedAt" = $1, "submissionLink" = $2 WHERE "assignmentSubmissionId" = $3`,
+                    [formattedDate, submissionLink, assignmentSubmissionId]
+                );
+            } else {
+                await pool.query(
+                    `INSERT INTO "AssignmentSubmission" ("studentId", "courseId", "assignmentId", "submissionLink", "submittedAt", "updatedAt", "isSubmitted")
+                    VALUES ($1, $2, $3, $4, $5, $5, true)`,
+                    [studentId, courseId, assignmentId, submissionLink, formattedDate]
+                );
+            }
+
+            res.status(200).send('Link submitted successfully');
+        } else {
+            res.status(400).send('No files or links uploaded');
         }
-    } else {
-        res.status(400).send('No files uploaded');
+    } catch (error) {
+        console.error('Error saving submission:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
@@ -410,7 +439,7 @@ router.get('/submission/:courseId/:assignmentId', async (req, res) => {
 
     try {
         const result = await pool.query(
-            `SELECT "assignmentSubmissionId", "submissionFile" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
+            `SELECT "assignmentSubmissionId", "submissionFile", "submissionLink" FROM "AssignmentSubmission" WHERE "studentId" = $1 AND "courseId" = $2 AND "assignmentId" = $3`,
             [studentId, courseId, assignmentId]
         );
 
@@ -420,7 +449,8 @@ router.get('/submission/:courseId/:assignmentId', async (req, res) => {
 
         res.status(200).send(result.rows.map(row => ({
             assignmentSubmissionId: row.assignmentSubmissionId,
-            files: row.submissionFile ? row.submissionFile.split(',') : []
+            files: row.submissionFile ? row.submissionFile.split(',') : [],
+            submissionLink: row.submissionLink
         })));
     } catch (error) {
         console.error('Error retrieving file paths from database:', error);

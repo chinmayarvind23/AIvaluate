@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import '../Auth.css';
 
 const ResetPasswordEval = () => {
   const { token } = useParams();
@@ -31,6 +32,7 @@ const ResetPasswordEval = () => {
   };
 
   return (
+    <div className="background-div">
     <div className="auth-container">
       <div className="auth-form secondary-colorbg">
         <h2 className="auth-title third-color-text">Reset Password</h2>
@@ -60,6 +62,7 @@ const ResetPasswordEval = () => {
         </form>
       </div>
     </div>
+  </div>
   );
 };
 

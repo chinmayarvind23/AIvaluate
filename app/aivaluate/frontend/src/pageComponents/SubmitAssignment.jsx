@@ -187,6 +187,20 @@ const SubmitAssignment = () => {
                             </div>
                         </div>
                         <div className="scrollable-div">
+                            <p className="file-upload-display">
+                                {uploadedFiles.length > 0 ? (
+                                    <div>
+                                        <b>Uploaded Files: </b>
+                                        {uploadedFiles.flatMap(submission => (
+                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
+                                                    <span>{String(file).split('/').pop()}</span>
+                                            )) : null
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p></p>
+                                )}
+                            </p>
                             <div className="due-date-div">
                                 <div className="due-date-submit-assign"><h3>Due: {formatDueDate(assignmentDetails.dueDate)}</h3></div>
                                 <div className="empty"> </div>
@@ -216,52 +230,35 @@ const SubmitAssignment = () => {
                                     </div>
                                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                                 </div>
+                                <p className="file-upload-display">
+                                {files.length > 0 ? (
+                                    <div>
+                                        <b>Files to be uploaded: </b> 
+                                        {files.map((file, index) => (
+                                            <span> {file.name} </span>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p></p>
+                                )}
+                                </p>
+                        
                                 <div>
                                     <input 
                                         type="text" 
                                         placeholder="Have a link? Upload it here! Please ensure the access is public."
                                         className="link-upload"
                                         onChange={(e) => setSubmissionLink(e.target.value)}
-                                     />
+                                    />
                                 </div>
                                 <div className="submit-right">
-                                    <h2 className="assignment-text"> Files to be uploaded</h2>
+                                    <h2 className="assignment-text">Assignment Rubric/Details</h2>
                                     <div className="empty"> </div>
                                     <button className="submit-button rborder" type="submit" disabled={isGraded}>Submit</button>
                                 </div>
                             </form>
-                            <div className="uploaded-files-container">
-                                {files.length > 0 ? (
-                                    <ul>
-                                        {files.map((file, index) => (
-                                            <li key={index}>
-                                                <span>{file.name}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p>No files selected yet.</p>
-                                )}
-                            </div>
-                            <h2>Assignment Rubric/Details</h2>
                             <div className="assignment-details">
                                 <pre className="details-content">{assignmentDetails.criteria}</pre>
-                            </div>
-                            <h2>Recently Uploaded Files</h2>
-                            <div className="uploaded-files-container">
-                                {uploadedFiles.length > 0 ? (
-                                    <ul>
-                                        {uploadedFiles.flatMap(submission => (
-                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
-                                                <li key={index}>
-                                                    <span>{String(file).split('/').pop()}</span>
-                                                </li>
-                                            )) : null
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p>No files uploaded yet.</p>
-                                )}
                             </div>
                             <h2>Feedback</h2>
                             <div className="feedback-container">

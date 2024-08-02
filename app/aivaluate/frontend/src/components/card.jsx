@@ -14,6 +14,13 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
   const navigate = useNavigate();
   const [enrolled, SetEnrolled] = useState(false);
 
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
   const handleClick = async () => {
     if (courseCode === 'Create Course') {
       navigate('/eval/createcourse');
@@ -87,7 +94,8 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
       <h2>{courseCode}
         {isArchived && <span className="archive-status"> - Archived</span>}
       </h2>
-      <p>{courseName}</p>
+      <p className="course-name-text">{truncateText(courseName, 21)}</p>
+      {/* <p className="course-name-text">{courseName}</p> */}
       <div>
         {(courseCode === 'Create Course' || user === 'joinCourse') && <CircumIcon name="circle_plus" />}
       </div>

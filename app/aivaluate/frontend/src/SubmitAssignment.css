@@ -142,10 +142,10 @@
     border: solid var(--primary-color);
     padding: 10px;
     width: stretch;
-    /* margin-left: 20px; */
     background-color: var(--secondary-color);
     color: var(--primary-color);
     margin-bottom: 20px;
+    /* margin-top: -10px; */
 }
 
 .drop-top{
@@ -175,4 +175,23 @@
 
 .no-feedback{
     color: var(--primary-color);
+}
+
+.feedback-container{
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.file-upload-display{
+    display: flex;
+    align-items: center;
+    margin-top: -14px;
+    margin-bottom:-14px;
+}
+
+.file-upload-display{
+    display: flex;
+    align-items: center;
+    
 }

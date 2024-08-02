@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBarAdmin from '../components/SideMenuBarAdmin';
-import '../CreateAccPT.css'; // 1. Ensure CSS is imported
+import '../CreateAccPT.css'; // Ensure CSS is imported
 import '../GeneralStyling.css';
 import '../ToastStyles.css';
 
@@ -94,10 +94,10 @@ const CreateAccPT = () => {
             <h1 className="eval-text">Register Evaluator</h1>
             <div className="empty"> </div>
           </div>
-          <div className="CreateAccPT-content"> {/* 1. Updated class name */}
-            <form className="CreateAccPT-user-form" onSubmit={handleSubmit}> {/* 1. Updated class name */}
-              <div className="CreateAccPT-form-group"> {/* 1. Updated class name */}
-                <div className="CreateAccPT-box"> {/* 1. Updated class name */}
+          <div className="CreateAccPT-content"> {/* Updated class name */}
+            <form className="CreateAccPT-user-form" onSubmit={handleSubmit}> {/* Updated class name */}
+              <div className="CreateAccPT-form-group"> {/* Updated class name */}
+                <div className="CreateAccPT-box"> {/* Updated class name */}
                   <label className="primary-text">
                     First Name:
                     <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
@@ -107,20 +107,20 @@ const CreateAccPT = () => {
                     <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
                   </label>
                 </div>
-                <div className="CreateAccPT-box"> {/* 1. Updated class name */}
+                <div className="CreateAccPT-box"> {/* Updated class name */}
                   <h2>Is this a T.A.?</h2>
-                  <label className="CreateAccPT-checkbox-label"> {/* 1. Updated class name */}
+                  <label className="CreateAccPT-checkbox-label"> {/* Updated class name */}
                     <div>
-                      <input type="checkbox" className="CreateAccPT-checkbox-input" checked={isTeachingAssistant} onChange={handleCheckboxChange} /> {/* 1. Updated class name */}
+                      <input type="checkbox" className="CreateAccPT-checkbox-input" checked={isTeachingAssistant} onChange={handleCheckboxChange} /> {/* Updated class name */}
                     </div>
                     <div>
-                      <span className="CreateAccPT-checkbox-text">Teaching Assistant</span> {/* 1. Updated class name */}
+                      <span className="CreateAccPT-checkbox-text">Teaching Assistant</span> {/* Updated class name */}
                     </div>
                   </label>
                 </div>
               </div>
-              <div className="CreateAccPT-form-group"> {/* 1. Updated class name */}
-                <div className="CreateAccPT-box"> {/* 1. Updated class name */}
+              <div className="CreateAccPT-form-group"> {/* Updated class name */}
+                <div className="CreateAccPT-box"> {/* Updated class name */}
                   <label>
                     Email:
                     <input type="email" name="email" value={formData.email} onChange={handleChange} required />
@@ -130,8 +130,8 @@ const CreateAccPT = () => {
                     <input type="password" name="password" value={formData.password} onChange={handleChange} required />
                   </label>
                 </div>
-                <button type="submit" className="CreateAccPT-create-user-button">Create user</button> {/* 1. Updated class name */}
               </div>
+              <button type="submit" className="CreateAccPT-create-user-button">Create user</button> {/* Updated class name */}
             </form>
             {message && <p>{message}</p>}
           </div>

@@ -36,7 +36,7 @@ describe('Selenium Admin Evaluator Manager Page Test', () => {
       console.log('Login form submitted');
 
       // Wait for redirection to the admin home page
-      await driver.wait(until.urlContains('/admin/home'), 20000);
+      await driver.wait(until.urlContains('/evaluatormanager'), 20000);
       console.log('Navigated to /admin/home');
 
       // Navigate to the evaluator manager page

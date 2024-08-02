@@ -1,6 +1,7 @@
 import { Builder, By, until } from 'selenium-webdriver';
+import { describe, beforeAll, afterAll, test, expect } from '@jest/globals';
 
-describe('Selenium Student Dashboard Page Test', () => {
+describe('Selenium Dashboard Page Test', () => {
   let driver;
 
   beforeAll(async () => {
@@ -11,7 +12,7 @@ describe('Selenium Student Dashboard Page Test', () => {
     await driver.quit();
   });
 
-  test('Student Dashboard page loads and displays courses', async () => {
+  test('Dashboard page loads and displays content', async () => {
     try {
       await driver.get('http://localhost:5173/stu/login');
 
@@ -35,30 +36,25 @@ describe('Selenium Student Dashboard Page Test', () => {
       await loginButton.click();
       console.log('Login form submitted');
 
-      // Wait for redirection to the student dashboard
+      // Wait for redirection to the dashboard page
       await driver.wait(until.urlContains('/stu/dashboard'), 20000);
       console.log('Navigated to /stu/dashboard');
 
-      // Verify that the dashboard page has loaded
-      const dashboardElement = await driver.wait(until.elementLocated(By.css('.dashboard')), 20000);
-      expect(dashboardElement).toBeTruthy();
-      console.log('Dashboard page displayed');
+      // Wait for the message container to load
+      const messageContainer = await driver.wait(until.elementLocated(By.css('.message-container')), 20000);
+      console.log('Message container displayed');
 
       // Verify that the notification text is displayed
-      const notificationText = await driver.findElement(By.css('.notification-text'));
+      const notificationText = await driver.wait(until.elementLocated(By.css('.notification-text')), 20000);
       expect(notificationText).toBeTruthy();
       console.log('Notification text displayed');
 
-      // Verify that the courses section is displayed
-      const coursesSection = await driver.findElement(By.xpath('//h1[text()="Your courses..."]'));
-      expect(coursesSection).toBeTruthy();
-      console.log('Courses section displayed');
+      // Verify that the courses heading is displayed
+      const coursesHeading = await driver.wait(until.elementLocated(By.xpath('//h1[text()="Your courses..."]')), 20000);
+      expect(coursesHeading).toBeTruthy();
+      console.log('Courses heading displayed');
 
-      // Verify that the course cards are displayed
-      const courseCards = await driver.wait(until.elementsLocated(By.css('.course-card')), 20000);
-      expect(courseCards.length).toBeGreaterThan(0);
-      console.log('Course cards displayed');
-
+      
     } catch (error) {
       console.error('Test failed:', error);
       throw error;

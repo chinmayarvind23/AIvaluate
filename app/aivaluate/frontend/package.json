@@ -36,6 +36,7 @@
     "react-spinners": "^0.14.1",
     "react-toastify": "^10.0.5",
     "remark-gfm": "^4.0.0",
+    "selenium-webdriver": "^4.23.0",
     "sweetalert2": "^11.12.3"
   },
   "devDependencies": {
@@ -61,7 +62,6 @@
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/babel-jest-transformer.cjs"
-      
     },
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
@@ -73,10 +73,19 @@
     },
     "collectCoverage": true,
     "coverageDirectory": "<rootDir>/coverage",
-    "coverageReporters": ["json", "lcov", "text", "clover"]
-    },
-    "collectCoverage": true,
-    "coverageDirectory": "<rootDir>/coverage",
-    "coverageReporters": ["json", "lcov", "text", "clover"]
-  }
-
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ]
+  },
+  "collectCoverage": true,
+  "coverageDirectory": "<rootDir>/coverage",
+  "coverageReporters": [
+    "json",
+    "lcov",
+    "text",
+    "clover"
+  ]
+}

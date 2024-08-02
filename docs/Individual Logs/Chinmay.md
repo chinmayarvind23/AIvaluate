@@ -795,3 +795,31 @@ Completed 90% of my tasks, the file submission is done, the DB is being populate
 - Goal 1: AI response extraction + DB updates completion, working on submission link extraction
 - Goal 2: Fixing forgot password (broken)
 - Goal 3: Fixing and changing around some small frontend fixes
+
+## July 31st - August 2nd
+
+## Timesheet
+
+Clockify report: Total hours - 17 hours
+<img width="1920" alt="Screenshot 2024-08-02 at 8 22 14 AM" src="https://github.com/user-attachments/assets/3beacda9-7812-40fe-a45e-9c54c3b06385">
+
+## Current Tasks (Provide sufficient detail)
+
+- **#1:** AI logic for link parsing (15 hours) (XL Task)
+- **#2:** Frontend fixes (2 hours) (Medium Task)
+
+## Progress Update (since 7/26/2024)
+
+| TASK/ISSUE # | STATUS      |
+|--------------|-------------|
+| Task 1       | Completed |
+| Task 2       | Completed |
+
+## Cycle Goal Review
+
+Completed 100% of my tasks, just the notifications system is left to be implemented along with the documentation for the project to be completed.
+
+## Next Cycle Goals
+
+- Goal 1: Project documentation
+- Goal 2: Notifications system (bonus feature)

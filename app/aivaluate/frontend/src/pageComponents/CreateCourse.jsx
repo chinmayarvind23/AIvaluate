@@ -43,6 +43,20 @@ const CreateCourse = () => {
     ensureCourseIdInSession();
   }, [ensureCourseIdInSession]);  
 
+  // Fetch current instructor ID
+  useEffect(() => {
+    const fetchInstructorId = async () => {
+      try {
+        const response = await axios.get('http://localhost:5173/eval-api/instructor/me');
+        setInstructorId(response.data.instructorId);
+      } catch (error) {
+        console.error('Error fetching instructor ID:', error);
+      }
+    }
+
+    fetchInstructorId();
+  }, []);
+
   useEffect(() => {
     const fetchInstructorsAndTAs = async () => {
       try {
@@ -73,12 +87,12 @@ const CreateCourse = () => {
       return;
     }
 
-    // Check if instructor is selected
-    if (!instructorId) {
-      setErrorMessage('Instructor selection is required.');
-      toast.error('Instructor selection is required.');
-      return;
-    }
+    // // Check if instructor is selected
+    // if (!instructorId) {
+    //   setErrorMessage('Instructor selection is required.');
+    //   toast.error('Instructor selection is required.');
+    //   return;
+    // }
 
     try {
       const response = await axios.post('http://localhost:5173/eval-api/courses', {
@@ -145,7 +159,7 @@ const CreateCourse = () => {
                 />
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <h3>Instructor</h3>
                 <select className="drop-down-menu" value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
                   <option value="">Select Instructor</option>
@@ -155,7 +169,8 @@ const CreateCourse = () => {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
+
               <div className="form-group">
                 <h3>Teaching Assistant</h3>
                 <select className="drop-down-menu"value={taId} onChange={(e) => setTaId(e.target.value)}>

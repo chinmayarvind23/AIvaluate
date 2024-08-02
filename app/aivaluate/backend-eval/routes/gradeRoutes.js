@@ -22,7 +22,8 @@ router.get('/evaluator-grades/:courseId', checkAuthenticated, async (req, res) =
             FROM "Assignment" a
             LEFT JOIN "AssignmentSubmission" asub ON a."assignmentId" = asub."assignmentId"
             LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
-            WHERE a."courseId" = $1
+            WHERE a."courseId" = $1  
+            AND ag."AIassignedGrade" IS NOT NULL
             GROUP BY a."assignmentName", a."dueDate"
             ORDER BY a."dueDate" ASC
         `;

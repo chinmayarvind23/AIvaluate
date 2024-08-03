@@ -1,6 +1,6 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import '../FileDirectory.css';
@@ -91,8 +91,8 @@ const EvalViewSubmissions = () => {
 
     useEffect(() => {
         const filtered = files.filter(file =>
-            file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            file.studentId.toString().includes(searchTerm)
+            (file.assignmentKey && file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (file.studentId && file.studentId.toString().includes(searchTerm))
         );
         setFilteredFiles(filtered);
         setCurrentPage(1);
@@ -120,10 +120,6 @@ const EvalViewSubmissions = () => {
         setCurrentPage(1);
     };
 
-    // const handleMarkAssignment = (studentId, assignmentId) => {
-    //     console.log(`Student ID: ${studentId}, Assignment ID: ${assignmentId}`);
-    // };
-
     const navBarText = `${courseCode} - ${courseName}`;
 
     return (
@@ -131,40 +127,42 @@ const EvalViewSubmissions = () => {
             <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="submissions" />
-                    <div className="main-margin">
-                        <div className="portal-container">
-                            <div className="top-bar">
-                                <h1>Student Submissions</h1>
-                                <div className="search-container">
-                                    <div className="search-box">
-                                        <FaSearch className="search-icon" />
-                                        <input 
-                                            type="text" 
-                                            placeholder="Search..." 
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                        />
-                                    </div>
+                <div className="main-margin">
+                    <div className="portal-container">
+                        <div className="top-bar">
+                            <h1>Student Submissions</h1>
+                            <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search..." 
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
                                 </div>
                             </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
+                        </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                file && (
                                     <div className="file-item" key={index}>
                                         <div className="folder-icon"><CircumIcon name="folder_on"/></div>
                                         <div className="file-name">{file.studentId} - {file.assignmentId} Submission</div>
                                         {file.isGraded && <div className="file-status">Marked as graded</div>}
                                     </div>
-                                ))}
-                            </div>
+                                )
+                            ))}
                         </div>
-                        <div className="pagination-controls">
-                            <span>Page {currentPage} of {totalPages}</span>
-                            <div className="pagination-buttons">
-                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                            </div>
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
                     </div> 
+                </div>
             </div>
         </div>
     );

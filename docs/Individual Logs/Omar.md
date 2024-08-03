@@ -560,3 +560,49 @@ Progress Update:
  
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - The next cycle will be focused on testing the website for the testing day we have on Friday and making sure it works perfectly. UI will be helping out any of the team members that need any help!
+
+
+
+
+
+
+
+
+
+
+
+## Cycle 19: Wednesday, July 30 - Friday, August 2
+
+Timesheet
+
+<img width="890" alt="Cycle 19" src="https://github.com/user-attachments/assets/763b57d5-9759-42ff-82de-7469c7d344d0">
+
+
+
+
+
+
+
+### Current Tasks
+
+- Fixed the edit button on the Evaluator Information Page
+- Fixed the confirm button on the evaluator information page
+- Fixed the create account for the evaluator page
+- Code cleanup
+
+
+  
+Progress Update: 
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Fixed the edit button on the Evaluator Information Page | Completed |
+| Task #2 / Fixed the confirm button on the evaluator information page | Completed |
+| Task #3 / Fixed the create account for the evaluator page |Completed|
+| Task #4 / Code cleanup |In progress|
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+- In this cycle, I mainly focused on getting these pages cleaned up and ready for the testing session on Friday. The only issue I faced was managing to get the buttons aligned on the screen but I still got it done.
+ 
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Next cycle I will do code cleanup and make sure all the codes are clean and well structured. I will also be helping my teammates and making sure our project is ready to be submitted on time. 

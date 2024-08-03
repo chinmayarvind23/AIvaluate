@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -114,6 +114,15 @@ const CreateCourse = () => {
     }
   };
 
+  const handleCourseCodeChange = (e) => {
+      const value = e.target.value;
+
+      // Allow empty input or numbers within the range 000-999
+      if (value === '' || (/^\d{1,3}$/.test(value) && value >= 0 && value <= 999)) {
+          setCourseCode(value.padStart(3, '0')); // Pad with zeros to ensure it is always three digits
+      }
+  };
+
   return (
     <>
       <AIvaluateNavBarEval navBarText='Create a Course' />
@@ -139,8 +148,9 @@ const CreateCourse = () => {
                   type="text" 
                   name="courseCode"
                   value={courseCode}
-                  onChange={(e) => setCourseCode(e.target.value)}
-                  maxLength="10" // Limit the course code to 10 characters
+                  placeholder="000-999"
+                  onChange={handleCourseCodeChange}
+                  maxLength="3" // Limit the course code to 3 characters
                   className="drop-down-menu"
                 />
               </div>

@@ -1,11 +1,14 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert'; // Import the package
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../EditRubric.css';
 import '../GeneralStyling.css';
+import '../ToastStyles.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -21,8 +24,6 @@ const EditRubric = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        console.log('assignmentRubricId:', assignmentRubricId); // Debug log
-
         if (!assignmentRubricId) {
             setError('Invalid rubric ID');
             return;
@@ -32,11 +33,8 @@ const EditRubric = () => {
             withCredentials: true
         })
         .then(response => {
-            console.log('API Response:', response.data); // Debug log
-
             if (response.data && response.data.length > 0) {
-                const rubric = response.data[0]; // Access the first element in the array
-                console.log('Fetched Rubric:', rubric); // Debug log
+                const rubric = response.data[0];
                 setTitle(rubric.rubricName);
                 setRubricContent(rubric.criteria);
             } else {
@@ -74,7 +72,6 @@ const EditRubric = () => {
             withCredentials: true
         })
         .then(response => {
-            console.log('Success:', response.data);
             setIsEdited(false); // Reset the edit flag
             toast.success('Rubric updated successfully!');
         })
@@ -82,6 +79,29 @@ const EditRubric = () => {
             console.error('Error updating rubric:', error);
             toast.error('An error occurred while updating the rubric.');
             setError('An error occurred while updating the rubric.');
+        });
+    };
+
+    const handleConfirmSave = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirm = () => {
+                    handleSaveChanges();
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm Changes</h1>
+                        <p>Are you sure you want to save these changes?</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirm} className="cancel-button">Save</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
         });
     };
 
@@ -120,7 +140,7 @@ const EditRubric = () => {
                         <div className="empty"></div>
                         <button 
                             className="confirm-button-rubric"
-                            onClick={handleSaveChanges}
+                            onClick={handleConfirmSave}
                             disabled={!isEdited}
                         >
                             Confirm Changes

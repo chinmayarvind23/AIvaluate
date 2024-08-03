@@ -23,8 +23,6 @@ const CreateAccPT = () => {
     department: ''
   });
 
-  const [message, setMessage] = useState('');
-
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
@@ -56,19 +54,16 @@ const CreateAccPT = () => {
 
     // Client-side validation
     if (!validateEmail(formData.email)) {
-      setMessage('Invalid email address.');
       toast.error('Invalid email address.');
       return;
     }
 
     if (!validatePassword(formData.password)) {
-      setMessage('Password must be at least 6 characters long and contain both letters and numbers.');
       toast.error('Password must be at least 6 characters long and contain both letters and numbers.');
       return;
     }
 
     if (!validateInput(formData.firstName) || !validateInput(formData.lastName)) {
-      setMessage('Invalid characters detected in name fields.');
       toast.error('Invalid characters detected in name fields.');
       return;
     }
@@ -95,7 +90,6 @@ const CreateAccPT = () => {
             onClose();
           } catch (error) {
             console.error('Error registering evaluator:', error);
-            setMessage('Failed to register evaluator, the email is already in use.');
             toast.error('Failed to register evaluator, the email is already in use.');
             onClose();
           }
@@ -107,7 +101,7 @@ const CreateAccPT = () => {
             <p>Are you sure you want to register this evaluator?</p>
             <div className="button-group">
               <button onClick={onClose} className="cancel-button">Cancel</button>
-              <button onClick={handleRegister} className="confirm-button">Confirm</button>
+              <button onClick={handleRegister} className="cancel-button">Confirm</button>
             </div>
           </div>
         );
@@ -168,7 +162,6 @@ const CreateAccPT = () => {
               </div>
               <button type="submit" className="create-user-button">Create user</button>
             </form>
-            {message && <p>{message}</p>}
           </div>
         </div>
       </div>

@@ -333,8 +333,7 @@ INSERT INTO "StudentFeedbackReport" ("studentId", "assignmentId", "courseId", "A
 VALUES 
     (5, 10, 5, 'Great job!', 'Good effort, but could be improved'),
     (5, 11, 5, 'Well done!', 'Excellent work'),
-    (5, 12, 5, 'Needs improvement', '#Good attempt 
-                                    This code looks **really good!**')
+    (5, 12, 5, 'Needs improvement', '## Good attempt. This code looks really good!')
 ON CONFLICT DO NOTHING;
 
 -- Insert dummy data into AssignmentRubric table

@@ -260,11 +260,20 @@ router.post('/evaluator/restore/:instructorId', checkAuthenticated, async (req, 
         // Restore related courses
         const backupCoursesResult = await client.query('SELECT * FROM "BackupTeaches" WHERE "instructorId" = $1', [instructorId]);
         for (const backupCourse of backupCoursesResult.rows) {
-            await client.query(`
-                INSERT INTO "Teaches" ("instructorId", "courseId")
-                VALUES ($1, $2)
-                ON CONFLICT DO NOTHING
-            `, [backupCourse.instructorId, backupCourse.courseId]);
+            // Check if the course still exists
+            const courseExistsQuery = 'SELECT 1 FROM "Course" WHERE "courseId" = $1';
+            const courseExistsResult = await client.query(courseExistsQuery, [backupCourse.courseId]);
+
+            if (courseExistsResult.rows.length > 0) {
+                // Restore the teaching assignment only if the course exists
+                await client.query(`
+                    INSERT INTO "Teaches" ("instructorId", "courseId")
+                    VALUES ($1, $2)
+                    ON CONFLICT DO NOTHING
+                `, [backupCourse.instructorId, backupCourse.courseId]);
+            } else {
+                console.warn(`Course with ID ${backupCourse.courseId} does not exist. Skipping restoration of this teaching assignment.`);
+            }
         }
         console.log('Related courses restored successfully'); // Debug log
 
@@ -364,6 +373,13 @@ router.post('/evaluator/:instructorId/restore/:courseCode', checkAuthenticated, 
         }
         const { courseId, courseName } = courseResult.rows[0];
 
+        // Check if the instructor exists
+        const instructorResult = await client.query('SELECT 1 FROM "Instructor" WHERE "instructorId" = $1', [instructorId]);
+        if (instructorResult.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Instructor not found' });
+        }
+
         // Ensure there is no existing entry causing conflict
         await client.query('DELETE FROM "Teaches" WHERE "instructorId" = $1 AND "courseId" = $2', [instructorId, courseId]);
 
@@ -372,6 +388,7 @@ router.post('/evaluator/:instructorId/restore/:courseCode', checkAuthenticated, 
             INSERT INTO "Teaches" ("instructorId", "courseId")
             SELECT "instructorId", "courseId" FROM "BackupTeaches"
             WHERE "instructorId" = $1 AND "courseId" = $2
+            ON CONFLICT DO NOTHING
         `;
         await client.query(restoreQuery, [instructorId, courseId]);
 

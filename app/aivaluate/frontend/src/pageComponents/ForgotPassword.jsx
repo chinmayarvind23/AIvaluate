@@ -74,7 +74,7 @@ const ForgotPassword = () => {
               />
             </div>
             <button className="auth-submit primary-colorbg" type="submit">Send Email</button>
-            <a href="/login" className="back-to-login primary-color-text">Back to login</a>
+            <a href="/stu/login" className="back-to-login primary-color-text">Back to login</a>
           </form>
         </div>
       </div>

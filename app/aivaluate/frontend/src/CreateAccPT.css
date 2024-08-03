@@ -1,9 +1,11 @@
-.main-content {
+/* Main content area */
+.CreateAccPT-main-content {
   display: flex;
   margin-left: 350px;
 }
 
-.content {
+/* Content wrapper */
+.CreateAccPT-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -11,39 +13,39 @@
   background: none;
   border-radius: 0;
   box-shadow: none;
-  margin-left:100px ;
+  margin-left: 100px;
   color: white;
 }
 
-.user-form {
+/* User form styling */
+.CreateAccPT-user-form {
   display: flex;
   flex-direction: column;
   width: 800px;
 }
 
-.form-group {
+/* Form group */
+.CreateAccPT-form-group {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px; 
-  width: 100%;
+  margin-bottom: 10px;
+  width: 700px;
 }
 
-.box {
+/* Box styling */
+.CreateAccPT-box {
   background: #3b3b3b;
   padding: 20px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   width: stretch;
-  
-
-  
   margin: 10px;
-  /* align-items: center;
-  text-align: center; */
   justify-content: left;
 }
-.box label {
+
+/* Box label styling */
+.CreateAccPT-box label {
   display: flex;
   flex-direction: column;
   color: white;
@@ -74,7 +76,8 @@
   border-radius: 10px;
 }
 
-.checkbox-label {
+/* Checkbox label styling */
+.CreateAccPT-checkbox-label {
   display: flex;
   align-items: center;
   color: rgb(255, 255, 255);
@@ -82,12 +85,13 @@
   width: 300px;
 }
 
-.checkbox-label input[type="checkbox"] {
+/* Checkbox input styling */
+.CreateAccPT-checkbox-label input[type="checkbox"] {
   margin-right: 10px;
   display: flex;
   align-items: center;
+  width: 150px;
 }
-
 
 .create-user-button{
   display:flex;
@@ -98,21 +102,20 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  border-radius: 60px;
+  border-radius: 10px; /* Matching border radius to Edit button */
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   background: var(--primary-color);
-  color: var(--secondary-color);
-  border: 2px solid var(--secondary-color);
-  font-weight: bold;
+  color: #fff;
+  border: none;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  margin-right:150px;
 }
 
-.create-user-button:hover {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
+/* Hover effect for create user button */
+.CreateAccPT-create-user-button:hover {
+  background-color:#0056b3;
 }
 
 .eval-text-up-top{

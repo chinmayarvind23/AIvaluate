@@ -11,6 +11,7 @@ const CourseCards = ({ navBarText, page }) => {
     const [loading, setLoading] = useState(true);
     const [isTA, setIsTA] = useState(false);
     const [taLoaded, setTaLoaded] = useState(false); // New state to track TA loading
+    const [instructorID, setInstructorID] = useState('');
 
     if (page === "JoinCourse") {
         const [searchTerm, setSearchTerm] = useState('');
@@ -110,14 +111,18 @@ const CourseCards = ({ navBarText, page }) => {
                 ))}
             </div>
         );
-    } else if (page === "prof/dashboard") {
+    } else     if (page === "prof/dashboard") {
         useEffect(() => {
             const fetchUserRole = async () => {
                 try {
                     const response = await axios.get('http://localhost:5173/eval-api/instructor/me', { withCredentials: true });
                     const { data } = await axios.get(`http://localhost:5173/eval-api/instructor/${response.data.instructorId}/isTA`, { withCredentials: true });
                     setIsTA(data.isTA);
-                    setTaLoaded(true); // Set taLoaded to true once TA status is fetched
+                    setTaLoaded(true);
+                    setInstructorID(response.data.instructorId);
+                    console.log('Fetched User Role:', response.data);
+                    console.log('Fetched TA status:', data);
+                    console.log('Fetched Instructor ID:', response.data.instructorId);
                 } catch (error) {
                     console.error('Error fetching user role:', error);
                 }
@@ -127,12 +132,12 @@ const CourseCards = ({ navBarText, page }) => {
         }, []);
         
         useEffect(() => {
-            if (taLoaded) {
+            if (taLoaded && instructorID) {
                 const fetchCourses = async () => {
                     try {
-                        const response = await axios.get('http://localhost:5173/eval-api/courses', { withCredentials: true });
-                        console.log('Fetched Courses:', response.data); // Log fetched courses to verify
-                        setCourses(response.data);
+                        const response = await axios.get(`http://localhost:5173/eval-api/courses/me/${instructorID}`, { withCredentials: true });
+                        console.log('Fetched Courses:', response.data); // Ensure this logs an array
+                        setCourses(Array.isArray(response.data) ? response.data : [response.data]);
                         setLoading(false);
                     } catch (error) {
                         console.error('Error fetching courses:', error);
@@ -142,7 +147,7 @@ const CourseCards = ({ navBarText, page }) => {
         
                 fetchCourses();
             }
-        }, [taLoaded]);
+        }, [taLoaded, instructorID]);
     
         if (loading) {
             return <div>Loading...</div>;
@@ -150,9 +155,9 @@ const CourseCards = ({ navBarText, page }) => {
         
         return (
             <div className="dashboard">
-                {courses.map(course => (
+                {Array.isArray(courses) && courses.map(course => (
                     <Card 
-                        // key={course.courseId} 
+                        key={course.courseId} 
                         courseCode={course.courseCode} 
                         courseName={course.courseName}
                         courseId={course.courseId}

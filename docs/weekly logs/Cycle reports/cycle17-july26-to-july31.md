@@ -1,4 +1,4 @@
-# Cycle 14 Weekly Log
+# Cycle 18 Weekly Log
 
 - ## Date range: July 26 - July 31, 2024
 
@@ -34,85 +34,168 @@
         </td>
     </tr>
     <tr>
-        <td> Add link submission capability
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Fix Create prof page
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed due date on create assignment page
+        <td> Login pages background
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed title of create assignment page
+        <td> Fix Forget + Reset password pages
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed edit name and email boxes in eval editor for admin
+        <td> 
+        </td> Add password check for admin account creation
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td> Move AI loading wheel and add loading text
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Change the "student ID" text to Admin ID in the admin account page
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> Fix EvaluatorManager.jsx so it matches the site design and change the top text to "Evaluators" rather then "Professors"
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed and complete frontend and backend for Student grading page
+        <td> 
+        </td> Add tool tip to the rubric in the CreateAssignment page so profs know what to include in the rubric
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix PublishAssignment.jsx page so it doesn't look like overflowed
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Add delete assignment functionality to BrowseAllAssignmentsEval.jsx and to AssignmentProf.jsx
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix confirm score input so that it is centered with the text in GradingAssignments.jsx
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix EditRubric.jsx so it doesn't overflow
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Remove the notification icon from dashboard
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix Backend on create assignment page for loading rubrics
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix Rubrics page frontend and backend
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix eval comment not uploading and loading from the database
+        <!-- Status -->
+        <td> Colton
+        </td>
+    </tr>
+    <tr>
+        <td> Fix empty assignment details/rubric from student submission page (backend)
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed create prompt and edit prompt modals
+        <td> Add warning to create assignment page that the assignment grade cannot be changed after creation
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed edit course modal
+        <td> Fix assignment feedback on student submission page
         </td>
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed tool tips for student and people pages
-        </td>
+        <td> 
+        </td> Remove the notification icon from dashboard
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Removed check image after joining a course
-        </td>
+        <td> 
+        </td> Fix date being on two line in SubmitAssignment.jsx
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed create course input text boxes
-        </td>
+        <td> 
+        </td> Toast popups fixes on all pages
         <!-- Status -->
         <td> Colton
         </td>
     </tr>
     <tr>
-        <td> Fixed frontend display on AI-settings page
-        </td>
-        <!-- Status -->
-        <td> Colton
-        </td>
-    </tr>
-    <tr>
-        <td> Changed the colour and styling of the entire site to make it more modern and feel like canvas.
-        </td>
+        <td> 
+        </td> Change all the confirm-button class name to cancel-button so they aren't square
         <!-- Status -->
         <td> Colton
         </td>
@@ -155,14 +238,14 @@
         </td>
     </tr>
     <tr>
-        <td> Email notifications
+        <td> Documentation
         </td>
         <!-- Status -->
-        <td> Colton
+        <td> Whole team
         </td>
     </tr>
-    <tr>
-        <td> Documentation
+        <tr>
+        <td> Code Clean up
         </td>
         <!-- Status -->
         <td> Whole team
@@ -170,4 +253,4 @@
     </tr>
 </table>
 
-- All backend tests are passing with 100% coverage. We are working on frontend tests using selenium.
+- All backend tests are passing with 100% coverage. We are working on frontend tests using selenium which are moslty passing.

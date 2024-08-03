@@ -1131,3 +1131,220 @@ This cycle I was suppose to work on course notifications but ended up spending m
 - Fix login pages so the auth div is more visible
 - Add notifications via email for newly created assignments
 -----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+
+## Cycle 18: Wednesday July 31st - Friday August 2nd
+
+### Current Tasks
+  * #1: Fix Create prof page
+  * #2: Login pages background
+  * #3: Fix Forget password pages
+  * #4: Fix Reset password pages
+  * #5: Add password check for admin account creation
+  * #6: Change the "student ID" text to Admin ID in the admin account page
+  * #7: Fix EvaluatorManager.jsx so it matches the site design and change the top text to "Evaluators" rather then "Professors"...
+  * #8: Move AI loading wheel and add loading text
+  * #9: Add tool tip to the rubric in the CreateAssignment page so profs know what to include in the rubric
+  * #10: Fix **PublishAssignment.jsx** page so it doesn't look like overflowed
+  * #11: Add delete assignment functionality to **BrowseAllAssignmentsEval.jsx** and to **AssignmentProf.jsx**
+  * #12: Fix confirm score input so that it is centered with the text in **GradingAssignments.jsx**
+  * #13: Fix **EditRubric.jsx** so it doesn't overflow
+  * #14: Remove the notification icon from dashboard
+  * #15: Fix Rubrics page frontend and backend
+  * #16: Fix Backend on create assignment page for loading rubrics
+  * #17: Fix eval comment not uploading and loading from the database
+  * #18: Add warning to create assignment page that the assignment grade cannot be changed after creation
+  * #19: Fix empty assignment details/rubric from student submission page (backend)
+  * #20: Fix assignment feedback on student submission page
+  * #21: Remove the notification icon from dashboard
+  * #22: Fix date being on two line in SubmitAssignment.jsx
+  * #23: Toast popups fixes on all pages
+  * #24: Change all the confirm-button class name to cancel-button so they aren't square
+
+
+### Timesheet
+Clockify report
+![alt text](./clockify-images/colton-clockify_C18.png)
+
+### Progress Update (since July 26th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Fix Create prof page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Login pages background
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fix Forget + Reset password pages
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Add password check for admin account creation
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td> Move AI loading wheel and add loading text
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Change the "student ID" text to Admin ID in the admin account page
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fix EvaluatorManager.jsx so it matches the site design and change the top text to "Evaluators" rather then "Professors"
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Add tool tip to the rubric in the CreateAssignment page so profs know what to include in the rubric
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix PublishAssignment.jsx page so it doesn't look like overflowed
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Add delete assignment functionality to BrowseAllAssignmentsEval.jsx and to AssignmentProf.jsx
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix confirm score input so that it is centered with the text in GradingAssignments.jsx
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix EditRubric.jsx so it doesn't overflow
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Remove the notification icon from dashboard
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix Backend on create assignment page for loading rubrics
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix Rubrics page frontend and backend
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix eval comment not uploading and loading from the database
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fix empty assignment details/rubric from student submission page (backend)
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Add warning to create assignment page that the assignment grade cannot be changed after creation
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fix assignment feedback on student submission page
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Remove the notification icon from dashboard
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Fix date being on two line in SubmitAssignment.jsx
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Toast popups fixes on all pages
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> 
+        </td> Change all the confirm-button class name to cancel-button so they aren't square
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle I was suppose to work on course notifications but ended up spending my time helping my team members fix their issues. I made fixes in 25 different frontend and backend files and because of this I wasn't able to get to doing the notifications. I will be doing this in the next cycle.
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Fixed empty assignment details from student submission page
+- Fix all pop up/toast messages
+- Added validation message for incorrectly submitted file types.
+- Add password check for admin account creation
+- Fix login pages so the auth div is more visible
+- Add notifications via email for newly created assignments
+-----------------------------------------------------------------------------------

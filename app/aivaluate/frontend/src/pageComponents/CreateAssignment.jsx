@@ -1,6 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
@@ -143,9 +145,7 @@ const CreateAssignment = () => {
         setDragging(false);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
+    const handleConfirmSubmit = async () => {
         await ensureSessionData();
         
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
@@ -192,7 +192,31 @@ const CreateAssignment = () => {
                 console.error('Error response data:', error.response.data);
             }
         }
-    };    
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirm = async () => {
+                    await handleConfirmSubmit();
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm to create assignment</h1>
+                        <p>Are you sure you want to create this assignment? Assignment grade cannot be changed after an assignment is created.</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirm} className="cancel-button">Confirm</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
+        });
+    };
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();

@@ -128,14 +128,7 @@ const CreateCourse = () => {
     }
   };
 
-  const handleCourseCodeChange = (e) => {
-      const value = e.target.value;
 
-      // Allow empty input or numbers within the range 000-999
-      if (value === '' || (/^\d{1,3}$/.test(value) && value >= 0 && value <= 999)) {
-          setCourseCode(value.padStart(3, '0')); // Pad with zeros to ensure it is always three digits
-      }
-  };
 
   return (
     <>
@@ -154,6 +147,7 @@ const CreateCourse = () => {
                   onChange={(e) => setCourseName(e.target.value)}
                   maxLength="50" // Limit the course name to 50 characters
                   className="drop-down-menu"
+                  placeholder="Example: Introduction to AI"
                 />
               </div>
               <div className="form-group">
@@ -162,24 +156,12 @@ const CreateCourse = () => {
                   type="text" 
                   name="courseCode"
                   value={courseCode}
-                  placeholder="000-999"
-                  onChange={handleCourseCodeChange}
-                  maxLength="3" // Limit the course code to 3 characters
+                  onChange={(e) => setCourseCode(e.target.value)}
+                  maxLength="9" // Limit the course code to 9 characters
                   className="drop-down-menu"
+                  placeholder="Example: COSC 101"
                 />
               </div>
-
-              {/* <div className="form-group">
-                <h3>Instructor</h3>
-                <select className="drop-down-menu" value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
-                  <option value="">Select Instructor</option>
-                  {instructors.map(instructor => (
-                    <option key={instructor.instructorId} value={instructor.instructorId}>
-                      {`${instructor.firstName} ${instructor.lastName}`}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
 
               <div className="form-group">
                 <h3>Teaching Assistant</h3>

@@ -38,8 +38,8 @@ const StudentViewSubmissions = () => {
 
     useEffect(() => {
         const filtered = files.filter(file =>
-            file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            file.studentId.toString().includes(searchTerm)
+            file.assignmentKey && file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            file.studentId && file.studentId.toString().includes(searchTerm)
         );
         setFilteredFiles(filtered);
         setCurrentPage(1);
@@ -71,7 +71,7 @@ const StudentViewSubmissions = () => {
 
     return (
         <div>
-            <AIvaluateNavBar navBarText= {navBarText} tab='submissions' />
+            <AIvaluateNavBar navBarText={navBarText} tab='submissions' />
             <div className="filler-div">
             <SideMenuBar tab="submissions" />
                 <div className="main-margin">
@@ -92,19 +92,21 @@ const StudentViewSubmissions = () => {
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (
-                            <div className="file-item" key={index}>
-                                {console.log('File:', file)}
-                                {console.log('Assignment ID:', file.assignmentId)}
-                                <a 
-                                    className="file-name" 
-                                    href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
-                                    download
-                                >
-                                    {file.submissionFile.split('/').pop()} Submission
-                                </a>
-                                {file.isGraded && <div className="file-status">Marked as graded</div>}
-                            </div>
-                        ))}
+                                file && (
+                                    <div className="file-item" key={index}>
+                                        {console.log('File:', file)}
+                                        {console.log('Assignment ID:', file.assignmentId)}
+                                        <a 
+                                            className="file-name" 
+                                            href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
+                                            download
+                                        >
+                                            {file.submissionFile.split('/').pop()} Submission
+                                        </a>
+                                        {file.isGraded && <div className="file-status">Marked as graded</div>}
+                                    </div>
+                                )
+                            ))}
                         </div>
                     </div>
                     <div className="pagination-controls">

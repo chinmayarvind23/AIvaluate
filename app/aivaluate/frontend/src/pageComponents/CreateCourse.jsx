@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -128,6 +128,8 @@ const CreateCourse = () => {
     }
   };
 
+
+
   return (
     <>
       <AIvaluateNavBarEval navBarText='Create a Course' />
@@ -145,6 +147,7 @@ const CreateCourse = () => {
                   onChange={(e) => setCourseName(e.target.value)}
                   maxLength="50" // Limit the course name to 50 characters
                   className="drop-down-menu"
+                  placeholder="Example: Introduction to AI"
                 />
               </div>
               <div className="form-group">
@@ -154,22 +157,11 @@ const CreateCourse = () => {
                   name="courseCode"
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
-                  maxLength="10" // Limit the course code to 10 characters
+                  maxLength="9" // Limit the course code to 9 characters
                   className="drop-down-menu"
+                  placeholder="Example: COSC 101"
                 />
               </div>
-
-              {/* <div className="form-group">
-                <h3>Instructor</h3>
-                <select className="drop-down-menu" value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
-                  <option value="">Select Instructor</option>
-                  {instructors.map(instructor => (
-                    <option key={instructor.instructorId} value={instructor.instructorId}>
-                      {`${instructor.firstName} ${instructor.lastName}`}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
 
               <div className="form-group">
                 <h3>Teaching Assistant</h3>

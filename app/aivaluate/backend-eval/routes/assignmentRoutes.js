@@ -50,22 +50,6 @@ function checkAuthenticated(req, res, next) {
     res.redirect('/eval-api/login');
 }
 
-// router.post('/assignments', async (req, res) => {
-//     const { courseId, dueDate, assignmentName, maxObtainableGrade, rubricName, criteria, assignmentKey } = req.body;
-//         try {
-//             const dir = path.resolve(__dirname, `../assignmentKeys/${courseId}/${instructorId}/${assignmentId}`);
-//             fs.mkdirSync(dir, { recursive: true });
-//             cb(null, dir);
-//         } catch (err) {
-//             console.error('Error creating directory:', err);
-//             cb(err);
-//         }
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname);
-//     },
-// });
-
 // Create a new assignment
 router.post('/assignments', upload.single('assignmentKey'), async (req, res) => {
     const { dueDate, assignmentName, assignmentDescription, maxObtainableGrade, criteria } = req.body;
@@ -778,30 +762,30 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
                 const insertGradeQuery = `
                     INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "InstructorAssignedFinalGrade", "isGraded", "maxObtainableGrade")
                     VALUES ($1, $2, $3, true, $4)`;
-                    console.log('Inserting grade:', {
-                        submissionId,
-                        assignmentId,
-                        InstructorAssignedFinalGrade,
-                        maxObtainableGrade
-                    });
+                console.log('Inserting grade:', {
+                    submissionId,
+                    assignmentId,
+                    InstructorAssignedFinalGrade,
+                    maxObtainableGrade
+                });
                 
                 await pool.query(insertGradeQuery, [submissionId, assignmentId, InstructorAssignedFinalGrade, maxObtainableGrade]);
             } else {
                 const updateGradeQuery = `
-                UPDATE "AssignmentGrade"
-                SET
-                    "InstructorAssignedFinalGrade" = $1,
-                    "isGraded" = true,
-                    "maxObtainableGrade" = $4
-                WHERE 
-                    "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
-                    console.log('Updating grade:', {
-                        submissionId,
-                        assignmentId,
-                        InstructorAssignedFinalGrade,
-                        maxObtainableGrade
-                    });
-            await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId, maxObtainableGrade]);
+                    UPDATE "AssignmentGrade"
+                    SET
+                        "InstructorAssignedFinalGrade" = $1,
+                        "isGraded" = true,
+                        "maxObtainableGrade" = $4
+                    WHERE 
+                        "assignmentSubmissionId" = $2 AND "assignmentId" = $3`;
+                console.log('Updating grade:', {
+                    submissionId,
+                    assignmentId,
+                    InstructorAssignedFinalGrade,
+                    maxObtainableGrade
+                });
+                await pool.query(updateGradeQuery, [InstructorAssignedFinalGrade, submissionId, assignmentId, maxObtainableGrade]);
             }
             const updateSubmissionQuery = `
                 UPDATE "AssignmentSubmission"
@@ -810,39 +794,39 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
             await pool.query(updateSubmissionQuery, [submissionId]);
 
             const checkFeedbackQuery = `
-                SELECT 1 FROM "StudentFeedback" WHERE "assignmentId" = $1 AND "studentId" = $2`;
+                SELECT 1 FROM "StudentFeedbackReport" WHERE "assignmentId" = $1 AND "studentId" = $2`;
             
             const feedbackExists = await pool.query(checkFeedbackQuery, [assignmentId, studentId]);
 
             if (feedbackExists.rows.length === 0) {
                 const insertFeedbackQuery = `
-                    INSERT INTO "StudentFeedback" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                    INSERT INTO "StudentFeedbackReport" ("assignmentId", "studentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
                     VALUES ($1, $2, $3, $4, $5)`;
-                    console.log('Inserting feedback:', {
-                        assignmentId,
-                        studentId,
-                        courseId,
-                        AIFeedbackText,
-                        InstructorFeedbackText
-                    });
+                console.log('Inserting feedback:', {
+                    assignmentId,
+                    studentId,
+                    courseId,
+                    AIFeedbackText,
+                    InstructorFeedbackText
+                });
                 await pool.query(insertFeedbackQuery, [assignmentId, studentId, courseId, AIFeedbackText, InstructorFeedbackText]);
 
             } else {
                 const updateFeedbackQuery = `
-                    UPDATE "StudentFeedback"
+                    UPDATE "StudentFeedbackReport"
                     SET
                         "AIFeedbackText" = $1,
                         "InstructorFeedbackText" = $2,
                         "courseId" = $3
                     WHERE
                         "assignmentId" = $4 AND "studentId" = $5`;
-                        console.log('Updating feedback:', {
-                            AIFeedbackText,
-                            InstructorFeedbackText,
-                            courseId,
-                            assignmentId,
-                            studentId
-                        });
+                console.log('Updating feedback with values:', {
+                    AIFeedbackText,
+                    InstructorFeedbackText,
+                    courseId,
+                    assignmentId,
+                    studentId
+                });
                 await pool.query(updateFeedbackQuery, [AIFeedbackText, InstructorFeedbackText, courseId, assignmentId, studentId]);
             }
         }
@@ -853,6 +837,7 @@ router.put('/assignment/complete/:studentId/:assignmentId', checkAuthenticated, 
         res.status(500).json({ error: 'Database error' });
     }
 });
+
 
 // Fetch assignmentRubricId in useRubric table by assignmentId
 router.get('/assignments/:assignmentId/rubric', async (req, res) => {
@@ -889,6 +874,27 @@ router.get('/rubrics/:courseId', async (req, res) => {
         res.status(500).json({ message: 'Error fetching rubrics' });
     }
 });
+
+// Get rubrics by instructor ID
+router.get('/rubrics/all/:instructorId', async (req, res) => {
+    const { instructorId } = req.params;
+    try {
+        const result = await pool.query(
+            `SELECT ar.*
+            FROM "AssignmentRubric" ar
+            JOIN "Course" c ON ar."courseId" = c."courseId"
+            JOIN "Teaches" t ON c."courseId" = t."courseId"
+            WHERE t."instructorId" = $1`,
+            [instructorId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Error fetching rubrics:', error);
+        res.status(500).json({ message: 'Error fetching rubrics' });
+    }
+});
+
+
 
 // Route to get file by file name and download it
 router.get('/file/:studentId/:courseId/:assignmentId/:fileName', (req, res) => {
@@ -958,6 +964,27 @@ router.post('/ai/assignments/:assignmentId/process-submissions', async (req, res
         } else {
             res.status(500).json({ error: 'Failed to process submissions' });
         }
+    }
+});
+
+// Delete assignment by assignment ID
+router.delete('/assignments/:assignmentId', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query(
+            'DELETE FROM "Assignment" WHERE "assignmentId" = $1 RETURNING *',
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json({ message: 'Assignment deleted successfully', assignment: result.rows[0] });
+    } catch (error) {
+        console.error('Error deleting assignment:', error);
+        res.status(500).json({ message: 'Error deleting assignment' });
     }
 });
 

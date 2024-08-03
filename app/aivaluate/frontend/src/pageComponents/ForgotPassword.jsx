@@ -44,7 +44,7 @@ const ForgotPassword = () => {
     <div className="background-div">
       <div className="logo">
         <div className="logoText">
-          <h1 className="primary-color-text">AI</h1><h1 className="third-color-text">valuate</h1>
+          <h1 className="ai-text">AI</h1><h1 className="third-color-text">valuate</h1>
         </div>
       </div>
       <div className="auth-container">
@@ -74,7 +74,7 @@ const ForgotPassword = () => {
               />
             </div>
             <button className="auth-submit primary-colorbg" type="submit">Send Email</button>
-            <a href="/login" className="back-to-login primary-color-text">Back to login</a>
+            <a href="/stu/login" className="back-to-login primary-color-text">Back to login</a>
           </form>
         </div>
       </div>

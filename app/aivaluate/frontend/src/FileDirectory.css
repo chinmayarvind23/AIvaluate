@@ -248,3 +248,42 @@
   display: flex;
   width: 600px; 
 }
+
+/* .delete-assign-button{
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  background-color: rgb(255, 190, 190);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+} */
+
+.file-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.file-item:hover .delete-assign-button {
+  display: block;
+}
+
+.delete-assign-button {
+  display: block;
+  position: absolute;
+  right: 45px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: rgb(255, 190, 190);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-assign-button:hover {
+  background-color: rgb(252, 76, 76);
+}

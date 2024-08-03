@@ -1,12 +1,16 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../CreateAssignment.css';
 import '../GeneralStyling.css';
+import '../ToastStyles.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import SideMenuBarEval from '../components/SideMenuBarEval';
 
@@ -35,9 +39,9 @@ const CreateAssignment = () => {
 
     const setSessionData = useCallback(async (courseId, instructorId) => {
         try {
-            await axios.post('http://localhost:5173/eval-api/set-course', {
-                courseId,
-                instructorId
+            await axios.post('http://localhost:5173/eval-api/set-session', {
+                instructorId,
+                courseId
             }, {
                 withCredentials: true
             });
@@ -45,6 +49,7 @@ const CreateAssignment = () => {
             sessionStorage.setItem('instructorId', instructorId);
         } catch (error) {
             console.error('Failed to set session data:', error);
+            toast.error('Failed to set session data.');
         }
     }, []);
     
@@ -61,12 +66,14 @@ const CreateAssignment = () => {
                 sessionStorage.setItem('instructorId', instructorId);
             } catch (error) {
                 console.error('Failed to fetch instructor details:', error);
+                toast.error('Failed to fetch instructor details.');
                 return;
             }
         }
     
         if (!courseId) {
             console.error('Course ID is missing from session storage.');
+            toast.error('Course ID is missing from session storage.');
             return;
         }
     
@@ -82,14 +89,21 @@ const CreateAssignment = () => {
     }, [courseId]);    
 
     useEffect(() => {
-        axios.get(`http://localhost:5173/eval-api/rubrics/${courseId}`)
-            .then(response => {
-                setRubrics(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching rubrics:', error);
-            });
-    }, [courseId]);
+        const instructorId = sessionStorage.getItem('instructorId');
+        if (instructorId) {
+            axios.get(`http://localhost:5173/eval-api/rubrics/all/${instructorId}`)
+                .then(response => {
+                    setRubrics(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching rubrics:', error);
+                    toast.error('Error fetching rubrics.');
+                });
+        } else {
+            console.error('Instructor ID is missing from session storage.');
+            // toast.error('Instructor ID is missing from session storage.');
+        }
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -104,7 +118,7 @@ const CreateAssignment = () => {
         const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
 
         if (file && !allowedExtensions.exec(file.name)) {
-            alert('Please upload file having extensions .css, .html, .js, or .jsx only.');
+            toast.error('Please upload file having extensions .css, .html, .js, or .jsx only.');
             return false;
         } else {
             setAssignmentKey(file);
@@ -131,20 +145,18 @@ const CreateAssignment = () => {
         setDragging(false);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
+    const handleConfirmSubmit = async () => {
         await ensureSessionData();
         
         if (!assignment.assignmentName || !assignment.criteria || !assignment.dueDate || !assignment.maxObtainableGrade) {
-            alert('Please fill in all fields.');
+            toast.error('Please fill in all fields.');
             return;
         }
         const dueDate = new Date(assignment.dueDate);
         const today = new Date();
     
         if (dueDate < today) {
-            alert('Due date cannot be in the past.');
+            toast.error('Due date cannot be in the past.');
             return;
         }
     
@@ -157,7 +169,7 @@ const CreateAssignment = () => {
                 courseId,
                 rubricName: 'Default Rubric',
             });
-            console.log('Assignment created:', response.data);
+            toast.success('Assignment created successfully!');
             if (assignmentKey) {
                 const formData = new FormData();
                 formData.append('assignmentKey', assignmentKey);
@@ -170,16 +182,41 @@ const CreateAssignment = () => {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
-                console.log('Solution added');
+                toast.success('Solution added successfully!');
             }
             navigate(`/eval/assignments/${courseId}`);
         } catch (error) {
             console.error('Error creating assignment:', error);
+            toast.error('Error creating assignment.');
             if (error.response && error.response.data) {
                 console.error('Error response data:', error.response.data);
             }
         }
-    };    
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirm = async () => {
+                    await handleConfirmSubmit();
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm to create assignment</h1>
+                        <p>Are you sure you want to create this assignment? Assignment grade cannot be changed after an assignment is created.</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirm} className="cancel-button">Confirm</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay",
+        });
+    };
 
     const handleUsePastRubricClick = (e) => {
         e.preventDefault();
@@ -200,6 +237,7 @@ const CreateAssignment = () => {
 
     return (
         <div>
+            <ToastContainer />
             <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
@@ -226,7 +264,7 @@ const CreateAssignment = () => {
                                     id="criteria"
                                     name="criteria"
                                     ref={criteriaRef}
-                                    placeholder="Enter project expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended."
+                                    placeholder="Enter assignment expectation, marking criteria, and what the student is expected to submit. Please be as detailed as possible. Markdown format is recommended. Example: student must submit a html file (2 points), a title which says 'Hello World' (1 point), and a paragraph with the text 'Hello World' (2 points)."
                                     value={assignment.criteria}
                                     onChange={handleInputChange}
                                 />
@@ -288,11 +326,15 @@ const CreateAssignment = () => {
                             <div className="available-rubrics" ref={availableRubricsRef}>
                                 <h3>Available Rubrics</h3>
                                 <ul>
-                                    {rubrics.map(rubric => (
-                                        <li key={rubric.assignmentRubricId} onClick={() => handleRubricClick(rubric.criteria)}>
-                                            {rubric.rubricName}
-                                        </li>
-                                    ))}
+                                    {rubrics.length > 0 ? (
+                                        rubrics.map(rubric => (
+                                            <li key={rubric.assignmentRubricId} onClick={() => handleRubricClick(rubric.criteria)}>
+                                                {rubric.rubricName}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li>No rubrics available</li>
+                                    )}
                                 </ul>
                             </div>
                         </div>

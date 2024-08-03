@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../Account.css';
-import '../GeneralStyling.css';
 import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
+import '../GeneralStyling.css';
+import '../ToastStyles.css';
 
 const EvalAccount = () => {
     const [firstName, setFirstName] = useState("");
@@ -13,8 +16,6 @@ const EvalAccount = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [accountId, setAccountId] = useState("");
     const [prof, setProf] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -35,7 +36,6 @@ const EvalAccount = () => {
                 const emailResponse = await axios.get(`http://localhost:5173/eval-api/instructor/${instructorId}/email`);
                 setEmail(emailResponse.data.email);
 
-                // Password is not fetched for security reasons
             } catch (error) {
                 console.error('There was an error fetching the instructor data:', error);
             }
@@ -49,16 +49,12 @@ const EvalAccount = () => {
     };
 
     const handlePasswordSaveClick = async () => {
-        setSuccessMessage(""); // Set default success message
-        setErrorMessage(""); // Set default error message
-
         // Check if all fields are filled in
         if (!currentPassword || !newPassword || !confirmNewPassword) {
-            setErrorMessage("All fields are required."); // Set error message
-            setSuccessMessage(""); // Clear any existing success messages
+            toast.error("All fields are required.");
             return;
         }
-        
+
         try {
             // Verify the current password
             const response = await axios.post(`http://localhost:5173/eval-api/instructor/${accountId}/verifyPassword`, {
@@ -68,38 +64,31 @@ const EvalAccount = () => {
             });
 
             if (!response.data.success) {
-                setErrorMessage("Current password is incorrect.");
-                setSuccessMessage("");
+                toast.error("Current password is incorrect.");
                 return;
             }
 
-            // Check if new password meets criteria, not shorter than 6 characters, not the same as current password, and matches confirm password
+            // Check if new password meets criteria
             if (newPassword.length < 6) {
-                setErrorMessage("New password must be at least 6 characters long.");
-                setSuccessMessage(""); 
+                toast.error("New password must be at least 6 characters long.");
                 return;
             }
-            
-            // Check if new password contains at least one letter and one number
 
             if (!/[a-zA-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
-                setErrorMessage("New password must contain at least one letter and one number.");
-                setSuccessMessage(""); // Clear any existing success messages
+                toast.error("New password must contain at least one letter and one number.");
                 return;
             }
-            
+
             if (newPassword === currentPassword) {
-                setErrorMessage("New password must be different from the current password.");
-                setSuccessMessage(""); // Clear any existing success messages
+                toast.error("New password must be different from the current password.");
                 return;
             }
 
             if (newPassword !== confirmNewPassword) {
-                setErrorMessage("New passwords do not match.");
-                setSuccessMessage(""); // Clear any existing success messages
+                toast.error("New passwords do not match.");
                 return;
             }
-            
+
             // Update the password
             await axios.put(`http://localhost:5173/eval-api/instructor/${accountId}/password`, {
                 password: newPassword
@@ -107,21 +96,21 @@ const EvalAccount = () => {
                 withCredentials: true
             });
 
-            setIsEditing(false); // hide the password edit fields after successful update
+            setIsEditing(false);
             setCurrentPassword("");
             setNewPassword("");
             setConfirmNewPassword("");
-            setSuccessMessage("Password updated successfully!");
+            toast.success("Password updated successfully!");
 
         } catch (error) {
             console.error('There was an error updating the password:', error);
-            setErrorMessage("There was an error updating the password. Please try again.");
-            setSuccessMessage("");
+            toast.error("There was an error updating the password. Please try again.");
         }
     };
 
     return (
         <div className="background-colour">
+            <ToastContainer />
             <AIvaluateNavBarEval navBarText='Your Account' tab='account' />
             <div className="fourth-colorbg account-details">
                 <div className="detail-label">First Name</div>
@@ -140,7 +129,7 @@ const EvalAccount = () => {
                 <div>
                     {isEditing ? (
                         <>
-                            <div className="password-edit-container-hidden" >
+                            <div className="password-edit-container-hidden">
                                 <input
                                     type="password"
                                     className="primary-colorbg password-input"
@@ -168,15 +157,13 @@ const EvalAccount = () => {
                                 />
                                 <button className="primary-button account-save-button" onClick={handlePasswordSaveClick}>Save</button>
                             </div>
-                            {errorMessage && <div className="error-message">{errorMessage}</div>}
                         </>
                     ) : (
                         <div className="password-edit-container">
                             <div className="primary-colorbg password-input">**********</div>
-                            <button className="primary-button account-edit-button" onClick={handlePasswordEditClick}>Edit</button>
+                            <button className="primary-button account-edit-button" onClick={handlePasswordEditClick}>Edit password</button>
                         </div>
                     )}
-                    {successMessage && <div className="success-message">{successMessage}</div>}
                 </div>
                 <div className="detail-label">Evaluator ID</div>
                 <div className="detail-row">

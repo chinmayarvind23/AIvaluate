@@ -1,8 +1,12 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../AssignmentProf.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
@@ -23,6 +27,7 @@ const BrowseAllAssignmentsEval = () => {
     const [filteredAssignments, setFilteredAssignments] = useState([]);
     const [totalAssignments, setTotalAssignments] = useState(0);
     const [error, setError] = useState(null);
+    const [deleteVisible, setDeleteVisible] = useState(null);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -37,7 +42,7 @@ const BrowseAllAssignmentsEval = () => {
         } else {
             setFilteredAssignments(assignments);
         }
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }, [searchTerm, assignments]);
 
     useEffect(() => {
@@ -88,12 +93,10 @@ const BrowseAllAssignmentsEval = () => {
         fetchAssignments();
     }, [courseId]);
 
-    // Calculates the current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredAssignments.slice(indexOfFirstItem, indexOfLastItem);
 
-    // This calculates the total number of pages based on the max number of items per page
     const totalPages = Math.ceil(filteredAssignments.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -112,48 +115,101 @@ const BrowseAllAssignmentsEval = () => {
         navigate(`/eval/published/${assignmentId}`);
     };
 
+    const toggleDeleteButton = (index) => {
+        setDeleteVisible(deleteVisible === index ? null : index);
+    };
+
+    const confirmDeleteAssignment = (assignmentId) => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                const handleConfirmDelete = async () => {
+                    try {
+                        await axios.delete(`http://localhost:5173/eval-api/assignments/${assignmentId}`, {
+                            withCredentials: true
+                        });
+                        setAssignments(assignments.filter(assignment => assignment.assignmentId !== assignmentId));
+                        setFilteredAssignments(filteredAssignments.filter(assignment => assignment.assignmentId !== assignmentId));
+                        setDeleteVisible(null);
+                        toast.success('Assignment deleted successfully.');
+                    } catch (error) {
+                        console.error('Error deleting assignment:', error);
+                        toast.error('Failed to delete assignment.');
+                    }
+                    onClose();
+                };
+
+                return (
+                    <div className="custom-ui">
+                        <h1>Confirm Deletion</h1>
+                        <p>Are you sure you want to delete this assignment?</p>
+                        <div className="button-group">
+                            <button onClick={onClose} className="cancel-button">Cancel</button>
+                            <button onClick={handleConfirmDelete} className="cancel-button">Confirm</button>
+                        </div>
+                    </div>
+                );
+            },
+            overlayClassName: "custom-overlay"
+        });
+    };
+
     return (
         <div>
+            <ToastContainer />
             <AIvaluateNavBarEval navBarText={navBarText} />
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
-                    <div className="main-margin">
-                        <div className="portal-container">
-                            <div className="top-bar">
-                                <div className="back-btn-div">
-                                    <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
-                                </div>
-                                <div className="title-text"><h1>All Assignments</h1></div>
-                                <div className="search-container">
-                                    <div className="search-box">
-                                        <FaSearch className="search-icon" />
-                                        <input 
-                                            type="text" 
-                                            placeholder="Search..." 
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                        />
-                                    </div>
-                                </div>
+                <div className="main-margin">
+                    <div className="portal-container">
+                        <div className="top-bar">
+                            <div className="back-btn-div">
+                                <button className="main-back-button" onClick={() => navigate(-1)}>
+                                    <CircumIcon name="circle_chev_left" />
+                                </button>
                             </div>
-                            <div className="filetab">
-                                {currentFiles.map((file, index) => (
-                                    <div className="file-item" key={index} onClick={() => handleAssignmentSelect(file.assignmentId)}>
-                                        <div className="file-name">{file.assignmentName}</div>
-                                        <div className="file-status">{file.isPublished ? 'Published' : 'Unpublished'}</div>
-                                        <div className="file-icon"><CircumIcon name="circle_more"/></div>
-                                    </div>
-                                ))}
+                            <div className="title-text"><h1>All Assignments</h1></div>
+                            <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search..."
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="pagination-controls">
-                            <span>Page {currentPage} of {totalPages}</span>
-                            <div className="pagination-buttons">
-                                <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                                <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                            </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                <div className="file-item" key={index}>
+                                    <div className="file-name" onClick={() => handleAssignmentSelect(file.assignmentId)}>
+                                        {file.assignmentName}
+                                    </div>
+                                    <div className="file-status">{file.isPublished ? 'Published' : 'Unpublished'}</div>
+                                    {deleteVisible === index && (
+                                        <button
+                                            className="delete-assign-button"
+                                            onClick={() => confirmDeleteAssignment(file.assignmentId)}
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
+                                    <div className="file-icon" onClick={() => toggleDeleteButton(index)}>
+                                        <CircumIcon name="circle_more" />
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    </div> 
+                    </div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

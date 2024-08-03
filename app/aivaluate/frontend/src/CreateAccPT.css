@@ -89,7 +89,7 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  border-radius: 10px; /* Matching border radius to Edit button */
+  border-radius: 50px; /* Matching border radius to Edit button */
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;

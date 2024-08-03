@@ -2,14 +2,14 @@ import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { useCallback, useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../ToastStyles.css';
 import '../GeneralStyling.css';
 import '../SubmitAssignment.css';
+import '../ToastStyles.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import MarkdownRenderer from '../components/MarkdownRenderer';
 import SideMenuBar from '../components/SideMenuBar';
 
 const SubmitAssignment = () => {
@@ -26,7 +26,9 @@ const SubmitAssignment = () => {
         maxObtainableGrade: '',
         InstructorAssignedFinalGrade: '',
         assignmentDescription: '',
-        AIFeedbackText: ''
+        AIFeedbackText: '',
+        InstructorFeedbackText: '',
+        isGraded: false // Include isGraded in the state
     });
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -43,7 +45,7 @@ const SubmitAssignment = () => {
             });
             const data = response.data;
             setAssignmentDetails(data);
-            setIsGraded(data.InstructorAssignedFinalGrade !== "--");
+            setIsGraded(data.isGraded);
         } catch (error) {
             console.error('Error fetching assignment details:', error);
         } finally {
@@ -222,8 +224,22 @@ const SubmitAssignment = () => {
                             </div>
                         </div>
                         <div className="scrollable-div">
+                            <p className="file-upload-display">
+                                {uploadedFiles.length > 0 ? (
+                                    <div>
+                                        <b>Uploaded Files: </b>
+                                        {uploadedFiles.flatMap(submission => (
+                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
+                                                    <span> {String(file).split('/').pop()} |</span>
+                                            )) : null
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p></p>
+                                )}
+                            </p>
                             <div className="due-date-div">
-                                <div className="due-date"><h3>Due: {formatDueDate(assignmentDetails.dueDate)}</h3></div>
+                                <div className="due-date-submit-assign"><h3>Due: {formatDueDate(assignmentDetails.dueDate)}</h3></div>
                                 <div className="empty"> </div>
                                 <div className="score">
                                     <h3>Score: {assignmentDetails.InstructorAssignedFinalGrade}/{assignmentDetails.maxObtainableGrade}</h3>
@@ -256,6 +272,19 @@ const SubmitAssignment = () => {
                                     </div>
                                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                                 </div>
+                                <p className="file-upload-display-2">
+                                {files.length > 0 ? (
+                                    <div>
+                                        <b>Files to be uploaded: </b> 
+                                        {files.map((file, index) => (
+                                            <span> {file.name} |</span>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p></p>
+                                )}
+                                </p>
+                        
                                 <div>
                                     <input 
                                         type="text" 
@@ -273,58 +302,29 @@ const SubmitAssignment = () => {
                                 <div className="submit-right">
                                     <h2 className="assignment-text">Assignment Rubric/Details</h2>
                                     <div className="empty"> </div>
-                                    <button className="submit-button rborder" type="submit">Submit</button>
+                                    <button className="submit-button rborder" type="submit" disabled={isGraded}>Submit</button>
                                 </div>
                             </form>
                             <div className="assignment-details">
-                                <pre className="details-content">{assignmentDetails.assignmentDescription}</pre>
-                            </div>
-                            <h2>Files to be uploaded</h2>
-                            <div className="uploaded-files-container">
-                                {files.length > 0 ? (
-                                    <ul>
-                                        {files.map((file, index) => (
-                                            <li key={index}>
-                                                <span>{file.name}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p>No files selected yet.</p>
-                                )}
-                            </div>
-                            <h2>Recently Uploaded Files</h2>
-                            <div className="uploaded-files-container">
-                                {uploadedFiles.length > 0 ? (
-                                    <ul>
-                                        {uploadedFiles.flatMap(submission => (
-                                            Array.isArray(submission.files) ? submission.files.map((file, index) => (
-                                                <li key={index}>
-                                                    <span>{String(file).split('/').pop()}</span>
-                                                </li>
-                                            )) : null
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    <p>No files uploaded yet.</p>
-                                )}
+                                <div className="details-content">
+                                    <ReactMarkdown>{assignmentDetails.criteria}</ReactMarkdown>
+                                </div>
                             </div>
                             <h2>Feedback</h2>
                             <div className="feedback-container">
-                                {isGraded ? (
+                                {typeof assignmentDetails.InstructorFeedbackText === 'string' && assignmentDetails.InstructorFeedbackText.trim().length > 0 ? (
                                     <div className="feedback">
                                         <div className="score-class">
                                             <div className="empty"> </div>
                                         </div>
                                         <div className="both-feedback">
-                                            <h3>Feedback</h3>
                                             <div className="feedback-text">
-                                                <MarkdownRenderer markdownText={assignmentDetails.AIFeedbackText || 'There is no feedback on this assignment'} />
+                                                <ReactMarkdown>{assignmentDetails.InstructorFeedbackText}</ReactMarkdown>
                                             </div>
                                         </div>
                                     </div>
                                 ) : (
-                                    <h3>No feedback available yet...</h3>
+                                    <h3 className="no-feedback">No feedback available yet...</h3>
                                 )}
                             </div>
                         </div>

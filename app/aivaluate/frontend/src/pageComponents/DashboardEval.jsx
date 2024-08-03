@@ -46,7 +46,6 @@ const DashboardEval = () => {
     <div>
       <div className="message-container">
         <div className="notification-container">
-        <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>
         <h1>Your courses...</h1>
         

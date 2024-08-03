@@ -1,11 +1,10 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
 import axios from 'axios';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ClipLoader } from 'react-spinners';
-import { FaSearch } from 'react-icons/fa';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -154,12 +153,6 @@ const SelectedAssignment = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            {isLoading && (
-                            <div className="spinner-container">
-                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                                <p className="loading-text">AI Grading in Progress...</p>
-                            </div>
-            )}
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
                     <div className="main-margin">
@@ -183,19 +176,12 @@ const SelectedAssignment = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="center-search">
-                                <div className="search-container">
-                                    <div className="search-box">
-                                        <FaSearch className="search-icon" />
-                                        <input
-                                            type="text"
-                                            placeholder="Search by student ID or file name"
-                                            value={searchTerm}
-                                            onChange={handleSearchChange}
-                                        />
-                                    </div>
-                                </div>
+                            {isLoading && (
+                            <div className="spinner-container">
+                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
+                                <p className="loading-text primary-color-text">AI Grading in Progress...</p>
                             </div>
+                            )}
                             <div className="filetab">
                                 {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>

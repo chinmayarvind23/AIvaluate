@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../DatePicker.css';
@@ -31,6 +31,7 @@ const GradingAssignments = () => {
   const [submittedFiles, setSubmittedFiles] = useState([]);
   const { fileName, submissionLink } = location.state || {};
   console.log("Received fileName:", fileName);
+
   useEffect(() => {
     const fetchAssignmentDetails = async () => {
       try {
@@ -67,7 +68,7 @@ const GradingAssignments = () => {
   const saveDueDate = async () => {
     setIsEditing(false);
     try {
-      const response = await axios.put(`http://localhost:5173/eval-api/assignments/${studentId}/${assignmentId}/due-date`, {
+      await axios.put(`http://localhost:5173/eval-api/assignments/${studentId}/${assignmentId}/due-date`, {
         dueDate
       }, {
         withCredentials: true
@@ -108,7 +109,7 @@ const GradingAssignments = () => {
     try {
       const response = await axios.put(`http://localhost:5173/eval-api/assignment/complete/${studentId}/${assignmentId}`, {
         dueDate,
-        InstructorAssignedFinalGrade: finalScore,
+        InstructorAssignedFinalGrade: parseFloat(finalScore),
         AIFeedbackText: feedback,
         InstructorFeedbackText: instructorFeedback,
         maxObtainableGrade: assignmentDetails.maxObtainableGrade
@@ -184,7 +185,7 @@ const GradingAssignments = () => {
           </div>
           <div className="student-info">
             <div className="feedback">
-              <h4>AI Feedback</h4>
+              <h4>AI Feedback - This is not seen by the student!</h4>
               <textarea
                 value={feedback}
                 onChange={handleFeedbackChange}
@@ -194,11 +195,11 @@ const GradingAssignments = () => {
               />
             </div>
             <div className="evaluator-comments">
-              <h4>Evaluator Comments</h4>
+              <h4>Evaluator Comments - To be submitted to the student</h4>
               <textarea
                 value={instructorFeedback}
                 onChange={handleInstructorFeedbackChange}
-                placeholder="Please fill-in instructor Feedback..."
+                placeholder="Please use the AI feedback to help you write your grading feedback. This is the feedback that will be returned to the student. Feel free to use markdown to make things easier to read for the student."
               ></textarea>
             </div>
             <div className="student-submission">
@@ -236,5 +237,3 @@ const GradingAssignments = () => {
 };
 
 export default GradingAssignments;
-
-

@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ClipLoader } from 'react-spinners';
 import { FaSearch } from 'react-icons/fa';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';

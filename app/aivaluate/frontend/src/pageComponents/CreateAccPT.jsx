@@ -162,7 +162,7 @@ const CreateAccPT = () => {
                   </label>
                 </div>
               </div>
-              <button type="submit" className="CreateAccPT-create-user-button">Create user</button> {/* Updated class name */}
+              <button type="submit" className="CreateAccPT-create-user-button">Create user</button>
             </form>
           </div>
         </div>

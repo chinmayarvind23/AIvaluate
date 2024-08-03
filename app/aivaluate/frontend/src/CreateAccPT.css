@@ -56,8 +56,13 @@
 .CreateAccPT-box input[type="text"],
 .CreateAccPT-box input[type="email"],
 .CreateAccPT-box input[type="password"] {
+/* Input styling for text, email, and password */
+.CreateAccPT-box input[type="text"],
+.CreateAccPT-box input[type="email"],
+.CreateAccPT-box input[type="password"] {
   padding: 10px;
   margin-top: 5px;
+  width: 700px;
   width: 700px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -69,7 +74,6 @@
   align-items: center;
   color: rgb(255, 255, 255);
   margin-top: 5px;
-  width: 300px;
 }
 
 /* Checkbox input styling */
@@ -87,10 +91,17 @@
   padding: 10px 20px; /* Matching padding to Edit button */
   margin-top: 20px; /* Added margin-top for spacing */
   align-self: flex-end; /* Align to the right */
+/* Create user button styling */
+.CreateAccPT-create-user-button {
+  display: flex;
+  width: 200px; /* Adjusted width */
+  padding: 10px 20px; /* Matching padding to Edit button */
+  margin-top: 20px; /* Added margin-top for spacing */
+  align-self: flex-end; /* Align to the right */
   justify-content: center;
   align-items: center;
   height: 50px;
-  border-radius: 10px; /* Matching border radius to Edit button */
+  border-radius: 50px; /* Matching border radius to Edit button */
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -104,4 +115,10 @@
 /* Hover effect for create user button */
 .CreateAccPT-create-user-button:hover {
   background-color:#0056b3;
+}
+
+.main-text-space{
+  width: 300px;
+  padding: 10px;
+  border-radius: 50px;
 }

@@ -199,7 +199,7 @@ const GradingAssignments = () => {
               <textarea
                 value={instructorFeedback}
                 onChange={handleInstructorFeedbackChange}
-                placeholder="Please use the AI feedback to help you write your grading feedback. This is the feedback that will be returned to the student. Use two spaces or '<br>' to create a new line is markdown."
+                placeholder="Please use the AI feedback to help you write your grading feedback. This is the feedback that will be returned to the student. Feel free to use markdown to make things easier to read for the student."
               ></textarea>
             </div>
             <div className="student-submission">

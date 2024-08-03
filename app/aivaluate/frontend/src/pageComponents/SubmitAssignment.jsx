@@ -521,7 +521,7 @@ const SubmitAssignment = () => {
                                         <b>Uploaded Files: </b>
                                         {uploadedFiles.flatMap(submission => (
                                             Array.isArray(submission.files) ? submission.files.map((file, index) => (
-                                                    <span>{String(file).split('/').pop()}</span>
+                                                    <span> {String(file).split('/').pop()} |</span>
                                             )) : null
                                         ))}
                                     </div>
@@ -568,7 +568,7 @@ const SubmitAssignment = () => {
                                     <div>
                                         <b>Files to be uploaded: </b> 
                                         {files.map((file, index) => (
-                                            <span> {file.name} </span>
+                                            <span> {file.name} |</span>
                                         ))}
                                     </div>
                                 ) : (
@@ -627,4 +627,3 @@ const SubmitAssignment = () => {
 };
 
 export default SubmitAssignment;
-

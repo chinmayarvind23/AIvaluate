@@ -1338,13 +1338,8 @@ Clockify report
 </table>
 
 ### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
-This cycle I was suppose to work on course notifications but ended up spending my time helping my team members fix their issues. I made fixes in 25 different frontend and backend files and because of this I wasn't able to get to doing the notifications. I will be doing this in the next cycle.
+This cycle I ended up spending my time helping my team members fix their issues while also improving our code and fixing issues that did not worked. I made a total of 36 fixes to our site and making these fixes made some massive improvement to the sites performance and usability.
 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
-- Fixed empty assignment details from student submission page
-- Fix all pop up/toast messages
-- Added validation message for incorrectly submitted file types.
-- Add password check for admin account creation
-- Fix login pages so the auth div is more visible
-- Add notifications via email for newly created assignments
+- Work on my individual report
 -----------------------------------------------------------------------------------

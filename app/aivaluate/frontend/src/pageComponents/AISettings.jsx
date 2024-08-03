@@ -210,7 +210,7 @@ const AISettings = () => {
                         />
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
-                            <button onClick={handleSave} className="confirm-button">Save</button>
+                            <button onClick={handleSave} className="cancel-button">Save</button>
                         </div>
                     </div>
                 );

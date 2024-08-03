@@ -87,7 +87,7 @@ const EvalManagerInfo = () => {
                                                 <p>Are you sure you want to remove the course {courseCode}?</p>
                                                 <div className="button-group">
                                                     <button onClick={onClose} className="cancel-button">Cancel</button>
-                                                    <button onClick={handleConfirmRemove} className="Eval-confirm-button">Confirm</button>
+                                                    <button onClick={handleConfirmRemove} className="cancel-button">Confirm</button>
                                                 </div>
                                             </div>
                                         );
@@ -119,7 +119,7 @@ const EvalManagerInfo = () => {
                                                 <p>Are you sure you want to delete this evaluator? Deleting this evaluator will remove all associated courses and data.</p>
                                                 <div className="button-group">
                                                     <button onClick={onClose} className="cancel-button">Cancel</button>
-                                                    <button onClick={handleConfirmDelete} className="Eval-confirm-button">Confirm</button>
+                                                    <button onClick={handleConfirmDelete} className="Eval-cancel-button">Confirm</button>
                                                 </div>
                                             </div>
                                         );
@@ -175,7 +175,7 @@ const EvalManagerInfo = () => {
                                                             await updateRole(newRole);
                                                             onClose();
                                                         }} 
-                                                        className="Eval-confirm-button"
+                                                        className="cancel-button"
                                                     >
                                                         Confirm
                                                     </button>

@@ -39,7 +39,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  width: stretch;
+  width: 850px;
   margin: 10px;
   justify-content: left;
 }
@@ -52,26 +52,13 @@
   margin-bottom: 10px;
 }
 
-.box input[type="text"] {
+/* Input styling for text, email, and password */
+.CreateAccPT-box input[type="text"],
+.CreateAccPT-box input[type="email"],
+.CreateAccPT-box input[type="password"] {
   padding: 10px;
   margin-top: 5px;
-  width: 600px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-
-}
-.box input[type="email"] {
-  padding: 10px;
-  margin-top: 5px;
-  width: 600px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-
-}
-.box input[type="password"] {
-  padding: 10px;
-  margin-top: 5px;
-  width: 600px;
+  width: 700px;
   border: 1px solid #ccc;
   border-radius: 10px;
 }
@@ -82,7 +69,6 @@
   align-items: center;
   color: rgb(255, 255, 255);
   margin-top: 5px;
-  width: 300px;
 }
 
 /* Checkbox input styling */
@@ -93,16 +79,17 @@
   width: 150px;
 }
 
-.create-user-button{
-  display:flex;
-  width: 200px;
-  padding: 10px;
-  /* margin-left: 40px;
-  margin-right: 40px; */
+/* Create user button styling */
+.CreateAccPT-create-user-button {
+  display: flex;
+  width: 200px; /* Adjusted width */
+  padding: 10px 20px; /* Matching padding to Edit button */
+  margin-top: 20px; /* Added margin-top for spacing */
+  align-self: flex-end; /* Align to the right */
   justify-content: center;
   align-items: center;
   height: 50px;
-  border-radius: 10px; /* Matching border radius to Edit button */
+  border-radius: 50px; /* Matching border radius to Edit button */
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -118,6 +105,8 @@
   background-color:#0056b3;
 }
 
-.eval-text-up-top{
-  width: 1000px;
+.main-text-space{
+  width: 300px;
+  padding: 10px;
+  border-radius: 50px;
 }

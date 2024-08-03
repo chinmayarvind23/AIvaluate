@@ -160,7 +160,7 @@ const CreateAccPT = () => {
                   </label>
                 </div>
               </div>
-              <button type="submit" className="create-user-button">Create user</button>
+              <button type="submit" className="CreateAccPT-create-user-button">Create user</button>
             </form>
           </div>
         </div>

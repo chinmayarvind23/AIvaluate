@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaSearch } from 'react-icons/fa';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
 import '../SearchBar.css';
@@ -154,12 +153,6 @@ const SelectedAssignment = () => {
     return (
         <div>
             <AIvaluateNavBarEval navBarText={navBarText} />
-            {isLoading && (
-                            <div className="spinner-container">
-                                <ClipLoader color="#123abc" loading={isLoading} size={50} />
-                                <p className="loading-text">AI Grading in Progress...</p>
-                            </div>
-            )}
             <div className="filler-div">
                 <SideMenuBarEval tab="assignments" />
                     <div className="main-margin">

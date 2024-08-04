@@ -417,3 +417,21 @@ SELECT setval(pg_get_serial_sequence('"AssignmentRubric"', 'assignmentRubricId')
 SELECT setval(pg_get_serial_sequence('"Prompt"', 'promptId'), COALESCE(MAX("promptId"), 1) + 1, false) FROM "Prompt";
 SELECT setval(pg_get_serial_sequence('"StudentFeedback"', 'studentFeedbackId'), COALESCE(MAX("studentFeedbackId"), 1) + 1, false) FROM "StudentFeedback";
 SELECT setval(pg_get_serial_sequence('"StudentFeedbackReport"', 'studentFeedbackReportId'), COALESCE(MAX("studentFeedbackReportId"), 1) + 1, false) FROM "StudentFeedbackReport";
+
+CREATE OR REPLACE FUNCTION notify_assignment_creation() RETURNS trigger AS $$
+DECLARE
+    courseId INT;
+    assignmentId INT;
+BEGIN
+    courseId := NEW."courseId";
+    assignmentId := NEW."assignmentId";
+    PERFORM pg_notify('assignment_created', json_build_object('courseId', courseId, 'assignmentId', assignmentId)::text);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER trigger_assignment_creation
+AFTER INSERT ON "Assignment"
+FOR EACH ROW
+EXECUTE FUNCTION notify_assignment_creation();

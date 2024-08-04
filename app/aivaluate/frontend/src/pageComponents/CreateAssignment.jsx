@@ -29,7 +29,7 @@ const CreateAssignment = () => {
         dueDate: new Date(),
         criteria: '',
         maxObtainableGrade: '',
-        courseId: courseId,
+        courseId: sessionStorage.getItem('courseId'),
         assignmentKey: ''
     });
 
@@ -64,6 +64,7 @@ const CreateAssignment = () => {
                 });
                 instructorId = response.data.instructorId;
                 sessionStorage.setItem('instructorId', instructorId);
+                console.log('Instructor ID fetched and set:', instructorId);
             } catch (error) {
                 console.error('Failed to fetch instructor details:', error);
                 toast.error('Failed to fetch instructor details.');
@@ -109,7 +110,7 @@ const CreateAssignment = () => {
         const { name, value } = e.target;
         setAssignment(prevAssignment => ({
             ...prevAssignment,
-            [name]: value
+            [name]: value || ''
         }));
     };
 
@@ -124,7 +125,7 @@ const CreateAssignment = () => {
             setAssignmentKey(file);
             setAssignment(prevAssignment => ({
                 ...prevAssignment,
-                assignmentKey: file.name
+                assignmentKey: file.name || ''
             }));
         }
     };
@@ -206,7 +207,7 @@ const CreateAssignment = () => {
                 return (
                     <div className="custom-ui">
                         <h1>Confirm to create assignment</h1>
-                        <p>Are you sure you want to create this assignment? Assignment grade cannot be changed after an assignment is created. Grade: {maxObtainableGrade}</p>
+                        <p>Are you sure you want to create this assignment? Assignment grade cannot be changed after an assignment is created. </p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
                             <button onClick={handleConfirm} className="cancel-button">Confirm</button>
@@ -256,7 +257,7 @@ const CreateAssignment = () => {
                                     type="text"
                                     id="assignmentName"
                                     name="assignmentName"
-                                    value={assignment.assignmentName}
+                                    value={assignment.assignmentName || ''}
                                     onChange={handleInputChange}
                                 />
                                 <label htmlFor="criteria">Assignment Rubric</label>

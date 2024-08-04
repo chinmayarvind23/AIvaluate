@@ -2,7 +2,7 @@ import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../Grades.css';
 import '../HelpPage.css';
@@ -91,7 +91,7 @@ const EvaluatorGrades = () => {
                                     <th>Name</th>
                                     <th>Date</th>
                                     <th>Avg. Grade</th>
-                                    <th>Max Point</th>
+                                    <th>Max Points</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,7 +99,9 @@ const EvaluatorGrades = () => {
                                         <tr key={index}>
                                             <td>
                                                 <div className="file-icon"></div>
-                                                {grade.name}
+                                                <Link to={`/eval/selected/${grade.assignmentId}`} className="assignment-link">
+                                                    {grade.name}
+                                                </Link>
                                             </td>
                                             <td>{formatDueDate(grade.due)}</td>
                                             <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>

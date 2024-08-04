@@ -15,19 +15,20 @@ router.get('/evaluator-grades/:courseId', checkAuthenticated, async (req, res) =
     try {
         // Query to get assignment details ordered by due date
         const assignmentDetailsQuery = `
-            SELECT a."assignmentName" AS "name", 
-                   a."dueDate" AS "due",
-                   a."maxObtainableGrade",
-                   COALESCE(SUM(ag."InstructorAssignedFinalGrade"), 0) AS "avgGrade",
-                   COALESCE(SUM(a."maxObtainableGrade"), 0) AS "totalGrade"
-            FROM "Assignment" a
-            LEFT JOIN "AssignmentSubmission" asub ON a."assignmentId" = asub."assignmentId"
-            LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
-            WHERE a."courseId" = $1  
-            AND ag."AIassignedGrade" IS NOT NULL
-            GROUP BY a."assignmentName", a."dueDate", a."maxObtainableGrade"
-            ORDER BY a."dueDate" ASC
-        `;
+                SELECT a."assignmentId",
+                    a."assignmentName" AS "name", 
+                    a."dueDate" AS "due",
+                    a."maxObtainableGrade",
+                    COALESCE(SUM(ag."InstructorAssignedFinalGrade"), 0) AS "avgGrade",
+                    COALESCE(SUM(a."maxObtainableGrade"), 0) AS "totalGrade"
+                FROM "Assignment" a
+                LEFT JOIN "AssignmentSubmission" asub ON a."assignmentId" = asub."assignmentId"
+                LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
+                WHERE a."courseId" = $1  
+                AND ag."AIassignedGrade" IS NOT NULL
+                GROUP BY a."assignmentId", a."assignmentName", a."dueDate", a."maxObtainableGrade"
+                ORDER BY a."dueDate" ASC
+            `;
         const assignmentDetailsResult = await pool.query(assignmentDetailsQuery, [courseId]);
         const assignmentDetails = assignmentDetailsResult.rows;
 

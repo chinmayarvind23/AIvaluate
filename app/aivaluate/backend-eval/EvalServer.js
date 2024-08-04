@@ -49,6 +49,8 @@ app.use(flash());
 app.use((req, res, next) => {
     console.log('Course ID from body:', req.body.courseId);
     console.log('Course ID from session:', req.session.courseId);
+    console.log('Instructor ID from body:', req.body.instructorId);
+    console.log('Instructor ID from session:', req.session.instructorId);
     if (!req.session.courseId && req.body.courseId) {
         req.session.courseId = req.body.courseId;
     }

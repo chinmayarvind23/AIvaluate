@@ -91,6 +91,7 @@ const EvaluatorGrades = () => {
                                     <th>Name</th>
                                     <th>Date</th>
                                     <th>Avg. Grade</th>
+                                    <th>Max Point</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -102,6 +103,7 @@ const EvaluatorGrades = () => {
                                             </td>
                                             <td>{formatDueDate(grade.due)}</td>
                                             <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>
+                                            <td>{grade.maxObtainableGrade}</td>
                                         </tr>
                                     ))}
                                 </tbody>

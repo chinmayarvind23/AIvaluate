@@ -92,6 +92,7 @@ const EvaluatorGrades = () => {
                                     <th>Name</th>
                                     <th>Date</th>
                                     <th>Avg. Grade</th>
+                                    <th>Max Point</th>
                                 </tr>
                             </thead>
                             <tbody>

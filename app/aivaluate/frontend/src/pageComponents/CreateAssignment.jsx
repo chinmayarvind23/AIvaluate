@@ -206,7 +206,7 @@ const CreateAssignment = () => {
                 return (
                     <div className="custom-ui">
                         <h1>Confirm to create assignment</h1>
-                        <p>Are you sure you want to create this assignment? Assignment grade cannot be changed after an assignment is created.</p>
+                        <p>Are you sure you want to create this assignment? Assignment grade cannot be changed after an assignment is created. Grade: {maxObtainableGrade}</p>
                         <div className="button-group">
                             <button onClick={onClose} className="cancel-button">Cancel</button>
                             <button onClick={handleConfirm} className="cancel-button">Confirm</button>

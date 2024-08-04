@@ -99,10 +99,6 @@ const SelectedAssignment = () => {
             : fileName;
     };
 
-    const toggleGradesVisibility = () => {
-        setGradesVisible(!gradesVisible);
-    };
-
     const handleMarkAssignment = (studentId, assignmentId, submissionFile, submissionLink) => {
         const fileName = submissionFile ? submissionFile.split('/').pop() : null;
         console.log("Navigating with fileName:", fileName);
@@ -148,7 +144,56 @@ const SelectedAssignment = () => {
             setIsLoading(false);
         }
     };
-    
+
+    // Function to handle hiding grades
+    const handleHideGrades = async () => {
+        if (!gradesVisible) {
+            toast.error('Grades are already hidden.');
+            return;
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}/hide-grades`, {}, {
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                setGradesVisible(false);
+                toast.success('Grades hidden successfully.');
+            } else {
+                console.error('Failed to hide grades:', response.data);
+                toast.error('Failed to hide grades.');
+            }
+        } catch (error) {
+            console.error('Error hiding grades:', error);
+            toast.error('Failed to hide grades. Please try again.');
+        }
+    };
+
+    // Function to handle releasing grades
+    const handleReleaseGrades = async () => {
+        if (gradesVisible) {
+            toast.error('Grades are already published.');
+            return;
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:5173/eval-api/assignments/${assignmentId}/release-grades`, {}, {
+                withCredentials: true
+            });
+
+            if (response.status === 200) {
+                setGradesVisible(true);
+                toast.success('Grades released successfully.');
+            } else {
+                console.error('Failed to release grades:', response.data);
+                toast.error('Failed to release grades.');
+            }
+        } catch (error) {
+            console.error('Error releasing grades:', error);
+            toast.error('Failed to release grades. Please try again.');
+        }
+    };
 
     return (
         <div>
@@ -168,10 +213,10 @@ const SelectedAssignment = () => {
                                     <button className="grades-button" onClick={handleGradeWithAI}>
                                         Grade With AI
                                     </button>
-                                    <button className="grades-button" disabled={gradesVisible} onClick={toggleGradesVisibility}>
+                                    <button className="grades-button" disabled={!gradesVisible} onClick={handleHideGrades}>
                                         Hide Grades
                                     </button>
-                                    <button className="grades-button" disabled={!gradesVisible} onClick={toggleGradesVisibility}>
+                                    <button className="grades-button" disabled={gradesVisible} onClick={handleReleaseGrades}>
                                         Publish Grades
                                     </button>
                                 </div>

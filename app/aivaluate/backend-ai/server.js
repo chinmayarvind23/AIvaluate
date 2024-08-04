@@ -4,6 +4,7 @@ const cors = require('cors');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const aiRoutes = require('./aiRoutes');
+const aiTestRoutes = require('./aiTestRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 9000;
@@ -52,6 +53,7 @@ app.use((req, res, next) => {
 // });
 
 app.use('/ai-api', aiRoutes);
+app.use('/ai-api', aiTestRoutes);
 
 app.listen(PORT, () => {
     console.log(`AI backend server is running on port ${PORT}`);

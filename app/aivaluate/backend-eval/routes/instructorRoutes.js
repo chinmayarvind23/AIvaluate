@@ -320,6 +320,20 @@ router.get('/courses/:id/tas', async (req, res) => {
     }
 });
 
+ // remove TA from course
+router.delete('/teaches/:courseId/:instructorId', async (req, res) => {
+    const { courseId, instructorId } = req.params;
+
+    try {
+        await pool.query('DELETE FROM "Teaches" WHERE "courseId" = $1 AND "instructorId" = $2', [courseId, instructorId]);
+        res.status(200).json({ message: 'TA removed from course successfully' });
+    } catch (error) {
+        console.error('Error removing TA from course:', error);
+        res.status(500).json({ message: 'Error removing TA from course' });
+    }
+}
+);
+
 // Determine whether the evaluator is a prof or a TA
 router.get('/instructor/:id/isTA', async (req, res) => {
     const instructorId = req.params.id;

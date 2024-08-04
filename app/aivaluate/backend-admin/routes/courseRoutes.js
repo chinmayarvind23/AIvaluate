@@ -412,7 +412,6 @@ router.delete('/courses/:id', async (req, res) => {
 // Restore a course and its dependencies from the backup table
 router.post('/course/restore/:id', async (req, res) => {
     const courseId = req.params.id;
-
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -428,79 +427,267 @@ router.post('/course/restore/:id', async (req, res) => {
 
         if (courseResult.rowCount > 0) {
             // Restore dependent data
-            await client.query(`
-                INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
-                SELECT "studentId", "courseId", "studentGrade"
-                FROM "BackupEnrolledIn"
+
+            // Restore EnrolledIn
+            const enrolledInResult = await client.query(`
+                SELECT * FROM "BackupEnrolledIn"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "Teaches" ("instructorId", "courseId")
-                SELECT "instructorId", "courseId"
-                FROM "BackupTeaches"
+            for (const enrolled of enrolledInResult.rows) {
+                const studentExists = await client.query('SELECT 1 FROM "Student" WHERE "studentId" = $1', [enrolled.studentId]);
+                if (studentExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
+                        VALUES ($1, $2, $3)
+                        ON CONFLICT DO NOTHING
+                    `, [enrolled.studentId, enrolled.courseId, enrolled.studentGrade]);
+                    console.log(`Enrollment for studentId ${enrolled.studentId} restored successfully.`);
+                } else {
+                    console.log(`Student with ID ${enrolled.studentId} does not exist. Skipping enrollment restoration.`);
+                }
+            }
+
+            // Restore Teaches
+            const teachesResult = await client.query(`
+                SELECT * FROM "BackupTeaches"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "Assignment" ("assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded")
-                SELECT "assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded"
-                FROM "BackupAssignment"
+            for (const teach of teachesResult.rows) {
+                const instructorExists = await client.query('SELECT 1 FROM "Instructor" WHERE "instructorId" = $1', [teach.instructorId]);
+                if (instructorExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "Teaches" ("instructorId", "courseId")
+                        VALUES ($1, $2)
+                        ON CONFLICT DO NOTHING
+                    `, [teach.instructorId, teach.courseId]);
+                    console.log(`Teaches entry for instructorId ${teach.instructorId} restored successfully.`);
+                } else {
+                    console.log(`Instructor with ID ${teach.instructorId} does not exist. Skipping teaches restoration.`);
+                }
+            }
+
+            // Restore Assignments
+            const assignmentsResult = await client.query(`
+                SELECT * FROM "BackupAssignment"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-                SELECT "assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded"
-                FROM "BackupAssignmentSubmission"
+            for (const assignment of assignmentsResult.rows) {
+                await client.query(`
+                    INSERT INTO "Assignment" ("assignmentId", "assignmentName", "courseId", "dueDate", "assignmentKey", "maxObtainableGrade", "assignmentDescription", "isPublished", "isGraded")
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                    ON CONFLICT DO NOTHING
+                `, [
+                    assignment.assignmentId,
+                    assignment.assignmentName,
+                    assignment.courseId,
+                    assignment.dueDate,
+                    assignment.assignmentKey,
+                    assignment.maxObtainableGrade,
+                    assignment.assignmentDescription,
+                    assignment.isPublished,
+                    assignment.isGraded
+                ]);
+                console.log(`Assignment ${assignment.assignmentId} restored successfully.`);
+            }
+
+            // Restore Assignment Submissions
+            const submissionsResult = await client.query(`
+                SELECT * FROM "BackupAssignmentSubmission"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
-                SELECT "assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded"
-                FROM "BackupAssignmentGrade"
+            for (const submission of submissionsResult.rows) {
+                const studentExists = await client.query('SELECT 1 FROM "Student" WHERE "studentId" = $1', [submission.studentId]);
+                const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [submission.assignmentId]);
+
+                if (studentExists.rows.length > 0 && assignmentExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                        ON CONFLICT DO NOTHING
+                    `, [
+                        submission.assignmentSubmissionId,
+                        submission.studentId,
+                        submission.courseId,
+                        submission.assignmentId,
+                        submission.submittedAt,
+                        submission.submissionFile,
+                        submission.isSubmitted,
+                        submission.updatedAt,
+                        submission.isGraded
+                    ]);
+                    console.log(`Assignment submission ${submission.assignmentSubmissionId} restored successfully.`);
+                } else {
+                    console.log(`Skipping submission restoration for studentId ${submission.studentId} or assignmentId ${submission.assignmentId} due to missing dependencies.`);
+                }
+            }
+
+            // Restore Assignment Grades
+            const gradesResult = await client.query(`
+                SELECT * FROM "BackupAssignmentGrade"
                 WHERE "assignmentSubmissionId" IN (
-                    SELECT "assignmentSubmissionId" FROM "AssignmentSubmission" WHERE "courseId" = $1
+                    SELECT "assignmentSubmissionId" FROM "BackupAssignmentSubmission" WHERE "courseId" = $1
                 )
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "CourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead")
-                SELECT "senderId", "receiverId", "courseId", "notificationMessage", "isRead"
-                FROM "BackupCourseNotification"
+            for (const grade of gradesResult.rows) {
+                const submissionExists = await client.query('SELECT 1 FROM "AssignmentSubmission" WHERE "assignmentSubmissionId" = $1', [grade.assignmentSubmissionId]);
+                if (submissionExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
+                        VALUES ($1, $2, $3, $4, $5, $6)
+                        ON CONFLICT DO NOTHING
+                    `, [
+                        grade.assignmentSubmissionId,
+                        grade.assignmentId,
+                        grade.maxObtainableGrade,
+                        grade.AIassignedGrade,
+                        grade.InstructorAssignedFinalGrade,
+                        grade.isGraded
+                    ]);
+                    console.log(`Assignment grade for submission ID ${grade.assignmentSubmissionId} restored successfully.`);
+                } else {
+                    console.log(`Skipping grade restoration for assignmentSubmissionId ${grade.assignmentSubmissionId} due to missing dependencies.`);
+                }
+            }
+
+            // Restore Course Notifications
+            const notificationsResult = await client.query(`
+                SELECT * FROM "BackupCourseNotification"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-                SELECT "studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText"
-                FROM "BackupStudentFeedback"
+            for (const notification of notificationsResult.rows) {
+                const senderExists = await client.query('SELECT 1 FROM "Student" WHERE "studentId" = $1', [notification.senderId]);
+                const receiverExists = await client.query('SELECT 1 FROM "Student" WHERE "studentId" = $1', [notification.receiverId]);
+
+                if (senderExists.rows.length > 0 && receiverExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "CourseNotification" ("senderId", "receiverId", "courseId", "notificationMessage", "isRead")
+                        VALUES ($1, $2, $3, $4, $5)
+                        ON CONFLICT DO NOTHING
+                    `, [
+                        notification.senderId,
+                        notification.receiverId,
+                        notification.courseId,
+                        notification.notificationMessage,
+                        notification.isRead
+                    ]);
+                    console.log(`Course notification for senderId ${notification.senderId} and receiverId ${notification.receiverId} restored successfully.`);
+                } else {
+                    console.log(`Skipping notification restoration for senderId ${notification.senderId} or receiverId ${notification.receiverId} due to missing dependencies.`);
+                }
+            }
+
+            // Restore Student Feedback
+            const feedbackResult = await client.query(`
+                SELECT * FROM "BackupStudentFeedback"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-                SELECT "studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText"
-                FROM "BackupStudentFeedbackReport"
+            for (const feedback of feedbackResult.rows) {
+                const studentExists = await client.query('SELECT 1 FROM "Student" WHERE "studentId" = $1', [feedback.studentId]);
+                const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [feedback.assignmentId]);
+
+                if (studentExists.rows.length > 0 && assignmentExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                        VALUES ($1, $2, $3, $4, $5, $6)
+                        ON CONFLICT DO NOTHING
+                    `, [
+                        feedback.studentFeedbackId,
+                        feedback.studentId,
+                        feedback.assignmentId,
+                        feedback.courseId,
+                        feedback.AIFeedbackText,
+                        feedback.InstructorFeedbackText
+                    ]);
+                    console.log(`Feedback for studentId ${feedback.studentId} and assignmentId ${feedback.assignmentId} restored successfully.`);
+                } else {
+                    console.log(`Skipping feedback restoration for studentId ${feedback.studentId} or assignmentId ${feedback.assignmentId} due to missing dependencies.`);
+                }
+            }
+
+            // Restore Student Feedback Reports
+            const feedbackReportsResult = await client.query(`
+                SELECT * FROM "BackupStudentFeedbackReport"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "AssignmentRubric" ("assignmentRubricId", "rubricName", "criteria", "courseId")
-                SELECT "assignmentRubricId", "rubricName", "criteria", "courseId"
-                FROM "BackupAssignmentRubric"
+            for (const report of feedbackReportsResult.rows) {
+                const studentExists = await client.query('SELECT 1 FROM "Student" WHERE "studentId" = $1', [report.studentId]);
+                const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [report.assignmentId]);
+
+                if (studentExists.rows.length > 0 && assignmentExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                        ON CONFLICT DO NOTHING
+                    `, [
+                        report.studentFeedbackReportId,
+                        report.studentFeedbackReportText,
+                        report.isResolved,
+                        report.studentId,
+                        report.assignmentId,
+                        report.courseId,
+                        report.AIFeedbackText,
+                        report.InstructorFeedbackText
+                    ]);
+                    console.log(`Feedback report for studentId ${report.studentId} and assignmentId ${report.assignmentId} restored successfully.`);
+                } else {
+                    console.log(`Skipping feedback report restoration for studentId ${report.studentId} or assignmentId ${report.assignmentId} due to missing dependencies.`);
+                }
+            }
+
+            // Restore Assignment Rubrics
+            const rubricsResult = await client.query(`
+                SELECT * FROM "BackupAssignmentRubric"
                 WHERE "courseId" = $1
             `, [courseId]);
 
-            await client.query(`
-                INSERT INTO "useRubric" ("assignmentId", "assignmentRubricId")
-                SELECT "assignmentId", "assignmentRubricId"
-                FROM "BackupUseRubric"
+            for (const rubric of rubricsResult.rows) {
+                await client.query(`
+                    INSERT INTO "AssignmentRubric" ("assignmentRubricId", "rubricName", "criteria", "courseId")
+                    VALUES ($1, $2, $3, $4)
+                    ON CONFLICT DO NOTHING
+                `, [
+                    rubric.assignmentRubricId,
+                    rubric.rubricName,
+                    rubric.criteria,
+                    rubric.courseId
+                ]);
+                console.log(`Rubric ${rubric.assignmentRubricId} restored successfully.`);
+            }
+
+            // Restore Use Rubric
+            const useRubricsResult = await client.query(`
+                SELECT * FROM "BackupUseRubric"
                 WHERE "assignmentId" IN (
-                    SELECT "assignmentId" FROM "Assignment" WHERE "courseId" = $1
+                    SELECT "assignmentId" FROM "BackupAssignment" WHERE "courseId" = $1
                 )
             `, [courseId]);
+
+            for (const useRubric of useRubricsResult.rows) {
+                const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [useRubric.assignmentId]);
+                const rubricExists = await client.query('SELECT 1 FROM "AssignmentRubric" WHERE "assignmentRubricId" = $1', [useRubric.assignmentRubricId]);
+
+                if (assignmentExists.rows.length > 0 && rubricExists.rows.length > 0) {
+                    await client.query(`
+                        INSERT INTO "useRubric" ("assignmentId", "assignmentRubricId")
+                        VALUES ($1, $2)
+                        ON CONFLICT DO NOTHING
+                    `, [
+                        useRubric.assignmentId,
+                        useRubric.assignmentRubricId
+                    ]);
+                    console.log(`UseRubric entry for assignmentId ${useRubric.assignmentId} restored successfully.`);
+                } else {
+                    console.log(`Skipping useRubric restoration for assignmentId ${useRubric.assignmentId} due to missing dependencies.`);
+                }
+            }
 
             // Delete data from backup tables
             await client.query('DELETE FROM "BackupEnrolledIn" WHERE "courseId" = $1', [courseId]);
@@ -529,6 +716,7 @@ router.post('/course/restore/:id', async (req, res) => {
         client.release();
     }
 });
+
 
 // Get all deleted courses
 router.get('/deleted-courses', async (req, res) => {

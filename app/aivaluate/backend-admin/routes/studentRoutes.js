@@ -119,16 +119,27 @@ router.post('/student/:studentId/restore/:courseCode', checkAuthenticated, async
         // Fetch the courseId from courseCode
         const courseResult = await client.query('SELECT "courseId" FROM "Course" WHERE "courseCode" = $1', [courseCode]);
         if (courseResult.rows.length === 0) {
+            console.warn(`Course with code ${courseCode} not found. Skipping restoration.`);
             await client.query('ROLLBACK');
             return res.status(404).json({ error: 'Course not found' });
         }
         const courseId = courseResult.rows[0].courseId;
+
+        // Check if the student exists
+        const studentExistsQuery = 'SELECT 1 FROM "Student" WHERE "studentId" = $1';
+        const studentExistsResult = await client.query(studentExistsQuery, [studentId]);
+        if (studentExistsResult.rows.length === 0) {
+            console.warn(`Student with ID ${studentId} not found. Skipping restoration.`);
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Student not found' });
+        }
 
         // Restore the enrolledIn relationship
         const restoreQuery = `
             INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
             SELECT "studentId", "courseId", "studentGrade" FROM "BackupEnrolledIn"
             WHERE "studentId" = $1 AND "courseId" = $2
+            ON CONFLICT DO NOTHING
         `;
         await client.query(restoreQuery, [studentId, courseId]);
 
@@ -391,90 +402,123 @@ router.post('/student/restore/:studentId', checkAuthenticated, async (req, res) 
         // Restore related enrollments
         const backupEnrollmentsResult = await client.query('SELECT * FROM "BackupEnrolledIn" WHERE "studentId" = $1', [studentId]);
         for (const backupEnrollment of backupEnrollmentsResult.rows) {
-            await client.query(`
-                INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
-                VALUES ($1, $2, $3)
-                ON CONFLICT DO NOTHING
-            `, [backupEnrollment.studentId, backupEnrollment.courseId, backupEnrollment.studentGrade]);
+            // Check if the course still exists
+            const courseExists = await client.query('SELECT 1 FROM "Course" WHERE "courseId" = $1', [backupEnrollment.courseId]);
+            if (courseExists.rows.length > 0) {
+                await client.query(`
+                    INSERT INTO "EnrolledIn" ("studentId", "courseId", "studentGrade")
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT DO NOTHING
+                `, [backupEnrollment.studentId, backupEnrollment.courseId, backupEnrollment.studentGrade]);
+                console.log(`Enrollment for courseId ${backupEnrollment.courseId} restored successfully.`);
+            } else {
+                console.log(`Course with ID ${backupEnrollment.courseId} does not exist. Skipping enrollment restoration.`);
+            }
         }
-        console.log('Related enrollments restored successfully'); // Debug log
 
         // Restore related assignment submissions
         const backupSubmissionsResult = await client.query('SELECT * FROM "BackupAssignmentSubmission" WHERE "studentId" = $1', [studentId]);
         for (const backupSubmission of backupSubmissionsResult.rows) {
-            await client.query(`
-                INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupSubmission.assignmentSubmissionId,
-                backupSubmission.studentId,
-                backupSubmission.courseId,
-                backupSubmission.assignmentId,
-                backupSubmission.submittedAt,
-                backupSubmission.submissionFile,
-                backupSubmission.isSubmitted,
-                backupSubmission.updatedAt,
-                backupSubmission.isGraded
-            ]);
+            // Check if the course and assignment still exist
+            const courseExists = await client.query('SELECT 1 FROM "Course" WHERE "courseId" = $1', [backupSubmission.courseId]);
+            const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [backupSubmission.assignmentId]);
+            if (courseExists.rows.length > 0 && assignmentExists.rows.length > 0) {
+                await client.query(`
+                    INSERT INTO "AssignmentSubmission" ("assignmentSubmissionId", "studentId", "courseId", "assignmentId", "submittedAt", "submissionFile", "isSubmitted", "updatedAt", "isGraded")
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                    ON CONFLICT DO NOTHING
+                `, [
+                    backupSubmission.assignmentSubmissionId,
+                    backupSubmission.studentId,
+                    backupSubmission.courseId,
+                    backupSubmission.assignmentId,
+                    backupSubmission.submittedAt,
+                    backupSubmission.submissionFile,
+                    backupSubmission.isSubmitted,
+                    backupSubmission.updatedAt,
+                    backupSubmission.isGraded
+                ]);
+                console.log(`Assignment submission ${backupSubmission.assignmentSubmissionId} restored successfully.`);
+            } else {
+                console.log(`Course with ID ${backupSubmission.courseId} or Assignment with ID ${backupSubmission.assignmentId} does not exist. Skipping submission restoration.`);
+            }
         }
-        console.log('Related assignment submissions restored successfully'); // Debug log
 
         // Restore related assignment grades
         const backupGradesResult = await client.query('SELECT * FROM "BackupAssignmentGrade" WHERE "assignmentSubmissionId" IN (SELECT "assignmentSubmissionId" FROM "BackupAssignmentSubmission" WHERE "studentId" = $1)', [studentId]);
         for (const backupGrade of backupGradesResult.rows) {
-            await client.query(`
-                INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupGrade.assignmentSubmissionId,
-                backupGrade.assignmentId,
-                backupGrade.maxObtainableGrade,
-                backupGrade.AIassignedGrade,
-                backupGrade.InstructorAssignedFinalGrade,
-                backupGrade.isGraded
-            ]);
+            // Check if the submission still exists
+            const submissionExists = await client.query('SELECT 1 FROM "AssignmentSubmission" WHERE "assignmentSubmissionId" = $1', [backupGrade.assignmentSubmissionId]);
+            if (submissionExists.rows.length > 0) {
+                await client.query(`
+                    INSERT INTO "AssignmentGrade" ("assignmentSubmissionId", "assignmentId", "maxObtainableGrade", "AIassignedGrade", "InstructorAssignedFinalGrade", "isGraded")
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                    ON CONFLICT DO NOTHING
+                `, [
+                    backupGrade.assignmentSubmissionId,
+                    backupGrade.assignmentId,
+                    backupGrade.maxObtainableGrade,
+                    backupGrade.AIassignedGrade,
+                    backupGrade.InstructorAssignedFinalGrade,
+                    backupGrade.isGraded
+                ]);
+                console.log(`Assignment grade for submission ID ${backupGrade.assignmentSubmissionId} restored successfully.`);
+            } else {
+                console.log(`Assignment submission with ID ${backupGrade.assignmentSubmissionId} does not exist. Skipping grade restoration.`);
+            }
         }
-        console.log('Related assignment grades restored successfully'); // Debug log
 
         // Restore related feedback
         const backupFeedbackResult = await client.query('SELECT * FROM "BackupStudentFeedback" WHERE "studentId" = $1', [studentId]);
         for (const backupFeedback of backupFeedbackResult.rows) {
-            await client.query(`
-                INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupFeedback.studentFeedbackId,
-                backupFeedback.studentId,
-                backupFeedback.assignmentId,
-                backupFeedback.courseId,
-                backupFeedback.AIFeedbackText,
-                backupFeedback.InstructorFeedbackText
-            ]);
+            // Check if the course and assignment still exist
+            const courseExists = await client.query('SELECT 1 FROM "Course" WHERE "courseId" = $1', [backupFeedback.courseId]);
+            const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [backupFeedback.assignmentId]);
+            if (courseExists.rows.length > 0 && assignmentExists.rows.length > 0) {
+                await client.query(`
+                    INSERT INTO "StudentFeedback" ("studentFeedbackId", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                    ON CONFLICT DO NOTHING
+                `, [
+                    backupFeedback.studentFeedbackId,
+                    backupFeedback.studentId,
+                    backupFeedback.assignmentId,
+                    backupFeedback.courseId,
+                    backupFeedback.AIFeedbackText,
+                    backupFeedback.InstructorFeedbackText
+                ]);
+                console.log(`Feedback for assignment ID ${backupFeedback.assignmentId} restored successfully.`);
+            } else {
+                console.log(`Course with ID ${backupFeedback.courseId} or Assignment with ID ${backupFeedback.assignmentId} does not exist. Skipping feedback restoration.`);
+            }
         }
-        console.log('Related feedback restored successfully'); // Debug log
 
         // Restore related feedback reports
         const backupFeedbackReportsResult = await client.query('SELECT * FROM "BackupStudentFeedbackReport" WHERE "studentId" = $1', [studentId]);
         for (const backupFeedbackReport of backupFeedbackReportsResult.rows) {
-            await client.query(`
-                INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                ON CONFLICT DO NOTHING
-            `, [
-                backupFeedbackReport.studentFeedbackReportId,
-                backupFeedbackReport.studentFeedbackReportText,
-                backupFeedbackReport.isResolved,
-                backupFeedbackReport.studentId,
-                backupFeedbackReport.assignmentId,
-                backupFeedbackReport.courseId,
-                backupFeedbackReport.AIFeedbackText,
-                backupFeedbackReport.InstructorFeedbackText
-            ]);
+            // Check if the course and assignment still exist
+            const courseExists = await client.query('SELECT 1 FROM "Course" WHERE "courseId" = $1', [backupFeedbackReport.courseId]);
+            const assignmentExists = await client.query('SELECT 1 FROM "Assignment" WHERE "assignmentId" = $1', [backupFeedbackReport.assignmentId]);
+            if (courseExists.rows.length > 0 && assignmentExists.rows.length > 0) {
+                await client.query(`
+                    INSERT INTO "StudentFeedbackReport" ("studentFeedbackReportId", "studentFeedbackReportText", "isResolved", "studentId", "assignmentId", "courseId", "AIFeedbackText", "InstructorFeedbackText")
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                    ON CONFLICT DO NOTHING
+                `, [
+                    backupFeedbackReport.studentFeedbackReportId,
+                    backupFeedbackReport.studentFeedbackReportText,
+                    backupFeedbackReport.isResolved,
+                    backupFeedbackReport.studentId,
+                    backupFeedbackReport.assignmentId,
+                    backupFeedbackReport.courseId,
+                    backupFeedbackReport.AIFeedbackText,
+                    backupFeedbackReport.InstructorFeedbackText
+                ]);
+                console.log(`Feedback report for assignment ID ${backupFeedbackReport.assignmentId} restored successfully.`);
+            } else {
+                console.log(`Course with ID ${backupFeedbackReport.courseId} or Assignment with ID ${backupFeedbackReport.assignmentId} does not exist. Skipping feedback report restoration.`);
+            }
         }
-        console.log('Related feedback reports restored successfully'); // Debug log
 
         // Delete the backup entries for the restored student
         await client.query('DELETE FROM "BackupStudent" WHERE "studentId" = $1', [studentId]);

@@ -248,7 +248,7 @@ const SubmitAssignment = () => {
                             <form onSubmit={handleSubmit}>
                                 <div className="file-upload">
                                     <label htmlFor="file-upload" className="file-upload-label">
-                                        Drag files here or Click to browse files
+                                        Click here to browse files
                                     </label>
                                     <div
                                         className={`file-upload-inner ${dragging ? 'dragging' : ''}`}
@@ -336,3 +336,4 @@ const SubmitAssignment = () => {
 };
 
 export default SubmitAssignment;
+

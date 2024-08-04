@@ -1,8 +1,8 @@
 import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link, useParams } from 'react-router-dom'; // to prevent page reload
 import axios from 'axios'; // Import axios
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom'; // to prevent page reload
 import '../GeneralStyling.css';
 import '../SideMenu.css';
 
@@ -81,14 +81,14 @@ const SideMenuBarEval = ({ tab }) => {
                 </div>
             </div>
 
-            <div className="class-selection">
+            {/* <div className="class-selection">
                 <div className="icon-div">
                     <CircumIcon name="folder_on" />
                 </div>
                 <div className="link-div">
                     <Link to={`/eval/submissions/${courseIdNavBar}`} className={`${tab === "submissions" ? 'primary-color-text' : 'third-color-text'}`}>All Submissions</Link>
                 </div>
-            </div>
+            </div> */}
 
             <div className="class-selection">
                 <div className="icon-div">

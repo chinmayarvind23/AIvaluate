@@ -18,7 +18,7 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
     }
 
     try {
-        // Query to get student name and grade sums
+        // Query to get student name and grade sums for visible grades
         const studentInfoQuery = `
             SELECT s."firstName", 
                    COALESCE(SUM(ag."InstructorAssignedFinalGrade"), 0) AS "totalGrade",
@@ -27,7 +27,11 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
             LEFT JOIN "AssignmentSubmission" asub ON s."studentId" = asub."studentId"
             LEFT JOIN "AssignmentGrade" ag ON asub."assignmentSubmissionId" = ag."assignmentSubmissionId"
             LEFT JOIN "Assignment" a ON asub."assignmentId" = a."assignmentId"
-            WHERE s."studentId" = $1 AND asub."courseId" = $2 AND ag."isGraded" = true 
+            WHERE s."studentId" = $1 
+              AND asub."courseId" = $2 
+              AND ag."isGraded" = true  
+              AND a."isPublished" = true 
+              AND a."gradeHidden" = false
             GROUP BY s."firstName"
         `;
         const studentInfoResult = await pool.query(studentInfoQuery, [studentId, courseId]);
@@ -42,12 +46,14 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
                 COALESCE(MAX(ag."InstructorAssignedFinalGrade"), 0) AS score,
                 a."maxObtainableGrade" AS total,
                 MAX(COALESCE(s."submittedAt", '1970-01-01'::date)) > '1970-01-01'::date AS submitted,
-                BOOL_OR(s."isGraded") AS marked
+                BOOL_OR(s."isGraded") AS marked,
+                BOOL_OR(a."isPublished") AS published,
+                BOOL_OR(a."gradeHidden") AS hidden
             FROM "Assignment" a
             LEFT JOIN "AssignmentSubmission" s ON a."assignmentId" = s."assignmentId" AND s."studentId" = $1
             LEFT JOIN "AssignmentGrade" ag ON s."assignmentSubmissionId" = ag."assignmentSubmissionId"
-            WHERE a."courseId" = $2
-            AND a."isPublished" = true
+            WHERE a."courseId" = $2 
+              AND a."isPublished" = true
             GROUP BY a."assignmentId"
         `;
         const result = await pool.query(query, [studentId, courseId]);
@@ -56,11 +62,17 @@ router.get('/student-grades/:courseId', checkAuthenticated, async (req, res) => 
             return res.status(404).json({ message: 'No grades found' });
         }
 
-        const totalGrade = result.rows.reduce((sum, row) => sum + row.score, 0);
-        const totalMaxGrade = result.rows.reduce((sum, row) => sum + row.total, 0);
+        // Calculate the total visible grades
+        const totalGrade = result.rows.reduce((sum, row) => {
+            return row.hidden ? sum : sum + row.score;
+        }, 0);
+        
+        const totalMaxGrade = result.rows.reduce((sum, row) => {
+            return row.hidden ? sum : sum + row.total;
+        }, 0);
 
         res.status(200).json({
-            studentName: req.user.name,
+            studentName: studentInfo ? studentInfo.firstName : 'Student',
             totalGrade,
             totalMaxGrade,
             assignments: result.rows

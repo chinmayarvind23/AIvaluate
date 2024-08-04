@@ -1,8 +1,7 @@
-
 import axios from 'axios';
 import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import '../GeneralStyling.css';
 import '../Grades.css';
 import '../HelpPage.css';
@@ -105,7 +104,7 @@ console.log("FirstName:", firstName);
                       <td>{formatDueDate(grade.due)}</td>
                       <td>{grade.submitted ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
                       <td>{grade.marked ? <span className="checkmark">✔️</span> : <span className="cross">❌</span>}</td>
-                      <td>{grade.score.toFixed(1)}/{grade.total}</td>
+                      <td>{grade.hidden ? '--' : `${grade.score.toFixed(1)}/${grade.total}`}</td>
                     </tr>               
                   ))}
                   <tr>

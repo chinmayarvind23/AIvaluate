@@ -38,4 +38,48 @@ router.get('/evaluator-grades/:courseId', checkAuthenticated, async (req, res) =
     }
 });
 
+// Route to hide grades for an assignment
+router.put('/assignments/:assignmentId/hide-grades', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        // Set gradeHidden to true to hide grades
+        const result = await pool.query(
+            'UPDATE "Assignment" SET "gradeHidden" = true WHERE "assignmentId" = $1 RETURNING *',
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json({ message: 'Grades hidden successfully', assignment: result.rows[0] });
+    } catch (error) {
+        console.error('Error hiding grades:', error);
+        res.status(500).json({ message: 'Error hiding grades' });
+    }
+});
+
+// Route to release grades for an assignment
+router.put('/assignments/:assignmentId/release-grades', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        // Set gradeHidden to false to release grades
+        const result = await pool.query(
+            'UPDATE "Assignment" SET "gradeHidden" = false WHERE "assignmentId" = $1 RETURNING *',
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        res.status(200).json({ message: 'Grades released successfully', assignment: result.rows[0] });
+    } catch (error) {
+        console.error('Error releasing grades:', error);
+        res.status(500).json({ message: 'Error releasing grades' });
+    }
+});
+
 module.exports = router;

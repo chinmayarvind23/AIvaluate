@@ -60,11 +60,10 @@
     "vite": "^5.2.0"
   },
   "jest": {
-    "testEnvironment": "jest-environment-jsdom",
+    "testEnvironment": "jsdom",
     "transform": {
       "^.+\\.jsx?$": "<rootDir>/babel-jest-transformer.cjs"
     },
-    "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "<rootDir>/jest.setup.js"
     ],

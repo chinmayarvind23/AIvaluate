@@ -46,7 +46,8 @@ const EvaluatorGrades = () => {
     let sumOfAvgGrades = grades.reduce((sum, grade) => sum + grade.avgGrade, 0);
     let sumOfTotalGrades = grades.reduce((sum, grade) => sum + grade.totalGrade, 0);
 
-    let average = ((sumOfAvgGrades / sumOfTotalGrades) * 100).toFixed(1);
+    // Calculate class average, handling division by zero or NaN
+    let average = sumOfTotalGrades > 0 ? ((sumOfAvgGrades / sumOfTotalGrades) * 100).toFixed(1) : '--';
 
     const formatDueDate = (dueDate) => {
         const date = parseISO(dueDate); // Parse as ISO string
@@ -63,27 +64,27 @@ const EvaluatorGrades = () => {
             <div className="filler-div">
                 <SideMenuBarEval tab="grades"/>
                 <div className="main-margin">
-                        <div className="top-bar">
-                            <div className="float-left">
-                                <div className="grade-summary-text"><h1>Grade Summary</h1></div>
-                                <div className="search-div">
-                                    <div className="search-container">
-                                        <div className="search-box">
-                                            <FaSearch className="search-icon" />
-                                            <input
-                                                type="text"
-                                                placeholder="Search..."
-                                                value={searchQuery}
-                                                onChange={handleSearch}
-                                            />
-                                        </div>
+                    <div className="top-bar">
+                        <div className="float-left">
+                            <div className="grade-summary-text"><h1>Grade Summary</h1></div>
+                            <div className="search-div">
+                                <div className="search-container">
+                                    <div className="search-box">
+                                        <FaSearch className="search-icon" />
+                                        <input
+                                            type="text"
+                                            placeholder="Search..."
+                                            value={searchQuery}
+                                            onChange={handleSearch}
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <div className="float-right">
-                                <div className="class-avg"><h2>Class Average: {average}%</h2></div>
-                            </div>
                         </div>
+                        <div className="float-right">
+                            <div className="class-avg"><h2>Class Average: {average}%</h2></div>
+                        </div>
+                    </div>
                     <div className="scrollable-div">
                         <table className="grades-table secondary-colorbg">
                             <thead>
@@ -95,20 +96,24 @@ const EvaluatorGrades = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                    {filteredGrades.map((grade, index) => (
-                                        <tr key={index}>
-                                            <td>
-                                                <div className="file-icon"></div>
-                                                {grade.name}
-                                            </td>
-                                            <td>{formatDueDate(grade.due)}</td>
-                                            <td>{((grade.avgGrade / grade.totalGrade)*100).toFixed(1)}%</td>
-                                            <td>{grade.maxObtainableGrade}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                {filteredGrades.map((grade, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <div className="file-icon"></div>
+                                            {grade.name}
+                                        </td>
+                                        <td>{formatDueDate(grade.due)}</td>
+                                        <td>
+                                        {(grade.totalGrade !== null && grade.totalGrade !== undefined && grade.totalGrade > 0)
+                                        ? ((grade.avgGrade / grade.totalGrade) * 100).toFixed(1) + '%'
+                                        : '--'}
+                                        </td>
+                                        <td>{grade.maxObtainableGrade}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

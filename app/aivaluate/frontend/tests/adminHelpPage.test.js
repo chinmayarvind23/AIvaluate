@@ -47,15 +47,20 @@ describe('Selenium Admin Help Page Test', () => {
       const helpSection = await driver.wait(until.elementLocated(By.css('.help-section')), 20000);
       console.log('Help section displayed');
 
-      // Verify that the Evaluator Manager section is displayed
-      const evaluatorManagerHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Evaluator Manager"]')), 20000);
-      expect(evaluatorManagerHeading).toBeTruthy();
-      console.log('Evaluator Manager section displayed');
+      // Verify that the Managing Evaluators section is displayed
+      const managingEvaluatorsHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Managing Evaluators"]')), 20000);
+      expect(managingEvaluatorsHeading).toBeTruthy();
+      console.log('Managing Evaluators section displayed');
 
-      // Verify that the Student Manager section is displayed
-      const studentManagerHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Student Manager"]')), 20000);
-      expect(studentManagerHeading).toBeTruthy();
-      console.log('Student Manager section displayed');
+      // Verify that the Managing Students section is displayed
+      const managingStudentsHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Managing Students"]')), 20000);
+      expect(managingStudentsHeading).toBeTruthy();
+      console.log('Managing Students section displayed');
+
+      // Verify that the Need Further Assistance section is displayed
+      const needAssistanceHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Need Further Assistance?"]')), 20000);
+      expect(needAssistanceHeading).toBeTruthy();
+      console.log('Need Further Assistance section displayed');
 
     } catch (error) {
       console.error('Test failed:', error);

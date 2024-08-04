@@ -16,7 +16,7 @@ describe('Selenium Forgot Password Page Test', () => {
       await driver.get('http://localhost:5173/forgotpassword');
 
       // Debugging: Log to check if the page loaded
-      console.log('Navigated to /stu/forgotpassword');
+      console.log('Navigated to /forgotpassword');
 
       // Wait for the email input to be present
       const emailInput = await driver.wait(until.elementLocated(By.css('input[placeholder="Email Address"]')), 30000);

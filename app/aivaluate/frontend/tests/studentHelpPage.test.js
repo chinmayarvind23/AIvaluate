@@ -47,20 +47,40 @@ describe('Selenium Help Page Test', () => {
       const helpSection = await driver.wait(until.elementLocated(By.css('.help-section')), 20000);
       console.log('Help section displayed');
 
-      // Verify that the "Step 1: Assignment Submission" section is displayed
-      const step1Heading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Step 1: Assignment Submission"]')), 20000);
-      expect(step1Heading).toBeTruthy();
-      console.log('Step 1: Assignment Submission section displayed');
+      // Verify that the Dashboard section is displayed
+      const dashboardHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Dashboard"]')), 20000);
+      expect(dashboardHeading).toBeTruthy();
+      console.log('Dashboard section displayed');
 
-      // Verify that the "Step 2: AI Analysis" section is displayed
-      const step2Heading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Step 2: AI Analysis"]')), 20000);
-      expect(step2Heading).toBeTruthy();
-      console.log('Step 2: AI Analysis section displayed');
+      // Verify that the Join a Course section is displayed
+      const joinCourseHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Join a Course"]')), 20000);
+      expect(joinCourseHeading).toBeTruthy();
+      console.log('Join a Course section displayed');
 
-      // Verify that the "Step 3: Feedback Generation" section is displayed
-      const step3Heading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Step 3: Feedback Generation"]')), 20000);
-      expect(step3Heading).toBeTruthy();
-      console.log('Step 3: Feedback Generation section displayed');
+      // Verify that the Grades section is displayed
+      const gradesHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Grades"]')), 20000);
+      expect(gradesHeading).toBeTruthy();
+      console.log('Grades section displayed');
+
+      // Verify that the Assignments section is displayed
+      const assignmentsHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Assignments"]')), 20000);
+      expect(assignmentsHeading).toBeTruthy();
+      console.log('Assignments section displayed');
+
+      // Verify that the People section is displayed
+      const peopleHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="People"]')), 20000);
+      expect(peopleHeading).toBeTruthy();
+      console.log('People section displayed');
+
+      // Verify that the Submissions section is displayed
+      const submissionsHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Submissions"]')), 20000);
+      expect(submissionsHeading).toBeTruthy();
+      console.log('Submissions section displayed');
+
+      // Verify that the Need Further Assistance section is displayed
+      const assistanceHeading = await driver.wait(until.elementLocated(By.xpath('//h3[text()="Need Further Assistance?"]')), 20000);
+      expect(assistanceHeading).toBeTruthy();
+      console.log('Need Further Assistance section displayed');
 
     } catch (error) {
       console.error('Test failed:', error);

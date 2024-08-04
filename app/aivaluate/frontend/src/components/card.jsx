@@ -94,7 +94,7 @@ const Card = ({ courseId, courseCode, courseName, isArchived, user="stu" }) => {
       <h2>{courseCode}
         {isArchived && <span className="archive-status"> - Archived</span>}
       </h2>
-      <p className="course-name-text">{truncateText(courseName, 21)}</p>
+      <p className="course-name-text">{truncateText(courseName, 30)}</p>
       {/* <p className="course-name-text">{courseName}</p> */}
       <div>
         {(courseCode === 'Create Course' || user === 'joinCourse') && <CircumIcon name="circle_plus" />}

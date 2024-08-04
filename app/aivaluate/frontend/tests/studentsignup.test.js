@@ -4,13 +4,23 @@ describe('Selenium Signup Page Test', () => {
   let driver;
 
   beforeAll(async () => {
-    driver = await new Builder().forBrowser('chrome').build();
+    try {
+      driver = await new Builder().forBrowser('chrome').build(); // Try to initialize the driver
+    } catch (error) {
+      console.error('Failed to initialize the driver:', error); // Log if there is an error during initialization
+    }
   });
 
   afterAll(async () => {
-    await driver.quit();
+    if (driver) { // Check if driver is initialized
+      try {
+        await driver.quit(); // Attempt to quit the driver safely
+      } catch (error) {
+        console.error('Failed to quit the driver:', error); // Log if there is an error during quit
+      }
+    }
   });
-
+  
   test('Signup page loads and allows account creation', async () => {
     try {
       await driver.get('http://localhost:5173/stu/signup');

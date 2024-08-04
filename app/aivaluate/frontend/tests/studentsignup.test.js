@@ -58,14 +58,6 @@ describe('Selenium Signup Page Test', () => {
       await confirmPasswordInput.sendKeys('pass1234');
       console.log('Confirm password entered');
 
-      // Wait for the major dropdown to be present
-      const majorSelect = await driver.wait(until.elementLocated(By.css('select')), 20000);
-      console.log('Major dropdown located');
-
-      // Select a major
-      await majorSelect.sendKeys('Computer Science');
-      console.log('Major selected');
-
       // Submit the form
       const submitButton = await driver.wait(until.elementLocated(By.css('.auth-submit')), 20000);
       await submitButton.click();

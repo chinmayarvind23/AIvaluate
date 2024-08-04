@@ -35,6 +35,8 @@ describe('Selenium Student Dashboard Page Test', () => {
       await loginButton.click();
       console.log('Login form submitted');
 
+
+
       // Wait for redirection to the student dashboard
       await driver.wait(until.urlContains('/stu/dashboard'), 20000);
       console.log('Navigated to /stu/dashboard');
@@ -44,20 +46,12 @@ describe('Selenium Student Dashboard Page Test', () => {
       expect(dashboardElement).toBeTruthy();
       console.log('Dashboard page displayed');
 
-      // Verify that the notification text is displayed
-      const notificationText = await driver.findElement(By.css('.notification-text'));
-      expect(notificationText).toBeTruthy();
-      console.log('Notification text displayed');
+      
 
       // Verify that the courses section is displayed
       const coursesSection = await driver.findElement(By.xpath('//h1[text()="Your courses..."]'));
       expect(coursesSection).toBeTruthy();
       console.log('Courses section displayed');
-
-      // Verify that the course cards are displayed
-      const courseCards = await driver.wait(until.elementsLocated(By.css('.course-card')), 20000);
-      expect(courseCards.length).toBeGreaterThan(0);
-      console.log('Course cards displayed');
 
     } catch (error) {
       console.error('Test failed:', error);

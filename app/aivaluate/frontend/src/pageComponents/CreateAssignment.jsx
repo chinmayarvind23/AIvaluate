@@ -118,6 +118,11 @@ const CreateAssignment = () => {
         const file = e.target.files[0];
         const allowedExtensions = /(\.css|\.html|\.js|\.jsx)$/i;
 
+        if (file && file.size === 0) {
+            toast.error('Empty files are not allowed.');
+            return false;
+        }
+
         if (file && !allowedExtensions.exec(file.name)) {
             toast.error('Please upload file having extensions .css, .html, .js, or .jsx only.');
             return false;
@@ -134,7 +139,9 @@ const CreateAssignment = () => {
         e.preventDefault();
         setDragging(false);
         const selectedFiles = Array.from(e.dataTransfer.files);
-        handleFileChange({ target: { files: selectedFiles } });
+        if (selectedFiles.length > 0) {
+            handleFileChange({ target: { files: selectedFiles } });
+        }
     };
 
     const handleDragOver = (e) => {

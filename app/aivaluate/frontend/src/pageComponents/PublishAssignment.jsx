@@ -132,6 +132,10 @@ const PublishAssignment = () => {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
+        if (selectedFile && selectedFile.size === 0) {
+            toast.error('Empty files are not allowed.');
+            return;
+        }
         setFile(selectedFile);
         setFiles([selectedFile]);
     };
@@ -140,6 +144,11 @@ const PublishAssignment = () => {
         e.preventDefault();
         setDragging(false);
         const selectedFiles = Array.from(e.dataTransfer.files);
+        const emptyFiles = selectedFiles.filter(file => file.size === 0);
+        if (emptyFiles.length > 0) {
+            toast.error('Empty files are not allowed.');
+            return;
+        }
         handleFileChange({ target: { files: selectedFiles } });
     };
 

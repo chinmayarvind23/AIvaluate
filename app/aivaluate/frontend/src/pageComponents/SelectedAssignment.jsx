@@ -162,7 +162,7 @@ const SelectedAssignment = () => {
                                     <button className="main-back-button" onClick={() => navigate(-1)}><CircumIcon name="circle_chev_left"/></button>
                                 </div>
                                 <div className="float-left">
-                                    <div className="title-text"><h1>Assignment - Submissions</h1></div>
+                                    <div className="title-text"><h1>All Submissions</h1></div>
                                 </div>
                                 <div className="float-right">
                                     <button className="grades-button" onClick={handleGradeWithAI}>

@@ -34,11 +34,11 @@
   }
   
   .course-form-input {
-    width: 100%;
-    padding: 10px; /* Adjust padding to be consistent */
+    width: 95%;
+    padding: 10px; 
     margin-bottom: 10px;
     border: 1px solid #ccc;
-    align-self: flex-end;
+    align-self: middle;
     border-radius: 50px;
   }
   

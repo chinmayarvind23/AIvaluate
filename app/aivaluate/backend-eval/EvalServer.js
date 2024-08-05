@@ -233,6 +233,26 @@ The AIvaluate Team
     }
 }
 
+async function sendAssignmentGradedEmail(payload) {
+    const { email, courseName, assignmentName } = payload;
+    const subject = `📊 Your assignment has been graded in ${courseName}`;
+    const text = `
+    ${assignmentName} in the course ${courseName} has been graded.
+
+    Please log in to your AIvaluate account to view your grade and feedback.
+
+    Best regards,
+    The AIvaluate Team
+    `;
+
+    try {
+        await sendMail(email, subject, text);
+        console.log(`Email sent to ${email} for graded assignment.`);
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+}
+
 app.use('/eval-api', ensureCourseAndInstructor, assignmentRoutes);
 app.use('/eval-api/rubrics', ensureCourseAndInstructor, courseRoutes);
 app.use('/eval-api/assignments', ensureCourseAndInstructor, assignmentRoutes);
@@ -256,7 +276,22 @@ async function listenForAssignmentCreation() {
     await client.query('LISTEN assignment_created');
 }
 
+async function listenForAssignmentGrading() {
+    const client = await pool.connect();
+    client.on('notification', async (msg) => {
+        if (msg.channel === 'assignment_graded') {
+            const payload = JSON.parse(msg.payload);
+            console.log('Assignment Graded:', payload);
+            await sendAssignmentGradedEmail(payload);
+        }
+    });
+
+    await client.query('LISTEN assignment_graded');
+}
+
 listenForAssignmentCreation();
+
+listenForAssignmentGrading();
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

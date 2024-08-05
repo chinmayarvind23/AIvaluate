@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS "AssignmentGrade"(
     "AIassignedGrade" FLOAT,
     "InstructorAssignedFinalGrade" FLOAT,
     "isGraded" BOOLEAN DEFAULT false,
+    "notificationSent" BOOLEAN DEFAULT false,
     CONSTRAINT unique_assignment_grade UNIQUE ("assignmentSubmissionId", "assignmentId"),
     FOREIGN KEY ("assignmentSubmissionId") REFERENCES "AssignmentSubmission"("assignmentSubmissionId") ON DELETE CASCADE,
     FOREIGN KEY ("assignmentId") REFERENCES "Assignment"("assignmentId") ON DELETE CASCADE
@@ -436,3 +437,44 @@ CREATE TRIGGER trigger_assignment_creation
 AFTER INSERT ON "Assignment"
 FOR EACH ROW
 EXECUTE FUNCTION notify_assignment_creation();
+
+CREATE OR REPLACE FUNCTION notify_student_after_grading() RETURNS trigger AS $$
+DECLARE
+    studentEmail TEXT;
+    courseName TEXT;
+    assignmentName TEXT;
+    courseId INT;
+BEGIN
+    IF NEW."isGraded" = TRUE AND NEW."notificationSent" = FALSE AND NEW."InstructorAssignedFinalGrade" IS NOT NULL THEN
+        SELECT a."courseId", c."courseName", a."assignmentName"
+        INTO courseId, courseName, assignmentName
+        FROM "Assignment" a
+        JOIN "Course" c ON a."courseId" = c."courseId"
+        WHERE a."assignmentId" = NEW."assignmentId" AND a."gradeHidden" = FALSE;
+        FOR studentEmail IN
+            SELECT s."email"
+            FROM "Student" s
+            JOIN "EnrolledIn" e ON s."studentId" = e."studentId"
+            WHERE e."courseId" = courseId
+        LOOP
+            PERFORM pg_notify('assignment_graded', json_build_object(
+                'email', studentEmail,
+                'courseName', courseName,
+                'assignmentName', assignmentName,
+                'courseId', courseId
+            )::text);
+        END LOOP;
+        UPDATE "AssignmentGrade"
+        SET "notificationSent" = TRUE
+        WHERE "assignmentSubmissionId" = NEW."assignmentSubmissionId";
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_notify_student_after_grading
+AFTER UPDATE ON "AssignmentGrade"
+FOR EACH ROW
+WHEN (NEW."isGraded" = TRUE AND NEW."notificationSent" = FALSE AND NEW."InstructorAssignedFinalGrade" IS NOT NULL)
+EXECUTE FUNCTION notify_student_after_grading();

@@ -33,7 +33,7 @@ To ensure the software runs smoothly on a user's machine, follow these steps:
 
 - **Download Docker and VS Code:**
   - Ensure Docker is installed on your desktop and ready to accept containers. If Docker is not installed, download and install it from [Docker's official website](https://www.docker.com/products/docker-desktop/).
-  - Ensure VS Code is insalled on your desktop and install it if not [VS Code Download](https://code.visualstudio.com/download)
+  - Ensure VS Code is insalled on your desktop and install it if not. [VS Code Download](https://code.visualstudio.com/download)
 - **Clone the Repository:**
   - Open a terminal or command prompt.
   - Clone the project repository to your desktop by running the following command:

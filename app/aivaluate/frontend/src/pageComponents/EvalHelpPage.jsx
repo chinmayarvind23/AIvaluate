@@ -22,10 +22,10 @@ const EvalHelpPage = () => {
                     <p><strong>Assign TA:</strong> Allocate Teaching Assistants to the course to assist with administrative and grading duties.</p>
                     <p><strong>Archive Course:</strong> Temporarily disable the course from the active list without deleting historical data or student records.</p>
                     <p><strong>Delete Course:</strong> Permanently remove the course and all its associated data from the system. This action is irreversible.</p>
-                    <p><strong>AI Test</strong>Provide feedback on a sample assignment submission to test prompt setting for clarity and accuracy</p>
+                    <p><strong>AI Test:</strong> Provide feedback on a sample assignment submission to test prompt setting for clarity and accuracy</p>
 
-                    <h3 className="heading-ss">Students</h3>
-                    <p><strong>AI Setting:</strong> Modify the prompt message to be sent to the AI grading bot.</p>
+                    <h3 className="heading-ss">AI Setting</h3>
+                    <p><strong>Manage Prompts:</strong> Create, delete, or modify the prompt message to be sent to the AI grading bot.</p>
 
                     <h3 className="heading-gradess">Student Grades</h3>
                     <p><strong>Managing Grades:</strong> Navigate to 'Student Grades' to view  grade summary. Click on a Assignment name to view the submissions and grades for that particular assignment.</p>

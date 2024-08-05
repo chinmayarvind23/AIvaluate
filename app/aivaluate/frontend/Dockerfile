@@ -1,5 +1,6 @@
 FROM node:20.14.0-buster as build
 
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -12,7 +13,7 @@ RUN npm install axios
 
 RUN npm install react-datepicker
 RUN npm install date-fns
-
+RUN npm install selenium-webdriver
 
 RUN npm run build
 

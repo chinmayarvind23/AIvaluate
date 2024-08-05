@@ -34,7 +34,7 @@ Bonus:
 5: Forgot password email implementation
 6: AI implementation
 7: Create/edit an Assignment
-8: New assignment notification
+8: New assignment notification & new assignment grade notification
 9: Summary of grades for teacher
 10: Edit AI grading for professor
 11: Publish or private assignments

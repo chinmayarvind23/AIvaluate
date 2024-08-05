@@ -110,9 +110,9 @@ By following these steps, you will be able to set up and run the software on you
 ### Dashboard
 - **Accessing the Dashboard:** 
   - Log in to view the main dashboard.
-  - Here, you can see all courses and notifications at a glance.
+  - Here, you can see all courses you teach.
 
-### Create a Course
+### Create a Course (for professors only)
 - **Creating a Course:**
   - Navigate to 'Create a Course' from the dashboard.
   - Provide the necessary course details and assign any teaching assistants as needed.
@@ -131,7 +131,7 @@ By following these steps, you will be able to set up and run the software on you
 ### Student Grades
 - **Managing Grades:**
   - Navigate to 'Student Grades' to view grade summary.
-  - Click on an assignment name to view the submissions and grades for that particular assignment.
+  - Here you can see grade analitics such as the class average, assignment averages, and max grades.
 
 ### Assignments
 - **Creating and Managing Assignments:**
@@ -142,22 +142,17 @@ By following these steps, you will be able to set up and run the software on you
 - **Viewing the Student List:**
   - Select 'Students' from the menu to see a list of all enrolled students.
 
-### All Submissions
-- **Reviewing Submissions:**
-  - Click on 'All Submissions' to review all assignments by students.
-
 ### Using Rubrics
 - **Using Rubrics:**
-  - Under 'Rubrics', create and modify scoring criteria for assignments.
-  - Select an assignment to apply a rubric and ensure grading consistency and transparency.
+  - Under 'Rubrics', view and modify scoring criteria for rubcrics.
+  - QWhen creaign a new assignemtn selete "use past rubric" to use a rubric that you've already made.
 
 ### Using the AI Tool to Grade Assignments
 - **AI Grading:**
-  - Navigate to the 'Assignments' section and select the assignment you wish to grade.
-  - Click on the 'Use AI to Grade' button.
-  - Review the AI-generated grades and feedback.
-  - Adjust grades or feedback if necessary.
-  - Confirm and finalize the grades to be recorded in the system.
+  - Navigate to the 'Assignments' section and select the assignment you wish to grade. Here you will see the list of student submissions fo rthis particular assignment.
+  - Click on the 'Grade with AI' button. and while for it to grade all assignments
+  - Review the AI-generated grades and feedback and confirm both the final grade and feedback so it can be shown to the student.
+  - You must confirm and finalize the grades to be recorded in the system.
 
 ### Further Assistance
 - **Contact Support:**
@@ -172,7 +167,7 @@ By following these steps, you will be able to set up and run the software on you
   - Use the search bar at the top of the Evaluator Manager to quickly find evaluators by name.
   - Enter the name of the evaluator and press enter.
 - **Updating Evaluator Profiles:**
-  - Select an evaluator from the list, click 'Edit', make any necessary changes to their profile, and save your updates.
+  - Select an evaluator from the list, click 'Edit', make any necessary changes to their profile such are changing the courses they teach, their first name, last name, or email, and save your updates.
 - **Assigning a TA Role:**
   - Use the 'Prof' slider button located below their name to assign an evaluator as a TA. Click and confirm this selection.
 - **Removing an Evaluator:**
@@ -182,11 +177,17 @@ By following these steps, you will be able to set up and run the software on you
 - **Searching for a Student:**
   - Use the search bar at the top of the Student Manager to quickly locate students by name. Type the student's name and press enter.
 - **Updating Student Profiles:**
-  - Select a student from the list, click 'Edit', make any necessary changes to their profile, and save your updates.
+  - Select a student from the list, click 'Edit', make any necessary changes to their profile such are changing the courses they're enrolled in, their first name, last name, or email and save your updates.
 - **Dropping Courses:**
   - In the student's profile, use the 'Drop' button in front of each course to manage their courses.
 - **Deleting a Student Account:**
   - To remove a student completely, click the 'Delete user' button at the bottom of their profile and confirm the deletion.
+
+### Managing courses
+- **Viewing courses:**
+  - Browse the list of courses to ensure they are all approved courses.
+- **Editing courses:**
+  - Select a course and add a professor to it or delete a course to remove it from the list of courses.
 
 ### Further Assistance
 - **Contact Support:**

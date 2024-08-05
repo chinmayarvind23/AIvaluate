@@ -65,9 +65,9 @@ To ensure the software runs smoothly on a user's machine, follow these steps:
   - To run the unit tests for the application please look at the terminal when you run **docker compose up --build** as the tests are run at the same time giving you a full coverage report to analyse.
   - To run the selenium integrations tests please make sure you have already run **docker compose up --build** in your terminal window. Without exiting out of the current running docker terminal, open a new terminal window and run the following to see the automated tests run:
     ```bash
-  cd app/aivaluate/frontend
-	npm install selemium-webdriver
-	npm test
+    cd app/aivaluate/frontend
+    npm install selemium-webdriver
+    npm test
     ```
 By following these steps, you will be able to set up and run the software on your machine successfully. If you encounter any issues during the installation process, please refer to the user guide sections for each role for further assistance or contact support at aivaluateoffical@gmail.com.
 

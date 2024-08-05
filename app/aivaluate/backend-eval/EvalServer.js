@@ -13,7 +13,8 @@ const studentRoutes = require('./routes/studentRoutes');
 const promptRoutes = require('./routes/promptRoutes');
 const evalRoutes = require('./routes/evalRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
-
+const { pool } = require('./dbConfig');
+const { sendMail } = require('./routes/instructorRoutes');
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
@@ -49,6 +50,8 @@ app.use(flash());
 app.use((req, res, next) => {
     console.log('Course ID from body:', req.body.courseId);
     console.log('Course ID from session:', req.session.courseId);
+    console.log('Instructor ID from body:', req.body.instructorId);
+    console.log('Instructor ID from session:', req.session.instructorId);
     if (!req.session.courseId && req.body.courseId) {
         req.session.courseId = req.body.courseId;
     }
@@ -158,6 +161,78 @@ function ensureCourseAndInstructor(req, res, next) {
     next();
 }
 
+async function sendAssignmentCreationEmails(courseId, assignmentId) {
+    try {
+        const result = await pool.query(
+            `SELECT s."email"
+             FROM "Student" s
+             JOIN "EnrolledIn" e ON s."studentId" = e."studentId"
+             WHERE e."courseId" = $1`,
+            [courseId]
+        );
+        
+        const assignmentResult = await pool.query(
+            `SELECT "assignmentName", "dueDate", "assignmentDescription", "maxObtainableGrade"
+             FROM "Assignment"
+             WHERE "assignmentId" = $1`,
+            [assignmentId]
+        );
+        const assignment = assignmentResult.rows[0];
+        const courseResult = await pool.query(
+            `SELECT "courseName", "courseCode"
+             FROM "Course"
+             WHERE "courseId" = $1`,
+            [courseId]
+        );
+        const course = courseResult.rows[0];
+        const dueDate = new Date(assignment.dueDate);
+        const formattedDate = dueDate.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+        });
+
+        const formattedTime = dueDate.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        });
+
+        const formattedDueDate = `${formattedDate} at ${formattedTime}`;
+        const subject = `📝 New Assignment: ${assignment.assignmentName} has been created`;
+        const text = `
+📅  Assignment Created 📅 
+
+A new assignment has been created in the course ${course.courseCode}: ${course.courseName}. Here are the details:
+
+📚 Assignment: ${assignment.assignmentName}
+
+📅 Due Date: ${formattedDueDate}
+
+---
+
+✨ Tips for Success: ✨
+
+- 📅 Mark the due date on your calendar.
+- ⏰ Manage your time effectively.
+- 📝 Review the assignment requirements carefully.
+- 💡 Start early to ensure you have ample time for resubmitting if you need to.
+
+You can access the assignment by logging into your AIvaluate account. Be sure to submit your work before the due date, good luck!
+
+Best regards,
+The AIvaluate Team
+        `;
+
+        for (let row of result.rows) {
+            await sendMail(row.email, subject, text);
+        }
+        console.log(`Emails sent to all students for assignment ID ${assignmentId}`);
+    } catch (error) {
+        console.error('Error sending assignment creation emails:', error);
+    }
+}
+
 app.use('/eval-api', ensureCourseAndInstructor, assignmentRoutes);
 app.use('/eval-api/rubrics', ensureCourseAndInstructor, courseRoutes);
 app.use('/eval-api/assignments', ensureCourseAndInstructor, assignmentRoutes);
@@ -167,6 +242,21 @@ app.use('/eval-api', gradeRoutes);
 app.use('/eval-api', studentRoutes);
 app.use('/eval-api', promptRoutes);
 app.use('/eval-api', submissionRoutes);
+
+async function listenForAssignmentCreation() {
+    const client = await pool.connect();
+    client.on('notification', async (msg) => {
+        if (msg.channel === 'assignment_created') {
+            const payload = JSON.parse(msg.payload);
+            console.log('Assignment Created:', payload);
+            sendAssignmentCreationEmails(payload.courseId, payload.assignmentId);
+        }
+    });
+
+    await client.query('LISTEN assignment_created');
+}
+
+listenForAssignmentCreation();
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

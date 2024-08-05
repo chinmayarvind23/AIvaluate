@@ -352,3 +352,4 @@ router.get('/instructor/:id/isTA', async (req, res) => {
 });
 
 module.exports = router;
+module.exports.sendMail = sendMail; 

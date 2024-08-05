@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
@@ -14,7 +13,7 @@ const StudentViewSubmissions = () => {
     const { courseId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
-    const [searchTerm, setSearchTerm] = useState('');
+    //const [searchTerm, setSearchTerm] = useState('');
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [files, setFiles] = useState([]);
 
@@ -25,6 +24,7 @@ const StudentViewSubmissions = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setFiles(data);
+                    setFilteredFiles(data);
                 } else {
                     console.error('Error fetching submissions:', response.statusText);
                 }
@@ -36,14 +36,14 @@ const StudentViewSubmissions = () => {
         fetchSubmissions();
     }, [courseId]);
 
-    useEffect(() => {
-        const filtered = files.filter(file =>
-            file.assignmentKey && file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            file.studentId && file.studentId.toString().includes(searchTerm)
-        );
-        setFilteredFiles(filtered);
-        setCurrentPage(1);
-    }, [searchTerm, files]);
+    // useEffect(() => {
+    //     const filtered = files.filter(file =>
+    //         file.assignmentKey && file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         file.studentId && file.studentId.toString().includes(searchTerm)
+    //     );
+    //     setFilteredFiles(filtered);
+    //     setCurrentPage(1);
+    // }, [searchTerm, files]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -62,10 +62,9 @@ const StudentViewSubmissions = () => {
         }
     };
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1);
-    };
+    // const handleSearchChange = (e) => {
+    //     setSearchTerm(e.target.value);
+    // };
 
     const navBarText = `${courseCode} - ${courseName}`;
 
@@ -78,7 +77,7 @@ const StudentViewSubmissions = () => {
                     <div className="portal-container">
                         <div className="top-bar">
                             <h1>Submissions</h1>
-                            <div className="search-container">
+                            {/* <div className="search-container">
                                 <div className="search-box">
                                     <FaSearch className="search-icon" />
                                     <input 
@@ -88,7 +87,7 @@ const StudentViewSubmissions = () => {
                                         onChange={handleSearchChange}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (

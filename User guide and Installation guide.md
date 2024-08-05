@@ -85,12 +85,14 @@ By following these steps, you will be able to set up and run the software on you
 ### Grades 
 - **Viewing Your Grades:**
   - Navigate to 'Grades' to view your grade summary.
-  - Click on an assignment name to view the submissions and grades for that particular assignment.
+  - Click on an assignment name to view your feedback.
 
 ### Assignments 
 - **Submitting Assignments:**
-  - Access the 'Assignments' section to view and submit assignments.
-
+  - Access the 'Assignments' section and click on the assignment you'd like to submit. This is where you will submit the assingment.
+ 
+- **Accessing feedback**
+  - Access the 'Assignments' section and click on the assignment you'd like to view. Here you can see the rubric, assignment grade, assignment feedback (in markdown), and the assignment dude date.
 ### People 
 - **Viewing the Student List:**
   - Select 'People' from the menu to see a list of all students enrolled in the course.

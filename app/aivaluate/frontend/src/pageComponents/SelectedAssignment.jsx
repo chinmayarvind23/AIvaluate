@@ -231,7 +231,7 @@ const SelectedAssignment = () => {
                                 {currentFiles.map((file, index) => (
                                 <div className="file-item" key={index} onClick={() => handleMarkAssignment(file.studentId, file.assignmentId, file.submissionFile, file.submissionLink)}>
                                     <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                                    <div className="file-name">Student ID: {file.studentId} - {file.submissionFile ? truncateFileName(file.submissionFile.split('/').pop()) : file.submissionLink}</div>
+                                    <div className="file-name"><div className="file-name-text">Student ID: {file.studentId} - {file.submissionFile ? truncateFileName(file.submissionFile.split('/').pop()) : file.submissionLink}</div></div>
                                     {file.isGraded && <div className="file-status">*Marked as graded</div>}
                                 </div>
                             ))}

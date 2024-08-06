@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS "Assignment"(
     "dueDate" TIMESTAMPTZ,
     "assignmentKey" VARCHAR(500),
     "maxObtainableGrade" FLOAT,
-    "assignmentDescription" VARCHAR(1000),
+    "assignmentDescription" VARCHAR(20000),
     "isPublished" BOOLEAN DEFAULT true,
     "isGraded" BOOLEAN DEFAULT false,
     "gradeHidden" BOOLEAN DEFAULT false,
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS "StudentFeedbackReport"(
 CREATE TABLE IF NOT EXISTS "AssignmentRubric"(
     "assignmentRubricId" SERIAL NOT NULL PRIMARY KEY,
     "rubricName" VARCHAR(150),
-    "criteria" VARCHAR(1000),
+    "criteria" VARCHAR(20000),
     "courseId" INT,
     FOREIGN KEY ("courseId") REFERENCES "Course"("courseId") ON DELETE CASCADE
 );

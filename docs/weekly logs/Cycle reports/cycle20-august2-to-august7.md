@@ -26,7 +26,8 @@
 
 ### Times for team/individual
 
-<img width="1920" alt="Screenshot 2024-08-07 at 1 47 02 AM" src="https://github.com/user-attachments/assets/47289f85-40ad-4ebc-a59b-a4a872d79d50">
+<img width="1423" alt="Screenshot 2024-08-07 at 7 26 23 AM" src="https://github.com/user-attachments/assets/8176dcb0-6dc9-4a83-901d-db51939254c1">
+
 
 - ### Table view of completed tasks on project board
 

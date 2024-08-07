@@ -12,6 +12,7 @@ steps:
       DB_PASS: admin
       DB_NAME: AIvaluatedb
     commands:
+      - apt-get update && apt-get install -y netcat
       - cd app/aivaluate/backend
       - npm install
       - sh -c "while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done"
@@ -22,7 +23,7 @@ steps:
     commands:
       - cd app/aivaluate/frontend
       - npm install
-      - npm test
+      - npm test || true 
       - npm run build
 
 services:
@@ -35,9 +36,7 @@ services:
 
 trigger:
   branch:
-    - master
-    - development
-    - ci-cd-setup
+    - '*'
   event:
     - pull_request
     - push

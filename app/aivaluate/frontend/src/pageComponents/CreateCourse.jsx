@@ -1,88 +1,140 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AIvaluateNavBarEval from '../components/AIvaluateNavBarEval';
 import '../CreateCourse.css';
 import '../GeneralStyling.css';
-import AIvaluateNavBar from '../components/AIvaluateNavBar';
-import '../styles.css';
+import '../ToastStyles.css';
 
 const CreateCourse = () => {
   const [courseName, setCourseName] = useState('');
   const [courseCode, setCourseCode] = useState('');
-  const [maxStudents, setMaxStudents] = useState('');
   const [instructorId, setInstructorId] = useState('');
+  const [maxStudents, setMaxStudents] = useState('');
   const [taId, setTaId] = useState('');
   const [instructors, setInstructors] = useState([]);
   const [tas, setTAs] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  const setCourseIdInSession = useCallback(async (courseId) => {
+    try {
+      await axios.post('http://localhost:5173/eval-api/set-course-only', { courseId }, { withCredentials: true });
+      sessionStorage.setItem('courseId', courseId);
+    } catch (error) {
+      console.error('Failed to set course ID in session:', error);
+    }
+  }, []);
+  
+  const ensureCourseIdInSession = useCallback(async () => {
+    let courseId = sessionStorage.getItem('courseId');
+  
+    if (!courseId) {
+      console.error('Course ID is missing from session storage.');
+      return;
+    }
+  
+    await setCourseIdInSession(courseId);
+  }, [setCourseIdInSession]);
+  
+  useEffect(() => {
+    ensureCourseIdInSession();
+  }, [ensureCourseIdInSession]);  
+
+  // Fetch current instructor ID
+  useEffect(() => {
+    const fetchInstructorId = async () => {
+      try {
+        const response = await axios.get('http://localhost:5173/eval-api/instructor/me');
+        setInstructorId(response.data.instructorId);
+      } catch (error) {
+        console.error('Error fetching instructor ID:', error);
+      }
+    }
+
+    fetchInstructorId();
+  }, []);
+
   useEffect(() => {
     const fetchInstructorsAndTAs = async () => {
       try {
-        const instructorResponse = await axios.get('http://localhost:4000/instructors');
+        const instructorResponse = await axios.get('http://localhost:5173/eval-api/instructors');
         setInstructors(instructorResponse.data);
-
-        const taResponse = await axios.get('http://localhost:4000/tas');
+  
+        const taResponse = await axios.get('http://localhost:5173/eval-api/tas');
         setTAs(taResponse.data);
       } catch (error) {
         console.error('Error fetching instructors and TAs:', error);
       }
     };
-
+  
     fetchInstructorsAndTAs();
-  }, []);
+  }, []);  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!courseName || !courseCode || !maxStudents) {
+    if (!courseName || !courseCode) {
       setErrorMessage('All fields are required.');
+      toast.error('All fields are required.');
       return;
     }
 
-    // Check if instructor is selected
-    if (!instructorId) {
-      setErrorMessage('Instructor selection is required.');
+    if (courseName.length > 50 || courseCode.length > 10) {
+      setErrorMessage('Course name must be less than 50 characters and course code must be less than 10 characters.');
       return;
     }
+
+    // // Check if instructor is selected
+    // if (!instructorId) {
+    //   setErrorMessage('Instructor selection is required.');
+    //   toast.error('Instructor selection is required.');
+    //   return;
+    // }
 
     try {
-      const response = await axios.post('http://localhost:4000/courses', {
+      const response = await axios.post('http://localhost:5173/eval-api/courses', {
         courseName,
-        courseCode,
-        maxStudents,
+        courseCode
       });
 
       const courseId = response.data.courseId;
+      await setCourseIdInSession(courseId); 
 
-      // Add instructor to the Teaches table
       if (instructorId) {
-        await axios.post('http://localhost:4000/teaches', {
+        console.log('Assigning instructor:', { courseId, instructorId });
+        await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId
         });
       }
 
-      // Add TA to the Teaches table if selected
       if (taId) {
-        await axios.post('http://localhost:4000/teaches', {
+        console.log('Assigning TA:', { courseId, taId });
+        await axios.post('http://localhost:5173/eval-api/teaches', {
           courseId,
           instructorId: taId
         });
       }
 
       console.log('Course created successfully:', response.data);
-      navigate('/dashboard'); // Redirect to dashboard after successful creation
+      toast.success('Course created successfully.');
+      navigate('/eval/dashboard');
     } catch (error) {
       console.error('There was an error creating the course:', error);
+      toast.error('There was an error creating the course.');
     }
   };
 
+
+
   return (
     <>
-      <AIvaluateNavBar navBarText='Create a Course' />
-      <div className='secondary-colorbg form-container'>
+      <AIvaluateNavBarEval navBarText='Create a Course' />
+      <div className='form-container'>
+      <ToastContainer />
         <section>
           <div className="form-content">
             <form onSubmit={handleSubmit}>
@@ -93,6 +145,9 @@ const CreateCourse = () => {
                   name="courseName"
                   value={courseName}
                   onChange={(e) => setCourseName(e.target.value)}
+                  maxLength="50" // Limit the course name to 50 characters
+                  className="drop-down-menu"
+                  placeholder="Example: Introduction to AI"
                 />
               </div>
               <div className="form-group">
@@ -102,34 +157,12 @@ const CreateCourse = () => {
                   name="courseCode"
                   value={courseCode}
                   onChange={(e) => setCourseCode(e.target.value)}
-                />
-              </div>
-              <div className="form-group">
-                <h3>Maximum Number of Students</h3>
-                <input 
-                  type="text" 
-                  name="maxStudents"
-                  value={maxStudents}
-                  onChange={(e) => setMaxStudents(e.target.value)}
+                  maxLength="9" // Limit the course code to 9 characters
+                  className="drop-down-menu"
+                  placeholder="Example: COSC 101"
                 />
               </div>
 
-              {/* Display a dropdown of instructors */}
-              {/* Select the instructor for the course */}
-              <div className="form-group">
-                <h3>Instructor</h3>
-                <select className="drop-down-menu" value={instructorId} onChange={(e) => setInstructorId(e.target.value)} required>
-                  <option value="">Select Instructor</option>
-                  {instructors.map(instructor => (
-                    <option key={instructor.instructorId} value={instructor.instructorId}>
-                      {`${instructor.firstName} ${instructor.lastName}`}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Display a dropdown of instructors */}
-              {/* Select the TA for the course */}
               <div className="form-group">
                 <h3>Teaching Assistant</h3>
                 <select className="drop-down-menu"value={taId} onChange={(e) => setTaId(e.target.value)}>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CourseCards.css';
 import '../Dashboard.css';
@@ -9,6 +10,8 @@ import CourseCards from '../components/CourseCards';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [accountId, setAccountId] = useState("");
   var notification = false;
   var notificationText = "YOU HAVE NO NEW NOTIFICATIONS...";
 
@@ -21,16 +24,31 @@ const Dashboard = () => {
     notificationText = "YOU HAVE NEW NOTIFICATIONS!";
   }
 
+  useEffect(() => {
+    const fetchStudentData = async () => {
+        try {
+            const { data: { studentId } } = await axios.get('http://localhost:5173/stu-api/student/me', {
+                withCredentials: true
+            });
+            setAccountId(studentId);
+
+            const firstNameResponse = await axios.get(`http://localhost:5173/stu-api/student/${studentId}/firstName`);
+            setFirstName(firstNameResponse.data.firstName);
+        } catch (error) {
+            console.error('There was an error fetching the student data:', error);
+        }
+    };
+    fetchStudentData();
+}, []);
+
   return (
     <div>
-      <div className="secondary-colorbg message-container">
+      <div className="message-container">
         <div className="notification-container">
-        <p className="notificationBubble">{'\u2B24'} </p><p className="notification-text">{notificationText}</p>
         </div>
-        <h1>Here are your courses...</h1>
-        
+        <h1>Your courses...</h1>
       </div>
-      <AIvaluateNavBar navBarText='Hello Colton' tab="home" />
+      <AIvaluateNavBar navBarText={`Hello ${firstName}`} tab="home" />
       <CourseCards page="stu/dashboard"/>
     </div>
   );

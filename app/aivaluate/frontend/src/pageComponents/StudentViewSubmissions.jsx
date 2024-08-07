@@ -1,110 +1,124 @@
-import CircumIcon from "@klarr-agency/circum-icons-react";
-import React, { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa'; // run npm install react-icons
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import '../Auth.css';
 import '../FileDirectory.css';
 import '../GeneralStyling.css';
-// import '../StudentViewSubmissions.css';
+import '../SearchBar.css';
 import AIvaluateNavBar from '../components/AIvaluateNavBar';
 import SideMenuBar from '../components/SideMenuBar';
 
 const StudentViewSubmissions = () => {
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredFiles, setFilteredFiles] = useState([]);
-
-  const files = [
-    'index.html',
-    'index.css',
-    'login.html',
-    'login.css',
-    'dashboard.html',
-    'dashboard.css',
-    'report.html',
-    'report.css',
-    'about.html',
-    'about.css',
-    'contact.html',
-    'contact.css',
-  ];
+    const courseCode = sessionStorage.getItem('courseCode');
+    const courseName = sessionStorage.getItem('courseName');
+    const { courseId } = useParams();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+    //const [searchTerm, setSearchTerm] = useState('');
+    const [filteredFiles, setFilteredFiles] = useState([]);
+    const [files, setFiles] = useState([]);
 
     useEffect(() => {
-        const filtered = files.filter(file =>
-            file.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredFiles(filtered);
-        setCurrentPage(1); // Reset to first page on new search
-    }, [searchTerm]);
+        const fetchSubmissions = async () => {
+            try {
+                const response = await fetch(`/stu-api/courses/${courseId}/submissions`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setFiles(data);
+                    setFilteredFiles(data);
+                } else {
+                    console.error('Error fetching submissions:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching submissions:', error);
+            }
+        };
 
-    // Calculates the current items to display
+        fetchSubmissions();
+    }, [courseId]);
+
+    // useEffect(() => {
+    //     const filtered = files.filter(file =>
+    //         file.assignmentKey && file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    //         file.studentId && file.studentId.toString().includes(searchTerm)
+    //     );
+    //     setFilteredFiles(filtered);
+    //     setCurrentPage(1);
+    // }, [searchTerm, files]);
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // This calculates the total number of pages based of the max number of items per page
-    const totalPages = Math.ceil(files.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredFiles.length / itemsPerPage);
 
     const handleNextPage = () => {
-    if (currentPage < totalPages) {
-        setCurrentPage(prevPage => prevPage + 1);
-    }
+        if (currentPage < totalPages) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
     };
 
     const handlePrevPage = () => {
-    if (currentPage > 1) {
-        setCurrentPage(prevPage => prevPage - 1);
-    }
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
     };
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on new search
-    };
+    // const handleSearchChange = (e) => {
+    //     setSearchTerm(e.target.value);
+    // };
 
-  return (
-  <div>
-    <AIvaluateNavBar navBarText='COSC 499 - Software Engineering Capstone' tab='submissions' />
-    <SideMenuBar tab="submissions" />
-    <div className="accented-outside rborder">
-        <div className="portal-all">
-            <div className="portal-container">
-                <div className="topBar">
-                    <h1>Submissions</h1>
-                    <div className="search-container">
-                        <div className="search-box">
-                            <FaSearch className="search-icon" />
-                            <input 
-                                type="text" 
-                                placeholder="Search..." 
-                                value={searchTerm}
-                                onChange={handleSearchChange}
-                            />
+    const navBarText = `${courseCode} - ${courseName}`;
+
+    return (
+        <div>
+            <AIvaluateNavBar navBarText={navBarText} tab='submissions' />
+            <div className="filler-div">
+            <SideMenuBar tab="submissions" />
+                <div className="main-margin">
+                    <div className="portal-container">
+                        <div className="top-bar">
+                            <h1>Submissions</h1>
+                            {/* <div className="search-container">
+                                <div className="search-box">
+                                    <FaSearch className="search-icon" />
+                                    <input 
+                                        type="text" 
+                                        placeholder="Search..." 
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                </div>
+                            </div> */}
+                        </div>
+                        <div className="filetab">
+                            {currentFiles.map((file, index) => (
+                                file && (
+                                    <div className="file-item" key={index}>
+                                        {console.log('File:', file)}
+                                        {console.log('Assignment ID:', file.assignmentId)}
+                                        <a 
+                                            className="file-name" 
+                                            href={`/stu-api/download-submission/${file.studentId}/${courseId}/${file.assignmentId}/${file.submissionFile.split('/').pop()}`}
+                                            download
+                                        >
+                                            {file.submissionFile.split('/').pop()} Submission
+                                        </a>
+                                        {file.isGraded && <div className="file-status">Marked as graded</div>}
+                                    </div>
+                                )
+                            ))}
                         </div>
                     </div>
-                </div>
-                <div className="filetab">
-                    {currentFiles.map((file, index) => (
-                        <div className="file-item" key={index}>
-                            <div className="folder-icon"><CircumIcon name="folder_on"/></div>
-                            <div className="file-name">{file}</div>
+                    <div className="pagination-controls">
+                        <span>Page {currentPage} of {totalPages}</span>
+                        <div className="pagination-buttons">
+                            <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
                         </div>
-                    ))}
+                    </div> 
                 </div>
             </div>
-            <div className="pagination-controls">
-                <span>Page {currentPage} of {totalPages}</span>
-                <div className="pagination-buttons">
-                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
-                </div>
-            </div>
-        </div> 
-    </div>
-  </div>
-  );
+        </div>
+    );
 };
 
 export default StudentViewSubmissions;

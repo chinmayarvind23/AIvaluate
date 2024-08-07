@@ -3,7 +3,9 @@
     display: flex;
     align-items: center;
     padding: 15px;
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
     height: 90px;
     z-index: 9;
     min-width: 800px;
@@ -19,6 +21,7 @@
   .header h1 {
     margin: 0;
     font-size: 44px;
+    cursor: default;
   }
 
   .menu {
@@ -26,6 +29,7 @@
     top: 20px;
     right: 20px;
     z-index: 10;
+    cursor: pointer;
   }
   
   .menu button {
@@ -58,8 +62,10 @@
     border-radius: 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    width: 400px;
+    width: 300px; 
     z-index: 1;
+    border: var(--primary-color) 2px solid;
+    cursor:pointer;
   }
   
   .menu .dropdown a {
@@ -68,6 +74,7 @@
     text-decoration: none;
     font-size: 30px;
     font-weight: bold;
+    cursor:pointer;
   }
 
   .menu .dropdown a::before {
@@ -83,4 +90,32 @@
   
   .menu .dropdown.show {
     display: block;
+  }
+
+  .menu .dropdown .logout {
+    display: block;
+    padding: 10px 45px 20px;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+    border:none;
+    border-radius: 0px;
+    width: stretch;
+    height: 90px;
+    background: none;
+    text-align:left;
+    color:black;
+    cursor:pointer;
+  }
+
+  .menu .dropdown .logout::before {
+    content: '•'; 
+    margin-right: 10px;
+    font-size: 40px;
+    text-decoration: none;
+  }
+
+  .menu .dropdown .logout:hover {
+    background: #eee;
+    color:var(--primary-color);
   }

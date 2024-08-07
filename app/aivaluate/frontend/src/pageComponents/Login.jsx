@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
-import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +18,11 @@ const Login = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -26,7 +31,13 @@ const Login = () => {
     if (!password) newErrors.password = 'Password is required';
 
     if (!validateEmail(email)) {
+     
       newErrors.email = 'Invalid email address';
+    }
+
+    if (!validateInput(email) || !validateInput(password)) {
+      setError('Invalid input detected.');
+      return;
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -35,12 +46,12 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/stu/login', {
-        email,
-        password
-      }, { withCredentials: true }); // Ensure cookies are sent/received
+      const response = await axios.post('http://localhost:5173/stu-api/login', {
+        email: email.trim(),
+        password: password.trim()
+      }, { withCredentials: true });
       console.log('Login successful:', response.data);
-      navigate('/dashboard');
+      navigate('/stu/dashboard');
     } catch (error) {
       console.error('There was an error logging in:', error);
       setError('Invalid email or password. Please try again.');
@@ -48,10 +59,10 @@ const Login = () => {
   };
 
   return (
-    <div className="background">
+    <div className="background-div">
       <div className="logo">
         <div className="logoText">
-          <h1 className="primary-color-text">AI</h1><h1 className="secondary-color-text">valuate</h1>
+          <h1 className="ai-text">AI</h1><h1 className="third-color-text">valuate</h1>
         </div>
       </div>
       <div className="auth-container">
@@ -59,7 +70,7 @@ const Login = () => {
           <h2 className="auth-title third-color-text">Login</h2>
           <div className="auth-toggle" style={divStyle}>
             <button className="auth-toggle-btn active">Login</button>
-            <button className="auth-toggle-btn" onClick={() => navigate('/signup')}>Signup</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/stu/signup')}>Signup</button>
           </div>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit}>
@@ -73,7 +84,6 @@ const Login = () => {
                 required 
               />
             </div>
-            {error && <p className="error-message">{error}</p>}
             <div className="form-group">
               <input 
                 type="password" 

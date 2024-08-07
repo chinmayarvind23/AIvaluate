@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../Auth.css';
 
 const Signup = () => {
@@ -23,8 +23,13 @@ const Signup = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  const validateInput = (input) => {
+    const sqlPattern = /\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|GRANT|REVOKE|TRUNCATE|REPLACE|MERGE|CALL|EXPLAIN|LOCK|UNLOCK|DESCRIBE|SHOW|USE|BEGIN|END|DECLARE|SET|RESET|ROLLBACK|SAVEPOINT|RELEASE)\b/i;
+    return !sqlPattern.test(input);
+  };
+
   const validatePassword = (password) => {
-    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/; // At least one letter and one number, minimum 6 characters
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return re.test(password);
   };
 
@@ -37,7 +42,6 @@ const Signup = () => {
     if (!email) newErrors.email = 'Email is required';
     if (!password) newErrors.password = 'Password is required';
     if (!password2) newErrors.password2 = 'Confirm Password is required';
-    if (!major) newErrors.major = 'Major is required';
 
     if (!validateEmail(email)) {
       newErrors.email = 'Invalid email address';
@@ -51,22 +55,26 @@ const Signup = () => {
       newErrors.password2 = 'Passwords do not match';
     }
 
+    if (!validateInput(firstName) || !validateInput(lastName) || !validateInput(email) || !validateInput(password) || !validateInput(password2)) {
+      setErrors({ form: 'Invalid input detected.' });
+      return;
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/stu/signup', {
-        firstName,
-        lastName,
-        email,
-        password,
-        password2,
-        major
+      const response = await axios.post('http://localhost:5173/stu-api/signup', {
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        password2: password2.trim()
       });
       console.log('Signup successful:', response.data);
-      navigate('/login'); // Redirect to login after successful signup
+      navigate('/stu/login');
     } catch (error) {
       console.error('There was an error signing up:', error);
       if (error.response && error.response.data && error.response.data.errors) {
@@ -86,17 +94,17 @@ const Signup = () => {
   };
 
   return (
-    <div className="background">
+    <div className="background-div">
       <div className="logo">
         <div className="logoText">
-          <h1 className="primary-color-text">AI</h1><h1 className="secondary-color-bg">valuate</h1>
+          <h1 className="ai-text">AI</h1><h1 className="third-color-text">valuate</h1>
         </div>
       </div>
       <div className="auth-container">
         <div className="auth-form secondary-colorbg">
           <h2 className="auth-title third-color-text">Signup</h2>
           <div className="auth-toggle" style={divStyle}>
-            <button className="auth-toggle-btn" onClick={() => navigate('/login')}>Login</button>
+            <button className="auth-toggle-btn" onClick={() => navigate('/stu/login')}>Login</button>
             <button className="auth-toggle-btn active">Signup</button>
           </div>
           {errors.server && <p className="error-message">{errors.server}</p>}
@@ -145,23 +153,7 @@ const Signup = () => {
               onChange={(e) => setPassword2(e.target.value)}
               required 
             />
-
-            {/* Major is not required for now*/}
-
             {errors.password2 && <p className="error-message">{errors.password2}</p>}
-            <select 
-              className="auth-input" 
-              value={major}
-              onChange={(e) => setMajor(e.target.value)}
-              required
-            >
-              <option value="">Select Major</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Engineering">Engineering</option>
-
-            </select>
-            {errors.major && <p className="error-message">{errors.major}</p>}
             <button className="auth-submit primary-colorbg" type="submit">Create Account</button>
           </form>
         </div>

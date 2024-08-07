@@ -1,11 +1,18 @@
 :root {
-    --primary-color: #4d24d4;
+    --primary-color: #003ECB; /* #4d24d4; */
     --secondary-color: white;
     --third-color: black;
     --gradient-color: linear-gradient(to right, #000000, #2600a3);
+    --radial-color: radial-gradient(circle, #ffffff, #003ECB);
+    /* --radial-color: radial-gradient(circle, #003ECB, #ffffff,); */
 }
 
-.background-color{background: var(--gradient-color);}
+.background-color{
+    /* background: var(--gradient-color); */
+    background: white;
+}
+
+
 .primary-color-text{color: var(--primary-color);}   /* Purple text */
 .secondary-color-text{color:var(--secondary-color);} /* White text */
 .third-color-text{color:var(--third-color);} /* Black text */
@@ -13,9 +20,11 @@
 a {text-decoration: none;}
 
 html{
-    background: var(--gradient-color);
+    /* background: var(--gradient-color); */
+    background: white;
     min-width: 1300px;
     min-height: 800px;
+    height: 100%;
 }
 body {
     font-family: Arial, sans-serif;
@@ -66,6 +75,19 @@ body {
     font-weight: bold;
 }
 
+.primary-button:hover {
+    transform: scale(1.1);
+}
+
+.secondary-button:hover {
+    transform: scale(1.1);
+}
+
+.rborder{
+    border-radius: 60px;
+
+}
+
 .nav-item {
     padding: 10px;
     cursor: pointer;
@@ -83,3 +105,88 @@ body {
     display:none;
     visibility: hidden;
 }
+
+
+  .main-margin{
+    width: stretch;
+    background-color: var(--secondary-color);
+    padding-top: 20px;
+    height:stretch;
+    border: var(--primary-color) 2px solid;
+    border-bottom: none;
+  }
+  .filler-div{
+    display:flex;
+    height:100vh;
+    margin-top:-40px;
+    margin-right:40px;
+    margin-left: 35px;
+    width: stretch;
+  }
+
+  .main-back-button {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-right: 20px;
+}
+
+.main-back-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.back-button-icon-size {
+    width: 24px;
+    height: 24px;
+}
+
+.top-bar{
+    /* width: stretch; */
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    margin-top:-20px;
+    padding-left: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.scrollable-div {
+    overflow-y: auto;
+    max-height: 700px;
+    padding: 10px;
+    background: var(--secondary-color);
+    width: stretch;
+}
+
+.empty{
+    width: stretch;
+    min-width: 20px;
+}
+
+.float-right{
+    float: right;
+    display: flex;
+    align-items: bottom;
+    
+}
+
+.float-left{
+    float: left;
+    display: flex;
+    align-items: baseline;
+    justify-content: bottom;
+    width:-webkit-fill-available;
+}
+
+

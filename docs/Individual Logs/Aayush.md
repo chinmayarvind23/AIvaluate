@@ -1930,7 +1930,7 @@ I invested considerable effort into adding more frontend tests and fixing the he
 
 
 
-# Timesheet (July 31 - August 2) - 18 hours
+# Timesheet (July 31 - August 2) - 14 hours
 
 ### Timesheet
 Clockify report

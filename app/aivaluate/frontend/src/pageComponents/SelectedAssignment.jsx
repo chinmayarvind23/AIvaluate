@@ -26,6 +26,7 @@ const SelectedAssignment = () => {
     const [error, setError] = useState(null);
     const [gradesVisible, setGradesVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [instructorId, setInstructorId] = useState('');
 
     const fetchSubmissions = useCallback(async () => {
         try {
@@ -50,6 +51,21 @@ const SelectedAssignment = () => {
             }
         }
     }, [assignmentId]); 
+    
+    useEffect(() => {
+        const fetchAdminData = async () => {
+            try {
+                const { data: { instructorId } } = await axios.get('http://localhost:5173/eval-api/instructor/me', {
+                    withCredentials: true
+                });
+                setInstructorId(instructorId);
+            } catch (error) {
+                console.error('There was an error fetching the instructor data:', error);
+            }
+        };
+
+        fetchAdminData();
+    }, []);
     
     useEffect(() => {
         fetchSubmissions();
@@ -107,7 +123,6 @@ const SelectedAssignment = () => {
 
     const handleGradeWithAI = async () => {
         const courseId = sessionStorage.getItem('courseId');
-        const instructorId = sessionStorage.getItem('instructorId');
     
         if (!instructorId || !courseId) {
             console.error('Instructor ID or Course ID is missing.');

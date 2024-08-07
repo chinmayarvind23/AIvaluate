@@ -1,24 +1,48 @@
 FROM node:20.14.0-buster as build
 
-WORKDIR /app
+# Set the working directory
+WORKDIR /app/aivaluate/backend
 
+# Install necessary packages
+RUN apt-get update && \
+    apt-get install -y netcat-openbsd postgresql-client && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Verify installation of netcat
+RUN which nc && nc -h
+
+# Copy package files and install dependencies
 COPY package*.json ./
-
+RUN npm install nodemailer
 RUN npm install
+RUN npm install express multer
 
+
+# Copy the application code
 COPY . .
 
-COPY --from=build /app .
+# Check the directory structure for debugging
+RUN ls -la /app/aivaluate/backend
 
-RUN apk add --no-cache postgresql-client
+# Check if jest.config.js and logger.js exist for debugging
+RUN ls -la /app/aivaluate/backend/jest.config.js
+RUN ls -la /app/aivaluate/backend/logger.js
 
-COPY aivaluatedb.sql /docker-entrypoint-initdb.d/
 
-ENV POSTGRES_USER=admin
-ENV POSTGRES_PASSWORD=admin
-ENV POSTGRES_DB=AIvaluatedb
-ENV POSTGRES_HOST=db
 
-EXPOSE 5432
+# Create necessary directories and set permissions
+RUN mkdir -p /app/aivaluate/backend/assignmentSubmissions && \
+    chmod -R 777 /app/aivaluate/backend/assignmentSubmissions
 
-CMD ["sh", "-c", "until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c 'SELECT 1' >/dev/null 2>&1; do echo 'Waiting for database connection...'; sleep 1; done && PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f /docker-entrypoint-initdb.d/aivaluatedb.sql && node server.js"]
+
+
+
+# Add a non-root user and change ownership of the necessary directories
+RUN useradd -m myuser && chown -R myuser:myuser /app
+USER myuser
+
+# Expose the necessary port
+EXPOSE 4000
+
+# Command to run the application
+CMD ["sh", "-c", "echo 'DB_HOST: $DB_HOST'; echo 'DB_PORT: $DB_PORT'; while ! nc -z $DB_HOST $DB_PORT; do sleep 1; done && npm test -- --coverage --coverageReporters=text && node server.js"]

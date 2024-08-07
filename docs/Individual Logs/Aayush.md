@@ -1929,6 +1929,81 @@ I invested considerable effort into adding more frontend tests and fixing the he
   * Goal 4: Prepare documentation
 
 
+# Timesheet (July 31 - August 2) - 14 hours
+
+### Timesheet
+Clockify report
+
+<img width="937" alt="Screenshot 2024-08-06 at 10 47 59 PM" src="https://github.com/user-attachments/assets/ee9b9c22-4dc4-4b1c-ab29-4cae8a20505f">
+
+
+### Current Tasks 
+  * #1: Frontend testing
+  * #2: Backend AI testing
+  * #3: Bug fixes
+
+### Progress Update (since 8/02/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Frontend testing</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Backend AI testing</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Bug fixes</td>
+        <td>In Progress</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I focused on finalizing the remaining frontend tests, conducting backend AI testing, and addressing various bug fixes. These tasks were essential for ensuring the smooth operation and reliability of our system. While significant progress has been made, a few tasks remain in progress and will be completed in the next cycle.
+
+### Next Cycle Goals 
+  * Goal 1: Finalize backend and frontend testing
+  * Goal 2: Fix any remaining and new bug fixes
+
+
+
+# Timesheet (August 2 - August 7) - 13 hours
+
+### Timesheet
+Clockify report
+<img width="934" alt="Screenshot 2024-08-07 at 11 04 34 AM" src="https://github.com/user-attachments/assets/0ef89bca-b093-4cba-962f-c74c12a8fe52">
+
+### Current Tasks 
+  * #1: Finalize backend and frontend testing
+  * #2: Fix any remaining and new bug fixes
+
+### Progress Update (since 8/02/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Finalize backend and frontend testing and reports</td>
+        <td>Complete</td>
+    </tr>
+    <tr>
+        <td>Fix any remaining and new bug fixes</td>
+        <td>Complete</td>
+    </tr>
+</table>
+
+### Cycle Goal Review 
+I focused on finalizing both backend and frontend testing and preparing the corresponding reports. Additionally, I addressed all remaining and new bug fixes. These tasks were crucial for ensuring the smooth operation and reliability of our system. The completion of these tasks marks significant progress in our development cycle.
+
+
+
+
+
 
 
  

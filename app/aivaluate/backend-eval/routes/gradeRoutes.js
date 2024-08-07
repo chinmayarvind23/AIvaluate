@@ -84,4 +84,27 @@ router.put('/assignments/:assignmentId/release-grades', async (req, res) => {
     }
 });
 
+// Route to determine if grades are hidden for an assignment
+router.get('/assignments/:assignmentId/grades-hidden', async (req, res) => {
+    const { assignmentId } = req.params;
+
+    try {
+        const result = await pool.query(
+            'SELECT "gradeHidden" FROM "Assignment" WHERE "assignmentId" = $1',
+            [assignmentId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Assignment not found' });
+        }
+
+        console.log('Grade Hidden Status:', result.rows[0].gradeHidden); // Log the gradeHidden value
+
+        res.status(200).json({ gradeHidden: result.rows[0].gradeHidden });
+    } catch (error) {
+        console.error('Error determining if grades are hidden:', error);
+        res.status(500).json({ message: 'Error determining if grades are hidden' });
+    }
+});
+
 module.exports = router;

@@ -24,9 +24,33 @@ const SelectedAssignment = () => {
     const [filteredFiles, setFilteredFiles] = useState([]);
     const [submissions, setSubmissions] = useState([]);
     const [error, setError] = useState(null);
-    const [gradesVisible, setGradesVisible] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [instructorId, setInstructorId] = useState('');
+    const [gradesHidden, setGradesHidden] = useState(false);
+
+    // Fetch grades hidden status
+    const fetchGradesHidden = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:5173/eval-api/assignments/${assignmentId}/grades-hidden`, {
+                withCredentials: true
+            });
+    
+            if (response.status === 200) {
+                setGradesHidden(response.data.gradeHidden);
+            } else {
+                console.error('Failed to fetch grades hidden status:', response.data);
+                toast.error('Failed to fetch grades hidden status.');
+            }
+        } catch (error) {
+            console.error('Error fetching grades hidden status:', error);
+            toast.error('Error fetching grades hidden status.');
+        }
+    }, [assignmentId]);
+
+    // Fetch grades hidden status when component mounts
+    useEffect(() => {
+        fetchGradesHidden();
+    }, [fetchGradesHidden]);
 
     const fetchSubmissions = useCallback(async () => {
         try {
@@ -162,7 +186,8 @@ const SelectedAssignment = () => {
 
     // Function to handle hiding grades
     const handleHideGrades = async () => {
-        if (!gradesVisible) {
+        // Verify the current state before proceeding
+        if (gradesHidden) {
             toast.error('Grades are already hidden.');
             return;
         }
@@ -173,8 +198,8 @@ const SelectedAssignment = () => {
             });
 
             if (response.status === 200) {
-                setGradesVisible(false);
                 toast.success('Grades hidden successfully.');
+                setGradesHidden(true); // Update state to reflect change
             } else {
                 console.error('Failed to hide grades:', response.data);
                 toast.error('Failed to hide grades.');
@@ -187,8 +212,9 @@ const SelectedAssignment = () => {
 
     // Function to handle releasing grades
     const handleReleaseGrades = async () => {
-        if (gradesVisible) {
-            toast.error('Grades are already published.');
+        // Verify the current state before proceeding
+        if (!gradesHidden) {
+            toast.error('Grades are already released.');
             return;
         }
 
@@ -198,8 +224,8 @@ const SelectedAssignment = () => {
             });
 
             if (response.status === 200) {
-                setGradesVisible(true);
                 toast.success('Grades released successfully.');
+                setGradesHidden(false); // Update state to reflect change
             } else {
                 console.error('Failed to release grades:', response.data);
                 toast.error('Failed to release grades.');
@@ -228,10 +254,10 @@ const SelectedAssignment = () => {
                                     <button className="grades-button" onClick={handleGradeWithAI}>
                                         Grade With AI
                                     </button>
-                                    <button className="grades-button" disabled={!gradesVisible} onClick={handleHideGrades}>
+                                    <button className="grades-button" onClick={handleHideGrades}>
                                         Hide Grades
                                     </button>
-                                    <button className="grades-button" disabled={gradesVisible} onClick={handleReleaseGrades}>
+                                    <button className="grades-button" onClick={handleReleaseGrades}>
                                         Publish Grades
                                     </button>
                                 </div>

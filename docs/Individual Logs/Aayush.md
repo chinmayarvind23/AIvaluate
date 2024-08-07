@@ -1930,48 +1930,6 @@ I invested considerable effort into adding more frontend tests and fixing the he
 
 
 
-# Timesheet (July 31 - August 2) - 14 hours
-
-### Timesheet
-Clockify report
-
-<img width="937" alt="Screenshot 2024-08-06 at 10 47 59 PM" src="https://github.com/user-attachments/assets/ee9b9c22-4dc4-4b1c-ab29-4cae8a20505f">
-
-
-### Current Tasks 
-  * #1: Frontend testing
-  * #2: Backend AI testing
-  * #3: Bug fixes
-
-### Progress Update (since 8/02/2024)
-<table>
-    <tr>
-        <td><strong>TASK/ISSUE #</strong></td>
-        <td><strong>STATUS</strong></td>
-    </tr>
-    <tr>
-        <td>Frontend testing</td>
-        <td>In Progress</td>
-    </tr>
-    <tr>
-        <td>Backend AI testing</td>
-        <td>In Progress</td>
-    </tr>
-    <tr>
-        <td>Bug fixes</td>
-        <td>In Progress</td>
-    </tr>
-</table>
-
-### Cycle Goal Review 
-I focused on finalizing the remaining frontend tests, conducting backend AI testing, and addressing various bug fixes. These tasks were essential for ensuring the smooth operation and reliability of our system. While significant progress has been made, a few tasks remain in progress and will be completed in the next cycle.
-
-### Next Cycle Goals 
-  * Goal 1: Finalize backend and frontend testing
-  * Goal 2: Fix any remaining and new bug fixes
-
-
-
 
  
 

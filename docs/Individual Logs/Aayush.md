@@ -1930,6 +1930,44 @@ I invested considerable effort into adding more frontend tests and fixing the he
 
 
 
+# Timesheet (July 31 - August 2) - 18 hours
+
+### Timesheet
+Clockify report
+
+### Current Tasks 
+  * #1: Finalize the remaining frontend tests
+  * #2: Fix the help page for student, evaluator, and admin
+  * #3: Integration testing with backend services
+
+### Progress Update (since 8/02/2024)
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong></td>
+        <td><strong>STATUS</strong></td>
+    </tr>
+    <tr>
+        <td>Frontend Testing</td>
+        <td>In Progress</td>
+    </tr>
+    <tr>
+        <td>Backend AI Testing</td>
+        <td>In Progress</td>
+    </tr>
+
+</table>
+
+### Cycle Goal Review 
+I focused on finalizing the remaining frontend tests, fixing the help page for students, evaluators, and admins, and starting integration testing with backend services. These tasks were essential for ensuring the smooth operation and reliability of our system. While significant progress has been made, a few tasks remain in progress and will be completed in the next cycle.
+
+### Next Cycle Goals 
+  * Goal 1: Complete the finalization of frontend tests
+  * Goal 2: Finish fixing the help page for student, evaluator, and admin
+  * Goal 3: Continue and complete integration testing with backend services
+  * Goal 4: Prepare and finalize documentation for testing processes and results
+
+
+
  
 
 

@@ -130,7 +130,7 @@
   }
 
   .file-name{
-    max-width: 800px;
+    max-width: 1000px;
     min-width: 400px;
     width: -webkit-fill-available;
     overflow: none;

@@ -605,4 +605,64 @@ Progress Update:
 - In this cycle, I mainly focused on getting these pages cleaned up and ready for the testing session on Friday. The only issue I faced was managing to get the buttons aligned on the screen but I still got it done.
  
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
-- Next cycle I will do code cleanup and make sure all the codes are clean and well structured. I will also be helping my teammates and making sure our project is ready to be submitted on time. 
+- Next cycle I will do code cleanup and make sure all the codes are clean and well structured. I will also be helping my teammates and making sure our project is ready to be submitted on time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Cycle 20: Friday, August 2 - Wednesday, August 7
+
+Timesheet
+
+
+<img width="849" alt="Cycle 20" src="https://github.com/user-attachments/assets/982de37d-6cd5-4fdb-a694-f66545a5383e">
+
+
+
+
+
+
+
+### Current Tasks
+
+- User Guide and Installation Guide
+- Code cleanup
+
+
+  
+Progress Update: 
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 /User Guide and Installation Guide|Completed|
+| Task #2 / Code cleanup |In progress|
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+- We decided to keep the code celanup for after since most of the code is already good. So in this cycle, I spent most of my time on the User Guide and Installation Guide and a lot of time on the individual report since its due soon.
+ 
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Next cycle I will prepare for the presentation; I think this is the last individual cycle. It's been a pleasure! 

@@ -105,6 +105,9 @@ By following these steps, you will be able to set up and run the software on you
 ### Further Assistance
 - **Contact Support:**
   - If you require additional support or have any questions, please contact us at aivaluateoffical@gmail.com.
+### Account Page:
+- **Change password:**
+  - If the user wants to change their password they may do it in the account page by confirming their old password first.
 
 ## Evaluator Guide
 ### Dashboard

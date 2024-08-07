@@ -1,5 +1,38 @@
 # Jerry Fan - Project Contribution Time Log
 
+# Timesheet (August 2 - August 7) -  7 hours
+
+## Wednesday August 7th
+### 1.5 hours
+- TA AI grading bug fix, toast message bug fix
+
+## Sunday August 4th
+### 1.5 hours
+- Code review and team meeting on task priority with Chinmay
+
+## Saturday August 3rd
+### 4 hours
+- Hide and publish grade (2 hours)
+- Fixing course management bugs (1 hour)
+- Fixing other various bugs (1 hour)
+
+  # Current Tasks
+- #1 Various bugs fixing
+- #2 UX/UI improvement
+
+# Progress Update
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 | Completed  |
+| Task #2 | Completed  |
+
+
+# Cycle Goal Review
+Most development work has been completed, this cycle I focused on fixing any bugs brought up during the last testing session, as well as implementing new toast messages to improve user experience.
+
+# Next Cycle 
+Add in-file comments, work on the final presentation and individual logs.
+
 # Timesheet (June 31 - August 1) -  9 hours
 
 ## Thursday August 1st

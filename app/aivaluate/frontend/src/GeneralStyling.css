@@ -186,6 +186,7 @@ body {
     display: flex;
     align-items: baseline;
     justify-content: bottom;
+    width:-webkit-fill-available;
 }
 
 

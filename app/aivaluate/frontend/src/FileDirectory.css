@@ -130,16 +130,15 @@
   }
 
   .file-name{
-    width: stretch;
+    max-width: 800px;
+    min-width: 400px;
+    width: -webkit-fill-available;
     overflow: none;
     cursor: pointer;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .file-name-text{
-    width: 50%;
+    width: 95%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -1342,3 +1342,56 @@ This cycle I ended up spending my time helping my team members fix their issues 
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
 - Work on my individual report
 -----------------------------------------------------------------------------------
+
+## Cycle 19: Friday August 2nd - Wednesday August 7th
+
+### Current Tasks
+  * #1: Fixed dashboard work olverlay problem
+  * #2: Fixed github gist student link problem
+  * #3: Fixed a bunch more very small frontend and backend features
+
+
+### Timesheet
+Clockify report
+<img width="1423" alt="colton-clockify_C19" src="https://github.com/user-attachments/assets/2b135828-db21-47b5-bffa-a8ad3d171031">
+
+### Progress Update (since July 26th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed dahsboard work olverlay problem
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> fixed github gist student link problem
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+    <tr>
+        <td> Fixed a bunch more very small frontend and backend features
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle our project was already almost completly done. I did a tone of bux fixes to finish off our project and now everthing works exactly as it should! I didn't run into any big issues this week
+
+### Next Cycle Goals (What are you going to accomplish during the next cycle)
+- Finish  my individual report
+-----------------------------------------------------------------------------------
+
+
+

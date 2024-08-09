@@ -1393,5 +1393,33 @@ This cycle our project was already almost completly done. I did a tone of bux fi
 - Finish  my individual report
 -----------------------------------------------------------------------------------
 
+## Cycle 20: Wednesday August 7th - Friday August 9th
 
+### Current Tasks
+  * #1: Worked on final project presentation
+  * #2: Did demo for Scott and Parsa
+  * #3: Code clean up (got ride of uselss comments)
+
+
+### Progress Update (since July 26th 2024) 
+<table>
+    <tr>
+        <td><strong>TASK/ISSUE #</strong>
+        </td>
+        <td><strong>STATUS</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> Code clean up (got ride of uselss comments)
+        </td>
+        <!-- Status -->
+        <td> Complete
+        </td>
+    </tr>
+</table>
+
+### Cycle Goal Review (Reflection: what went well, what was done, what didn't; Retrospective: how is the process going and why?)
+This cycle our project was already complete so I made a presentation video for our client and did some code clean up. My team and I also worked on our final presention for Friday.
+
+## Project Complete!
 

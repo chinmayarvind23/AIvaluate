@@ -665,4 +665,23 @@ Progress Update:
 - We decided to keep the code celanup for after since most of the code is already good. So in this cycle, I spent most of my time on the User Guide and Installation Guide and a lot of time on the individual report since its due soon.
  
 ### Next Cycle Goals (What are you going to accomplish during the next cycle)
-- Next cycle I will prepare for the presentation; I think this is the last individual cycle. It's been a pleasure! 
+- Next cycle I will prepare for the presentation; I think this is the last individual cycle. It's been a pleasure!
+
+
+
+
+
+
+
+
+## Cycle 21: Wednesday, August 7 - Friday, August 9
+
+
+### Progress Update 
+| Task/Iusse# | Status |
+| ----------- | --- |
+| Task #1 / Presentation preparing|Completed|
+| Task #2 / Indidvidual Report|Completed|
+
+
+In this cycle all I did was work on my individual report and get ready for the presentation we had on Friday, I have successfully finished both and finished the course with a great presentation with my team members. 

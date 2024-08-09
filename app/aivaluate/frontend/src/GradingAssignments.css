@@ -53,7 +53,6 @@
 
 .assignment-text{
   width: stretch;
-  /* border: red solid 2px; */
   margin-right: 20px;
 }
 
@@ -69,9 +68,6 @@
 }
 
 .due-date-container {
-  /* position: absolute;
-  right: 30px;
-  top: 200px; */
   display: flex;
   align-items: center;
   width: 260px;
@@ -185,11 +181,9 @@
 
 .final-score{
   display: flex;
-  /* width: 20px; */
   margin-left: 20px;
   margin-top: 20px;
   color: var(--third-color);
-  /* border: red solid 2px; */
 }
 
 .full-score{
@@ -205,7 +199,6 @@
   border: 0.5px dashed var(--third-color);
   border-radius: 10px;
   text-align: center;
-  /* height: 20px; */
   font-size: 17px;
   margin-top: -20px;
 }

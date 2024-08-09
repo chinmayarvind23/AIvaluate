@@ -36,15 +36,6 @@ const StudentViewSubmissions = () => {
         fetchSubmissions();
     }, [courseId]);
 
-    // useEffect(() => {
-    //     const filtered = files.filter(file =>
-    //         file.assignmentKey && file.assignmentKey.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    //         file.studentId && file.studentId.toString().includes(searchTerm)
-    //     );
-    //     setFilteredFiles(filtered);
-    //     setCurrentPage(1);
-    // }, [searchTerm, files]);
-
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFiles = filteredFiles.slice(indexOfFirstItem, indexOfLastItem);
@@ -62,10 +53,6 @@ const StudentViewSubmissions = () => {
         }
     };
 
-    // const handleSearchChange = (e) => {
-    //     setSearchTerm(e.target.value);
-    // };
-
     const navBarText = `${courseCode} - ${courseName}`;
 
     return (
@@ -77,17 +64,6 @@ const StudentViewSubmissions = () => {
                     <div className="portal-container">
                         <div className="top-bar">
                             <h1>Submissions</h1>
-                            {/* <div className="search-container">
-                                <div className="search-box">
-                                    <FaSearch className="search-icon" />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Search..." 
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                </div>
-                            </div> */}
                         </div>
                         <div className="filetab">
                             {currentFiles.map((file, index) => (

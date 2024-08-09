@@ -2,7 +2,6 @@
     padding: 20px;
     margin: 20px;
     color: var(--third-color);
-    /* border: red 2px solid; */
     max-height: 680px;
 }
 
@@ -24,7 +23,6 @@
     color: var(--primary-color);
     margin-bottom: 20px;
     border: 2px solid var(--primary-color);
-    /* width: 200px; */
 }
 
 .title-input:focus{
@@ -35,7 +33,6 @@
     margin-left: 20px;
     display:block;
     height: 350px;
-    /* border: red 2px solid; */
 }
 
 .rubric-text {

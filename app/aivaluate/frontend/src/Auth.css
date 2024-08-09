@@ -123,11 +123,8 @@
     color: var(--third-color);
   }
 
+  /*This adds the black border around the blue 'AI' in the AIvaluate logo that is on all the login or forgot password screens*/
   .ai-text{
-    /* text-shadow: -1px 1px 0 #000,
-                1px 1px 0 #000,
-                1px -1px 0 #000,
-                -1px -1px 0 #000; */
     text-shadow: -1px 1px 0 var(--third-color),
                 1px 1px 0 var(--third-color),
                 1px -1px 0 var(--third-color),

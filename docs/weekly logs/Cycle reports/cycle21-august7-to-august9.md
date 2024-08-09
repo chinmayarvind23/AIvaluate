@@ -2,6 +2,11 @@
 
 - ## Date range: August 7 - August 9, 2024
 
+### Burn-up chart (velocity)
+
+Generated burn-up chart for the current cycle:
+    <img width="915" alt="Screenshot 2024-08-09 at 9 55 17 AM" src="https://github.com/user-attachments/assets/92895370-a1d1-4a4a-9886-a23173f45580">
+
 - ### Table view of completed tasks on project board
 
 <table border="1">

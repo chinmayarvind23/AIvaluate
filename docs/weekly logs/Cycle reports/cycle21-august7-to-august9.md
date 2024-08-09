@@ -16,9 +16,13 @@
         <td> Colton
         </td>
     </tr>
+    <tr>
+        <td> Presentation preparation
+        </td>
+        <!-- Status -->
+        <td> Entire Team
+        </td>
+    </tr>
 </table>
-
-
-
 
 - All backend tests are passing with 100% coverage. The frontend tests are also now passing with 100% coverage. The project is now feature complete and we have been preparing for our final presentation on Friday.

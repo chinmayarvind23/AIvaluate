@@ -10,10 +10,8 @@
 }
 
 .create-assignment-container {
-    /* display: flex; */
     padding: 20px;
     width: 100%;
-    /* overflow: auto; */
     overflow-y: scroll;
     max-height: 750px;
     box-sizing: border-box;

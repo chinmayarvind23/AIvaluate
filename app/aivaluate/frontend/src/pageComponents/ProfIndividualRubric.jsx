@@ -72,12 +72,6 @@ const ProfIndividualRubric = () => {
                     </div>
                     <div className="bottom-bar">
                         <div className="empty-space"></div>
-                        {/* <button 
-                            className={`confirm-button ${isEdited ? 'secondary-button' : 'disabled-button'} rborder`} 
-                            disabled={!isEdited}
-                        >
-                            CLICK TO CONFIRM CHANGES
-                        </button> */}
                         <button 
                             className="confirm-button secondary-button rborder"
                             onClick={handlePublish}

@@ -1,8 +1,3 @@
-.grades-section {
-    /* margin-right: 20px; */
-    /* margin-left: 350px; */
-}
-
 .grades-table {
     width: 100%;
     border-collapse: collapse;
@@ -48,15 +43,12 @@
     width: 270px;
     height: 50px;
     margin-top: 50px;
-    /* margin-right: 20px; */
     color: var(--third-color);
-    /* border: red 2px solid; */
     float: right;
 }
 
 .grade-summary-text{
     width:450px;
-    /* border: red 2px solid; */
 }
 
 

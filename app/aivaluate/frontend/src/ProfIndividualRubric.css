@@ -112,24 +112,6 @@
     margin-left: 20px;
     display:flex;
 }
-/* 
-.confirm-button {
-    width: 300px;
-    height: 50px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-
-
-.disabled-button {
-    background-color: grey;
-    border: 2px solid grey;
-    color: white;
-    cursor: not-allowed;
-} */
 
 
 .secondary-button {
@@ -157,7 +139,4 @@
     margin-bottom: 20px;
 }
 
-/* .deadline-input:focus {
-    border: 2px dashed red;
-} */
 

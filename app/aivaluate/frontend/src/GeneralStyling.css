@@ -1,26 +1,23 @@
 :root {
-    --primary-color: #003ECB; /* #4d24d4; */
+    --primary-color: #003ECB;
     --secondary-color: white;
     --third-color: black;
     --gradient-color: linear-gradient(to right, #000000, #2600a3);
     --radial-color: radial-gradient(circle, #ffffff, #003ECB);
-    /* --radial-color: radial-gradient(circle, #003ECB, #ffffff,); */
 }
 
 .background-color{
-    /* background: var(--gradient-color); */
     background: white;
 }
 
 
-.primary-color-text{color: var(--primary-color);}   /* Purple text */
+.primary-color-text{color: var(--primary-color);}   /* blue text */
 .secondary-color-text{color:var(--secondary-color);} /* White text */
 .third-color-text{color:var(--third-color);} /* Black text */
 .rborder{border-radius: 60px;}
 a {text-decoration: none;}
 
 html{
-    /* background: var(--gradient-color); */
     background: white;
     min-width: 1300px;
     min-height: 800px;
@@ -33,7 +30,7 @@ body {
     padding: 0;
 }
 
-/* White text on purple background */
+/* White text on blue background */
 .primary-colorbg{
  background: var(--primary-color);
  color: var(--secondary-color);
@@ -45,7 +42,7 @@ body {
     color:var(--primary-color);
 }
 
-/* Black text on purple background */
+/* Black text on blue background */
 .third-colorbg{
     background:var(--primary-color);
     color: var(--third-color);
@@ -57,7 +54,7 @@ body {
     color: var(--third-color);
 }
 
-/* White background with purple text and border */
+/* White background with blue text and border */
 .primary-button {
     background: var(--secondary-color);
     color: var(--primary-color);
@@ -66,7 +63,7 @@ body {
     font-weight: bold;
 }
 
-/* Purple background with white text and border */
+/* blue background with white text and border */
 .secondary-button {
     background: var(--primary-color);
     color: var(--secondary-color);
@@ -151,7 +148,6 @@ body {
 }
 
 .top-bar{
-    /* width: stretch; */
     display: flex;
     margin-bottom: 10px;
     align-items: center;
@@ -188,5 +184,4 @@ body {
     justify-content: bottom;
     width:-webkit-fill-available;
 }
-
 

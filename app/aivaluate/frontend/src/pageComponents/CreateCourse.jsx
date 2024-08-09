@@ -87,13 +87,6 @@ const CreateCourse = () => {
       return;
     }
 
-    // // Check if instructor is selected
-    // if (!instructorId) {
-    //   setErrorMessage('Instructor selection is required.');
-    //   toast.error('Instructor selection is required.');
-    //   return;
-    // }
-
     try {
       const response = await axios.post('http://localhost:5173/eval-api/courses', {
         courseName,

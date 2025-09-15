@@ -1,6 +1,6 @@
 # AI-Powered Course Platform
 
-Automated grading and feedback for programming courses, built with a microservices stack (Node.js/Express, React, Docker) and OpenAI’s Assistants API. The included final report covers architecture, evaluation, and results. This repository is a fork of the original capstone project repository, which can be found [here](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8)
+Automated grading and feedback for programming courses, built with a microservices stack (Node.js/Express, React, Docker) and OpenAI’s Assistants API. The included [final report](https://github.com/chinmayarvind23/AIvaluate/blob/master/COSC%20499%20Final%20Report%20-%202024.pdf) covers architecture, evaluation, and results. This repository is a fork of the original capstone project repository, which can be found [here](https://github.com/UBCO-COSC499-Summer-2024/team-8-capstone-team-8)
 
 ## Highlights
 - Automated evaluation with OpenAI Assistants API → **~70% reduction in grading time** and higher grading consistency.
